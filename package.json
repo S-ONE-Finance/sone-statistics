@@ -1,5 +1,5 @@
 {
-  "name": "@uniswap/info",
+  "name": "sone-statistics",
   "private": true,
   "homepage": "https://info.uniswap.org",
   "devDependencies": {
