@@ -185,16 +185,6 @@ const ResponsiveTopEndSubMenu = styled(SubMenu)`
   `}
 `
 
-// Put submenu cling to the bottom left of the screen.
-const ResponsiveBottomLeftSubMenu = styled(SubMenu)`
-  ${({ theme }) => theme.mediaWidth.upToLarge`
-    top: unset;
-    bottom: calc(70px + 1rem);
-    left: 0;
-    transform: none;
-`}
-`
-
 // Put submenu cling to the bottom right of the screen.
 const ResponsiveBottomRightSubMenu = styled(SubMenu)`
   ${({ theme }) => theme.mediaWidth.upToLarge`
