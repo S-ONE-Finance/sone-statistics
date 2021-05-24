@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import 'feather-icons'
 
-import { TYPE } from '../Theme'
+import { TYPE } from '../theme'
 import Panel from '../components/Panel'
 import { useAllPairData } from '../contexts/PairData'
 import PairList from '../components/PairList'

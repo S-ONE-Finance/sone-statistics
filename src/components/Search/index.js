@@ -17,7 +17,7 @@ import { transparentize } from 'polished'
 import { client } from '../../apollo/client'
 import { PAIR_SEARCH, TOKEN_SEARCH } from '../../apollo/queries'
 import FormattedName from '../FormattedName'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
 
 const Container = styled.div`

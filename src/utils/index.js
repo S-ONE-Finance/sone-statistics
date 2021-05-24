@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import utc from 'dayjs/plugin/utc'
 import { client, blockClient } from '../apollo/client'
-import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
+import { GET_BLOCK, GET_BLOCKS, GET_LATEST_BLOCK, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
@@ -15,6 +15,13 @@ import Numeral from 'numeral'
 const Decimal = toFormat(_Decimal)
 BigNumber.set({ EXPONENTIAL_AT: 50 })
 dayjs.extend(utc)
+
+export const getFormatNumber = (num, digits) => {
+  if (num === Number.POSITIVE_INFINITY) return '∞ '
+  return Numeral(num)
+    .format(`0,0.[${'0'.repeat(digits)}]a`)
+    .toLocaleUpperCase()
+}
 
 export function getTimeframe(timeWindow) {
   const utcEndTime = dayjs.utc()
@@ -141,6 +148,14 @@ export async function splitQuery(query, localClient, vars, list, skipCount = 100
   }
 
   return fetchedData
+}
+
+export async function getLatestBlock() {
+  let result = await blockClient.query({
+    query: GET_LATEST_BLOCK,
+    fetchPolicy: 'network-only',
+  })
+  return result?.data?.blocks?.[0]?.number
 }
 
 /**

@@ -14,7 +14,7 @@ import { AutoColumn } from '../Column'
 import { useEthPrice } from '../../contexts/GlobalData'
 import { RowFixed } from '../Row'
 import { ButtonLight } from '../ButtonStyled'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import FormattedName from '../FormattedName'
 
 dayjs.extend(utc)

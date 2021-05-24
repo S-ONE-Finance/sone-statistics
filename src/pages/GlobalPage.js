@@ -18,7 +18,7 @@ import { useMedia } from 'react-use'
 import Panel from '../components/Panel'
 import { useAllTokenData } from '../contexts/TokenData'
 import { formattedNum, formattedPercent } from '../utils'
-import { TYPE, ThemedBackground } from '../Theme'
+import { TYPE, ThemedBackground } from '../theme'
 import { transparentize } from 'polished'
 import { CustomLink } from '../components/Link'
 

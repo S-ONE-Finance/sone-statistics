@@ -1,4 +1,4 @@
-import theme from '../Theme/theme'
+import theme from '../theme/theme'
 const color = theme.colors
 
 export const customStyles = {

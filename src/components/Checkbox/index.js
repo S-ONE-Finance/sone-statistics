@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import { RowFixed } from '../Row'
 
 const StyleCheckbox = styled.input`

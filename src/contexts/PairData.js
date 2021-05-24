@@ -27,6 +27,7 @@ import {
 import { timeframeOptions, TRACKED_OVERRIDES } from '../constants'
 import { useLatestBlocks } from './Application'
 import { updateNameData } from '../utils/data'
+import useBlockNumber from '../hooks/useBlockNumber'
 
 const UPDATE = 'UPDATE'
 const UPDATE_PAIR_TXNS = 'UPDATE_PAIR_TXNS'
@@ -255,6 +256,78 @@ async function getBulkPairData(pairList, ethPrice) {
   }
 }
 
+/**
+ * Get một đống data trong "hiện tại", "1 day ago", "2 days ago",
+ * "1 week ago", "2 week ago" để parse ra data mà UI cần.
+ * @param pairList
+ */
+export async function getBulkPairDataForFooter(pairList) {
+  const [t1] = getTimestampsForChanges()
+  const [{ number: b1 }] = (await getBlocksFromTimestamps([t1])) || {}
+
+  if (b1 === undefined) return []
+
+  try {
+    // Lấy data current.
+    const current = await client.query({
+      query: PAIRS_BULK,
+      variables: {
+        allPairs: pairList,
+      },
+      fetchPolicy: 'network-only',
+    })
+
+    // Lấy data quá khứ.
+    const [oneDayResult] = await Promise.all(
+      [b1].map(async (block) => {
+        return client.query({
+          query: PAIRS_HISTORICAL_BULK(block, pairList),
+          fetchPolicy: 'network-only',
+        })
+      })
+    )
+
+    // Làm đẹp data quá khứ.
+    const oneDayData = oneDayResult?.data?.pairs.reduce((obj, cur) => {
+      return { ...obj, [cur.id]: cur }
+    }, {})
+
+    // So sánh data hiện tại và quá khứ và trả về giá trị mong muốn:
+    // Với mỗi pair ở hiện tại, tìm data của nó trong quá khứ rồi map sự thay đổi.
+    const pairs = await Promise.all(
+      current &&
+        current.data.pairs.map(async (pair) => {
+          let data = pair
+          async function getHistoryFromData(data, blockNumber) {
+            let history = data?.[pair.id]
+            if (!history) {
+              const newData = await client.query({
+                query: PAIR_DATA(pair.id, blockNumber),
+                fetchPolicy: 'network-only',
+              })
+              history = newData.data.pairs[0]
+            }
+            return history
+          }
+          const oneDayHistory = await getHistoryFromData(oneDayData, b1)
+
+          // Nếu không có data quá khứ thì trả về null.
+          if (oneDayHistory) {
+            data = parseDataForFooter(data, oneDayHistory)
+            return data
+          } else {
+            return null
+          }
+        })
+    )
+    // Lọc những pair nào bị null.
+    return pairs.filter((pair) => pair !== null)
+  } catch (e) {
+    console.error(e)
+    return []
+  }
+}
+
 function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBlock) {
   const pairAddress = data.id
 
@@ -307,6 +380,20 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
   }
 
   // format incorrect names
+  updateNameData(data)
+
+  return data
+}
+
+function parseDataForFooter(data, oneDayData) {
+  if (!data) {
+    throw new Error('Pass the empty data current')
+  }
+
+  const oneDayToken1PriceChange = getPercentChange(data.token1Price, oneDayData.token1Price)
+
+  data.oneDayToken1PriceChange = oneDayToken1PriceChange
+
   updateNameData(data)
 
   return data
@@ -641,4 +728,87 @@ export function usePairChartData(pairAddress) {
 export function useAllPairData() {
   const [state] = usePairDataContext()
   return state || {}
+}
+
+/**
+ * Use Subgraph to query data for footer.
+ */
+function useFooterData() {
+  const blockNumber = useBlockNumber()
+  const [subgraphData, setSubgraphData] = useState({})
+
+  // region Callback functions.
+  const getData = useCallback(async () => {
+    const {
+      data: { pairs },
+    } = await client.query({
+      query: PAIRS_CURRENT,
+      fetchPolicy: 'cache-first',
+    })
+
+    // Format as array of addresses.
+    const pairIds = pairs.map((pair) => pair.id)
+
+    // Get data for every pair in list.
+    const data = await getBulkPairDataForFooter(pairIds)
+    if (data?.length > 0) {
+      setSubgraphData(data)
+    }
+
+    // Log out to track query results.
+    if (data?.length > 0) {
+      console.log('Array trả về có ' + data.length + ' items.')
+    } else {
+      console.error('Array trả về lỗi', data)
+    }
+  }, [])
+
+  // Wait 5s for TheGraph mapping data.
+  const getDataAfter5Seconds = useCallback(() => {
+    setTimeout(() => {
+      getData()
+    }, 5000)
+  }, [getData])
+  // endregion
+
+  // region Effects.
+  // Query data the first time.
+  useEffect(() => {
+    getData()
+  }, [getData])
+
+  // When new block created, run the getDataAfter5Seconds callback function.
+  useEffect(() => {
+    getDataAfter5Seconds()
+  }, [blockNumber, getDataAfter5Seconds])
+  // endregion
+
+  return subgraphData
+}
+
+/**
+ * Lấy ra giá token0 so với token1 ở thời điểm hiện tại = (số lượng token1) / (số lượng token0),
+ * và so sánh giá trị này với chính nó ở thời điểm 24h trước.
+ * Ta có 2 kết quả: "token1Price và token1PriceChange"
+ *
+ * PS: Chỗ này tại sao ko phải là "token0Price và token0PriceChange"?? do data trong subgraph là như thế, maybe
+ * bug do token1 bị swap với token0, source: uniswap-info).
+ */
+export function useOneDayPairPriceChange() {
+  const data = useFooterData()
+
+  return useMemo(
+    () =>
+      data &&
+      Object.values(data).map((item) => {
+        return {
+          id: item.id,
+          token0Symbol: item.token0.symbol,
+          token1Symbol: item.token1.symbol,
+          token1Price: item.token1Price,
+          oneDayToken1PriceChange: item.oneDayToken1PriceChange,
+        }
+      }),
+    [data]
+  )
 }

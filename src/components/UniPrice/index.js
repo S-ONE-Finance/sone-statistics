@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Panel from '../Panel'
 import { AutoColumn } from '../Column'
 import { RowFixed } from '../Row'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import { usePairData } from '../../contexts/PairData'
 import { formattedNum } from '../../utils'
 

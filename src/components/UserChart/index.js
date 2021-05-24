@@ -11,7 +11,7 @@ import DropdownSelect from '../DropdownSelect'
 import { useUserLiquidityChart } from '../../contexts/User'
 import LocalLoader from '../LocalLoader'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 
 const ChartWrapper = styled.div`
   height: 100%;

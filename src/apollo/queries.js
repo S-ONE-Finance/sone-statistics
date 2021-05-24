@@ -46,6 +46,16 @@ export const V1_DATA_QUERY = gql`
   }
 `
 
+export const GET_LATEST_BLOCK = gql`
+  query blocks {
+    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 9300000 }) {
+      id
+      number
+      timestamp
+    }
+  }
+`
+
 export const GET_BLOCK = gql`
   query blocks($timestampFrom: Int!, $timestampTo: Int!) {
     blocks(
@@ -704,18 +714,16 @@ export const PAIRS_BULK = gql`
 
 export const PAIRS_HISTORICAL_BULK = (block, pairs) => {
   let pairsString = `[`
-  pairs.map((pair) => {
-    return (pairsString += `"${pair}"`)
+  pairs.forEach((pair) => {
+    pairsString += `"${pair}"`
   })
   pairsString += ']'
   let queryString = `
   query pairs {
     pairs(first: 200, where: {id_in: ${pairsString}}, block: {number: ${block}}, orderBy: trackedReserveETH, orderDirection: desc) {
       id
-      reserveUSD
-      trackedReserveETH
-      volumeUSD
-      untrackedVolumeUSD
+      token0Price
+      token1Price
     }
   }
   `

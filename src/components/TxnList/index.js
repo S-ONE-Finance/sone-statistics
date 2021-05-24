@@ -14,7 +14,7 @@ import Link from '../Link'
 import { Divider, EmptyCard } from '..'
 import DropdownSelect from '../DropdownSelect'
 import FormattedName from '../FormattedName'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
 
 dayjs.extend(utc)
