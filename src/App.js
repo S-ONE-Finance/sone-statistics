@@ -30,6 +30,8 @@ const HeaderWrapper = styled.div`
   flex-flow: row nowrap;
   width: 100%;
   justify-content: space-between;
+  overflow: hidden;
+  box-sizing: border-box;
 `
 
 const FooterWrapper = styled.div`
@@ -40,7 +42,13 @@ const FooterWrapper = styled.div`
   height: 45px;
   background: ${({ theme }) => theme.bg4Sone};
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-  z-index: 999;
+  z-index: 1;
+
+  ${({ theme }) => theme.mediaWidth.upToLarge`
+    bottom: 72px;
+    border-radius: 12px 12px 0 0;
+    padding: 0 1rem;
+  `};
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     position: fixed;

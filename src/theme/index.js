@@ -178,6 +178,10 @@ export const TYPE = {
   red1Sone(props) {
     return <TextWrapper fontWeight={500} color={'red1Sone'} {...props} />
   },
+
+  language(props) {
+    return <TextWrapper fontWeight={500} color={'text2Sone'} {...props} />
+  },
 }
 
 export const Hover = styled.div`

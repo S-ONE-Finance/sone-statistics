@@ -22,7 +22,7 @@ import { updateNameData } from '../../utils/data'
 
 const Container = styled.div`
   height: 48px;
-  z-index: 30;
+  z-index: 1;
   position: relative;
 
   @media screen and (max-width: 600px) {
