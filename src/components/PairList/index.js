@@ -13,7 +13,7 @@ import { formattedNum, formattedPercent } from '../../utils'
 import DoubleTokenLogo from '../DoubleLogo'
 import FormattedName from '../FormattedName'
 import QuestionHelper from '../QuestionHelper'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import { PAIR_BLACKLIST } from '../../constants'
 import { AutoColumn } from '../Column'
 

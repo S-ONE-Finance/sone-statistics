@@ -6,7 +6,7 @@ import { useGlobalData, useEthPrice } from '../../contexts/GlobalData'
 import { formattedNum, localNumber } from '../../utils'
 
 import UniPrice from '../UniPrice'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 
 const Header = styled.div`
   width: 100%;

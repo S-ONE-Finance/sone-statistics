@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Row, { RowBetween } from '../Row'
 import { AutoColumn } from '../Column'
 import { ChevronDown as Arrow } from 'react-feather'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import { StyledIcon } from '..'
 
 const Wrapper = styled.div`

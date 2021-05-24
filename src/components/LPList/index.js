@@ -10,7 +10,7 @@ import { CustomLink } from '../Link'
 import { Divider } from '..'
 import { withRouter } from 'react-router-dom'
 import { formattedNum } from '../../utils'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 import DoubleTokenLogo from '../DoubleLogo'
 import { RowFixed } from '../Row'
 

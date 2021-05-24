@@ -14,7 +14,7 @@ import { useMedia } from 'react-use'
 import { withRouter } from 'react-router-dom'
 import { TOKEN_BLACKLIST } from '../../constants'
 import FormattedName from '../FormattedName'
-import { TYPE } from '../../Theme'
+import { TYPE } from '../../theme'
 
 dayjs.extend(utc)
 

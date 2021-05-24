@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider as StyledComponentsThemeProvider, createGlobalStyle } from 'styled-components'
+import { ThemeProvider as StyledComponentsThemeProvider, css, createGlobalStyle } from 'styled-components'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import styled from 'styled-components'
 import { Text } from 'rebass'
@@ -10,7 +10,26 @@ export default function ThemeProvider({ children }) {
   return <StyledComponentsThemeProvider theme={theme(darkMode)}>{children}</StyledComponentsThemeProvider>
 }
 
+export const MEDIA_WIDTHS = {
+  upToExtraSmall: 500,
+  upToSmall: 768,
+  upToMedium: 992,
+  upToLarge: 1400,
+  upToExtraLarge: 1920,
+}
+
+const mediaWidthTemplates = Object.keys(MEDIA_WIDTHS).reduce((accumulator, size) => {
+  accumulator[size] = (a, b, c) => css`
+    @media (max-width: ${MEDIA_WIDTHS[size]}px) {
+      ${css(a, b, c)}
+    }
+  `
+  return accumulator
+}, {})
+
 const theme = (darkMode, color) => ({
+  mediaWidth: mediaWidthTemplates,
+
   customColor: color,
   textColor: darkMode ? color : 'black',
 
@@ -73,6 +92,46 @@ const theme = (darkMode, color) => ({
   blue: '2f80ed',
 
   background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #ff007a30 0%, #fff 0%)`,
+
+  // S-ONE
+  textBlack: '#333333',
+  text1Sone: darkMode ? '#FFFFFF' : '#111111',
+  text2Sone: darkMode ? '#7AA3E5' : '#111111',
+  text3Sone: darkMode ? '#FFFFFF' : '#767676',
+  text4Sone: darkMode ? '#AAAAAA' : '#767676',
+  text5Sone: '#3FAAB0',
+  text6Sone: darkMode ? '#FFFFFF' : '#333333',
+  text7Sone: darkMode ? '#56CFD6' : '#65BAC5',
+  text8Sone: '#767676',
+  text9Sone: '#C9C9C9',
+  text10Sone: darkMode ? '#AAAAAA' : '#333333',
+
+  red1Sone: '#F05359',
+  green1Sone: '#7AC51B',
+
+  bg1Sone: darkMode ? '#0E2B4A' : '#FFFFFF',
+  bg2Sone: darkMode ? '#3B5183' : '#FAEDED',
+  bg3Sone: darkMode ? '#3B5183' : '#FFFFFF',
+  bg4Sone: darkMode ? '#111111' : '#F3F3F3',
+  bg5Sone: '#DFDFDF',
+  bgInputPanel: darkMode ? 'transparent' : '#F3F3F3',
+
+  border1Sone: darkMode ? '#AAAAAA' : '#C9C9C9',
+  border2Sone: darkMode ? '#AAAAAA' : 'transparent',
+  border3Sone: darkMode ? '#FFFFFF' : '#DFDFDF',
+  stroke1Sone: darkMode ? '#3FAAB0' : '#F05359',
+  divider1Sone: darkMode ? '#AAAAAA' : 'rgba(0, 0, 0, 0.25)',
+  scrollbarThumb: darkMode ? '#3B5183' : '#808080',
+  closeIcon: darkMode ? '#AAAAAA' : '#000000',
+
+  // Tab
+  tabBg: darkMode ? '#3B5183' : '#F3F3F3',
+  tabBgActive: darkMode ? '#ECECEC' : '#3FAAB0',
+  tabText: darkMode ? '#7AA3E5' : '#C9C9C9',
+  tabTextActive: darkMode ? '#4F4F4F' : '#FFFFFF',
+
+  // Others
+  f3f3f3: '#F3F3F3',
 })
 
 const TextWrapper = styled(Text)`
@@ -106,6 +165,22 @@ export const TYPE = {
 
   pink(props) {
     return <TextWrapper fontWeight={props.faded ? 400 : 600} color={props.faded ? 'text1' : 'text1'} {...props} />
+  },
+
+  black(props) {
+    return <TextWrapper fontWeight={500} color={'text1'} {...props} />
+  },
+
+  green1Sone(props) {
+    return <TextWrapper fontWeight={500} color={'green1Sone'} {...props} />
+  },
+
+  red1Sone(props) {
+    return <TextWrapper fontWeight={500} color={'red1Sone'} {...props} />
+  },
+
+  language(props) {
+    return <TextWrapper fontWeight={500} color={'text2Sone'} {...props} />
   },
 }
 
@@ -156,9 +231,14 @@ export const ThemedBackground = styled.div`
 
 export const GlobalStyle = createGlobalStyle`
   @import url('https://rsms.me/inter/inter.css');
-  html { font-family: 'Inter', sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+  
+  html {
+    font-family: 'Roboto', sans-serif;
+  }
+  
   @supports (font-variation-settings: normal) {
-    html { font-family: 'Inter var', sans-serif; }
+    html { font-family: 'Roboto', sans-serif; }
   }
   
   html,
@@ -167,7 +247,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     width: 100%;
     height: 100%;
-    font-size: 14px;    
+    font-size: 16px;
     background-color: ${({ theme }) => theme.bg6};
   }
 
