@@ -5,7 +5,6 @@
 
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { lighten } from 'polished'
 import { ReactComponent as Close } from '../../assets/x.svg'
 import Column from '../Column'
 
@@ -42,20 +41,6 @@ const ColumnWrapper = styled(Column)<{ padding?: string }>`
 
   & > *:not(:last-child) {
     border-bottom: ${({ theme }) => `1px solid ${theme.divider1Sone}`};
-  }
-`
-
-const TextBoxChangeAccount = styled.div`
-  width: 100%;
-  font-size: 14px;
-  font-weight: 500;
-  color: #3faab0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  :hover {
-    color: ${`${lighten(0.05, '#3FAAB0')}`};
   }
 `
 
