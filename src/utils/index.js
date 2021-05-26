@@ -191,7 +191,7 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
 
   let blocks = []
   if (fetchedData) {
-    for (var t in fetchedData) {
+    for (const t in fetchedData) {
       if (fetchedData[t].length > 0) {
         blocks.push({
           timestamp: t.split('t')[1],

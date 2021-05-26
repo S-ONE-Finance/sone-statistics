@@ -25,7 +25,7 @@ const HeaderFrame = styled.div`
   flex-direction: row;
   width: 100%;
   top: 0;
-  position: relative;
+  position: absolute;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 0 80px;
   z-index: 3;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './apollo/client'
@@ -19,6 +19,7 @@ import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
 import Footer from './components/Footer'
 import Polling from './components/Polling'
 import Header from './components/Header'
+import StakingStats from './pages/StakingStats'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -81,7 +82,7 @@ const WarningBanner = styled.div`
 /**
  * Wrap the component with the header and sidebar pinned tab
  */
-const LayoutWrapper = ({ children, savedOpen, setSavedOpen }) => {
+const LayoutWrapper = ({ children }) => {
   return (
     <>
       <HeaderWrapper>
@@ -99,8 +100,6 @@ const LayoutWrapper = ({ children, savedOpen, setSavedOpen }) => {
 const BLOCK_DIFFERENCE_THRESHOLD = 30
 
 function App() {
-  const [savedOpen, setSavedOpen] = useState(false)
-
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
   const [latestBlock, headBlock] = useLatestBlocks()
@@ -135,7 +134,7 @@ function App() {
                     !Object.keys(TOKEN_BLACKLIST).includes(match.params.tokenAddress.toLowerCase())
                   ) {
                     return (
-                      <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                      <LayoutWrapper>
                         <TokenPage address={match.params.tokenAddress.toLowerCase()} />
                       </LayoutWrapper>
                     )
@@ -154,7 +153,7 @@ function App() {
                     !Object.keys(PAIR_BLACKLIST).includes(match.params.pairAddress.toLowerCase())
                   ) {
                     return (
-                      <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                      <LayoutWrapper>
                         <PairPage pairAddress={match.params.pairAddress.toLowerCase()} />
                       </LayoutWrapper>
                     )
@@ -170,7 +169,7 @@ function App() {
                 render={({ match }) => {
                   if (isAddress(match.params.accountAddress.toLowerCase())) {
                     return (
-                      <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                      <LayoutWrapper>
                         <AccountPage account={match.params.accountAddress.toLowerCase()} />
                       </LayoutWrapper>
                     )
@@ -181,26 +180,32 @@ function App() {
               />
 
               <Route path="/home">
-                <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                <LayoutWrapper>
                   <GlobalPage />
                 </LayoutWrapper>
               </Route>
 
               <Route path="/tokens">
-                <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                <LayoutWrapper>
                   <AllTokensPage />
                 </LayoutWrapper>
               </Route>
 
               <Route path="/pairs">
-                <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                <LayoutWrapper>
                   <AllPairsPage />
                 </LayoutWrapper>
               </Route>
 
               <Route path="/accounts">
-                <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                <LayoutWrapper>
                   <AccountLookup />
+                </LayoutWrapper>
+              </Route>
+
+              <Route path="/staking">
+                <LayoutWrapper>
+                  <StakingStats />
                 </LayoutWrapper>
               </Route>
 
