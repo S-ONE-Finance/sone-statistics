@@ -8,6 +8,7 @@ import TokenDataContextProvider, { Updater as TokenDataContextUpdater } from './
 import GlobalDataContextProvider from './contexts/GlobalData'
 import PairDataContextProvider, { Updater as PairDataContextUpdater } from './contexts/PairData'
 import ApplicationContextProvider from './contexts/Application'
+import StakingDataContextProvider from './contexts/StakingData'
 import UserContextProvider from './contexts/User'
 import App from './App'
 
@@ -40,7 +41,9 @@ function ContextProviders({ children }) {
         <TokenDataContextProvider>
           <GlobalDataContextProvider>
             <PairDataContextProvider>
-              <UserContextProvider>{children}</UserContextProvider>
+              <UserContextProvider>
+                <StakingDataContextProvider>{children}</StakingDataContextProvider>
+              </UserContextProvider>
             </PairDataContextProvider>
           </GlobalDataContextProvider>
         </TokenDataContextProvider>

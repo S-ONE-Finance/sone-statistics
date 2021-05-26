@@ -3,6 +3,8 @@ import { ThemeProvider as StyledComponentsThemeProvider, css, createGlobalStyle 
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import styled from 'styled-components'
 import { Text } from 'rebass'
+import backgroundImage from '../assets/background-light.svg'
+import backgroundImageDark from '../assets/background-dark.svg'
 
 export default function ThemeProvider({ children }) {
   const [darkMode] = useDarkModeManager()
@@ -92,6 +94,7 @@ const theme = (darkMode, color) => ({
   blue: '2f80ed',
 
   background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #ff007a30 0%, #fff 0%)`,
+  bgImage: darkMode ? backgroundImageDark : backgroundImage,
 
   // S-ONE
   textBlack: '#333333',
@@ -132,6 +135,7 @@ const theme = (darkMode, color) => ({
 
   // Others
   f3f3f3: '#F3F3F3',
+  tableCellOddBackground: darkMode ? '#0A1C29' : '#F3F3F3',
 })
 
 const TextWrapper = styled(Text)`
@@ -248,7 +252,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     font-size: 16px;
-    background-color: ${({ theme }) => theme.bg6};
+    background-color: ${({ theme }) => theme.bg1Sone};
   }
 
   a {
