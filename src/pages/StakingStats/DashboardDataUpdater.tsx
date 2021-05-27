@@ -1,55 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Box } from '@material-ui/core'
+import useDashboardData from '../../hooks/useDashboardData'
+import { setCacheCommon, setCachePools } from '../../utils/storage'
+import { POOL_CONFIG, TOKEN_ADDRESS, TOKEN_ICON } from '../../constants/tokens'
+import Service from '../../services'
 import _get from 'lodash.get'
-import CommonStatistics from '../components/CommonStatistics'
-import PoolTable from '../components/PoolTable'
-import Service from '../services'
-import useDashboardData from '../hooks/useDashboardData'
-import { POOL_CONFIG, TOKEN_ADDRESS, TOKEN_ICON } from '../constants/tokens'
-import { setCacheCommon, setCachePools } from '../utils/storage'
-import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url(${({ theme }) => theme.bgImage});
-  background-size: cover;
-  padding-top: 108px; // Lấy từ PageWrapper cho đồng bộ.
-  margin-bottom: 80px;
-
-  > * {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  ${({ theme }) => theme.mediaWidth.upToLarge`
-    margin-bottom: 140px;
-  `}
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding-top: 0;
-  `}
-`
-
-const Title = styled.div`
-  color: ${({ theme }) => theme.text6Sone};
-  font-size: 40px;
-  font-weight: 500;
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    font-size: 20px;
-    font-weight: 700;
-    text-align: center;
-  `}
-`
-
-const Dashboard = () => {
+export default function DashboardDataUpdater({ children }: { children: React.ReactNode }) {
   const { commonData, setCommonData, setPools } = useDashboardData()
   const [firstTime, setFirstTime] = useState(true)
+
   const priceInterval = useRef(null)
 
   const reloadCommonData = () => {
@@ -179,23 +138,5 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstTime, commonData])
 
-  return (
-    <>
-      <Wrapper>
-        <div>
-          <Box mb={0.5} px={4}>
-            <Title>Staking Statistics</Title>
-          </Box>
-          <Box mb={2}>
-            <CommonStatistics />
-          </Box>
-          <Box px={2}>
-            <PoolTable />
-          </Box>
-        </div>
-      </Wrapper>
-    </>
-  )
+  return <>{children}</>
 }
-
-export default Dashboard
