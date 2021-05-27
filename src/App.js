@@ -57,7 +57,7 @@ const FooterWrapper = styled.div`
   `};
 `
 
-const Center = styled.div`
+const Body = styled.div`
   height: 100%;
   z-index: 9999;
   transition: width 0.25s ease;
@@ -88,7 +88,7 @@ const LayoutWrapper = ({ children }) => {
       <HeaderWrapper>
         <Header />
       </HeaderWrapper>
-      <Center id="center">{children}</Center>
+      <Body id="center">{children}</Body>
       <Polling />
       <FooterWrapper>
         <Footer />
