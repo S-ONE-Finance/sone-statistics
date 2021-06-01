@@ -1,16 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { Grid, Paper, makeStyles, Box, Typography, Tab, Tabs, AppBar } from '@material-ui/core'
-import BoxSearch from '../../components/Search'
+import { Grid, makeStyles, Box, Typography } from '@material-ui/core'
 import CardItem from '../../components/CardItem'
 import styled, { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
-import { reduceFractionDigit, reduceLongNumber } from '../../utils/number'
+import { reduceFractionDigit } from '../../utils/number'
 import useDashboardData from '../../hooks/useDashboardData'
-import { PageWrapper, ContentWrapper } from '../../components'
 import Panel from '../../components/Panel'
 import GlobalChart from '../../components/GlobalChart'
 import { AutoRow, RowBetween } from '../../components/Row'
-import { TYPE, ThemedBackground } from '../../theme'
+import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
 import { useAllTokenData } from '../../contexts/TokenData'
@@ -79,9 +77,8 @@ function OverviewStatistics(props) {
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
-  const { commonData, pools } = useDashboardData()
+  const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
-  const [indexTabMain, setIndexTabMain] = useState(0)
 
   return (
     <div className="box-main-content">

@@ -3,10 +3,9 @@ import { Grid, makeStyles, Box, Tab, Tabs, withStyles } from '@material-ui/core'
 import BoxSearch from '../../components/Search'
 import styled, { ThemeContext } from 'styled-components'
 import { PageWrapper, ContentWrapper } from '../../components'
-import { AutoRow } from '../../components/Row'
 import OverviewStatistics from './OverviewStatistics'
 import './styles.css'
-import circleImage from '../../assets/circle-dot.svg'
+import { circleImage } from '../../assets/circle-dot.svg'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -101,7 +100,6 @@ const TabCustom = withStyles((theme) => ({
 
 function StatsPage() {
   const classes = customStyleTabbar()
-  const theme = useContext(ThemeContext)
   const [indexTabMain, setIndexTabMain] = useState(0)
 
   const handleChange = (event, newValue) => {

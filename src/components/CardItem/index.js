@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react'
-import PropTypes from 'prop-types'
-import { Grid, Paper, makeStyles, Box, Typography } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { Grid, Paper, makeStyles, Box } from '@material-ui/core'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
-import styled, { ThemeContext } from 'styled-components'
+import { ThemeContext } from 'styled-components'
 
 CardItem.propTypes = {}
 

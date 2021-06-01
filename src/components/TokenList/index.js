@@ -14,29 +14,10 @@ import { useMedia } from 'react-use'
 import { withRouter } from 'react-router-dom'
 import { TOKEN_BLACKLIST } from '../../constants'
 import FormattedName from '../FormattedName'
-import { TYPE } from '../../theme'
 import { Pagination } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import Panel from '../../components/Panel'
 dayjs.extend(utc)
-
-const PageButtons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 2em;
-  margin-bottom: 2em;
-`
-
-const Arrow = styled.div`
-  color: ${({ theme }) => theme.primary1};
-  opacity: ${(props) => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
-`
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;

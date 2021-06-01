@@ -209,7 +209,7 @@ function App() {
                   <StakingStats />
                 </LayoutWrapper>
               </Route>
-              <Route path="/stats">
+              <Route path="/swap">
                 <LayoutWrapper>
                   <OverStats />
                 </LayoutWrapper>
