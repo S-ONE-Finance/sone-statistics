@@ -64,7 +64,9 @@ const DashGrid = styled.div`
   }
 `
 
-const ListWrapper = styled.div``
+const ListWrapper = styled.div`
+  backgroundcolor: #fff;
+`
 
 const ClickableText = styled(Text)`
   text-align: end;
@@ -331,7 +333,6 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
         shape="rounded"
         classes={{
           root: classes.root, // class name, e.g. `classes-nesting-root-x`
-          outlined: classes.outlined, // class name, e.g. `classes-nesting-label-x`
         }}
       />
     </>

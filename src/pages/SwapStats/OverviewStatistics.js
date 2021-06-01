@@ -157,39 +157,52 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Tokens
             </TYPE.main>
             <CustomLink to={'/tokens'}>See more</CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}
+        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
         <TopTokenList tokens={allTokens} />
         {/* </Panel> */}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-              Top Tokens
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+              Top Pairs
             </TYPE.main>
             <CustomLink to={'/tokens'}>See more</CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}
+        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
         <TopTokenList tokens={allTokens} />
         {/* </Panel> */}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-              Top Tokens
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+              Top Accounts
             </TYPE.main>
             <CustomLink to={'/tokens'}>See more</CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}
+        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
+        <TopTokenList tokens={allTokens} />
+        {/* </Panel> */}
+      </div>
+      <div>
+        <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
+          <RowBetween>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+              Transactions
+            </TYPE.main>
+            <CustomLink to={'/tokens'}>See more</CustomLink>
+          </RowBetween>
+        </ListOptions>
+        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
         <TopTokenList tokens={allTokens} />
         {/* </Panel> */}
       </div>
