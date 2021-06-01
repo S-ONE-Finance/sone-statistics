@@ -1,3 +1,38 @@
+#root {
+  background: linear-gradient(30.5deg, #fcf0f0 8.77%, #ffffff 32.67%), #ffffff;
+  position: relative;
+}
+#root::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  background-image: url(../../assets/bg-root.svg);
+  background-repeat: no-repeat;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center;
+  margin: auto;
+  z-index: 0;
+}
+
+#root::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  background-image: url(../../assets/bg-root.svg);
+  background-repeat: no-repeat;
+  top: 0;
+  bottom: 6%;
+  left: 0;
+  background-position: bottom;
+  margin: auto;
+  z-index: 0;
+}
+
+.makeStyles-root-1 {
+  z-index: 10;
+}
 div.MuiTabs-flexContainer {
   justify-content: space-between;
 }
@@ -25,4 +60,15 @@ div.MuiTabs-flexContainer {
 }
 .MuiPaginationItem-root {
   color: #c4c4c4 !important;
+}
+
+.MuiButtonBase-root.MuiTab-root svg {
+  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1%) contrast(60%);
+}
+.MuiButtonBase-root.MuiTab-root.Mui-selected svg {
+  filter: brightness(0) invert(1);
+}
+
+.sc-fMiknA.kJSEpH.css-vurnku {
+  background-color: #fff;
 }

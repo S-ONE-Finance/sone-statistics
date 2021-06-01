@@ -5,7 +5,10 @@ import styled, { ThemeContext } from 'styled-components'
 import { PageWrapper, ContentWrapper } from '../../components'
 import OverviewStatistics from './OverviewStatistics'
 import './styles.css'
-import { circleImage } from '../../assets/circle-dot.svg'
+import PhoneIcon from '@material-ui/icons/Phone'
+import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
+import { ReactComponent as IconLink } from '../../assets/link.svg'
+import { ReactComponent as IconUser } from '../../assets/user.svg'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -58,7 +61,6 @@ const customStyleTabbar = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    // backgroundColor: 'red',
   },
   btnMain: {
     background: theme.red1Sone,
@@ -82,13 +84,15 @@ const TabCustom = withStyles((theme) => ({
     minWidth: 250,
     marginBottom: 30,
     borderRadius: 30,
+    marginTop: 35,
     backgroundColor: useContext(ThemeContext).gray,
+    color: '#000',
     '&:hover': {
-      color: useContext(ThemeContext).red1Sone,
+      color: '',
       opacity: 1,
     },
     '&$selected': {
-      color: useContext(ThemeContext).text1Sone,
+      color: '#fff',
       backgroundColor: useContext(ThemeContext).red1Sone,
       borderRadius: 30,
       fontWeight: theme.typography.fontWeightMedium,
@@ -134,15 +138,51 @@ function StatsPage() {
                   wrapper: classes.iconLabelWrapper,
                   labelContainer: classes.labelContainer,
                 }}
-                icon={<circleImage className={classes.iconPaddingRight} />}
+                icon={<CircleImage className={classes.iconPaddingRight} />}
                 className={classes.btnMain}
                 label="Overview"
                 {...a11yProps(0)}
               />
-              <TabCustom className={classes.btnMain} label="Tokens " {...a11yProps(1)} />
-              <TabCustom className={classes.btnMain} label="Pairs" {...a11yProps(2)} />
-              <TabCustom className={classes.btnMain} label="Accounts" {...a11yProps(3)} />
-              <TabCustom className={classes.btnMain} label="Transactions" {...a11yProps(4)} />
+              <TabCustom
+                classes={{
+                  wrapper: classes.iconLabelWrapper,
+                  labelContainer: classes.labelContainer,
+                }}
+                icon={<CircleImage className={classes.iconPaddingRight} />}
+                className={classes.btnMain}
+                label="Tokens "
+                {...a11yProps(1)}
+              />
+              <TabCustom
+                classes={{
+                  wrapper: classes.iconLabelWrapper,
+                  labelContainer: classes.labelContainer,
+                }}
+                icon={<IconLink className={classes.iconPaddingRight} />}
+                className={classes.btnMain}
+                label="Pairs"
+                {...a11yProps(2)}
+              />
+              <TabCustom
+                classes={{
+                  wrapper: classes.iconLabelWrapper,
+                  labelContainer: classes.labelContainer,
+                }}
+                icon={<IconUser className={classes.iconPaddingRight} />}
+                className={classes.btnMain}
+                label="Accounts"
+                {...a11yProps(3)}
+              />
+              <TabCustom
+                classes={{
+                  wrapper: classes.iconLabelWrapper,
+                  labelContainer: classes.labelContainer,
+                }}
+                icon={<IconUser className={classes.iconPaddingRight} />}
+                className={classes.btnMain}
+                label="Transactions"
+                {...a11yProps(4)}
+              />
             </Tabs>
             <TabPanel value={indexTabMain} index={0}>
               <OverviewStatistics />
