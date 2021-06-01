@@ -466,8 +466,8 @@ export default function Header() {
                   Stats
                 </StyledExternalLink>
                 <SubMenu>
-                  <SubMenuItemExternalLink href={'/swap'}>Swap Stats</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={'https://www.lipsum.com/'}>Staking Stats</SubMenuItemExternalLink>
+                  <SubMenuItemNavLink to={'/stats'}>Swap Stats</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/staking'}>Staking Stats</SubMenuItemNavLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>
