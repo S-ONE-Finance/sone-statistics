@@ -138,9 +138,9 @@ function GlobalPage() {
               <CustomLink to={'/tokens'}>See All</CustomLink>
             </RowBetween>
           </ListOptions>
-          <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}>
-            <TopTokenList tokens={allTokens} />
-          </Panel>
+          {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}
+          <TopTokenList tokens={allTokens} />
+          {/* </Panel> */}
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap' }}>

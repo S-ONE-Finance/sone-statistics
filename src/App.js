@@ -17,9 +17,10 @@ import { useLatestBlocks } from './contexts/Application'
 import GoogleAnalyticsReporter from './components/analytics/GoogleAnalyticsReporter'
 import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
 import Footer from './components/Footer'
-import Polling from './components/Polling'
 import Header from './components/Header'
 import StakingStats from './pages/StakingStats'
+import Polling from './components/Polling'
+import OverStats from './pages/SwapStats/StatsPage'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -208,7 +209,11 @@ function App() {
                   <StakingStats />
                 </LayoutWrapper>
               </Route>
-
+              <Route path="/swap">
+                <LayoutWrapper>
+                  <OverStats />
+                </LayoutWrapper>
+              </Route>
               <Redirect to="/home" />
             </Switch>
           </BrowserRouter>

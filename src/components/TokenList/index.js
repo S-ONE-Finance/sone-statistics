@@ -14,27 +14,10 @@ import { useMedia } from 'react-use'
 import { withRouter } from 'react-router-dom'
 import { TOKEN_BLACKLIST } from '../../constants'
 import FormattedName from '../FormattedName'
-import { TYPE } from '../../theme'
-
+import { Pagination } from '@material-ui/lab'
+import { makeStyles } from '@material-ui/core/styles'
+import Panel from '../../components/Panel'
 dayjs.extend(utc)
-
-const PageButtons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 2em;
-  margin-bottom: 2em;
-`
-
-const Arrow = styled.div`
-  color: ${({ theme }) => theme.primary1};
-  opacity: ${(props) => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
-`
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
@@ -120,12 +103,30 @@ const SORT_FIELD = {
   CHANGE: 'priceChangeUSD',
 }
 
+const useStyles = makeStyles({
+  root: {
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    marginTop: 25,
+  },
+  outlined: {
+    border: '1px solid red',
+  },
+})
+
 // @TODO rework into virtualized list
 function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-
+  //styles
+  const classes = useStyles()
   // sorting
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.LIQ)
@@ -211,110 +212,129 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   }
 
   return (
-    <ListWrapper>
-      <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
-        <Flex alignItems="center" justifyContent="flexStart">
-          <ClickableText
-            color="text"
-            area="name"
-            fontWeight="500"
-            onClick={(e) => {
-              setSortedColumn(SORT_FIELD.NAME)
-              setSortDirection(sortedColumn !== SORT_FIELD.NAME ? true : !sortDirection)
-            }}
-          >
-            {below680 ? 'Symbol' : 'Name'} {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-        {!below680 && (
-          <Flex alignItems="center">
-            <ClickableText
-              area="symbol"
-              onClick={() => {
-                setSortedColumn(SORT_FIELD.SYMBOL)
-                setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
-              }}
-            >
-              Symbol {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
-            </ClickableText>
-          </Flex>
-        )}
+    <>
+      <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}>
+        <ListWrapper>
+          <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
+            <Flex alignItems="center" justifyContent="flexStart">
+              <ClickableText
+                color="text"
+                area="name"
+                fontWeight="500"
+                onClick={(e) => {
+                  setSortedColumn(SORT_FIELD.NAME)
+                  setSortDirection(sortedColumn !== SORT_FIELD.NAME ? true : !sortDirection)
+                }}
+              >
+                {below680 ? 'Symbol' : 'Name'} {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
+            {!below680 && (
+              <Flex alignItems="center">
+                <ClickableText
+                  area="symbol"
+                  onClick={() => {
+                    setSortedColumn(SORT_FIELD.SYMBOL)
+                    setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
+                  }}
+                >
+                  Symbol {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
+                </ClickableText>
+              </Flex>
+            )}
 
-        <Flex alignItems="center">
-          <ClickableText
-            area="liq"
-            onClick={(e) => {
-              setSortedColumn(SORT_FIELD.LIQ)
-              setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
-            }}
-          >
-            Liquidity {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-        <Flex alignItems="center">
-          <ClickableText
-            area="vol"
-            onClick={() => {
-              setSortedColumn(useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL)
-              setSortDirection(
-                sortedColumn !== (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? true : !sortDirection
-              )
-            }}
-          >
-            Volume (24hrs)
-            {sortedColumn === (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-        {!below1080 && (
-          <Flex alignItems="center">
-            <ClickableText
-              area="price"
-              onClick={(e) => {
-                setSortedColumn(SORT_FIELD.PRICE)
-                setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
-              }}
-            >
-              Price {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
-            </ClickableText>
-          </Flex>
-        )}
-        {!below1080 && (
-          <Flex alignItems="center">
-            <ClickableText
-              area="change"
-              onClick={(e) => {
-                setSortedColumn(SORT_FIELD.CHANGE)
-                setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)
-              }}
-            >
-              Price Change (24hrs)
-              {sortedColumn === SORT_FIELD.CHANGE ? (!sortDirection ? '↑' : '↓') : ''}
-            </ClickableText>
-          </Flex>
-        )}
-      </DashGrid>
-      <Divider />
-      <List p={0}>
-        {filteredList &&
-          filteredList.map((item, index) => {
-            return (
-              <div key={index}>
-                <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
-                <Divider />
-              </div>
-            )
-          })}
-      </List>
-      <PageButtons>
+            <Flex alignItems="center">
+              <ClickableText
+                area="liq"
+                onClick={(e) => {
+                  setSortedColumn(SORT_FIELD.LIQ)
+                  setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
+                }}
+              >
+                Liquidity {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
+            <Flex alignItems="center">
+              <ClickableText
+                area="vol"
+                onClick={() => {
+                  setSortedColumn(useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL)
+                  setSortDirection(
+                    sortedColumn !== (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? true : !sortDirection
+                  )
+                }}
+              >
+                Volume (24hrs)
+                {sortedColumn === (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
+            {!below1080 && (
+              <Flex alignItems="center">
+                <ClickableText
+                  area="price"
+                  onClick={(e) => {
+                    setSortedColumn(SORT_FIELD.PRICE)
+                    setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
+                  }}
+                >
+                  Price {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
+                </ClickableText>
+              </Flex>
+            )}
+            {!below1080 && (
+              <Flex alignItems="center">
+                <ClickableText
+                  area="change"
+                  onClick={(e) => {
+                    setSortedColumn(SORT_FIELD.CHANGE)
+                    setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)
+                  }}
+                >
+                  Price Change (24hrs)
+                  {sortedColumn === SORT_FIELD.CHANGE ? (!sortDirection ? '↑' : '↓') : ''}
+                </ClickableText>
+              </Flex>
+            )}
+          </DashGrid>
+          <Divider />
+          <List p={0}>
+            {filteredList &&
+              filteredList.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
+                    <Divider />
+                  </div>
+                )
+              })}
+          </List>
+          {/* <PageButtons>
         <div onClick={() => setPage(page === 1 ? page : page - 1)}>
           <Arrow faded={page === 1 ? true : false}>←</Arrow>
         </div>
+        <div onClick={() => setPage(page === 1 ? page : page - 1)}>{page + 1}</div>
         <TYPE.body>{'Page ' + page + ' of ' + maxPage}</TYPE.body>
         <div onClick={() => setPage(page === maxPage ? page : page + 1)}>
           <Arrow faded={page === maxPage ? true : false}>→</Arrow>
         </div>
-      </PageButtons>
-    </ListWrapper>
+      </PageButtons> */}
+        </ListWrapper>
+      </Panel>
+      <Pagination
+        style={{ justifyContent: 'center' }}
+        page={page}
+        onChange={(event, newPage) => {
+          setPage(newPage)
+        }}
+        count={maxPage}
+        variant="outlined"
+        shape="rounded"
+        classes={{
+          root: classes.root, // class name, e.g. `classes-nesting-root-x`
+          outlined: classes.outlined, // class name, e.g. `classes-nesting-label-x`
+        }}
+      />
+    </>
   )
 }
 

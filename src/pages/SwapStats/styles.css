@@ -1,0 +1,28 @@
+div.MuiTabs-flexContainer {
+  justify-content: space-between;
+}
+.PrivateTabIndicator-colorPrimary-8 {
+  display: none;
+}
+.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected {
+  /* color: #333333 !important; */
+}
+.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary {
+  /* color: #fff; */
+  font-size: 24px;
+  min-height: 56px;
+  padding-top: 6px;
+}
+
+.MuiPaginationItem-page.Mui-selected {
+  border: 1px solid #f05359 !important;
+  color: #f05359 !important;
+  background-color: transparent !important;
+}
+.MuiPaginationItem-page {
+  border: 1px solid #c4c4c4 !important;
+  color: #c4c4c4 !important;
+}
+.MuiPaginationItem-root {
+  color: #c4c4c4 !important;
+}
