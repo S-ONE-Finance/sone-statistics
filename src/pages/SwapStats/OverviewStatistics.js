@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Grid, makeStyles, Box, Typography } from '@material-ui/core'
 import CardItem from '../../components/CardItem'
 import styled, { ThemeContext } from 'styled-components'

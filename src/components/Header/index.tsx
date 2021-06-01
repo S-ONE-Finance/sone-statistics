@@ -466,7 +466,7 @@ export default function Header() {
                   Stats
                 </StyledExternalLink>
                 <SubMenu>
-                  <SubMenuItemNavLink to={'/stats'}>Swap Stats</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/swap'}>Swap Stats</SubMenuItemNavLink>
                   <SubMenuItemNavLink to={'/staking'}>Staking Stats</SubMenuItemNavLink>
                 </SubMenu>
               </MenuItem>
