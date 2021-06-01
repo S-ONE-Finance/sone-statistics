@@ -21,7 +21,7 @@ import Header from './components/Header'
 import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
-// import Sta
+
 const AppWrapper = styled.div`
   position: relative;
   width: 100%;
