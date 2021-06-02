@@ -39,7 +39,7 @@ function CardItem({ displayPreview, title, valueContainer, descriptionContainer,
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
   return (
-    <Grid item xs={12} sm={6} lg={4} className={classes.root}>
+    <Grid item className={classes.root}>
       <Paper
         elevation={2}
         style={{ background: theme.bg1Sone, color: '#767676', borderRadius: isUpToExtraSmall ? 20 : 25 }}

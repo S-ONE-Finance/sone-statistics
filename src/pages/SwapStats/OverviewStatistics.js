@@ -12,6 +12,8 @@ import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
 import { useAllTokenData } from '../../contexts/TokenData'
+import { useMedia } from 'react-use'
+import { AutoColumn } from '../../components/Column'
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +52,7 @@ const StyledGrid = styled(Grid)`
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     max-width: 400px;
+    width: 100%;
   `}
 `
 
@@ -80,79 +83,99 @@ function OverviewStatistics(props) {
   const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
 
+  // breakpoints
+  const below800 = useMedia('(max-width: 800px)')
+
   return (
-    <div className="box-main-content">
-      <StyledGrid container spacing={3} style={{ flexWrap: 'nowrap' }}>
-        <CardItem
-          title="ETH Price"
-          colorTextRatioValue="#F05359"
-          valueContainer={
-            <Box display="flex" alignItems="center">
-              <Typography
-                className={classes.cardValue}
-                style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
-              >
-                {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
-              </Typography>
-            </Box>
-          }
-          ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
-        />
-        <CardItem
-          title="No. Transactions (24h)"
-          colorTextRatioValue="#7AC51B"
-          valueContainer={
-            <Box display="flex" alignItems="center">
-              <Typography
-                className={classes.cardValue}
-                style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
-              >
-                {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
-              </Typography>
-            </Box>
-          }
-          ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
-        />
-        <CardItem
-          title="Pools"
-          colorTextRatioValue="#F05359 "
-          valueContainer={
-            <Box display="flex" alignItems="center">
-              <Typography
-                className={classes.cardValue}
-                style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
-              >
-                {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
-              </Typography>
-            </Box>
-          }
-          ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
-        />
-        <CardItem
-          title="Total Fees (24h)"
-          colorTextRatioValue="#7AC51B"
-          valueContainer={
-            <Box display="flex" alignItems="center">
-              <Typography
-                className={classes.cardValue}
-                style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
-              >
-                {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
-              </Typography>
-            </Box>
-          }
-          ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
-        />
+    <div className="box-main-content-overview">
+      <StyledGrid className="box-card-items" container spacing={3}>
+        <Grid item md={6} lg={3} className="card-item">
+          <CardItem
+            title="ETH Price"
+            colorTextRatioValue="#F05359"
+            valueContainer={
+              <Box display="flex" alignItems="center">
+                <Typography
+                  className={classes.cardValue}
+                  style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
+                >
+                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                </Typography>
+              </Box>
+            }
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+          />
+        </Grid>
+        <Grid item md={6} lg={3} className="card-item">
+          <CardItem
+            title="No. Transactions (24h)"
+            colorTextRatioValue="#7AC51B"
+            valueContainer={
+              <Box display="flex" alignItems="center">
+                <Typography
+                  className={classes.cardValue}
+                  style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
+                >
+                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                </Typography>
+              </Box>
+            }
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+          />
+        </Grid>
+        <Grid item md={12} lg={3} className="card-item">
+          <CardItem
+            title="Pools"
+            colorTextRatioValue="#F05359 "
+            valueContainer={
+              <Box display="flex" alignItems="center">
+                <Typography
+                  className={classes.cardValue}
+                  style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
+                >
+                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                </Typography>
+              </Box>
+            }
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+          />
+        </Grid>
+        <Grid item md={12} lg={3} className="card-item">
+          <CardItem
+            title="Total Fees (24h)"
+            colorTextRatioValue="#7AC51B"
+            valueContainer={
+              <Box display="flex" alignItems="center">
+                <Typography
+                  className={classes.cardValue}
+                  style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
+                >
+                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                </Typography>
+              </Box>
+            }
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+          />
+        </Grid>
       </StyledGrid>
       <div>
-        <GridRow>
-          <Panel style={{ height: '100%', minHeight: '300px' }}>
-            <GlobalChart display="liquidity" />
-          </Panel>
-          <Panel style={{ height: '100%' }}>
-            <GlobalChart display="volume" />
-          </Panel>
-        </GridRow>
+        {!below800 && (
+          <GridRow>
+            <Panel style={{ height: '100%', minHeight: '300px' }}>
+              <GlobalChart display="liquidity" />
+            </Panel>
+            <Panel style={{ height: '100%' }}>
+              <GlobalChart display="volume" />
+            </Panel>
+          </GridRow>
+        )}
+        {below800 && (
+          <AutoColumn style={{ marginTop: '6px' }} gap="24px">
+            <Panel style={{ height: '100%', minHeight: '300px' }}>
+              <GlobalChart display="liquidity" />
+            </Panel>
+          </AutoColumn>
+        )}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>

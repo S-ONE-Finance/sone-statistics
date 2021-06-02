@@ -81,10 +81,64 @@ div.MuiTabs-flexContainer {
   background-color: #22242a;
 }
 
-.sc-iELTvK.cIJBAB {
+.sc-iELTvK.cIJBAB,
+.sc-iELTvK.bmPFCO {
   z-index: 1;
 }
 .sc-dfVpRl.fFjblt,
-.sc-fMiknA.cnylqf.css-vurnku {
+.sc-fMiknA.cnylqf.css-vurnku,
+.sc-fMiknA.kJSEpH.css-vurnku {
   z-index: 0;
+}
+.box-main-content-overview .box-card-items {
+  flex-wrap: nowrap;
+}
+
+.box-search_left {
+  margin-left: auto;
+}
+
+@media (max-width: 576px) {
+  #root .box-first-main {
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    margin: auto;
+    width: 100%;
+  }
+  .box-main-content-overview .box-card-items {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .box-main-content-overview .box-card-items .card-item {
+    width: 100%;
+  }
+  .box-search_left {
+    margin: auto;
+    width: 100%;
+  }
+  #root .btn-tab-custom {
+    font-size: 16px;
+    min-width: 150px;
+    min-height: auto;
+  }
+  #root .panigation-table {
+    padding: 0;
+  }
+}
+@media (min-width: 576px) and (max-width: 800px) {
+  .box-main-content-overview .box-card-items {
+    flex-wrap: wrap;
+  }
+  #root .box-first-main {
+    width: 90%;
+    margin: auto;
+  }
+  #root .box-search_left {
+    margin-left: auto;
+  }
+  .box-main-content-overview .box-card-items .card-item {
+    width: 50%;
+  }
+  /*  */
 }

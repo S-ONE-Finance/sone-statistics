@@ -64,9 +64,7 @@ const DashGrid = styled.div`
   }
 `
 
-const ListWrapper = styled.div`
-  backgroundcolor: #fff;
-`
+const ListWrapper = styled.div``
 
 const ClickableText = styled(Text)`
   text-align: end;
@@ -331,6 +329,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
         count={maxPage}
         variant="outlined"
         shape="rounded"
+        className="panigation-table"
         classes={{
           root: classes.root, // class name, e.g. `classes-nesting-root-x`
         }}

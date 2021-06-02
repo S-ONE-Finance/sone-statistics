@@ -134,7 +134,7 @@ export const PageWrapper = styled.div`
 `
 
 export const ContentWrapper = styled.div`
-  display: grid;
+  display: block;
   justify-content: start;
   align-items: start;
   grid-template-columns: 1fr;
@@ -145,9 +145,12 @@ export const ContentWrapper = styled.div`
   padding: 0 2rem;
   box-sizing: border-box;
 
-  @media screen and (max-width: 1180px) {
+  @media (min-width: 576px) and (max-width: 1180px) {
     grid-template-columns: 1fr;
     padding: 0 1rem;
+  }
+  @media (max-width: 576px) {
+    padding: 0 15px;
   }
 `
 
