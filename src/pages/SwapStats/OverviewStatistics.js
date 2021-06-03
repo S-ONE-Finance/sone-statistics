@@ -158,13 +158,13 @@ function OverviewStatistics(props) {
           />
         </Grid>
       </StyledGrid>
-      <div>
+      <div className="box-chart">
         {!below800 && (
           <GridRow>
-            <Panel style={{ height: '100%', minHeight: '300px' }}>
+            <Panel style={{ height: '100%', minHeight: '300px', zIndex: 0 }}>
               <GlobalChart display="liquidity" />
             </Panel>
-            <Panel style={{ height: '100%' }}>
+            <Panel style={{ height: '100%', zIndex: 0 }}>
               <GlobalChart display="volume" />
             </Panel>
           </GridRow>

@@ -82,7 +82,7 @@ const TabCustom = withStyles((theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(4),
     justifyContent: 'space-between',
-    minWidth: 250,
+    minWidth: 220,
     marginBottom: 30,
     borderRadius: 30,
     marginTop: 35,
@@ -113,7 +113,7 @@ function StatsPage() {
 
   return (
     <>
-      <PageWrapper>
+      <PageWrapper className="stats-page">
         <ContentWrapper style={{ zIndex: 1 }}>
           <Grid container spacing={3} className="box-first-main">
             <Grid item lg={4} md={12} mb={0.5} px={2}>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect, useMemo, useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -135,6 +135,9 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   const below680 = useMedia('(max-width: 680px)')
   const below600 = useMedia('(max-width: 600px)')
 
+  // style theme 
+  const theme = useContext(ThemeContext)
+
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -213,7 +216,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
 
   return (
     <>
-      <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}>
+      <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ', zIndex: 1, backgroundColor: theme.bgTable }}>
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
             <Flex alignItems="center" justifyContent="flexStart">

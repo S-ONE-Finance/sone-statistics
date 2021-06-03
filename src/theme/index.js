@@ -118,7 +118,7 @@ const theme = (darkMode, color) => ({
   bg3Sone: darkMode ? '#3B5183' : '#FFFFFF',
   bg4Sone: darkMode ? '#111111' : '#F3F3F3',
   bg5Sone: '#DFDFDF',
-
+  bgTable: darkMode ? '#22242a' : '#FFFFFF',
   bgInputPanel: darkMode ? 'transparent' : '#F3F3F3',
 
   border1Sone: darkMode ? '#AAAAAA' : '#C9C9C9',
