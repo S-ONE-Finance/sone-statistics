@@ -82,7 +82,7 @@ function OverviewStatistics(props) {
   const isUpToExtraSmall = useIsUpToExtraSmall()
   const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
-
+ 
   // breakpoints
   const below800 = useMedia('(max-width: 800px)')
 

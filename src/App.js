@@ -21,6 +21,7 @@ import Header from './components/Header'
 import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
+import {useDarkModeManager} from './contexts/LocalStorage'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -84,12 +85,14 @@ const WarningBanner = styled.div`
  * Wrap the component with the header and sidebar pinned tab
  */
 const LayoutWrapper = ({ children }) => {
+  const [isDarkMode, toggleDarkMode] = useDarkModeManager();
+  console.log('isDarkMode', isDarkMode)
   return (
     <>
       <HeaderWrapper>
         <Header />
       </HeaderWrapper>
-      <Body id="center">{children}</Body>
+      <Body id="center" className={isDarkMode ? "dark-mode" : "light-mode"}>{children}</Body>
       <Polling />
       <FooterWrapper>
         <Footer />
@@ -104,7 +107,7 @@ function App() {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
   const [latestBlock, headBlock] = useLatestBlocks()
-
+  ;
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
 

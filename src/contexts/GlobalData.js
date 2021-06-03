@@ -50,6 +50,7 @@ function useGlobalDataContext() {
 }
 
 function reducer(state, { type, payload }) {
+  
   switch (type) {
     case UPDATE: {
       const { data } = payload
@@ -180,6 +181,7 @@ export default function Provider({ children }) {
       },
     })
   }, [])
+  console.log('state lobal data', );
   return (
     <GlobalDataContext.Provider
       value={useMemo(

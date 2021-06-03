@@ -216,7 +216,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
 
   return (
     <>
-      <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ', zIndex: 1, backgroundColor: theme.bgTable }}>
+      <Panel className="box-table-main" style={{ marginTop: '6px', padding: '1.125rem 0 ', zIndex: 1, backgroundColor: theme.bgTable }}>
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
             <Flex alignItems="center" justifyContent="flexStart">

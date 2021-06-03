@@ -18,7 +18,7 @@ import { useDarkModeManager } from '../../contexts/LocalStorage'
 
 const ChartWrapper = styled.div`
   height: 100%;
-  min-height: 300px;
+  min-height: 600px;
 
   @media screen and (max-width: 600px) {
     min-height: 200px;

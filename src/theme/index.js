@@ -8,8 +8,8 @@ import backgroundImageDark from '../assets/background-dark.svg'
 
 export default function ThemeProvider({ children }) {
   const [darkMode] = useDarkModeManager()
-
-  return <StyledComponentsThemeProvider theme={theme(darkMode)}>{children}</StyledComponentsThemeProvider>
+  // console.log('statusTheme----------', darkMode);
+  return <StyledComponentsThemeProvider statusTheme={darkMode}  theme={theme(darkMode)}>{children}</StyledComponentsThemeProvider>
 }
 
 export const MEDIA_WIDTHS = {
@@ -64,8 +64,8 @@ const theme = (darkMode, color) => ({
 
   //specialty colors
   modalBG: darkMode ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.6)',
-  advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)',
-  onlyLight: darkMode ? '#22242a' : 'transparent',
+  advancedBG: darkMode ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)',
+  onlyLight: darkMode ? '#0A1C29' : 'transparent',
   divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
   //primary colors
@@ -118,7 +118,7 @@ const theme = (darkMode, color) => ({
   bg3Sone: darkMode ? '#3B5183' : '#FFFFFF',
   bg4Sone: darkMode ? '#111111' : '#F3F3F3',
   bg5Sone: '#DFDFDF',
-  bgTable: darkMode ? '#22242a' : '#FFFFFF',
+  bgTable: darkMode ? '#0A1C29' : '#FFFFFF',
   bgInputPanel: darkMode ? 'transparent' : '#F3F3F3',
 
   border1Sone: darkMode ? '#AAAAAA' : '#C9C9C9',
