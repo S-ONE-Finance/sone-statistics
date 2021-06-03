@@ -4,6 +4,7 @@ import BoxSearch from '../../components/Search'
 import styled, { ThemeContext } from 'styled-components'
 import { PageWrapper, ContentWrapper } from '../../components'
 import OverviewStatistics from './OverviewStatistics'
+import TokensStatistics from './TokensStatistics'
 import './styles.css'
 import PhoneIcon from '@material-ui/icons/Phone'
 import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
@@ -192,7 +193,7 @@ function StatsPage() {
             <OverviewStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={1}>
-            Item Two
+            <TokensStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={2}>
             Item Three

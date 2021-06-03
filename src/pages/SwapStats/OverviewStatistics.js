@@ -93,6 +93,7 @@ function OverviewStatistics(props) {
           <CardItem
             title="ETH Price"
             colorTextRatioValue="#F05359"
+            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -110,6 +111,7 @@ function OverviewStatistics(props) {
           <CardItem
             title="No. Transactions (24h)"
             colorTextRatioValue="#7AC51B"
+            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -126,7 +128,8 @@ function OverviewStatistics(props) {
         <Grid item md={12} lg={3} className="card-item">
           <CardItem
             title="Pools"
-            colorTextRatioValue="#F05359 "
+            colorTextRatioValue="#F05359"
+            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -144,6 +147,7 @@ function OverviewStatistics(props) {
           <CardItem
             title="Total Fees (24h)"
             colorTextRatioValue="#7AC51B"
+            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography

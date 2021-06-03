@@ -39,6 +39,9 @@
   z-index: 0;
 }
 
+.stats-page .box-card-items .card-item>div>div>div {
+  padding: 16px 30px;
+}
 
 
 
