@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect, useMemo, useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -17,6 +17,7 @@ import FormattedName from '../FormattedName'
 import { Pagination } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import Panel from '../../components/Panel'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 dayjs.extend(utc)
 
 const List = styled(Box)`
@@ -64,9 +65,7 @@ const DashGrid = styled.div`
   }
 `
 
-const ListWrapper = styled.div`
-  backgroundcolor: #fff;
-`
+const ListWrapper = styled.div``
 
 const ClickableText = styled(Text)`
   text-align: end;
@@ -127,6 +126,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const [isDarkMode] = useDarkModeManager()
   //styles
   const classes = useStyles()
   // sorting
@@ -136,6 +136,9 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   const below1080 = useMedia('(max-width: 1080px)')
   const below680 = useMedia('(max-width: 680px)')
   const below600 = useMedia('(max-width: 600px)')
+
+  // style theme
+  const theme = useContext(ThemeContext)
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -215,7 +218,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
 
   return (
     <>
-      <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}>
+      <Panel className="box-table-main" style={{ marginTop: '6px', zIndex: 1, backgroundColor: theme.bgTable }}>
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
             <Flex alignItems="center" justifyContent="flexStart">
@@ -303,23 +306,25 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             {filteredList &&
               filteredList.map((item, index) => {
                 return (
-                  <div key={index}>
+                  // <div key={index} className={index % 2 && isDarkMode ? 'table-row-dark-mode' : 'table-row-light-mode'}>
+                  <div
+                    key={index}
+                    className={
+                      isDarkMode
+                        ? index % 2
+                          ? 'table-row'
+                          : 'table-row-dark-mode'
+                        : index % 2
+                        ? 'table-row'
+                        : 'table-row-light-mode'
+                    }
+                  >
                     <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
                     <Divider />
                   </div>
                 )
               })}
           </List>
-          {/* <PageButtons>
-        <div onClick={() => setPage(page === 1 ? page : page - 1)}>
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        <div onClick={() => setPage(page === 1 ? page : page - 1)}>{page + 1}</div>
-        <TYPE.body>{'Page ' + page + ' of ' + maxPage}</TYPE.body>
-        <div onClick={() => setPage(page === maxPage ? page : page + 1)}>
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons> */}
         </ListWrapper>
       </Panel>
       <Pagination
@@ -331,6 +336,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
         count={maxPage}
         variant="outlined"
         shape="rounded"
+        className="panigation-table"
         classes={{
           root: classes.root, // class name, e.g. `classes-nesting-root-x`
         }}
