@@ -3,7 +3,7 @@ import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { useAllTokenData } from '../../contexts/TokenData'
 
 const ListOptions = styled(AutoRow)`

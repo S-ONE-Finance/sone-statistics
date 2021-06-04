@@ -85,7 +85,7 @@ const WarningBanner = styled.div`
  * Wrap the component with the header and sidebar pinned tab
  */
 const LayoutWrapper = ({ children }) => {
-  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
+  const [isDarkMode] = useDarkModeManager()
   return (
     <>
       <HeaderWrapper>

@@ -126,7 +126,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
+  const [isDarkMode] = useDarkModeManager()
   //styles
   const classes = useStyles()
   // sorting

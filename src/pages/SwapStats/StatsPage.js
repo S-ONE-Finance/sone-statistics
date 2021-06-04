@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { Grid, makeStyles, Box, Tab, Tabs, withStyles, AppBar } from '@material-ui/core'
+import { Grid, makeStyles, Box, Tab, Tabs, withStyles } from '@material-ui/core'
 import BoxSearch from '../../components/Search'
 import styled, { ThemeContext } from 'styled-components'
 import { PageWrapper, ContentWrapper } from '../../components'
 import OverviewStatistics from './OverviewStatistics'
 import TokensStatistics from './TokensStatistics'
 import './styles.css'
-import PhoneIcon from '@material-ui/icons/Phone'
 import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
 import { ReactComponent as IconLink } from '../../assets/link.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
@@ -108,7 +107,7 @@ const TabCustom = withStyles((theme) => ({
 function StatsPage() {
   const classes = customStyleTabbar()
   const [indexTabMain, setIndexTabMain] = useState(0)
-  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
+  const [isDarkMode] = useDarkModeManager()
   const handleChange = (event, newValue) => {
     setIndexTabMain(newValue)
   }

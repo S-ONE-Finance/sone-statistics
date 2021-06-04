@@ -83,7 +83,7 @@ function OverviewStatistics(props) {
   const isUpToExtraSmall = useIsUpToExtraSmall()
   const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
-  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
+  const [isDarkMode] = useDarkModeManager()
   // breakpoints
   const below800 = useMedia('(max-width: 800px)')
 
