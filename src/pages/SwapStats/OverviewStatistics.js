@@ -14,6 +14,7 @@ import TopTokenList from '../../components/TokenList'
 import { useAllTokenData } from '../../contexts/TokenData'
 import { useMedia } from 'react-use'
 import { AutoColumn } from '../../components/Column'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +83,7 @@ function OverviewStatistics(props) {
   const isUpToExtraSmall = useIsUpToExtraSmall()
   const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
- 
+  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
   // breakpoints
   const below800 = useMedia('(max-width: 800px)')
 
@@ -165,17 +166,43 @@ function OverviewStatistics(props) {
       <div className="box-chart">
         {!below800 && (
           <GridRow>
-            <Panel style={{ height: '100%', minHeight: '300px', zIndex: 0 }}>
+            <Panel
+              style={{
+                height: '100%',
+                minHeight: '300px',
+                zIndex: 0,
+                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
+                border: 0,
+                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+              }}
+            >
               <GlobalChart display="liquidity" />
             </Panel>
-            <Panel style={{ height: '100%', zIndex: 0 }}>
+            <Panel
+              style={{
+                height: '100%',
+                zIndex: 0,
+                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
+                border: 0,
+                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+              }}
+            >
               <GlobalChart display="volume" />
             </Panel>
           </GridRow>
         )}
         {below800 && (
           <AutoColumn style={{ marginTop: '6px' }} gap="24px">
-            <Panel style={{ height: '100%', minHeight: '300px' }}>
+            <Panel
+              style={{
+                height: '100%',
+                minHeight: '300px',
+                zIndex: 0,
+                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
+                border: 0,
+                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+              }}
+            >
               <GlobalChart display="liquidity" />
             </Panel>
           </AutoColumn>
@@ -187,7 +214,9 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Tokens
             </TYPE.main>
-            <CustomLink to={'/tokens'}>See more</CustomLink>
+            <CustomLink className="btnLink" to={'/tokens'}>
+              See more
+            </CustomLink>
           </RowBetween>
         </ListOptions>
         {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
@@ -200,7 +229,9 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Pairs
             </TYPE.main>
-            <CustomLink to={'/tokens'}>See more</CustomLink>
+            <CustomLink className="btnLink" to={'/tokens'}>
+              See more
+            </CustomLink>
           </RowBetween>
         </ListOptions>
         {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
@@ -213,7 +244,9 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Accounts
             </TYPE.main>
-            <CustomLink to={'/tokens'}>See more</CustomLink>
+            <CustomLink className="btnLink" to={'/tokens'}>
+              See more
+            </CustomLink>
           </RowBetween>
         </ListOptions>
         {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
@@ -226,7 +259,9 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Transactions
             </TYPE.main>
-            <CustomLink to={'/tokens'}>See more</CustomLink>
+            <CustomLink className="btnLink" to={'/tokens'}>
+              See more
+            </CustomLink>
           </RowBetween>
         </ListOptions>
         {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}

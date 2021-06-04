@@ -9,7 +9,11 @@ import backgroundImageDark from '../assets/background-dark.svg'
 export default function ThemeProvider({ children }) {
   const [darkMode] = useDarkModeManager()
   // console.log('statusTheme----------', darkMode);
-  return <StyledComponentsThemeProvider statusTheme={darkMode}  theme={theme(darkMode)}>{children}</StyledComponentsThemeProvider>
+  return (
+    <StyledComponentsThemeProvider statusTheme={darkMode} theme={theme(darkMode)}>
+      {children}
+    </StyledComponentsThemeProvider>
+  )
 }
 
 export const MEDIA_WIDTHS = {
@@ -92,7 +96,7 @@ const theme = (darkMode, color) => ({
   yellow2: '#F3841E',
   link: '#2172E5',
   blue: '2f80ed',
-  gray: '#F3F3F3',
+  // gray: darkMode ? '#0E2B4A' : '#F3F3F3',
 
   background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #ff007a30 0%, #fff 0%)`,
   bgImage: darkMode ? backgroundImageDark : backgroundImage,
@@ -118,7 +122,7 @@ const theme = (darkMode, color) => ({
   bg3Sone: darkMode ? '#3B5183' : '#FFFFFF',
   bg4Sone: darkMode ? '#111111' : '#F3F3F3',
   bg5Sone: '#DFDFDF',
-  bgTable: darkMode ? '#0A1C29' : '#FFFFFF',
+  bgTable: darkMode ? '#0E2B4A' : '#FFFFFF',
   bgInputPanel: darkMode ? 'transparent' : '#F3F3F3',
 
   border1Sone: darkMode ? '#AAAAAA' : '#C9C9C9',
@@ -128,6 +132,8 @@ const theme = (darkMode, color) => ({
   divider1Sone: darkMode ? '#AAAAAA' : 'rgba(0, 0, 0, 0.25)',
   scrollbarThumb: darkMode ? '#3B5183' : '#808080',
   closeIcon: darkMode ? '#AAAAAA' : '#000000',
+
+  colorModeButton: darkMode ? '#AAAAAA' : '#333333',
 
   // Tab
   tabBg: darkMode ? '#3B5183' : '#F3F3F3',

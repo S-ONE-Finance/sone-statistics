@@ -17,6 +17,7 @@ import FormattedName from '../FormattedName'
 import { Pagination } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import Panel from '../../components/Panel'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 dayjs.extend(utc)
 
 const List = styled(Box)`
@@ -125,6 +126,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
   //styles
   const classes = useStyles()
   // sorting
@@ -135,7 +137,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   const below680 = useMedia('(max-width: 680px)')
   const below600 = useMedia('(max-width: 600px)')
 
-  // style theme 
+  // style theme
   const theme = useContext(ThemeContext)
 
   useEffect(() => {
@@ -216,7 +218,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
 
   return (
     <>
-      <Panel className="box-table-main" style={{ marginTop: '6px', padding: '1.125rem 0 ', zIndex: 1, backgroundColor: theme.bgTable }}>
+      <Panel className="box-table-main" style={{ marginTop: '6px', zIndex: 1, backgroundColor: theme.bgTable }}>
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
             <Flex alignItems="center" justifyContent="flexStart">
@@ -304,23 +306,25 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             {filteredList &&
               filteredList.map((item, index) => {
                 return (
-                  <div key={index}>
+                  // <div key={index} className={index % 2 && isDarkMode ? 'table-row-dark-mode' : 'table-row-light-mode'}>
+                  <div
+                    key={index}
+                    className={
+                      isDarkMode
+                        ? index % 2
+                          ? 'table-row'
+                          : 'table-row-dark-mode'
+                        : index % 2
+                        ? 'table-row'
+                        : 'table-row-light-mode'
+                    }
+                  >
                     <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
                     <Divider />
                   </div>
                 )
               })}
           </List>
-          {/* <PageButtons>
-        <div onClick={() => setPage(page === 1 ? page : page - 1)}>
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        <div onClick={() => setPage(page === 1 ? page : page - 1)}>{page + 1}</div>
-        <TYPE.body>{'Page ' + page + ' of ' + maxPage}</TYPE.body>
-        <div onClick={() => setPage(page === maxPage ? page : page + 1)}>
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons> */}
         </ListWrapper>
       </Panel>
       <Pagination

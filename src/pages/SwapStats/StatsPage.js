@@ -10,6 +10,7 @@ import PhoneIcon from '@material-ui/icons/Phone'
 import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
 import { ReactComponent as IconLink } from '../../assets/link.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -88,7 +89,7 @@ const TabCustom = withStyles((theme) => ({
     borderRadius: 30,
     marginTop: 35,
     backgroundColor: useContext(ThemeContext).gray,
-    color: '#000',
+    color: useContext(ThemeContext).colorModeButton,
     '&:hover': {
       color: '',
       opacity: 1,
@@ -107,7 +108,7 @@ const TabCustom = withStyles((theme) => ({
 function StatsPage() {
   const classes = customStyleTabbar()
   const [indexTabMain, setIndexTabMain] = useState(0)
-
+  const [isDarkMode, toggleDarkMode] = useDarkModeManager()
   const handleChange = (event, newValue) => {
     setIndexTabMain(newValue)
   }
@@ -141,8 +142,9 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<CircleImage className={classes.iconPaddingRight} />}
-                  className={classes.btnMain + ` btn-tab-custom`}
+                  icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  // className={classes.btnMain + ` btn-tab-custom`}
+                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Overview"
                   {...a11yProps(0)}
                 />
@@ -151,8 +153,8 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<CircleImage className={classes.iconPaddingRight} />}
-                  className={classes.btnMain + ` btn-tab-custom`}
+                  icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Tokens "
                   {...a11yProps(1)}
                 />
@@ -161,8 +163,8 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconLink className={classes.iconPaddingRight} />}
-                  className={classes.btnMain + ` btn-tab-custom`}
+                  icon={<IconLink className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Pairs"
                   {...a11yProps(2)}
                 />
@@ -171,8 +173,8 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconUser className={classes.iconPaddingRight} />}
-                  className={classes.btnMain + ` btn-tab-custom`}
+                  icon={<IconUser className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Accounts"
                   {...a11yProps(3)}
                 />
@@ -181,8 +183,8 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconUser className={classes.iconPaddingRight} />}
-                  className={classes.btnMain + ` btn-tab-custom`}
+                  icon={<IconUser className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Transactions"
                   {...a11yProps(4)}
                 />

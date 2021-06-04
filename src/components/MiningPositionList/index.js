@@ -215,7 +215,7 @@ function MiningPositionList({ miningPositions }) {
       .slice(ITEMS_PER_PAGE * (page - 1), page * ITEMS_PER_PAGE)
       .map((miningPosition, index) => {
         return (
-          <div key={index}>
+          <div key={index} className={index % 2 ? 'tableRowDarkMode' : 'tableRowLightMode'}>
             <ListItem key={index} index={(page - 1) * ITEMS_PER_PAGE + index + 1} miningPosition={miningPosition} />
             <Divider />
           </div>
