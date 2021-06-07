@@ -60,7 +60,7 @@ const DashGrid = styled.div`
   @media screen and (min-width: 1080px) {
     display: grid;
     grid-gap: 0.5em;
-    grid-template-columns: 1.5fr 0.6fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 0.6fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 'name symbol liq vol price change';
   }
 `
@@ -200,18 +200,18 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           </Row>
         </DataText>
         {!below680 && (
-          <DataText area="symbol" color="text" fontWeight="500">
+          <DataText area="symbol" color="text" fontWeight="500" className="justify-content-center">
             <FormattedName text={item.symbol} maxCharacters={5} />
           </DataText>
         )}
-        <DataText area="liq">{formattedNum(item.totalLiquidityUSD, true)}</DataText>
-        <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText>
+        <DataText area="liq" className="justify-content-center">{formattedNum(item.totalLiquidityUSD, true)}</DataText>
+        <DataText area="vol" className="justify-content-center">{formattedNum(item.oneDayVolumeUSD, true)}</DataText>
         {!below1080 && (
-          <DataText area="price" color="text" fontWeight="500">
+          <DataText area="price" color="text" fontWeight="500" className="justify-content-center">
             {formattedNum(item.priceUSD, true)}
           </DataText>
         )}
-        {!below1080 && <DataText area="change">{formattedPercent(item.priceChangeUSD)}</DataText>}
+        {!below1080 && <DataText area="change" className="justify-content-center">{formattedPercent(item.priceChangeUSD)}</DataText>}
       </DashGrid>
     )
   }
@@ -220,7 +220,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
     <>
       <Panel className="box-table-main" style={{ marginTop: '6px', zIndex: 1, backgroundColor: theme.bgTable }}>
         <ListWrapper>
-          <DashGrid center={true} style={{ height: 'fit-content', padding: '0 1.125rem 1rem 1.125rem' }}>
+          <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem 1.125rem 1rem 1.125rem' }}>
             <Flex alignItems="center" justifyContent="flexStart">
               <ClickableText
                 color="text"
