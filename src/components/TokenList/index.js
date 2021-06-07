@@ -315,8 +315,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
                           ? 'table-row'
                           : 'table-row-dark-mode'
                         : index % 2
-                        ? 'table-row'
-                        : 'table-row-light-mode'
+                          ? 'table-row'
+                          : 'table-row-light-mode'
                     }
                   >
                     <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />

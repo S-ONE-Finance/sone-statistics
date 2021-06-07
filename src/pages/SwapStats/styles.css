@@ -1,3 +1,8 @@
+.light-mode {
+  background: linear-gradient(30.5deg, #FCF0F0 8.77%, #FFFFFF 32.67%), #FFFFFF;
+  /* position: relative; */
+}
+
 .stats-page {
   position: relative;
   padding-bottom: 10%;
@@ -7,7 +12,7 @@
   justify-content: center;
 }
 
-.light-mode .stats-page::after {
+.light-mode::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -21,7 +26,7 @@
   z-index: 0;
 }
 
-.light-mode .stats-page::before {
+/* .light-mode::before {
   content: '';
   position: absolute;
   width: 100%;
@@ -33,9 +38,9 @@
   background-position: bottom;
   margin: auto;
   z-index: 0;
-}
+} */
 
-.dark-mode .stats-page::after {
+/* .dark-mode .stats-page::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -47,9 +52,9 @@
   background-position: center;
   margin: auto;
   z-index: 0;
-}
+} */
 
-.dark-mode .stats-page::before {
+.dark-mode::before {
   content: '';
   position: absolute;
   width: 100%;
@@ -83,11 +88,11 @@
   border-radius: 15px;
 }
 
-.stats-page .table-row-dark-mode {
+.table-row-dark-mode {
   background-color: #0a1c29;
 }
 
-.stats-page .table-row-light-mode {
+.table-row-light-mode {
   background-color: #f2f2f2;
 }
 
@@ -212,6 +217,16 @@ div.MuiTabs-flexContainer {
   color: #3faab0;
 }
 
+.isBgTableDark {
+  background-color: #0E2B4A;
+  box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+}
+
+.isBgTableLight {
+  background-color: #fff;
+  box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+}
+
 @media (max-width: 576px) {
   .stats-page .box-first-main {
     justify-content: flex-start;
@@ -295,5 +310,10 @@ div.MuiTabs-flexContainer {
   .stats-page .btn-tab-custom {
     width: calc(100% / 5 - 26px);
     min-width: auto;
+  }
+
+  .column-token {
+    grid-template-rows: initial;
+    gap: 20px;
   }
 }

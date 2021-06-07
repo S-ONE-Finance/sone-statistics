@@ -35,7 +35,7 @@ import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
 import QuestionHelper from '../components/QuestionHelper'
 import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
-
+import { useDarkModeManager } from '../contexts/LocalStorage'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -116,7 +116,7 @@ function TokenPage({ address, history }) {
     oneDayTxns,
     txnChange,
   } = useTokenData(address)
-
+  const [isDarkMode] = useDarkModeManager()
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
   }, [])
@@ -284,7 +284,7 @@ function TokenPage({ address, history }) {
                   )}
                 </RowFixed>
               )}
-              <PanelWrapper style={{ marginTop: below1080 ? '0' : '1rem' }}>
+              <PanelWrapper className="column-token" style={{ marginTop: below1080 ? '0' : '1rem' }}>
                 {below1080 && price && (
                   <Panel>
                     <AutoColumn gap="20px">
@@ -302,8 +302,8 @@ function TokenPage({ address, history }) {
                     </AutoColumn>
                   </Panel>
                 )}
-                <Panel>
-                  <AutoColumn gap="20px">
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                  <AutoColumn gap="20px" >
                     <RowBetween>
                       <TYPE.main>Total Liquidity</TYPE.main>
                       <div />
@@ -316,7 +316,7 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Volume (24hrs)</TYPE.main>
@@ -331,7 +331,7 @@ function TokenPage({ address, history }) {
                   </AutoColumn>
                 </Panel>
 
-                <Panel>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Transactions (24hrs)</TYPE.main>
@@ -349,6 +349,9 @@ function TokenPage({ address, history }) {
                   style={{
                     gridColumn: below1080 ? '1' : '2/4',
                     gridRow: below1080 ? '' : '1/4',
+                    backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
+                    border: 0,
+                    boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)'
                   }}
                 >
                   <TokenChart address={address} color={backgroundColor} base={priceUSD} />
@@ -371,7 +374,9 @@ function TokenPage({ address, history }) {
               rounded
               style={{
                 marginTop: '1.5rem',
-                padding: '1.125rem 0 ',
+                padding: '0 ',
+                backgroundColor: 'transparent',
+                border: 0,
               }}
             >
               {address && fetchedPairsList ? (
