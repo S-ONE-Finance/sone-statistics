@@ -3,6 +3,10 @@
   padding-bottom: 10%;
 }
 
+.justify-content-center {
+  justify-content: center;
+}
+
 .light-mode .stats-page::after {
   content: '';
   position: absolute;
@@ -67,7 +71,7 @@
   z-index: 0;
 }
 
-.stats-page .box-card-items .card-item > div > div > div {
+.stats-page .box-card-items .card-item>div>div>div {
   padding: 16px 30px;
 }
 
@@ -78,12 +82,25 @@
   box-shadow: 0px 8px 17px rgb(0 0 0 / 18%);
   border-radius: 15px;
 }
+
 .stats-page .table-row-dark-mode {
   background-color: #0a1c29;
 }
+
 .stats-page .table-row-light-mode {
   background-color: #f2f2f2;
 }
+
+.stats-page .box-table-main {
+  padding: 0px;
+}
+
+.stats-page .box-table-main>div>div>div {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .makeStyles-root-1 {
   z-index: 10;
 }
@@ -121,6 +138,7 @@ div.MuiTabs-flexContainer {
 .MuiPaginationItem-root {
   color: #c4c4c4 !important;
 }
+
 .MuiButtonBase-root.MuiTab-root svg {
   padding-right: 7px;
   margin-bottom: 0px !important;
@@ -129,6 +147,7 @@ div.MuiTabs-flexContainer {
 .MuiButtonBase-root.MuiTab-root .iconLightMode {
   filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1%) contrast(60%);
 }
+
 .MuiButtonBase-root.MuiTab-root .iconDarkMode {
   filter: invert(115%) sepia(107%) saturate(109%) hue-rotate(249deg) brightness(226%) contrast(13%);
 }
@@ -180,12 +199,15 @@ div.MuiTabs-flexContainer {
 .stats-page .btn-tab-custom.btn-light-mode {
   background-color: #f3f3f3;
 }
+
 .stats-page .btn-tab-custom.btn-light-mode span {
   color: #000;
 }
+
 .stats-page .btn-tab-custom.Mui-selected.btn-light-mode span {
   color: #fff;
 }
+
 .stats-page .btnLink {
   color: #3faab0;
 }
