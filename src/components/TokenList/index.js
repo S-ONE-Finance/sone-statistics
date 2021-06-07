@@ -60,7 +60,7 @@ const DashGrid = styled.div`
   @media screen and (min-width: 1080px) {
     display: grid;
     grid-gap: 0.5em;
-    grid-template-columns: 1.5fr 0.6fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 0.6fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 'name symbol liq vol price change';
   }
 `
