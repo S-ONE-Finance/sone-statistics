@@ -218,14 +218,15 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
 
   return (
     <>
-      <Panel className="box-table-main" style={{ marginTop: '6px', zIndex: 1, backgroundColor: theme.bgTable }}>
+      <Panel className="box-table-main" style={{ marginTop: '6px', zIndex: 1, backgroundColor: theme.bgTable, border: 0, padding: 0 }}>
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem 1.125rem 1rem 1.125rem' }}>
-            <Flex alignItems="center" justifyContent="flexStart">
+            <Flex alignItems="center" className="justify-content-center w-100 text-center">
               <ClickableText
                 color="text"
                 area="name"
                 fontWeight="500"
+
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.NAME)
                   setSortDirection(sortedColumn !== SORT_FIELD.NAME ? true : !sortDirection)
@@ -238,6 +239,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="symbol"
+                  className="justify-content-center w-100 text-center"
                   onClick={() => {
                     setSortedColumn(SORT_FIELD.SYMBOL)
                     setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
@@ -251,6 +253,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             <Flex alignItems="center">
               <ClickableText
                 area="liq"
+                className="justify-content-center w-100 text-center"
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.LIQ)
                   setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
@@ -262,6 +265,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             <Flex alignItems="center">
               <ClickableText
                 area="vol"
+                className="justify-content-center w-100 text-center"
                 onClick={() => {
                   setSortedColumn(useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL)
                   setSortDirection(
@@ -277,6 +281,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="price"
+                  className="justify-content-center w-100 text-center"
                   onClick={(e) => {
                     setSortedColumn(SORT_FIELD.PRICE)
                     setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
@@ -290,6 +295,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="change"
+                  className="justify-content-center w-100 text-center"
                   onClick={(e) => {
                     setSortedColumn(SORT_FIELD.CHANGE)
                     setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)

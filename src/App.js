@@ -95,7 +95,7 @@ const LayoutWrapper = ({ children }) => {
         {children}
       </Body>
       <Polling />
-      <FooterWrapper>
+      <FooterWrapper style={{ zIndex: 9999 }}>
         <Footer />
       </FooterWrapper>
     </>
@@ -122,9 +122,9 @@ function App() {
           </WarningWrapper>
         )}
         {globalData &&
-        Object.keys(globalData).length > 0 &&
-        globalChartData &&
-        Object.keys(globalChartData).length > 0 ? (
+          Object.keys(globalData).length > 0 &&
+          globalChartData &&
+          Object.keys(globalChartData).length > 0 ? (
           <BrowserRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>

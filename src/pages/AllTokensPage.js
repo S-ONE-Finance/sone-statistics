@@ -27,14 +27,14 @@ function AllTokensPage() {
     <PageWrapper>
       <FullWrapper>
         <RowBetween>
-          <TYPE.largeHeader>Top Tokens</TYPE.largeHeader>
+          <TYPE.largeHeader fontSize={'2.125rem'}>Top Tokens</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
         </RowBetween>
         {/* <AutoRow gap="4px">
           <CheckBox checked={useTracked} setChecked={() => setUseTracked(!useTracked)} text={'Hide untracked tokens'} />
           <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
         </AutoRow> */}
-        <Panel style={{ marginTop: '6px', padding: below600 && '1rem 0 0 0 ' }}>
+        <Panel style={{ marginTop: '6px', padding: below600 && '1rem 0 0 0 ', backgroundColor: 'transparent', border: 0, padding: 0 }}>
           <TopTokenList tokens={allTokens} itemMax={50} />
         </Panel>
       </FullWrapper>

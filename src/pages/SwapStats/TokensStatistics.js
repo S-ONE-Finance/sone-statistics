@@ -27,7 +27,7 @@ function TokensStatistics({ ...props }) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Tokens
             </TYPE.main>
-            <CustomLink to={'/tokens'}>See more</CustomLink>
+            <CustomLink style={{ color: "#3FAAB0" }} to={'/tokens'}>See more</CustomLink>
           </RowBetween>
         </ListOptions>
         {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}

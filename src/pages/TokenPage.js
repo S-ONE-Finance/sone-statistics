@@ -38,7 +38,7 @@ import { shortenAddress } from '../utils'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 // import Button from '@material-ui/core/Button';
 import { useCopyClipboard } from '../hooks'
-
+import { CustomLink } from '../components/Link'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -339,7 +339,7 @@ function TokenPage({ address, history }) {
                 <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>Transactions (24hrs)</TYPE.main>
+                      <TYPE.main >Transactions (24hrs)</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -365,14 +365,10 @@ function TokenPage({ address, history }) {
             </>
 
             <RowBetween style={{ marginTop: '3rem' }}>
-              <TYPE.main fontSize={'1.125rem'}>Top Pairs</TYPE.main>
+              <TYPE.main fontSize={'2.125rem'}>Top Pairs</TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
-                <Checkbox
-                  checked={useTracked}
-                  setChecked={() => setUseTracked(!useTracked)}
-                  text={'Hide untracked pairs'}
-                />
-                <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
+                <CustomLink style={{ color: "#3FAAB0" }} to={'/tokens'}>See more</CustomLink>
+                {/* <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." /> */}
               </AutoRow>
             </RowBetween>
             <Panel
@@ -393,7 +389,7 @@ function TokenPage({ address, history }) {
               )}
             </Panel>
             <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
-              <TYPE.main fontSize={'1.125rem'}>Transactions</TYPE.main> <div />
+              <TYPE.main fontSize={'2.125rem'}>Transactions</TYPE.main> <div />
             </RowBetween>
             <Panel className="box-shadow-none" rounded style={{ backgroundColor: 'transparent', border: 0, padding: 0 }}>
               {transactions ? <TxnList color={backgroundColor} transactions={transactions} /> : <Loader />}
@@ -412,20 +408,20 @@ function TokenPage({ address, history }) {
                 <TokenDetailsLayout>
                   <Column>
                     <TYPE.main style={{ fontWeight: "bold" }}>Symbol</TYPE.main>
-                    <Text style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
-                      <FormattedName text={symbol} maxCharacters={12} />
+                    <Text fontSize={'1.125rem'} style={{ marginTop: '.5rem' }} fontWeight="500" >
+                      <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676" }} text={symbol} maxCharacters={12} />
                     </Text>
                   </Column>
                   <Column>
                     <TYPE.main style={{ fontWeight: "bold" }}>Name</TYPE.main>
-                    <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
-                      <FormattedName text={name} maxCharacters={16} />
+                    <TYPE.main style={{ marginTop: '.5rem' }} fontSize={'1.125rem'} fontWeight="500">
+                      <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676" }} text={name} maxCharacters={16} />
                     </TYPE.main>
                   </Column>
                   <Column>
                     <TYPE.main style={{ fontWeight: "bold" }}>Address</TYPE.main>
                     <AutoRow align="flex-end">
-                      <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
+                      <TYPE.main style={{ marginTop: '.5rem' }} fontSize={'1.125rem'} fontWeight="500" style={{ color: isDarkMode ? "#AAAAAA" : "#767676" }}>
                         {address.slice(0, 8) + '...' + address.slice(36, 42)}
                       </TYPE.main>
                     </AutoRow>
