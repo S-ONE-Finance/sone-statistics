@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Tooltip } from '../QuestionHelper'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 
 const TextWrapper = styled.div`
   position: relative;
@@ -19,7 +20,7 @@ const TextWrapper = styled.div`
 
 const FormattedName = ({ text, maxCharacters, margin = false, adjustSize = false, fontSize, link, ...rest }) => {
   const [showHover, setShowHover] = useState(false)
-
+  const [isDarkMode] = useDarkModeManager();
   if (!text) {
     return ''
   }
@@ -35,6 +36,7 @@ const FormattedName = ({ text, maxCharacters, margin = false, adjustSize = false
           link={link}
           fontSize={fontSize}
           {...rest}
+
         >
           {' ' + text.slice(0, maxCharacters - 1) + '...'}
         </TextWrapper>

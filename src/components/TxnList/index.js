@@ -16,6 +16,8 @@ import DropdownSelect from '../DropdownSelect'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { Pagination } from '@material-ui/lab'
 
 dayjs.extend(utc)
 
@@ -172,7 +174,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.TIMESTAMP)
   const [filteredItems, setFilteredItems] = useState()
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
-
+  const [isDarkMode] = useDarkModeManager();
   const [currency] = useCurrentCurrency()
 
   useEffect(() => {
@@ -283,161 +285,185 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     return (
       <DashGrid style={{ height: '48px' }}>
         <DataText area="txn" fontWeight="500">
-          <Link color={color} external href={urls.showTransaction(item.hash)}>
+          <Link color="#3FAAB0" external href={urls.showTransaction(item.hash)}>
             {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
           </Link>
         </DataText>
-        <DataText area="value">
+        <DataText area="value" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>
           {currency === 'ETH' ? 'Ξ ' + formattedNum(item.valueETH) : formattedNum(item.amountUSD, true)}
         </DataText>
         {!below780 && (
           <>
-            <DataText area="amountOther">
+            <DataText area="amountOther" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>
               {formattedNum(item.token1Amount) + ' '}{' '}
-              <FormattedName text={item.token1Symbol} maxCharacters={5} margin={true} />
+              <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }} text={item.token1Symbol} maxCharacters={5} margin={true} />
             </DataText>
-            <DataText area="amountToken">
+            <DataText area="amountToken" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>
               {formattedNum(item.token0Amount) + ' '}{' '}
-              <FormattedName text={item.token0Symbol} maxCharacters={5} margin={true} />
+              <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }} text={item.token0Symbol} maxCharacters={5} margin={true} />
             </DataText>
           </>
         )}
         {!below1080 && (
-          <DataText area="account">
-            <Link color={color} external href={'https://etherscan.io/address/' + item.account}>
+          <DataText area="account" style={{ justifyContent: 'center' }}>
+            <Link color="#3FAAB0" external href={'https://etherscan.io/address/' + item.account}>
               {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
             </Link>
           </DataText>
         )}
-        <DataText area="time">{formatTime(item.timestamp)}</DataText>
+        <DataText area="time" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>{formatTime(item.timestamp)}</DataText>
       </DashGrid>
     )
   }
 
   return (
     <>
-      <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0' }}>
-        {below780 ? (
-          <RowBetween area="txn">
-            <DropdownSelect options={TXN_TYPE} active={txFilter} setActive={setTxFilter} color={color} />
-          </RowBetween>
-        ) : (
-          <RowFixed area="txn" gap="10px" pl={4}>
-            <SortText
-              onClick={() => {
-                setTxFilter(TXN_TYPE.ALL)
-              }}
-              active={txFilter === TXN_TYPE.ALL}
-            >
-              All
+      <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15 }}>
+        <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
+          {below780 ? (
+            <RowBetween area="txn">
+              <DropdownSelect options={TXN_TYPE} active={txFilter} setActive={setTxFilter} color={color} />
+            </RowBetween>
+          ) : (
+            <RowFixed area="txn" gap="10px" pl={4}>
+              <SortText
+                onClick={() => {
+                  setTxFilter(TXN_TYPE.ALL)
+                }}
+                active={txFilter === TXN_TYPE.ALL}
+                style={{ fontWeight: 'bold' }}
+              >
+                All
             </SortText>
-            <SortText
-              onClick={() => {
-                setTxFilter(TXN_TYPE.SWAP)
-              }}
-              active={txFilter === TXN_TYPE.SWAP}
-            >
-              Swaps
+              <SortText
+                onClick={() => {
+                  setTxFilter(TXN_TYPE.SWAP)
+                }}
+                active={txFilter === TXN_TYPE.SWAP}
+                style={{ fontWeight: 'bold' }}
+              >
+                Swaps
             </SortText>
-            <SortText
-              onClick={() => {
-                setTxFilter(TXN_TYPE.ADD)
-              }}
-              active={txFilter === TXN_TYPE.ADD}
-            >
-              Adds
+              <SortText
+                onClick={() => {
+                  setTxFilter(TXN_TYPE.ADD)
+                }}
+                active={txFilter === TXN_TYPE.ADD}
+                style={{ fontWeight: 'bold' }}
+              >
+                Adds
             </SortText>
-            <SortText
-              onClick={() => {
-                setTxFilter(TXN_TYPE.REMOVE)
-              }}
-              active={txFilter === TXN_TYPE.REMOVE}
-            >
-              Removes
+              <SortText
+                onClick={() => {
+                  setTxFilter(TXN_TYPE.REMOVE)
+                }}
+                active={txFilter === TXN_TYPE.REMOVE}
+                style={{ fontWeight: 'bold' }}
+              >
+                Removes
             </SortText>
-          </RowFixed>
-        )}
+            </RowFixed>
+          )}
 
-        <Flex alignItems="center" justifyContent="flexStart">
-          <ClickableText
-            color="textDim"
-            area="value"
-            onClick={(e) => {
-              setSortedColumn(SORT_FIELD.VALUE)
-              setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
-            }}
-          >
-            Total Value {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-        {!below780 && (
-          <Flex alignItems="center">
+          <Flex alignItems="center" justifyContent="center">
             <ClickableText
-              area="amountToken"
               color="textDim"
-              onClick={() => {
-                setSortedColumn(SORT_FIELD.AMOUNT0)
-                setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
+              area="value"
+              style={{ fontWeight: 'bold' }}
+              onClick={(e) => {
+                setSortedColumn(SORT_FIELD.VALUE)
+                setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
               }}
             >
-              {symbol0Override ? symbol0Override + ' Amount' : 'Token Amount'}{' '}
-              {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↑' : '↓') : ''}
+              Total Value {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
-        )}
-        <>
           {!below780 && (
-            <Flex alignItems="center">
+            <Flex alignItems="center" justifyContent="center">
               <ClickableText
-                area="amountOther"
+                area="amountToken"
                 color="textDim"
+                style={{ fontWeight: 'bold' }}
                 onClick={() => {
-                  setSortedColumn(SORT_FIELD.AMOUNT1)
-                  setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
+                  setSortedColumn(SORT_FIELD.AMOUNT0)
+                  setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
                 }}
               >
-                {symbol1Override ? symbol1Override + ' Amount' : 'Token Amount'}{' '}
-                {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↑' : '↓') : ''}
+                {symbol0Override ? symbol0Override + ' Amount' : 'Token Amount'}{' '}
+                {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           )}
-          {!below1080 && (
-            <Flex alignItems="center">
-              <TYPE.body area="account">Account</TYPE.body>
+          <>
+            {!below780 && (
+              <Flex alignItems="center" justifyContent="center">
+                <ClickableText
+                  area="amountOther"
+                  color="textDim"
+                  style={{ fontWeight: 'bold' }}
+                  onClick={() => {
+                    setSortedColumn(SORT_FIELD.AMOUNT1)
+                    setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
+                  }}
+                >
+                  {symbol1Override ? symbol1Override + ' Amount' : 'Token Amount'}{' '}
+                  {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↑' : '↓') : ''}
+                </ClickableText>
+              </Flex>
+            )}
+            {!below1080 && (
+              <Flex alignItems="center" justifyContent="center">
+                <TYPE.body area="account" style={{ fontWeight: 'bold' }}>Account</TYPE.body>
+              </Flex>
+            )}
+            <Flex alignItems="center" justifyContent="center">
+              <ClickableText
+                area="time"
+                color="textDim"
+                onClick={() => {
+                  setSortedColumn(SORT_FIELD.TIMESTAMP)
+                  setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
+                }}
+                style={{ fontWeight: 'bold' }}
+              >
+                Time {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
             </Flex>
+          </>
+        </DashGrid>
+        <Divider />
+        <List p={0}>
+          {!filteredList ? (
+            <LocalLoader />
+          ) : filteredList.length === 0 ? (
+            <EmptyCard>No recent transactions found.</EmptyCard>
+          ) : (
+            filteredList.map((item, index) => {
+              return (
+                // <div key={index} >
+                <div
+                  key={index}
+                  className={
+                    isDarkMode
+                      ? index % 2
+                        ? 'table-row'
+                        : 'table-row-dark-mode'
+                      : index % 2
+                        ? 'table-row'
+                        : 'table-row-light-mode'
+                  }
+                  style={{ padding: '0 1rem' }}
+                >
+                  <ListItem key={index} index={index + 1} item={item} />
+                  <Divider />
+                </div>
+              )
+            })
           )}
-          <Flex alignItems="center">
-            <ClickableText
-              area="time"
-              color="textDim"
-              onClick={() => {
-                setSortedColumn(SORT_FIELD.TIMESTAMP)
-                setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
-              }}
-            >
-              Time {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
-            </ClickableText>
-          </Flex>
-        </>
-      </DashGrid>
-      <Divider />
-      <List p={0}>
-        {!filteredList ? (
-          <LocalLoader />
-        ) : filteredList.length === 0 ? (
-          <EmptyCard>No recent transactions found.</EmptyCard>
-        ) : (
-          filteredList.map((item, index) => {
-            return (
-              <div key={index}>
-                <ListItem key={index} index={index + 1} item={item} />
-                <Divider />
-              </div>
-            )
-          })
-        )}
-      </List>
-      <PageButtons>
+        </List>
+
+      </div>
+      {/* <PageButtons>
         <div
           onClick={(e) => {
             setPage(page === 1 ? page : page - 1)
@@ -453,7 +479,20 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         >
           <Arrow faded={page === maxPage ? true : false}>→</Arrow>
         </div>
-      </PageButtons>
+      </PageButtons> */}
+
+      <Pagination
+        style={{ justifyContent: 'center' }}
+        page={page}
+        onChange={(event, newPage) => {
+          setPage(newPage)
+        }}
+        count={maxPage}
+        variant="outlined"
+        shape="rounded"
+        className="panigation-table-token-page"
+
+      />
     </>
   )
 }

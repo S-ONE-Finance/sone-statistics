@@ -36,6 +36,9 @@ import QuestionHelper from '../components/QuestionHelper'
 import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
 import { useDarkModeManager } from '../contexts/LocalStorage'
+// import Button from '@material-ui/core/Button';
+import { useCopyClipboard } from '../hooks'
+
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -117,6 +120,8 @@ function TokenPage({ address, history }) {
     txnChange,
   } = useTokenData(address)
   const [isDarkMode] = useDarkModeManager()
+  const [isCopied, setCopied] = useCopyClipboard()
+
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
   }, [])
@@ -189,7 +194,7 @@ function TokenPage({ address, history }) {
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper >
       <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
       <Warning
         type={'token'}
@@ -197,7 +202,7 @@ function TokenPage({ address, history }) {
         setShow={markAsDismissed}
         address={address}
       />
-      <ContentWrapper>
+      <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
           <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
             <TYPE.body>
@@ -217,7 +222,7 @@ function TokenPage({ address, history }) {
           {!below600 && <Search small={true} />}
         </RowBetween>
         <WarningGrouping disabled={!dismissed && listedTokens && !listedTokens.includes(address)}>
-          <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem' }}>
+          <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem', zIndex: 1 }}>
             <RowBetween
               style={{
                 flexWrap: 'wrap',
@@ -309,10 +314,10 @@ function TokenPage({ address, history }) {
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500} style={{ color: isDarkMode ? "#fff" : "#333333" }}>
                         {liquidity}
                       </TYPE.main>
-                      <TYPE.main>{liquidityChange}</TYPE.main>
+                      <TYPE.main >{liquidityChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -323,10 +328,10 @@ function TokenPage({ address, history }) {
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500} style={{ color: isDarkMode ? "#fff" : "#333333" }}>
                         {volume}
                       </TYPE.main>
-                      <TYPE.main>{volumeChange}</TYPE.main>
+                      <TYPE.main >{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -338,7 +343,7 @@ function TokenPage({ address, history }) {
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500} style={{ color: isDarkMode ? "#fff" : "#333333" }}>
                         {oneDayTxns ? localNumber(oneDayTxns) : 0}
                       </TYPE.main>
                       <TYPE.main>{txnChangeFormatted}</TYPE.main>
@@ -371,12 +376,14 @@ function TokenPage({ address, history }) {
               </AutoRow>
             </RowBetween>
             <Panel
+              className="box-shadow-none"
               rounded
               style={{
                 marginTop: '1.5rem',
                 padding: '0 ',
                 backgroundColor: 'transparent',
                 border: 0,
+                boxShadow: '0'
               }}
             >
               {address && fetchedPairsList ? (
@@ -385,10 +392,10 @@ function TokenPage({ address, history }) {
                 <Loader />
               )}
             </Panel>
-            <RowBetween mt={40} mb={'1rem'}>
+            <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
               <TYPE.main fontSize={'1.125rem'}>Transactions</TYPE.main> <div />
             </RowBetween>
-            <Panel rounded>
+            <Panel className="box-shadow-none" rounded style={{ backgroundColor: 'transparent', border: 0, padding: 0 }}>
               {transactions ? <TxnList color={backgroundColor} transactions={transactions} /> : <Loader />}
             </Panel>
             <>
@@ -404,38 +411,47 @@ function TokenPage({ address, history }) {
               >
                 <TokenDetailsLayout>
                   <Column>
-                    <TYPE.main>Symbol</TYPE.main>
+                    <TYPE.main style={{ fontWeight: "bold" }}>Symbol</TYPE.main>
                     <Text style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
                       <FormattedName text={symbol} maxCharacters={12} />
                     </Text>
                   </Column>
                   <Column>
-                    <TYPE.main>Name</TYPE.main>
+                    <TYPE.main style={{ fontWeight: "bold" }}>Name</TYPE.main>
                     <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
                       <FormattedName text={name} maxCharacters={16} />
                     </TYPE.main>
                   </Column>
                   <Column>
-                    <TYPE.main>Address</TYPE.main>
+                    <TYPE.main style={{ fontWeight: "bold" }}>Address</TYPE.main>
                     <AutoRow align="flex-end">
                       <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
                         {address.slice(0, 8) + '...' + address.slice(36, 42)}
                       </TYPE.main>
-                      <CopyHelper toCopy={address} />
                     </AutoRow>
                   </Column>
-                  <ButtonLight color={backgroundColor}>
-                    <Link color={backgroundColor} external href={'https://etherscan.io/address/' + address}>
-                      View on Etherscan ↗
+                  <Column>
+                    <TYPE.main style={{ fontWeight: "bold" }}>Action</TYPE.main>
+                    <AutoRow align="flex-end" style={{ marginTop: '.5rem' }}>
+                      <button className='btn-danger' onClick={() => setCopied(address)}>
+                        Copy Address
+                      </button>
+                      <ButtonLight className='btn-danger ml-1'>
+                        <Link color='#fff' external href={'https://etherscan.io/address/' + address}>
+                          View on Etherscan ↗
                     </Link>
-                  </ButtonLight>
+                      </ButtonLight>
+                    </AutoRow>
+
+                  </Column>
+
                 </TokenDetailsLayout>
               </Panel>
             </>
           </DashboardWrapper>
         </WarningGrouping>
       </ContentWrapper>
-    </PageWrapper>
+    </PageWrapper >
   )
 }
 
