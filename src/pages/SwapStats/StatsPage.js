@@ -10,6 +10,7 @@ import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
 import { ReactComponent as IconLink } from '../../assets/link.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import PairsStatistics from './PairsStatistics'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -197,7 +198,7 @@ function StatsPage() {
             <TokensStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={2}>
-            Item Three
+            <PairsStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={3}>
             Item Four

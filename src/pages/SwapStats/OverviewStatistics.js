@@ -15,6 +15,11 @@ import { useAllTokenData } from '../../contexts/TokenData'
 import { useMedia } from 'react-use'
 import { AutoColumn } from '../../components/Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useAllPairData } from '../../contexts/PairData'
+import PairList from '../../components/PairList'
+import LPList from '../../components/LPList'
+import TxnList from '../../components/TxnList'
+import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -84,6 +89,12 @@ function OverviewStatistics(props) {
   const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
+  const allPairs = useAllPairData()
+
+  //accounts
+  const topLps = useTopLps()
+  //Transactions
+  const transactions = useGlobalTransactions()
   // breakpoints
   const below800 = useMedia('(max-width: 800px)')
 
@@ -219,9 +230,7 @@ function OverviewStatistics(props) {
             </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
         <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
@@ -229,14 +238,12 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Pairs
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
+            <CustomLink className="btnLink" to={'/pairs'}>
               See more
             </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-        <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
+        <PairList pairs={allPairs} />
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
@@ -244,14 +251,12 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Accounts
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
+            <CustomLink className="btnLink" to={'/accounts'}>
               See more
             </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-        <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
+        <LPList lps={topLps} />
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
@@ -259,14 +264,12 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Transactions
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
+            {/* <CustomLink className="btnLink" to={'/tokens'}>
               See more
-            </CustomLink>
+            </CustomLink> */}
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-        <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
+        <TxnList transactions={transactions} />
       </div>
     </div>
   )
