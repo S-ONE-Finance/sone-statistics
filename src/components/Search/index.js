@@ -19,6 +19,7 @@ import { PAIR_SEARCH, TOKEN_SEARCH } from '../../apollo/queries'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 
 const Container = styled.div`
   height: 48px;
@@ -160,11 +161,11 @@ export const Search = ({ small = false }) => {
   const [value, setValue] = useState('')
   const [, toggleShadow] = useState(false)
   const [, toggleBottomShadow] = useState(false)
-
+  const [isDarkMode] = useDarkModeManager()
   // fetch new data on tokens and pairs if needed
   useTokenData(value)
   usePairData(value)
-
+  const below1080 = useMedia('(min-width: 1080px)')
   const below700 = useMedia('(max-width: 700px)')
   const below470 = useMedia('(max-width: 470px)')
   const below410 = useMedia('(max-width: 410px)')
@@ -418,9 +419,11 @@ export const Search = ({ small = false }) => {
   })
 
   return (
-    <Container small={small} style={{ zIndex: 2 }}>
-      <Wrapper open={showMenu} shadow={true} small={small}>
+    <Container small={small} style={{ zIndex: 100 }}>
+      <Wrapper open={showMenu} shadow={true} small={small} style={{ borderWidth: isDarkMode ? 1 : 0, borderStyle: "solid", borderColor: "#AAAAAA", backgroundColor: isDarkMode ? "" : "#F3F3F3", minWidth: below1080 ? 450 : "auto" }}>
+        <SearchIconLarge style={{ position: "relative", right: 'initial', marginRight: 0 }} />
         <Input
+          style={{ paddingLeft: below1080 ? "10px" : 0 }}
           large={!small}
           type={'text'}
           ref={wrapperRef}
@@ -430,10 +433,10 @@ export const Search = ({ small = false }) => {
               : below410
                 ? 'Search...'
                 : below470
-                  ? 'Search Uniswap...'
+                  ? 'Search swap...'
                   : below700
                     ? 'Search pairs and tokens...'
-                    : 'Search Uniswap pairs and tokens...'
+                    : 'Search tokens, pairs and accounts'
           }
           value={value}
           onChange={(e) => {
@@ -445,7 +448,7 @@ export const Search = ({ small = false }) => {
             }
           }}
         />
-        {!showMenu ? <SearchIconLarge /> : <CloseIcon onClick={() => toggleMenu(false)} />}
+        {showMenu && <CloseIcon onClick={() => toggleMenu(false)} />}
       </Wrapper>
       <Menu hide={!showMenu} ref={menuRef}>
         <Heading>

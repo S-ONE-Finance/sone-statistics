@@ -316,6 +316,18 @@ div.MuiTabs-flexContainer {
   .stats-page .panigation-table {
     padding: 0;
   }
+
+  .btn-danger {
+    min-width: calc(100% / 2 - 15px);
+  }
+
+  .box-btn-action {
+    width: 100%;
+  }
+
+  .box-title-main {
+    margin-top: 1rem;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 800px) {
@@ -356,6 +368,10 @@ div.MuiTabs-flexContainer {
   .stats-page .box-card-items .card-item {
     width: 50%;
     max-width: 50%;
+  }
+
+  .three-line-legend {
+    width: auto;
   }
 }
 

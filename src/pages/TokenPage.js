@@ -219,11 +219,11 @@ function TokenPage({ address, history }) {
               </Text>
             </Link>
           </AutoRow>
-          {!below600 && <Search small={true} />}
         </RowBetween>
         <WarningGrouping disabled={!dismissed && listedTokens && !listedTokens.includes(address)}>
           <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem', zIndex: 1 }}>
             <RowBetween
+              className="box-title-main"
               style={{
                 flexWrap: 'wrap',
                 marginBottom: '2rem',
@@ -249,33 +249,28 @@ function TokenPage({ address, history }) {
                   )}
                 </RowFixed>
               </RowFixed>
-              <span>
-                <RowFixed ml={below500 ? '0' : '2.5rem'} mt={below500 ? '1rem' : '0'}>
-                  {!!!savedTokens[address] && !below800 ? (
-                    <Hover onClick={() => addToken(address, symbol)}>
-                      <StyledIcon>
-                        <PlusCircle style={{ marginRight: '0.5rem' }} />
-                      </StyledIcon>
-                    </Hover>
-                  ) : !below1080 ? (
-                    <StyledIcon>
-                      <Bookmark style={{ marginRight: '0.5rem', opacity: 0.4 }} />
-                    </StyledIcon>
-                  ) : (
-                    <></>
-                  )}
-                  <Link href={getPoolLink(address)} target="_blank">
-                    <ButtonLight color={backgroundColor}>+ Add Liquidity</ButtonLight>
-                  </Link>
-                  <Link href={getSwapLink(address)} target="_blank">
-                    <ButtonDark ml={'.5rem'} mr={below1080 && '.5rem'} color={backgroundColor}>
-                      Trade
-                    </ButtonDark>
-                  </Link>
-                </RowFixed>
-              </span>
+              <RowFixed>
+                {!below600 && <Search small={false} />}
+              </RowFixed>
             </RowBetween>
-
+            <RowBetween
+              style={{
+                flexWrap: 'wrap',
+                marginBottom: '2rem',
+                alignItems: 'flex-start',
+              }}
+            >
+              <RowFixed>
+                <Link href={getPoolLink(address)} target="_blank">
+                  <ButtonLight style={{ backgroundColor: '#F05359', color: "#fff" }}>+ Add Liquidity</ButtonLight>
+                </Link>
+                <Link href={getSwapLink(address)} target="_blank">
+                  <ButtonDark style={{ backgroundColor: '#F05359', color: "#fff" }} ml={'.5rem'} mr={below1080 && '.5rem'} >
+                    Swap
+                  </ButtonDark>
+                </Link>
+              </RowFixed>
+            </RowBetween>
             <>
               {!below1080 && (
                 <RowFixed>
@@ -382,11 +377,12 @@ function TokenPage({ address, history }) {
                 boxShadow: '0'
               }}
             >
-              {address && fetchedPairsList ? (
+              {/* {address && fetchedPairsList ? (
                 <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
               ) : (
                 <Loader />
-              )}
+              )} */}
+              <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
             </Panel>
             <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
               <TYPE.main fontSize={'2.125rem'}>Transactions</TYPE.main> <div />
@@ -402,33 +398,34 @@ function TokenPage({ address, history }) {
                 rounded
                 style={{
                   marginTop: '1.5rem',
+                  backgroundColor: isDarkMode ? '#0E2B4A' : "#fff", border: 0, boxShadow: "0px 8px 17px rgba(0, 0, 0, 0.18)", borderRadius: 15
                 }}
                 p={20}
               >
-                <TokenDetailsLayout>
+                <TokenDetailsLayout style={{}}>
                   <Column>
                     <TYPE.main style={{ fontWeight: "bold" }}>Symbol</TYPE.main>
-                    <Text fontSize={'1.125rem'} style={{ marginTop: '.5rem' }} fontWeight="500" >
+                    <Text fontSize={'1rem'} style={{ marginTop: '1.5rem' }} fontWeight="400" >
                       <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676" }} text={symbol} maxCharacters={12} />
                     </Text>
                   </Column>
                   <Column>
                     <TYPE.main style={{ fontWeight: "bold" }}>Name</TYPE.main>
-                    <TYPE.main style={{ marginTop: '.5rem' }} fontSize={'1.125rem'} fontWeight="500">
+                    <TYPE.main style={{ marginTop: '1.5rem' }} fontSize={'1rem'} fontWeight="400">
                       <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676" }} text={name} maxCharacters={16} />
                     </TYPE.main>
                   </Column>
                   <Column>
                     <TYPE.main style={{ fontWeight: "bold" }}>Address</TYPE.main>
                     <AutoRow align="flex-end">
-                      <TYPE.main style={{ marginTop: '.5rem' }} fontSize={'1.125rem'} fontWeight="500" style={{ color: isDarkMode ? "#AAAAAA" : "#767676" }}>
+                      <TYPE.main fontSize={'1rem'} fontWeight="400" style={{ color: isDarkMode ? "#AAAAAA" : "#767676", marginTop: '1.5rem' }}>
                         {address.slice(0, 8) + '...' + address.slice(36, 42)}
                       </TYPE.main>
                     </AutoRow>
                   </Column>
-                  <Column>
+                  <Column className="box-btn-action">
                     <TYPE.main style={{ fontWeight: "bold" }}>Action</TYPE.main>
-                    <AutoRow align="flex-end" style={{ marginTop: '.5rem' }}>
+                    <AutoRow align="flex-end" style={{ marginTop: '1.5rem' }}>
                       <button className='btn-danger' onClick={() => setCopied(address)}>
                         Copy Address
                       </button>
