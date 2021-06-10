@@ -37,7 +37,13 @@
   justify-content: center;
 }
 
-.btn-dark-mode {}
+.m-auto {
+  margin: auto !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
 
 .btn-danger {
   min-width: 190px;
@@ -280,6 +286,23 @@ div.MuiTabs-flexContainer {
   margin-top: 20px;
 }
 
+
+.btn-secondary {
+  background-color: #C9C9C9 !important;
+}
+
+.minw-auto {
+  min-width: auto !important;
+}
+
+.h-auto {
+  height: auto !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
 @media (max-width: 576px) {
   .stats-page .box-first-main {
     justify-content: flex-start;
@@ -320,6 +343,7 @@ div.MuiTabs-flexContainer {
   .btn-danger {
     min-width: calc(100% / 2 - 15px);
   }
+
 
   .box-btn-action {
     width: 100%;

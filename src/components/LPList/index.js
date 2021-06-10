@@ -42,7 +42,7 @@ const List = styled(Box)`
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 10px 1.5fr 1fr 1fr;
+  grid-template-columns: 0.1fr 1fr 1fr 1fr;
   grid-template-areas: 'number name pair value';
   padding: 0 4px;
 
@@ -104,12 +104,12 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
     return (
       <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
         {!below600 && (
-          <DataText area="number" fontWeight="500">
+          <DataText area="number" fontWeight="500" style={{ justifyContent: "center", margin: "auto" }}>
             {index}
           </DataText>
         )}
         <DataText area="name" fontWeight="500" justifyContent="flex-start">
-          <CustomLink style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap' }} to={'/account/' + lp.user.id}>
+          <CustomLink style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap', color: "#3FAAB0", margin: "auto" }} to={'/account/' + lp.user.id}>
             {below800 ? lp.user.id.slice(0, 4) + '...' + lp.user.id.slice(38, 42) : lp.user.id}
           </CustomLink>
         </DataText>
@@ -121,14 +121,14 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
         )} */}
 
         <DataText>
-          <CustomLink area="pair" to={'/pair/' + lp.pairAddress}>
+          <CustomLink style={{ color: "#3FAAB0", margin: "auto", minWidth: "115px" }} area="pair" to={'/pair/' + lp.pairAddress}>
             <RowFixed>
               {!below600 && <DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
               {lp.pairName}
             </RowFixed>
           </CustomLink>
         </DataText>
-        <DataText area="value">{formattedNum(lp.usd, true)}</DataText>
+        <DataText style={{ margin: "auto", minWidth: "200px" }} area="value">{formattedNum(lp.usd, true)}</DataText>
       </DashGrid>
     )
   }
@@ -159,19 +159,19 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'}>
-        <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: ' 0 0 1rem 0' }}>
+        <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '1rem' }}>
           {!below600 && (
-            <Flex alignItems="center" justifyContent="flex-start">
+            <Flex alignItems="center" style={{ justifyContent: "center" }}>
               <TYPE.main area="number">#</TYPE.main>
             </Flex>
           )}
-          <Flex alignItems="center" justifyContent="flex-start">
+          <Flex alignItems="center" style={{ justifyContent: "center" }}>
             <TYPE.main area="name">Account</TYPE.main>
           </Flex>
-          <Flex alignItems="center" justifyContent="flexEnd">
+          <Flex alignItems="center" style={{ justifyContent: "center" }}>
             <TYPE.main area="pair">Pair</TYPE.main>
           </Flex>
-          <Flex alignItems="center" justifyContent="flexEnd">
+          <Flex alignItems="center" style={{ justifyContent: "center" }}>
             <TYPE.main area="value">Value</TYPE.main>
           </Flex>
         </DashGrid>
