@@ -38,7 +38,7 @@ import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
 import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
-
+import { useDarkModeManager } from '../contexts/LocalStorage'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -135,6 +135,7 @@ function PairPage({ pairAddress, history }) {
     volumeChangeUntracked,
     liquidityChangeUSD,
   } = usePairData(pairAddress)
+  const [isDarkMode] = useDarkModeManager()
 
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
@@ -222,12 +223,11 @@ function PairPage({ pairAddress, history }) {
         setShow={markAsDismissed}
         address={pairAddress}
       />
-      <ContentWrapperLarge>
+      <ContentWrapperLarge style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
             <BasicLink to="/pairs">{'Pairs '}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
           </TYPE.body>
-          {!below600 && <Search small={true} />}
         </RowBetween>
         <WarningGrouping
           disabled={
@@ -265,33 +265,25 @@ function PairPage({ pairAddress, history }) {
                     </TYPE.main>
                   </RowFixed>
                 </RowFixed>
+                <RowFixed>
+                  {!below600 && <Search small={false} />}
+                </RowFixed>
+              </div>
+              <div>
                 <RowFixed
-                  ml={below900 ? '0' : '2.5rem'}
+                  ml={0}
                   mt={below1080 && '1rem'}
                   style={{
                     flexDirection: below1080 ? 'row-reverse' : 'initial',
+                    marginLeft: 0
                   }}
                 >
-                  {!!!savedPairs[pairAddress] && !below1080 ? (
-                    <Hover onClick={() => addPair(pairAddress, token0.id, token1.id, token0.symbol, token1.symbol)}>
-                      <StyledIcon>
-                        <PlusCircle style={{ marginRight: '0.5rem' }} />
-                      </StyledIcon>
-                    </Hover>
-                  ) : !below1080 ? (
-                    <StyledIcon>
-                      <Bookmark style={{ marginRight: '0.5rem', opacity: 0.4 }} />
-                    </StyledIcon>
-                  ) : (
-                    <></>
-                  )}
-
                   <Link external href={getPoolLink(token0?.id, token1?.id)}>
-                    <ButtonLight color={backgroundColor}>+ Add Liquidity</ButtonLight>
+                    <ButtonLight style={{ backgroundColor: '#F05359', color: "#fff" }}>+ Add Liquidity</ButtonLight>
                   </Link>
                   <Link external href={getSwapLink(token0?.id, token1?.id)}>
-                    <ButtonDark ml={!below1080 && '.5rem'} mr={below1080 && '.5rem'} color={backgroundColor}>
-                      Trade
+                    <ButtonDark ml={!below1080 && '.5rem'} mr={below1080 && '.5rem'} style={{ backgroundColor: '#F05359', color: "#fff" }}>
+                      Swap
                     </ButtonDark>
                   </Link>
                 </RowFixed>
@@ -311,9 +303,8 @@ function PairPage({ pairAddress, history }) {
                   <TokenLogo address={token0?.id} size={'16px'} />
                   <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'}>
                     {token0 && token1
-                      ? `1 ${formattedSymbol0} = ${token0Rate} ${formattedSymbol1} ${
-                          parseFloat(token0?.derivedETH) ? '(' + token0USD + ')' : ''
-                        }`
+                      ? `1 ${formattedSymbol0} = ${token0Rate} ${formattedSymbol1} ${parseFloat(token0?.derivedETH) ? '(' + token0USD + ')' : ''
+                      }`
                       : '-'}
                   </TYPE.main>
                 </RowFixed>
@@ -323,9 +314,8 @@ function PairPage({ pairAddress, history }) {
                   <TokenLogo address={token1?.id} size={'16px'} />
                   <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'}>
                     {token0 && token1
-                      ? `1 ${formattedSymbol1} = ${token1Rate} ${formattedSymbol0}  ${
-                          parseFloat(token1?.derivedETH) ? '(' + token1USD + ')' : ''
-                        }`
+                      ? `1 ${formattedSymbol1} = ${token1Rate} ${formattedSymbol0}  ${parseFloat(token1?.derivedETH) ? '(' + token1USD + ')' : ''
+                      }`
                       : '-'}
                   </TYPE.main>
                 </RowFixed>
@@ -345,7 +335,7 @@ function PairPage({ pairAddress, history }) {
                 </RowFixed>
               )}
               <PanelWrapper style={{ marginTop: '1.5rem' }}>
-                <Panel style={{ height: '100%' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Total Liquidity </TYPE.main>
@@ -359,7 +349,7 @@ function PairPage({ pairAddress, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel style={{ height: '100%' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Volume (24hrs) </TYPE.main>
@@ -373,7 +363,7 @@ function PairPage({ pairAddress, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel style={{ height: '100%' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Fees (24hrs)</TYPE.main>
@@ -387,7 +377,7 @@ function PairPage({ pairAddress, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel style={{ height: '100%' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Pooled Tokens</TYPE.main>

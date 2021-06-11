@@ -371,13 +371,13 @@ function AccountPage({ account }) {
                 <TYPE.header fontSize={24}>{totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}</TYPE.header>
                 <TYPE.main>Total Value Swapped</TYPE.main>
               </AutoColumn>
-              <AutoColumn gap="8px">
+              <AutoColumn gap="8px" style={{ marginLeft: '6rem !important' }}>
                 <TYPE.header fontSize={24}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.header>
                 <TYPE.main>Total Fees Paid</TYPE.main>
               </AutoColumn>
-              <AutoColumn gap="8px">
+              <AutoColumn gap="8px" style={{ marginLeft: '6rem !important' }}>
                 <TYPE.header fontSize={24}>{transactionCount ? transactionCount : '-'}</TYPE.header>
                 <TYPE.main>Total Transactions</TYPE.main>
               </AutoColumn>
