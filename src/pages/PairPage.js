@@ -335,7 +335,7 @@ function PairPage({ pairAddress, history }) {
                 </RowFixed>
               )}
               <PanelWrapper style={{ marginTop: '1.5rem' }}>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', marginBottom: 20 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Total Liquidity </TYPE.main>
@@ -349,7 +349,7 @@ function PairPage({ pairAddress, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', marginBottom: 20 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Volume (24hrs) </TYPE.main>
@@ -363,7 +363,7 @@ function PairPage({ pairAddress, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', marginBottom: 20 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Fees (24hrs)</TYPE.main>
@@ -411,6 +411,7 @@ function PairPage({ pairAddress, history }) {
                   style={{
                     gridColumn: below1080 ? '1' : '2/4',
                     gridRow: below1080 ? '' : '1/5',
+                    backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
                   }}
                 >
                   <PairChart
