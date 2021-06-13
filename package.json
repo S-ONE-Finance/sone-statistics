@@ -75,11 +75,11 @@
     "wcag-contrast": "^3.0.0"
   },
   "scripts": {
-    "start": "yarn postinstall; PORT=29014 react-scripts start",
+    "postinstall": "husky install",
+    "start": "yarn postinstall && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "husky install"
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
