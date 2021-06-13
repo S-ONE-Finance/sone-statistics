@@ -1,7 +1,23 @@
 {
   "name": "sone-statistics",
   "private": true,
+  "license": "GPL-3.0-or-later",
   "homepage": "https://info.uniswap.org",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "axios": "^0.21.1",
+    "lodash.get": "^4.4.2",
+    "lodash.orderby": "^4.6.0"
+  },
   "devDependencies": {
     "@popperjs/core": "^2.4.2",
     "@reach/dialog": "^0.10.3",
@@ -74,13 +90,6 @@
     "unstated": "^2.1.1",
     "wcag-contrast": "^3.0.0"
   },
-  "scripts": {
-    "postinstall": "husky install",
-    "start": "yarn postinstall && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -92,15 +101,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "license": "GPL-3.0-or-later",
-  "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.58",
-    "axios": "^0.21.1",
-    "lodash.get": "^4.4.2",
-    "lodash.orderby": "^4.6.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,html,css,scss,md}": [
