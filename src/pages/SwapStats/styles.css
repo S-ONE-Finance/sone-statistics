@@ -418,6 +418,18 @@ div.MuiTabs-flexContainer {
 
   /*  */
 }
+@media (max-width: 800px) {
+  .MuiTabs-scroller.MuiTabs-fixed {
+    overflow: initial !important;
+  }
+  .MuiTabs-scroller.MuiTabs-fixed .MuiTabs-flexContainer {
+    flex-wrap: wrap;
+  }
+
+  .MuiTabs-scroller.MuiTabs-fixed .MuiTabs-flexContainer button {
+    min-width: calc(100% / 3 - 15px) !important;
+  }
+}
 
 @media (min-width: 800px) and (max-width: 1024.5px) {
   .stats-page .btn-tab-custom {

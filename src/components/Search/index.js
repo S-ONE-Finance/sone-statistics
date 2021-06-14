@@ -429,8 +429,9 @@ export const Search = ({ small = false }) => {
           borderStyle: 'solid',
           borderColor: '#AAAAAA',
           backgroundColor: isDarkMode ? '' : '#F3F3F3',
-          minWidth: below1080 ? 450 : 'auto',
+          // minWidth: below1080 ? 450 : 'auto',
           borderRadius: 30,
+          width: '100%',
         }}
       >
         <SearchIconLarge style={{ position: 'relative', right: 'initial', marginRight: 0 }} />

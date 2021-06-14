@@ -44,21 +44,15 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`} aria-labelledby={`tab-${index}`} {...other}>
       {<Box>{children}</Box>}
     </div>
   )
 }
 function a11yProps(index) {
   return {
-    id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    id: `tab-${index}`,
+    'aria-controls': `tabpanel-${index}`,
   }
 }
 
@@ -136,7 +130,7 @@ function StatsPage() {
                 onChange={handleChange}
                 indicatorColor=""
                 textColor="primary"
-                variant="scrollable"
+                variant="fullWidth"
                 scrollButtons="off"
               >
                 <TabCustom
