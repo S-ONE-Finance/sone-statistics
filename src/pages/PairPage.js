@@ -265,9 +265,7 @@ function PairPage({ pairAddress, history }) {
                     </TYPE.main>
                   </RowFixed>
                 </RowFixed>
-                <RowFixed>
-                  {!below600 && <Search small={false} />}
-                </RowFixed>
+                <RowFixed>{!below600 && <Search small={false} />}</RowFixed>
               </div>
               <div>
                 <RowFixed
@@ -275,14 +273,18 @@ function PairPage({ pairAddress, history }) {
                   mt={below1080 && '1rem'}
                   style={{
                     flexDirection: below1080 ? 'row-reverse' : 'initial',
-                    marginLeft: 0
+                    marginLeft: 0,
                   }}
                 >
                   <Link external href={getPoolLink(token0?.id, token1?.id)}>
-                    <ButtonLight style={{ backgroundColor: '#F05359', color: "#fff" }}>+ Add Liquidity</ButtonLight>
+                    <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>+ Add Liquidity</ButtonLight>
                   </Link>
                   <Link external href={getSwapLink(token0?.id, token1?.id)}>
-                    <ButtonDark ml={!below1080 && '.5rem'} mr={below1080 && '.5rem'} style={{ backgroundColor: '#F05359', color: "#fff" }}>
+                    <ButtonDark
+                      ml={!below1080 && '.5rem'}
+                      mr={below1080 && '.5rem'}
+                      style={{ backgroundColor: '#F05359', color: '#fff' }}
+                    >
                       Swap
                     </ButtonDark>
                   </Link>
@@ -298,24 +300,32 @@ function PairPage({ pairAddress, history }) {
                 flexWrap: 'wrap',
               }}
             >
-              <FixedPanel onClick={() => history.push(`/token/${token0?.id}`)}>
+              <FixedPanel
+                onClick={() => history.push(`/token/${token0?.id}`)}
+                style={{ backgroundColor: '#F3F3F3', borderRadius: 25, border: 0 }}
+              >
                 <RowFixed>
                   <TokenLogo address={token0?.id} size={'16px'} />
-                  <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'}>
+                  <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} style={{ color: '#767676' }}>
                     {token0 && token1
-                      ? `1 ${formattedSymbol0} = ${token0Rate} ${formattedSymbol1} ${parseFloat(token0?.derivedETH) ? '(' + token0USD + ')' : ''
-                      }`
+                      ? `1 ${formattedSymbol0} = ${token0Rate} ${formattedSymbol1} ${
+                          parseFloat(token0?.derivedETH) ? '(' + token0USD + ')' : ''
+                        }`
                       : '-'}
                   </TYPE.main>
                 </RowFixed>
               </FixedPanel>
-              <FixedPanel onClick={() => history.push(`/token/${token1?.id}`)}>
+              <FixedPanel
+                style={{ backgroundColor: '#F3F3F3', borderRadius: 25, border: 0, color: '#767676' }}
+                onClick={() => history.push(`/token/${token1?.id}`)}
+              >
                 <RowFixed>
                   <TokenLogo address={token1?.id} size={'16px'} />
-                  <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'}>
+                  <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} style={{ color: '#767676' }}>
                     {token0 && token1
-                      ? `1 ${formattedSymbol1} = ${token1Rate} ${formattedSymbol0}  ${parseFloat(token1?.derivedETH) ? '(' + token1USD + ')' : ''
-                      }`
+                      ? `1 ${formattedSymbol1} = ${token1Rate} ${formattedSymbol0}  ${
+                          parseFloat(token1?.derivedETH) ? '(' + token1USD + ')' : ''
+                        }`
                       : '-'}
                   </TYPE.main>
                 </RowFixed>
@@ -412,6 +422,8 @@ function PairPage({ pairAddress, history }) {
                     gridColumn: below1080 ? '1' : '2/4',
                     gridRow: below1080 ? '' : '1/5',
                     backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
+                    border: 0,
+                    boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
                   }}
                 >
                   <PairChart
@@ -428,6 +440,10 @@ function PairPage({ pairAddress, history }) {
               <Panel
                 style={{
                   marginTop: '1.5rem',
+                  padding: 0,
+                  border: 0,
+                  backgroundColor: 'transparent',
+                  boxShadow: 'none',
                 }}
               >
                 {transactions ? <TxnList transactions={transactions} /> : <Loader />}
@@ -439,12 +455,16 @@ function PairPage({ pairAddress, history }) {
                 rounded
                 style={{
                   marginTop: '1.5rem',
+                  backgroundColor: isDarkMode ? '#0E2B4A' : '#FFFFFF',
+                  border: 0,
                 }}
                 p={20}
               >
                 <TokenDetailsLayout>
                   <Column>
-                    <TYPE.main>Pair Name</TYPE.main>
+                    <TYPE.main className="font-weight-bold f-20" style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}>
+                      Pair Name
+                    </TYPE.main>
                     <TYPE.main style={{ marginTop: '.5rem' }}>
                       <RowFixed>
                         <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} />
@@ -454,7 +474,9 @@ function PairPage({ pairAddress, history }) {
                     </TYPE.main>
                   </Column>
                   <Column>
-                    <TYPE.main>Pair Address</TYPE.main>
+                    <TYPE.main className="font-weight-bold f-20" style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}>
+                      Pair Address
+                    </TYPE.main>
                     <AutoRow align="flex-end">
                       <TYPE.main style={{ marginTop: '.5rem' }}>
                         {pairAddress.slice(0, 6) + '...' + pairAddress.slice(38, 42)}
@@ -463,7 +485,7 @@ function PairPage({ pairAddress, history }) {
                     </AutoRow>
                   </Column>
                   <Column>
-                    <TYPE.main>
+                    <TYPE.main className="font-weight-bold f-20" style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}>
                       <RowFixed>
                         <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} />{' '}
                         <span style={{ marginLeft: '4px' }}>Address</span>
