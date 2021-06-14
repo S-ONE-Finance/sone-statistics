@@ -32,6 +32,10 @@
   padding-bottom: 10%;
 }
 
+.d-flex {
+  display: flex !important;
+}
+
 .justify-content-center {
   justify-content: center;
 }
@@ -47,9 +51,11 @@
 .font-weight-bold {
   font-weight: bold !important;
 }
+
 .f-20 {
   font-size: 20px !important;
 }
+
 .spacing-left-10 {
   margin-left: 10% !important;
 }
@@ -88,6 +94,29 @@
   background-position: center;
   margin: auto;
   z-index: 0;
+}
+
+.btn-copy-dark-mode {
+  color: #fff;
+}
+
+.box-btn-copy-dark-mode {
+  width: 38px;
+  height: 38px;
+  background-color: #3faab0;
+  border-radius: 15px;
+}
+
+.btn-copy-light-mode {
+  color: #3faab0;
+}
+
+.box-btn-copy-light-mode {
+  width: 38px;
+  height: 38px;
+  background-color: transparent;
+  border-radius: 15px;
+  border: 2px solid #3faab0;
 }
 
 /* .light-mode::before {

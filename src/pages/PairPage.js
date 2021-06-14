@@ -460,63 +460,87 @@ function PairPage({ pairAddress, history }) {
                 }}
                 p={20}
               >
-                <TokenDetailsLayout>
-                  <Column>
+                <TokenDetailsLayout style={{ maxHeight: 82 }}>
+                  <Column style={{ height: '100%' }}>
                     <TYPE.main className="font-weight-bold f-20" style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}>
                       Pair Name
                     </TYPE.main>
-                    <TYPE.main style={{ marginTop: '.5rem' }}>
+                    <TYPE.main style={{ margin: 'auto' }}>
                       <RowFixed>
-                        <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} />
+                        <FormattedName
+                          style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
+                          fontSize={16}
+                          text={token0?.symbol ?? ''}
+                          maxCharacters={8}
+                        />
                         -
-                        <FormattedName text={token1?.symbol ?? ''} maxCharacters={8} />
+                        <FormattedName
+                          style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
+                          fontSize={16}
+                          text={token1?.symbol ?? ''}
+                          maxCharacters={8}
+                        />
                       </RowFixed>
                     </TYPE.main>
                   </Column>
-                  <Column>
+                  <Column style={{ height: '100%' }}>
                     <TYPE.main className="font-weight-bold f-20" style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}>
                       Pair Address
                     </TYPE.main>
-                    <AutoRow align="flex-end">
-                      <TYPE.main style={{ marginTop: '.5rem' }}>
+                    <AutoRow align="center" style={{ margin: 'auto' }}>
+                      <TYPE.main style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}>
                         {pairAddress.slice(0, 6) + '...' + pairAddress.slice(38, 42)}
                       </TYPE.main>
                       <CopyHelper toCopy={pairAddress} />
                     </AutoRow>
                   </Column>
-                  <Column>
+                  <Column style={{ height: '100%' }}>
                     <TYPE.main className="font-weight-bold f-20" style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}>
                       <RowFixed>
                         <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} />{' '}
                         <span style={{ marginLeft: '4px' }}>Address</span>
                       </RowFixed>
                     </TYPE.main>
-                    <AutoRow align="flex-end">
-                      <TYPE.main style={{ marginTop: '.5rem' }}>
+                    <AutoRow align="center" style={{ margin: 'auto' }}>
+                      <TYPE.main style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}>
                         {token0 && token0.id.slice(0, 6) + '...' + token0.id.slice(38, 42)}
                       </TYPE.main>
                       <CopyHelper toCopy={token0?.id} />
                     </AutoRow>
                   </Column>
-                  <Column>
+                  <Column style={{ height: '100%' }}>
                     <TYPE.main>
                       <RowFixed>
                         <FormattedName text={token1?.symbol ?? ''} maxCharacters={8} />{' '}
                         <span style={{ marginLeft: '4px' }}>Address</span>
                       </RowFixed>
                     </TYPE.main>
-                    <AutoRow align="flex-end">
-                      <TYPE.main style={{ marginTop: '.5rem' }} fontSize={16}>
+                    <AutoRow align="center" style={{ margin: 'auto' }}>
+                      <TYPE.main style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }} fontSize={16}>
                         {token1 && token1.id.slice(0, 6) + '...' + token1.id.slice(38, 42)}
                       </TYPE.main>
                       <CopyHelper toCopy={token1?.id} />
                     </AutoRow>
                   </Column>
-                  <ButtonLight color={backgroundColor}>
-                    <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
-                      View on Etherscan ↗
-                    </Link>
-                  </ButtonLight>
+                  <Column>
+                    <TYPE.main>
+                      <RowFixed>
+                        <TYPE.main
+                          className="font-weight-bold f-20"
+                          style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}
+                        >
+                          Action
+                        </TYPE.main>
+                      </RowFixed>
+                    </TYPE.main>
+                    <AutoRow align="center" style={{ margin: 'auto' }}>
+                      <ButtonLight color={backgroundColor} className="btn-danger" style={{ marginTop: 20 }}>
+                        <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
+                          View on Etherscan ↗
+                        </Link>
+                      </ButtonLight>
+                    </AutoRow>
+                  </Column>
                 </TokenDetailsLayout>
               </Panel>
             </>

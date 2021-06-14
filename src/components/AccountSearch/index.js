@@ -12,6 +12,7 @@ import { Hover, StyledIcon } from '..'
 import Panel from '../Panel'
 import { Divider } from '..'
 import { Flex } from 'rebass'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 
 import { X } from 'react-feather'
 
@@ -76,7 +77,7 @@ const DashGrid = styled.div`
 function AccountSearch({ history, small }) {
   const [accountValue, setAccountValue] = useState()
   const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
-
+  const [isDarkMode] = useDarkModeManager()
   function handleAccountSearch() {
     if (isAddress(accountValue)) {
       history.push('/account/' + accountValue)
@@ -97,6 +98,13 @@ function AccountSearch({ history, small }) {
                 onChange={(e) => {
                   setAccountValue(e.target.value)
                 }}
+                style={{
+                  borderWidth: isDarkMode ? 0.5 : 0,
+                  borderStyle: 'solid',
+                  borderColor: '#AAAAAA',
+                  backgroundColor: isDarkMode ? 'transparent' : '#F3F3F3',
+                  borderRadius: 30,
+                }}
               />
             </Wrapper>
             <ButtonLight onClick={handleAccountSearch}>Load Account Details</ButtonLight>
@@ -106,7 +114,7 @@ function AccountSearch({ history, small }) {
 
       <AutoColumn gap={'12px'}>
         {!small && (
-          <Panel>
+          <Panel style={{ backgroundColor: isDarkMode ? '#0E2B4A' : '#FFFFFF', border: 0 }}>
             <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0' }}>
               <TYPE.main area="account">Saved Accounts</TYPE.main>
             </DashGrid>

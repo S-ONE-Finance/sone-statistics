@@ -11,6 +11,8 @@ import { ReactComponent as IconLink } from '../../assets/link.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import PairsStatistics from './PairsStatistics'
+import AccountStatics from './AccountStatics'
+import TransactionStatics from './TransactionStatics'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -201,10 +203,10 @@ function StatsPage() {
             <PairsStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={3}>
-            Item Four
+            <AccountStatics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={4}>
-            Item Five
+            <TransactionStatics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={5}>
             Item Six
