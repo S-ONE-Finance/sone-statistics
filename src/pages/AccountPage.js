@@ -102,8 +102,8 @@ function AccountPage({ account }) {
   let totalSwappedUSD = useMemo(() => {
     return transactions?.swaps
       ? transactions?.swaps.reduce((total, swap) => {
-        return total + parseFloat(swap.amountUSD)
-      }, 0)
+          return total + parseFloat(swap.amountUSD)
+        }, 0)
       : 0
   }, [transactions])
 
@@ -136,12 +136,12 @@ function AccountPage({ account }) {
   const positionValue = useMemo(() => {
     return dynamicPositions
       ? dynamicPositions.reduce((total, position) => {
-        return (
-          total +
-          (parseFloat(position?.liquidityTokenBalance) / parseFloat(position?.pair?.totalSupply)) *
-          position?.pair?.reserveUSD
-        )
-      }, 0)
+          return (
+            total +
+            (parseFloat(position?.liquidityTokenBalance) / parseFloat(position?.pair?.totalSupply)) *
+              position?.pair?.reserveUSD
+          )
+        }, 0)
       : null
   }, [dynamicPositions])
 
@@ -158,7 +158,7 @@ function AccountPage({ account }) {
   const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
   const isBookmarked = savedAccounts.includes(account)
   const handleBookmarkClick = useCallback(() => {
-    ; (isBookmarked ? removeAccount : addAccount)(account)
+    ;(isBookmarked ? removeAccount : addAccount)(account)
   }, [account, isBookmarked, addAccount, removeAccount])
 
   // status theme mode
@@ -182,7 +182,9 @@ function AccountPage({ account }) {
             <span>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
               <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
-                <TYPE.main fontSize={14}>View on Etherscan</TYPE.main>
+                <TYPE.main className="btn-danger" fontSize={14} mt={3} mb={3}>
+                  View on Etherscan
+                </TYPE.main>
               </Link>
             </span>
             <AccountWrapper>
@@ -198,14 +200,21 @@ function AccountPage({ account }) {
         <DashboardWrapper>
           {showWarning && <Warning>Fees cannot currently be calculated for pairs that include AMPL.</Warning>}
           {!hideLPContent && (
-            <DropdownWrapper>
-              <ButtonDropdown width="100%" onClick={() => setShowDropdown(!showDropdown)} open={showDropdown}>
+            <DropdownWrapper style={{ border: 0, borderRadius: 25, backgroundColor: '#F3F3F3' }}>
+              <ButtonDropdown
+                style={{ border: 0, backgroundColor: 'transparent' }}
+                width="100%"
+                onClick={() => setShowDropdown(!showDropdown)}
+                open={showDropdown}
+              >
                 {!activePosition && (
                   <RowFixed>
-                    <StyledIcon>
-                      <Activity size={16} />
+                    <StyledIcon style={{ color: '#333333' }}>
+                      <Activity style={{ color: '#333333' }} size={16} />
                     </StyledIcon>
-                    <TYPE.body ml={'10px'}>All Positions</TYPE.body>
+                    <TYPE.body style={{ color: '#333333' }} ml={'10px'}>
+                      All Positions
+                    </TYPE.body>
                   </RowFixed>
                 )}
                 {activePosition && (
@@ -265,11 +274,20 @@ function AccountPage({ account }) {
             </DropdownWrapper>
           )}
           {!hideLPContent && (
-            <Panel style={{ height: '100%', marginBottom: '1rem', border: 0, backgroundColor: isDarkMode ? "#0E2B4A" : "#F2F2F2" }}>
+            <Panel
+              style={{
+                height: '100%',
+                marginBottom: '1rem',
+                border: 0,
+                backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+              }}
+            >
               <AutoRow gap="20px">
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body style={{ color: isDarkMode ? "#0E2B4A" : "#767676 " }}>Liquidity (Including Fees)</TYPE.body>
+                    <TYPE.body style={{ color: isDarkMode ? '#0E2B4A' : '#767676 ' }}>
+                      Liquidity (Including Fees)
+                    </TYPE.body>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
@@ -277,8 +295,8 @@ function AccountPage({ account }) {
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
-                          ? formattedNum(0, true)
-                          : '-'}
+                        ? formattedNum(0, true)
+                        : '-'}
                     </TYPE.header>
                   </RowFixed>
                 </AutoColumn>
@@ -298,7 +316,14 @@ function AccountPage({ account }) {
           )}
           {!hideLPContent && (
             <PanelWrapper>
-              <Panel style={{ gridColumn: '1', border: 0, backgroundColor: isDarkMode ? "#0E2B4A" : "#F2F2F2", boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)' }}>
+              <Panel
+                style={{
+                  gridColumn: '1',
+                  border: 0,
+                  backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+                  boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+                }}
+              >
                 {activePosition ? (
                   <PairReturnsChart account={account} position={activePosition} />
                 ) : (
@@ -321,13 +346,15 @@ function AccountPage({ account }) {
           >
             <PositionList positions={positions} />
           </Panel>
-          <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
+          {/* <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Liquidity Mining Pools
           </TYPE.main>
           <Panel
             style={{
               marginTop: '1.5rem',
-              border: 0, backgroundColor: isDarkMode ? "#0E2B4A" : "#F2F2F2", boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)'
+              border: 0,
+              backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+              boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
             }}
           >
             {miningPositions && <MiningPositionList miningPositions={miningPositions} />}
@@ -339,7 +366,7 @@ function AccountPage({ account }) {
                 </AutoRow>{' '}
               </AutoColumn>
             )}
-          </Panel>
+          </Panel> */}
           <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Transactions
           </TYPE.main>{' '}
@@ -366,20 +393,32 @@ function AccountPage({ account }) {
               border: 0,
             }}
           >
-            <AutoRow gap="20px" style={{ boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)', backgroundColor: isDarkMode ? "#0E2B4A" : "#F2F2F2", borderRadius: 15 }}>
+            <AutoRow
+              gap="20px"
+              className="flex-wrap m-auto"
+              style={{
+                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+                backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+                borderRadius: 15,
+              }}
+            >
               <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>{totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}</TYPE.header>
-                <TYPE.main>Total Value Swapped</TYPE.main>
+                <TYPE.header fontSize={20}>Total Value Swapped</TYPE.header>
+                <TYPE.main color="#767676" fontSize={24}>
+                  {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
+                </TYPE.main>
               </AutoColumn>
-              <AutoColumn gap="8px" style={{ marginLeft: '6rem !important' }}>
-                <TYPE.header fontSize={24}>
+              <AutoColumn gap="8px" className="spacing-left-10">
+                <TYPE.header fontSize={20}>Total Fees Paid</TYPE.header>
+                <TYPE.main color="#767676" fontSize={24}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
-                </TYPE.header>
-                <TYPE.main>Total Fees Paid</TYPE.main>
+                </TYPE.main>
               </AutoColumn>
-              <AutoColumn gap="8px" style={{ marginLeft: '6rem !important' }}>
-                <TYPE.header fontSize={24}>{transactionCount ? transactionCount : '-'}</TYPE.header>
-                <TYPE.main>Total Transactions</TYPE.main>
+              <AutoColumn gap="8px" className="spacing-left-10">
+                <TYPE.header fontSize={20}>Total Transactions</TYPE.header>
+                <TYPE.main color="#767676" fontSize={24}>
+                  {transactionCount ? transactionCount : '-'}
+                </TYPE.main>
               </AutoColumn>
             </AutoRow>
           </Panel>

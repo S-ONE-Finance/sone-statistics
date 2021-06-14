@@ -1,11 +1,10 @@
 .light-mode {
-  background: linear-gradient(30.5deg, #FCF0F0 8.77%, #FFFFFF 32.67%), #FFFFFF;
+  background: linear-gradient(30.5deg, #fcf0f0 8.77%, #ffffff 32.67%), #ffffff;
   /* position: relative; */
 }
 
 .justify-content-center {
   justify-content: center !important;
-
 }
 
 .align-items-center {
@@ -15,7 +14,6 @@
 .w-100 {
   width: 100% !important;
 }
-
 
 .text-center {
   text-align: center;
@@ -46,6 +44,20 @@
   height: 100% !important;
 }
 
+.font-weight-bold {
+  font-weight: bold !important;
+}
+.f-20 {
+  font-size: 20px !important;
+}
+.spacing-left-10 {
+  margin-left: 10% !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
 .btn-danger {
   min-width: 190px;
   height: 48px;
@@ -54,14 +66,14 @@
   align-items: center;
   border-radius: 25px;
   font-weight: bold;
-  color: #FFFFFF;
-  background-color: #F05359;
+  color: #ffffff;
+  background-color: #f05359;
   border: 0;
   cursor: pointer;
 }
 
 .btn-danger a {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .light-mode::after {
@@ -128,7 +140,7 @@
   z-index: 0;
 }
 
-.stats-page .box-card-items .card-item>div>div>div {
+.stats-page .box-card-items .card-item > div > div > div {
   padding: 16px 30px;
 }
 
@@ -152,7 +164,7 @@
   padding: 0px;
 }
 
-.stats-page .box-table-main>div>div>div {
+.stats-page .box-table-main > div > div > div {
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -270,7 +282,7 @@ div.MuiTabs-flexContainer {
 }
 
 .isBgTableDark {
-  background-color: #0E2B4A;
+  background-color: #0e2b4a;
   box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   border-radius: 15px;
 }
@@ -287,9 +299,8 @@ div.MuiTabs-flexContainer {
   margin-top: 20px;
 }
 
-
 .btn-secondary {
-  background-color: #C9C9C9 !important;
+  background-color: #c9c9c9 !important;
 }
 
 .minw-auto {
@@ -344,7 +355,6 @@ div.MuiTabs-flexContainer {
   .btn-danger {
     min-width: calc(100% / 2 - 15px);
   }
-
 
   .box-btn-action {
     width: 100%;
