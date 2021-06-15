@@ -66,6 +66,7 @@ const Body = styled.div`
   background-color: ${({ theme }) => theme.onlyLight};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding-bottom: 10%;
+    padding-top: 2%;
   `};
 `
 

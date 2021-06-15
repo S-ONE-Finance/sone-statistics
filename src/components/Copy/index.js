@@ -21,6 +21,10 @@ const CopyIcon = styled.div`
     opacity: 0.8;
     cursor: pointer;
   }
+  @media (max-width: 800px) {
+    margin-right: 0;
+    margin-left: auto;
+  }
 `
 const TransactionStatusText = styled.span`
   margin-left: 0.25rem;

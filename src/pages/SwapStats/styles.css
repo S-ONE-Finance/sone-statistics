@@ -346,6 +346,15 @@ div.MuiTabs-flexContainer {
   color: #fff !important;
 }
 
+@media (min-width: 300px) {
+  .light-mode::after {
+    display: none;
+  }
+  .dark-mode::after {
+    display: none;
+  }
+}
+
 @media (max-width: 576px) {
   .stats-page .box-first-main {
     justify-content: flex-start;
