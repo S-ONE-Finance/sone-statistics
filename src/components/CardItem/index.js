@@ -8,6 +8,9 @@ CardItem.propTypes = {}
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: 30,
+    '@media (max-width: 800px)': {
+      marginBottom: 15,
+    },
   },
   cardPreview: {
     marginRight: 30,

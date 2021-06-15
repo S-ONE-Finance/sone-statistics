@@ -46,6 +46,22 @@ const useStyles = makeStyles((theme) => ({
   primaryBg: {
     backgroundColor: theme.palette.primary.main,
   },
+  boxCardItems: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  boxItem: {
+    flexBasis: 'calc(100% / 4 - 30px)',
+    '@media (max-width: 800px)': {
+      flexBasis: 'calc(100%)',
+    },
+  },
+  boxMainContentOverview: {
+    marginTop: 30,
+    '@media (max-width: 800px)': {
+      marginTop: 15,
+    },
+  },
 }))
 
 const StyledGrid = styled(Grid)`
@@ -99,13 +115,12 @@ function OverviewStatistics(props) {
   const below800 = useMedia('(max-width: 800px)')
 
   return (
-    <div className="box-main-content-overview">
-      <StyledGrid className="box-card-items" container spacing={3}>
-        <Grid item md={6} lg={3} className="card-item">
+    <div className={classes.boxMainContentOverview}>
+      <StyledGrid className={classes.boxCardItems} container spacing={0}>
+        <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
             title="ETH Price"
             colorTextRatioValue="#F05359"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -119,11 +134,10 @@ function OverviewStatistics(props) {
             ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
           />
         </Grid>
-        <Grid item md={6} lg={3} className="card-item">
+        <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
             title="No. Transactions (24h)"
             colorTextRatioValue="#7AC51B"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -137,11 +151,10 @@ function OverviewStatistics(props) {
             ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
           />
         </Grid>
-        <Grid item md={12} lg={3} className="card-item">
+        <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
             title="Pools"
             colorTextRatioValue="#F05359"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -155,11 +168,10 @@ function OverviewStatistics(props) {
             ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
           />
         </Grid>
-        <Grid item md={12} lg={3} className="card-item">
+        <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
             title="Total Fees (24h)"
             colorTextRatioValue="#7AC51B"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography

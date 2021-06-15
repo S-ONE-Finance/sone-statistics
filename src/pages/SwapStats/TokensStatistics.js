@@ -19,6 +19,7 @@ const ListOptions = styled(AutoRow)`
 
 function TokensStatistics({ ...props }) {
   const allTokens = useAllTokenData()
+
   return (
     <div className="box-main-content-tokens">
       <div>
@@ -27,7 +28,9 @@ function TokensStatistics({ ...props }) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Top Tokens
             </TYPE.main>
-            <CustomLink style={{ color: "#3FAAB0" }} to={'/tokens'}>See more</CustomLink>
+            <CustomLink style={{ color: '#3FAAB0' }} to={'/tokens'}>
+              See more
+            </CustomLink>
           </RowBetween>
         </ListOptions>
         {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}

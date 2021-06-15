@@ -26,6 +26,12 @@ const Title = styled.div`
   `}
 `
 
+const MainWrapper = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   padding-bottom: 10%
+  `}
+`
+
 const StyledGrid = styled(Grid)`
   max-width: 100%;
   margin: 0 auto !important;
@@ -72,6 +78,16 @@ const customStyleTabbar = makeStyles((theme) => ({
     paddingRight: 7,
     marginBottom: '0px !important',
   },
+  boxSearchLeft: {
+    marginLeft: 'auto',
+    '@media (max-width: 576px)': {
+      margin: '15px auto 0',
+      width: '100%',
+    },
+    '@media (min-width: 576px) and (max-width: 800px)': {
+      // margin-left: auto;
+    },
+  },
 }))
 
 const TabCustom = withStyles((theme) => ({
@@ -98,7 +114,9 @@ const TabCustom = withStyles((theme) => ({
       justifyContent: 'space-between',
     },
   },
-  selected: {},
+  selected: {
+    backgroundColor: 'red',
+  },
 }))((props) => <Tab disableRipple {...props} />)
 
 function StatsPage() {
@@ -110,20 +128,20 @@ function StatsPage() {
   }
 
   return (
-    <>
-      <PageWrapper className="stats-page">
+    <MainWrapper>
+      <PageWrapper>
         <ContentWrapper style={{ zIndex: 1 }}>
-          <Grid container spacing={3} className="box-first-main">
-            <Grid item lg={4} md={12} mb={0.5} px={2}>
+          <Grid container spacing={0} className="box-first-main">
+            <Grid item lg={4} md={12} mb={0.5} px={0}>
               <Title>Swap Statistics</Title>
             </Grid>
-            <Grid className="box-search_left" item lg={4} md={12} mb={0.5} px={2}>
+            <Grid className={classes.boxSearchLeft} item lg={4} md={12} mb={0.5} px={2} mt={2}>
               <BoxSearch />
             </Grid>
           </Grid>
 
           {/* tab switch */}
-          <StyledGrid container spacing={3}>
+          <StyledGrid container spacing={0}>
             <Grid item xs={12}>
               <Tabs
                 value={indexTabMain}
@@ -169,7 +187,7 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconUser className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  icon={<IconUser fontSize="small" className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Accounts"
                   {...a11yProps(3)}
@@ -179,7 +197,12 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconUser className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  icon={
+                    <IconUser
+                      style={{ width: 20, height: 20 }}
+                      className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+                    />
+                  }
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Transactions"
                   {...a11yProps(4)}
@@ -210,7 +233,7 @@ function StatsPage() {
           </TabPanel>
         </ContentWrapper>
       </PageWrapper>
-    </>
+    </MainWrapper>
   )
 }
 

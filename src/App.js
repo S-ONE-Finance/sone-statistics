@@ -64,6 +64,9 @@ const Body = styled.div`
   z-index: 9999;
   transition: width 0.25s ease;
   background-color: ${({ theme }) => theme.onlyLight};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding-bottom: 10%;
+  `};
 `
 
 const WarningWrapper = styled.div`
@@ -122,9 +125,9 @@ function App() {
           </WarningWrapper>
         )}
         {globalData &&
-          Object.keys(globalData).length > 0 &&
-          globalChartData &&
-          Object.keys(globalChartData).length > 0 ? (
+        Object.keys(globalData).length > 0 &&
+        globalChartData &&
+        Object.keys(globalChartData).length > 0 ? (
           <BrowserRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>

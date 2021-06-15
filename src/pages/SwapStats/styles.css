@@ -248,6 +248,8 @@ div.MuiTabs-flexContainer {
 
 .MuiButtonBase-root.MuiTab-root .iconDarkMode {
   filter: invert(115%) sepia(107%) saturate(109%) hue-rotate(249deg) brightness(226%) contrast(13%);
+  width: 20px;
+  height: 20px;
 }
 
 .MuiButtonBase-root.MuiTab-root.Mui-selected .iconLightMode,
@@ -286,27 +288,27 @@ div.MuiTabs-flexContainer {
   margin-left: auto;
 }
 
-.stats-page .btn-tab-custom.Mui-selected {
+.btn-tab-custom.Mui-selected {
   background-color: #f05359 !important;
 }
 
-.stats-page .btn-tab-custom.btn-dark-mode {
+.btn-tab-custom.btn-dark-mode {
   background-color: #0e2b4a;
 }
 
-.stats-page .btn-tab-custom.btn-light-mode {
+.btn-tab-custom.btn-light-mode {
   background-color: #f3f3f3;
 }
 
-.stats-page .btn-tab-custom.btn-light-mode span {
+.btn-tab-custom.btn-light-mode span {
   color: #000;
 }
 
-.stats-page .btn-tab-custom.Mui-selected.btn-light-mode span {
+.btn-tab-custom.Mui-selected.btn-light-mode span {
   color: #fff;
 }
 
-.stats-page .btnLink {
+.btnLink {
   color: #3faab0;
 }
 
@@ -425,9 +427,25 @@ div.MuiTabs-flexContainer {
   .MuiTabs-scroller.MuiTabs-fixed .MuiTabs-flexContainer {
     flex-wrap: wrap;
   }
+  div.MuiTabs-flexContainer {
+    justify-content: space-around;
+  }
 
   .MuiTabs-scroller.MuiTabs-fixed .MuiTabs-flexContainer button {
-    min-width: calc(100% / 3 - 15px) !important;
+    min-width: 120px;
+    margin: auto 0;
+    width: auto;
+    margin-top: 14px;
+    min-height: auto;
+    margin-right: 5px;
+    max-width: 130px;
+  }
+
+  .MuiTabs-scroller.MuiTabs-fixed .MuiTabs-flexContainer button span {
+    font-size: 13px;
+  }
+  .stats-page .box-card-items {
+    margin-top: 15px;
   }
 }
 
