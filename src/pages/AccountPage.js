@@ -23,6 +23,24 @@ import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 
+const StyledPanel = styled(Panel)`
+  margin-top: 1.5rem !important;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border: 0;
+`
+const StyleAutoColumn = styled(AutoColumn)`
+  margin-left: 10% !important;
+
+  @media (max-width: 800px) {
+    :first-child {
+      margin-left: 20px !important;
+    }
+    margin-left: 0% !important;
+  }
+`
+
 const AccountWrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
   padding: 6px 16px;
@@ -163,6 +181,18 @@ function AccountPage({ account }) {
 
   // status theme mode
   const [isDarkMode] = useDarkModeManager()
+
+  const StyleAutoRow = styled(AutoRow)`
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    border-radius: 15px;
+    flex-wrap: wrap;
+    margin: auto;
+    @media (max-width: 800px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  `
 
   return (
     <PageWrapper>
@@ -337,6 +367,7 @@ function AccountPage({ account }) {
           </TYPE.main>{' '}
           <Panel
             className="box-shadow-none"
+            className="flex-wrap m-auto"
             style={{
               marginTop: '1.5rem',
               border: 0,
@@ -346,27 +377,6 @@ function AccountPage({ account }) {
           >
             <PositionList positions={positions} />
           </Panel>
-          {/* <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
-            Liquidity Mining Pools
-          </TYPE.main>
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-              border: 0,
-              backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
-              boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-            }}
-          >
-            {miningPositions && <MiningPositionList miningPositions={miningPositions} />}
-            {!miningPositions && (
-              <AutoColumn gap="8px" justify="flex-start">
-                <TYPE.main>No Staked Liquidity.</TYPE.main>
-                <AutoRow gap="8px" justify="flex-start">
-                  <ButtonLight style={{ padding: '4px 6px', borderRadius: '4px' }}>Learn More</ButtonLight>{' '}
-                </AutoRow>{' '}
-              </AutoColumn>
-            )}
-          </Panel> */}
           <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Transactions
           </TYPE.main>{' '}
@@ -384,44 +394,29 @@ function AccountPage({ account }) {
           <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Wallet Stats
           </TYPE.main>{' '}
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-              padding: 0,
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-              border: 0,
-            }}
-          >
-            <AutoRow
-              gap="20px"
-              className="flex-wrap m-auto"
-              style={{
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
-                borderRadius: 15,
-              }}
-            >
-              <AutoColumn gap="8px">
+          <StyledPanel>
+            <StyleAutoRow gap="20px">
+              <StyleAutoColumn gap="8px">
                 <TYPE.header fontSize={20}>Total Value Swapped</TYPE.header>
                 <TYPE.main color="#767676" fontSize={24}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
                 </TYPE.main>
-              </AutoColumn>
-              <AutoColumn gap="8px" className="spacing-left-10">
+              </StyleAutoColumn>
+
+              <StyleAutoColumn gap="8px">
                 <TYPE.header fontSize={20}>Total Fees Paid</TYPE.header>
                 <TYPE.main color="#767676" fontSize={24}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.main>
-              </AutoColumn>
-              <AutoColumn gap="8px" className="spacing-left-10">
+              </StyleAutoColumn>
+              <StyleAutoColumn gap="8px">
                 <TYPE.header fontSize={20}>Total Transactions</TYPE.header>
                 <TYPE.main color="#767676" fontSize={24}>
                   {transactionCount ? transactionCount : '-'}
                 </TYPE.main>
-              </AutoColumn>
-            </AutoRow>
-          </Panel>
+              </StyleAutoColumn>
+            </StyleAutoRow>
+          </StyledPanel>
         </DashboardWrapper>
       </ContentWrapper>
     </PageWrapper>
