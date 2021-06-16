@@ -19,6 +19,14 @@ const AccountWrapper = styled.div`
   }
 `
 
+const StylePanel = styled(Panel)`
+  margin-top: 1.5rem;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  box-shadow: none;
+`
+
 function AccountLookup() {
   // scroll to top
   useEffect(() => {

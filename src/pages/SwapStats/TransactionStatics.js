@@ -11,9 +11,11 @@ const ListOptions = styled(AutoRow)`
   width: 100%;
   font-size: 1.25rem;
   font-weight: 600;
-
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
   @media screen and (max-width: 640px) {
     font-size: 1rem;
+    margin-top: 1rem;
   }
 `
 
@@ -21,7 +23,7 @@ function TransactionStatics(props) {
   const transactions = useGlobalTransactions()
   return (
     <div>
-      <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
+      <ListOptions gap="10px">
         <RowBetween>
           <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
             Transactions

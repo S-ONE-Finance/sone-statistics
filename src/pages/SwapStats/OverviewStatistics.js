@@ -112,7 +112,24 @@ function OverviewStatistics(props) {
   //Transactions
   const transactions = useGlobalTransactions()
   // breakpoints
-  const below800 = useMedia('(max-width: 800px)')
+  const below800 = useMedia('max-width: 800px')
+
+  const PanelHight = styled(Panel)`
+    height: 100%;
+    min-height: 300px;
+    z-index: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
+    border: 0;
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+  `
+
+  const PanelLow = styled(Panel)`
+    height: 100%;
+    z-index: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
+    border: 0;
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+  `
 
   return (
     <div className={classes.boxMainContentOverview}>
@@ -189,45 +206,19 @@ function OverviewStatistics(props) {
       <div className="box-chart">
         {!below800 && (
           <GridRow>
-            <Panel
-              style={{
-                height: '100%',
-                minHeight: '300px',
-                zIndex: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
-                border: 0,
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-              }}
-            >
+            <PanelHight>
               <GlobalChart display="liquidity" />
-            </Panel>
-            <Panel
-              style={{
-                height: '100%',
-                zIndex: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
-                border: 0,
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-              }}
-            >
+            </PanelHight>
+            <PanelLow>
               <GlobalChart display="volume" />
-            </Panel>
+            </PanelLow>
           </GridRow>
         )}
         {below800 && (
           <AutoColumn style={{ marginTop: '6px' }} gap="24px">
-            <Panel
-              style={{
-                height: '100%',
-                minHeight: '300px',
-                zIndex: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
-                border: 0,
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-              }}
-            >
+            <PanelHight>
               <GlobalChart display="liquidity" />
-            </Panel>
+            </PanelHight>
           </AutoColumn>
         )}
       </div>
@@ -276,9 +267,6 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
               Transactions
             </TYPE.main>
-            {/* <CustomLink className="btnLink" to={'/tokens'}>
-              See more
-            </CustomLink> */}
           </RowBetween>
         </ListOptions>
         <TxnList transactions={transactions} />

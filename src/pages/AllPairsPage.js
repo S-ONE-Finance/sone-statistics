@@ -11,6 +11,8 @@ import Search from '../components/Search'
 import { useMedia } from 'react-use'
 import QuestionHelper from '../components/QuestionHelper'
 import CheckBox from '../components/Checkbox'
+import styled from 'styled-components'
+import { useDarkModeManager } from '../contexts/LocalStorage'
 
 function AllPairsPage() {
   const allPairs = useAllPairData()
@@ -22,6 +24,14 @@ function AllPairsPage() {
   const below800 = useMedia('(max-width: 800px)')
 
   const [useTracked, setUseTracked] = useState(true)
+  const [isDarkMode] = useDarkModeManager()
+
+  const StylePanel = styled(Panel)`
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+  `
 
   return (
     <PageWrapper>
@@ -34,9 +44,9 @@ function AllPairsPage() {
           <CheckBox checked={useTracked} setChecked={() => setUseTracked(!useTracked)} text={'Hide untracked pairs'} />
           <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
         </AutoRow>
-        <Panel style={{ padding: below800 && '1rem 0 0 0 ' }}>
+        <StylePanel>
           <PairList pairs={allPairs} disbaleLinks={true} maxItems={50} useTracked={useTracked} />
-        </Panel>
+        </StylePanel>
       </FullWrapper>
     </PageWrapper>
   )

@@ -9,8 +9,8 @@ import { PageWrapper, FullWrapper } from '../components'
 import { RowBetween } from '../components/Row'
 import Search from '../components/Search'
 import { useMedia } from 'react-use'
-// import CheckBox from '../components/Checkbox'
-// import QuestionHelper from '../components/QuestionHelper'
+import styled from 'styled-components'
+import { useDarkModeManager } from '../contexts/LocalStorage'
 
 function AllTokensPage() {
   const allTokens = useAllTokenData()
@@ -21,8 +21,14 @@ function AllTokensPage() {
 
   const below600 = useMedia('(max-width: 800px)')
 
-  // const [useTracked, setUseTracked] = useState(true)
+  const [isDarkMode] = useDarkModeManager()
 
+  const StylePanel = styled(Panel)`
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+  `
   return (
     <PageWrapper>
       <FullWrapper>
@@ -30,13 +36,10 @@ function AllTokensPage() {
           <TYPE.largeHeader fontSize={'2.125rem'}>Top Tokens</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
         </RowBetween>
-        {/* <AutoRow gap="4px">
-          <CheckBox checked={useTracked} setChecked={() => setUseTracked(!useTracked)} text={'Hide untracked tokens'} />
-          <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
-        </AutoRow> */}
-        <Panel style={{ marginTop: '6px', padding: below600 && '1rem 0 0 0 ', backgroundColor: 'transparent', border: 0, padding: 0 }}>
+
+        <StylePanel>
           <TopTokenList tokens={allTokens} itemMax={50} />
-        </Panel>
+        </StylePanel>
       </FullWrapper>
     </PageWrapper>
   )
