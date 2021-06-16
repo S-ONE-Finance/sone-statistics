@@ -18,12 +18,24 @@ const ListOptions = styled(AutoRow)`
   }
 `
 
+const StyleListOptions = styled(ListOptions)`
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+`
+
+const StylePanel = styled(Panel)`
+  margintop: 6px;
+  padding: 0;
+  border: 0;
+  backgroundcolor: transparent;
+`
+
 function PairsStatistics({}) {
   const allPairs = useAllPairData()
 
   return (
     <>
-      <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
+      <StyleListOptions gap="10px" style={{}}>
         <RowBetween>
           <TYPE.main fontSize={'2rem'} style={{ whiteSpace: 'nowrap' }}>
             Top Pairs
@@ -32,8 +44,8 @@ function PairsStatistics({}) {
             <CustomLink to={'/pairs'}>See All</CustomLink>
           </AutoRow>
         </RowBetween>
-      </ListOptions>
-      <Panel style={{ marginTop: '6px', padding: '0', border: 0, backgroundColor: 'transparent' }}>
+      </StyleListOptions>
+      <Panel style={{}}>
         <PairList pairs={allPairs} />
       </Panel>
     </>
