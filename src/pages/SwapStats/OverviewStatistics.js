@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   boxItem: {
-    flexBasis: 'calc(100% / 4 - 30px)',
+    flexBasis: 'calc(100% / 4 - 20px)',
     '@media (max-width: 800px)': {
       flexBasis: 'calc(100%)',
     },
@@ -82,7 +82,7 @@ const GridRow = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: 1fr 1fr;
-  column-gap: 6px;
+  column-gap: 19px;
   align-items: start;
   justify-content: space-between;
 `
@@ -225,7 +225,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Tokens
             </TYPE.main>
             <CustomLink className="btnLink" to={'/tokens'}>
@@ -238,7 +238,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Pairs
             </TYPE.main>
             <CustomLink className="btnLink" to={'/pairs'}>
@@ -251,7 +251,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Accounts
             </TYPE.main>
             <CustomLink className="btnLink" to={'/accounts'}>
@@ -264,7 +264,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Transactions
             </TYPE.main>
           </RowBetween>

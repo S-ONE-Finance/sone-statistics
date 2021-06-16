@@ -194,6 +194,22 @@ function AccountPage({ account }) {
     }
   `
 
+  const StylePanel = styled(Panel)`
+    grid-column: 1;
+    border: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+  `
+  const StylePanelBlockPosition = styled(Panel)`
+    flex-wrap: wrap;
+    margin: auto;
+    box-shadow: none;
+    margin-top: 1.5rem;
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+  `
+
   return (
     <PageWrapper>
       <ContentWrapper style={{ zIndex: 1 }}>
@@ -346,51 +362,27 @@ function AccountPage({ account }) {
           )}
           {!hideLPContent && (
             <PanelWrapper>
-              <Panel
-                style={{
-                  gridColumn: '1',
-                  border: 0,
-                  backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
-                  boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-                }}
-              >
+              <StylePanel>
                 {activePosition ? (
                   <PairReturnsChart account={account} position={activePosition} />
                 ) : (
                   <UserChart account={account} position={activePosition} />
                 )}
-              </Panel>
+              </StylePanel>
             </PanelWrapper>
           )}
           <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Positions
           </TYPE.main>{' '}
-          <Panel
-            className="box-shadow-none"
-            className="flex-wrap m-auto"
-            style={{
-              marginTop: '1.5rem',
-              border: 0,
-              backgroundColor: 'transparent',
-              padding: 0,
-            }}
-          >
+          <StylePanelBlockPosition>
             <PositionList positions={positions} />
-          </Panel>
+          </StylePanelBlockPosition>
           <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Transactions
           </TYPE.main>{' '}
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-              padding: 0,
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-              border: 0,
-            }}
-          >
+          <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
-          </Panel>
+          </StylePanelBlockPosition>
           <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
             Wallet Stats
           </TYPE.main>{' '}

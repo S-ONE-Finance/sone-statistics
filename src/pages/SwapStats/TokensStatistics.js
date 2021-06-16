@@ -5,6 +5,7 @@ import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
 import styled from 'styled-components'
 import { useAllTokenData } from '../../contexts/TokenData'
+import { useMedia } from 'react-use'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
