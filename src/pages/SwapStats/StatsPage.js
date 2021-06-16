@@ -37,7 +37,7 @@ const StyledGrid = styled(Grid)`
   margin: 0 auto !important;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    max-width: 90%;
+    max-width: 100%;
   `}
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
