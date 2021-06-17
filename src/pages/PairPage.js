@@ -46,7 +46,7 @@ const DashboardWrapper = styled.div`
 const PanelWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: max-content;
-  gap: 6px;
+  gap: 20px;
   display: inline-grid;
   width: 100%;
   align-items: start;
@@ -227,16 +227,36 @@ function PairPage({ pairAddress, history }) {
     )
   }
 
+  const StylePanel = styled(Panel)`
+    border: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F3F3F3'};
+    margin-bottom: 20;
+  `
+  // const StylePanelPairChart = styled(Panel)`
+  //   gridColumn: ${below1080 ? 1 : 2/4};
+  //   gridRow: below1080 ? '' : '1/5';
+  //   backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3';
+  //   border: 0;
+  //   boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+  //   borderRadius: 25
+  // `
+  const StyleDiv = styled.div`
+    z-index: 2;
+  `
+
   return (
     <PageWrapper>
       <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
       <span />
-      <Warning
-        type={'pair'}
-        show={!dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))}
-        setShow={markAsDismissed}
-        address={pairAddress}
-      />
+      <StyleDiv>
+        <Warning
+          type={'pair'}
+          show={!dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))}
+          setShow={markAsDismissed}
+          address={pairAddress}
+        />
+      </StyleDiv>
+
       <ContentWrapperLarge style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
@@ -348,7 +368,7 @@ function PairPage({ pairAddress, history }) {
             <>
               {!below1080 && (
                 <RowFixed>
-                  <TYPE.main fontSize={'1.125rem'} mr="6px">
+                  <TYPE.main fontSize={'2.125rem'} mr="6px">
                     Pair Stats
                   </TYPE.main>
                   {showUSDWaning ? (
@@ -359,7 +379,7 @@ function PairPage({ pairAddress, history }) {
                 </RowFixed>
               )}
               <PanelWrapper style={{ marginTop: '1.5rem' }}>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', marginBottom: 20 }}>
+                <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Total Liquidity </TYPE.main>
@@ -372,8 +392,8 @@ function PairPage({ pairAddress, history }) {
                       <TYPE.main>{liquidityChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
-                </Panel>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', marginBottom: 20 }}>
+                </StylePanel>
+                <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Volume (24hrs) </TYPE.main>
@@ -386,8 +406,8 @@ function PairPage({ pairAddress, history }) {
                       <TYPE.main>{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
-                </Panel>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', marginBottom: 20 }}>
+                </StylePanel>
+                <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Fees (24hrs)</TYPE.main>
@@ -400,8 +420,8 @@ function PairPage({ pairAddress, history }) {
                       <TYPE.main>{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
-                </Panel>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                </StylePanel>
+                <StylePanel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Pooled Tokens</TYPE.main>
@@ -430,7 +450,7 @@ function PairPage({ pairAddress, history }) {
                       </AutoRow>
                     </Hover>
                   </AutoColumn>
-                </Panel>
+                </StylePanel>
                 <Panel
                   style={{
                     gridColumn: below1080 ? '1' : '2/4',
@@ -438,6 +458,7 @@ function PairPage({ pairAddress, history }) {
                     backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
                     border: 0,
                     boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+                    borderRadius: 25,
                   }}
                 >
                   <PairChart
@@ -448,7 +469,7 @@ function PairPage({ pairAddress, history }) {
                   />
                 </Panel>
               </PanelWrapper>
-              <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
+              <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
                 Transactions
               </TYPE.main>{' '}
               <Panel
@@ -463,7 +484,7 @@ function PairPage({ pairAddress, history }) {
                 {transactions ? <TxnList transactions={transactions} /> : <Loader />}
               </Panel>
               <RowBetween style={{ marginTop: '3rem' }}>
-                <TYPE.main fontSize={'1.125rem'}>Pair Information</TYPE.main>{' '}
+                <TYPE.main fontSize={'2.125rem'}>Pair Information</TYPE.main>{' '}
               </RowBetween>
               <Panel
                 rounded

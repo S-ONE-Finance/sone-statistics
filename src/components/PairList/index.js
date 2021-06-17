@@ -97,7 +97,7 @@ const DataText = styled(Flex)`
   color: ${({ theme }) => theme.text1};
 
   & > * {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   @media screen and (max-width: 600px) {
@@ -149,7 +149,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
   const ITEMS_PER_PAGE = maxItems
-  const [isDarkMode] = useDarkModeManager();
+  const [isDarkMode] = useDarkModeManager()
 
   // sorting
   const [sortDirection, setSortDirection] = useState(true)
@@ -186,7 +186,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
 
       const apy = formattedPercent(
         ((pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD : pairData.oneDayVolumeUntracked) * 0.003 * 365 * 100) /
-        (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
+          (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
       )
 
       const weekVolume = formattedNum(
@@ -200,7 +200,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
       )
 
       return (
-        <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true} >
+        <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
           <DataText area="name" fontWeight="500">
             {!below600 && <div style={{ marginRight: '20px', width: '10px' }}>{index}</div>}
             <DoubleTokenLogo
@@ -209,7 +209,11 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
               a1={pairData.token1.id}
               margin={!below740}
             />
-            <CustomLink style={{ marginLeft: '20px', whiteSpace: 'nowrap' }} to={'/pair/' + pairAddress} color={isDarkMode ? "#fff" : "#333333"}>
+            <CustomLink
+              style={{ marginLeft: '20px', whiteSpace: 'nowrap' }}
+              to={'/pair/' + pairAddress}
+              color={isDarkMode ? '#fff' : '#333333'}
+            >
               <FormattedName
                 text={pairData.token0.symbol + '-' + pairData.token1.symbol}
                 maxCharacters={below600 ? 8 : 16}
@@ -218,18 +222,44 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
               />
             </CustomLink>
           </DataText>
-          <DataText area="liq" className="justify-content-center w-100" style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }}>{formatDataText(liquidity, pairData.trackedReserveUSD)}</DataText>
-          <DataText area="vol" className="justify-content-center w-100" style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }}>{formatDataText(volume, pairData.oneDayVolumeUSD)}</DataText>
-          { !below1080 && <DataText area="volWeek" className="justify-content-center w-100" style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }}>{formatDataText(weekVolume, pairData.oneWeekVolumeUSD)}</DataText>}
-          { !below1080 && <DataText area="fees" className="justify-content-center w-100" style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }}>{formatDataText(fees, pairData.oneDayVolumeUSD)}</DataText>}
-          {
-            !below1080 && (
-              <DataText area="apy" className="justify-content-center w-100">
-                {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}
-              </DataText>
-            )
-          }
-        </DashGrid >
+          <DataText
+            area="liq"
+            className="justify-content-center w-100"
+            style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          >
+            {formatDataText(liquidity, pairData.trackedReserveUSD)}
+          </DataText>
+          <DataText
+            area="vol"
+            className="justify-content-center w-100"
+            style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          >
+            {formatDataText(volume, pairData.oneDayVolumeUSD)}
+          </DataText>
+          {!below1080 && (
+            <DataText
+              area="volWeek"
+              className="justify-content-center w-100"
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            >
+              {formatDataText(weekVolume, pairData.oneWeekVolumeUSD)}
+            </DataText>
+          )}
+          {!below1080 && (
+            <DataText
+              area="fees"
+              className="justify-content-center w-100"
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            >
+              {formatDataText(fees, pairData.oneDayVolumeUSD)}
+            </DataText>
+          )}
+          {!below1080 && (
+            <DataText area="apy" className="justify-content-center w-100">
+              {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}
+            </DataText>
+          )}
+        </DashGrid>
       )
     } else {
       return ''
@@ -268,8 +298,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                     ? 'table-row'
                     : 'table-row-dark-mode'
                   : index % 2
-                    ? 'table-row'
-                    : 'table-row-light-mode'
+                  ? 'table-row'
+                  : 'table-row-light-mode'
               }
             >
               <ListItem key={index} index={(page - 1) * ITEMS_PER_PAGE + index + 1} pairAddress={pairAddress} />
@@ -282,15 +312,13 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'}>
-        <DashGrid
-          center={true}
-          disbaleLinks={disbaleLinks}
-          style={{ height: 'fit-content', padding: '20px' }}
-        >
+        <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '20px' }}>
           <Flex alignItems="center" className="justify-content-center w-100">
-            <TYPE.main area="name" style={{ fontWeight: 'bold' }} >Name</TYPE.main>
+            <TYPE.main area="name" style={{ fontWeight: 'bold' }}>
+              Name
+            </TYPE.main>
           </Flex>
-          <Flex alignItems="center" justifyContent="center" className="justify-content-center w-100" >
+          <Flex alignItems="center" justifyContent="center" className="justify-content-center w-100">
             <ClickableText
               area="liq"
               style={{ fontWeight: 'bold' }}
@@ -312,7 +340,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
               }}
             >
               Volume (24hrs)
-            {sortedColumn === SORT_FIELD.VOL ? (!sortDirection ? '↑' : '↓') : ''}
+              {sortedColumn === SORT_FIELD.VOL ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
           {!below1080 && (
@@ -360,7 +388,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
           )}
         </DashGrid>
         <Divider />
-        <List p={0} >{!pairList ? <LocalLoader /> : pairList}</List>
+        <List p={0}>{!pairList ? <LocalLoader /> : pairList}</List>
       </ListWrapper>
       <Pagination
         style={{ justifyContent: 'center' }}
@@ -372,7 +400,6 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         variant="outlined"
         shape="rounded"
         className="panigation-table-token-page"
-
       />
     </>
   )

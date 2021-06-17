@@ -16,6 +16,10 @@ const ListOptions = styled(AutoRow)`
     font-size: 1rem;
   }
 `
+const StyleDiv = styled.div`
+  margin-top: 1.25rem;
+`
+
 function AccountStatics() {
   const topLps = useTopLps()
   return (
@@ -30,7 +34,9 @@ function AccountStatics() {
           </CustomLink>
         </RowBetween>
       </ListOptions>
-      <LPList lps={topLps} />
+      <StyleDiv>
+        <LPList lps={topLps} />
+      </StyleDiv>
     </div>
   )
 }

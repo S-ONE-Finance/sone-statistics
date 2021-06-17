@@ -34,6 +34,10 @@ const StyleAutoColumn = styled(AutoColumn)`
   margin-left: 10% !important;
 
   @media (max-width: 800px) {
+    display: flex;
+    width: fit-content;
+    justify-content: space-between;
+    grid-column-gap: 20px;
     :first-child {
       margin-left: 20px !important;
     }
@@ -191,6 +195,7 @@ function AccountPage({ account }) {
     @media (max-width: 800px) {
       flex-direction: column;
       align-items: flex-start;
+      grid-column-gap: 20px;
     }
   `
 
@@ -210,15 +215,51 @@ function AccountPage({ account }) {
     padding: 0;
   `
 
+  const TitlteTop = styled(TYPE.main)`
+    margin-top: 3rem !important;
+    margin-bottom: 1.125rem !important;
+  `
+
+  const StyleTitle = styled(TYPE.body)`
+    color: ${isDarkMode ? '#AAAAAA' : '#767676'}
+    font-size: 20px;
+    @media(max-width: 600px){
+      font-size: 13px;
+    }
+  `
+
+  const StyleContentBottom = styled(TYPE.header)`
+    color: ${isDarkMode ? '#FFFFF' : '#767676'}
+    font-size: 24px;
+    @media(max-width: 600px){
+      font-size: 16px;
+    }
+  `
+  const StyleAutoRow2 = styled(AutoRow)`
+    margin: 0px !important;
+    justify-content: space-between;
+  `
+
+  const StylePanel2 = styled(Panel)`
+    height: 100%;
+    margin-bottom: 35px;
+    border: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    padding: 1.25rem;
+    margin: -20px;
+    @media (max-width: 600px) {
+      margin-bottom: 15px !important;
+    }
+  `
+
   return (
     <PageWrapper>
       <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/accounts">{'Accounts '}</BasicLink>→{' '}
+            <BasicLink to="/accounts">{'Accounts '}</BasicLink>→
             <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
-              {' '}
-              {account?.slice(0, 42)}{' '}
+              {account?.slice(0, 42)}
             </Link>
           </TYPE.body>
           {!below600 && <Search small={true} />}
@@ -228,7 +269,11 @@ function AccountPage({ account }) {
             <span>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
               <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
-                <TYPE.main className="btn-danger" fontSize={14} mt={3} mb={3}>
+                <TYPE.main
+                  className="btn-danger"
+                  fontSize={16}
+                  style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
+                >
                   View on Etherscan
                 </TYPE.main>
               </Link>
@@ -246,7 +291,14 @@ function AccountPage({ account }) {
         <DashboardWrapper>
           {showWarning && <Warning>Fees cannot currently be calculated for pairs that include AMPL.</Warning>}
           {!hideLPContent && (
-            <DropdownWrapper style={{ border: 0, borderRadius: 25, backgroundColor: '#F3F3F3' }}>
+            <DropdownWrapper
+              style={{
+                border: 0,
+                borderRadius: 25,
+                backgroundColor: '#F3F3F3',
+                marginBottom: !below600 ? '35px' : '15px',
+              }}
+            >
               <ButtonDropdown
                 style={{ border: 0, backgroundColor: 'transparent' }}
                 width="100%"
@@ -320,45 +372,38 @@ function AccountPage({ account }) {
             </DropdownWrapper>
           )}
           {!hideLPContent && (
-            <Panel
-              style={{
-                height: '100%',
-                marginBottom: '1rem',
-                border: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
-              }}
-            >
-              <AutoRow gap="20px">
+            <StylePanel2 className="xxxxxxxx">
+              <StyleAutoRow2>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body style={{ color: isDarkMode ? '#0E2B4A' : '#767676 ' }}>
+                    <StyleTitle style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
                       Liquidity (Including Fees)
-                    </TYPE.body>
+                    </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <TYPE.header fontSize={'24px'} lineHeight={1}>
+                    <StyleContentBottom lineHeight={1}>
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
                         ? formattedNum(0, true)
                         : '-'}
-                    </TYPE.header>
+                    </StyleContentBottom>
                   </RowFixed>
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body>Fees Earned (Cumulative)</TYPE.body>
+                    <StyleTitle>Fees Earned (Cumulative)</StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <TYPE.header fontSize={'24px'} lineHeight={1} color={aggregateFees && 'green'}>
+                    <StyleContentBottom lineHeight={1} color={aggregateFees && 'green'}>
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
-                    </TYPE.header>
+                    </StyleContentBottom>
                   </RowFixed>
                 </AutoColumn>
-              </AutoRow>
-            </Panel>
+              </StyleAutoRow2>
+            </StylePanel2>
           )}
           {!hideLPContent && (
             <PanelWrapper>
@@ -371,39 +416,33 @@ function AccountPage({ account }) {
               </StylePanel>
             </PanelWrapper>
           )}
-          <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
-            Positions
-          </TYPE.main>{' '}
+          <TitlteTop fontSize={'2.125rem'}>Positions</TitlteTop>
           <StylePanelBlockPosition>
             <PositionList positions={positions} />
           </StylePanelBlockPosition>
-          <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
-            Transactions
-          </TYPE.main>{' '}
+          <TitlteTop fontSize={'2.125rem'}>Transactions</TitlteTop>
           <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
           </StylePanelBlockPosition>
-          <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
-            Wallet Stats
-          </TYPE.main>{' '}
+          <TitlteTop fontSize={'2.125rem'}>Wallet Stats</TitlteTop>
           <StyledPanel>
             <StyleAutoRow gap="20px">
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={20}>Total Value Swapped</TYPE.header>
-                <TYPE.main color="#767676" fontSize={24}>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Value Swapped</TYPE.header>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
 
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={20}>Total Fees Paid</TYPE.header>
-                <TYPE.main color="#767676" fontSize={24}>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Fees Paid</TYPE.header>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={20}>Total Transactions</TYPE.header>
-                <TYPE.main color="#767676" fontSize={24}>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Transactions</TYPE.header>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {transactionCount ? transactionCount : '-'}
                 </TYPE.main>
               </StyleAutoColumn>

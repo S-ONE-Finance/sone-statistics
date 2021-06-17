@@ -86,7 +86,7 @@ const DataText = styled(Flex)`
   color: ${({ theme }) => theme.text1} !important;
 
   & > * {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   @media screen and (max-width: 600px) {

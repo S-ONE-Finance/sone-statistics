@@ -121,7 +121,7 @@ function PositionList({ positions }) {
   // sorting
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.VALUE)
-  // status mode theme page 
+  // status mode theme page
   const [isDarkMode] = useDarkModeManager()
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -146,7 +146,11 @@ function PositionList({ positions }) {
 
     return (
       <DashGrid style={{ opacity: poolOwnership > 0 ? 1 : 0.6 }} focus={true}>
-        {!below740 && <DataText className="m-auto" area="number">{index}</DataText>}
+        {!below740 && (
+          <DataText className="m-auto" area="number">
+            {index}
+          </DataText>
+        )}
         <DataText area="name" justifyContent="flex-start" alignItems="flex-start">
           <AutoColumn gap="8px" justify="flex-start" align="flex-start">
             <DoubleTokenLogo size={16} a0={position.pair.token0.id} a1={position.pair.token1.id} margin={!below740} />
@@ -167,20 +171,30 @@ function PositionList({ positions }) {
                 href={getPoolLink(position.pair.token0.id, position.pair.token1.id)}
                 style={{ marginRight: '.5rem' }}
               >
-                <ButtonLight className='btn-danger minw-auto h-auto' style={{ padding: '4px 6px', borderRadius: '4px' }}>Add</ButtonLight>
+                <ButtonLight
+                  className="btn-danger minw-auto h-auto"
+                  style={{ padding: '4px 6px', borderRadius: '4px' }}
+                >
+                  Add
+                </ButtonLight>
               </Link>
               {poolOwnership > 0 && (
                 <Link external href={getPoolLink(position.pair.token0.id, position.pair.token1.id, true)}>
-                  <ButtonLight className='btn-secondary minw-auto h-auto text-white' style={{ padding: '4px 6px', borderRadius: '4px' }}>Remove</ButtonLight>
+                  <ButtonLight
+                    className="btn-secondary minw-auto h-auto text-white"
+                    style={{ padding: '4px 6px', borderRadius: '4px' }}
+                  >
+                    Withdraw
+                  </ButtonLight>
                 </Link>
               )}
             </RowFixed>
           </AutoColumn>
         </DataText>
         <DataText area="uniswap" className="justify-content-center">
-          <AutoColumn gap="12px" justify="flex-end">
+          <AutoColumn gap="12px" justify="center">
             <TYPE.main>{formattedNum(valueUSD, true, true)}</TYPE.main>
-            <AutoColumn gap="4px" justify="flex-end">
+            <AutoColumn gap="4px" justify="center">
               <RowFixed>
                 <TYPE.small fontWeight={400}>
                   {formattedNum(poolOwnership * parseFloat(position.pair.reserve0))}{' '}
@@ -208,19 +222,19 @@ function PositionList({ positions }) {
         </DataText>
         {!below500 && (
           <DataText area="return" className="justify-content-center">
-            <AutoColumn gap="12px" justify="flex-end">
+            <AutoColumn gap="12px" justify="center">
               <TYPE.main color={'green'}>
                 <RowFixed>{formattedNum(position?.fees.sum, true, true)}</RowFixed>
               </TYPE.main>
-              <AutoColumn gap="4px" justify="flex-end">
+              <AutoColumn gap="4px" justify="center">
                 <RowFixed>
                   <TYPE.small fontWeight={400}>
                     {parseFloat(position.pair.token0.derivedETH)
                       ? formattedNum(
-                        position?.fees.sum / (parseFloat(position.pair.token0.derivedETH) * ethPrice) / 2,
-                        false,
-                        true
-                      )
+                          position?.fees.sum / (parseFloat(position.pair.token0.derivedETH) * ethPrice) / 2,
+                          false,
+                          true
+                        )
                       : 0}{' '}
                   </TYPE.small>
                   <FormattedName
@@ -234,10 +248,10 @@ function PositionList({ positions }) {
                   <TYPE.small fontWeight={400}>
                     {parseFloat(position.pair.token1.derivedETH)
                       ? formattedNum(
-                        position?.fees.sum / (parseFloat(position.pair.token1.derivedETH) * ethPrice) / 2,
-                        false,
-                        true
-                      )
+                          position?.fees.sum / (parseFloat(position.pair.token1.derivedETH) * ethPrice) / 2,
+                          false,
+                          true
+                        )
                       : 0}{' '}
                   </TYPE.small>
                   <FormattedName
@@ -288,8 +302,8 @@ function PositionList({ positions }) {
                   ? 'table-row'
                   : 'table-row-dark-mode'
                 : index % 2
-                  ? 'table-row'
-                  : 'table-row-light-mode'
+                ? 'table-row'
+                : 'table-row-light-mode'
             }
           >
             <ListItem key={index} index={(page - 1) * 10 + index + 1} position={position} />
@@ -300,15 +314,24 @@ function PositionList({ positions }) {
 
   return (
     <>
-      <ListWrapper style={{ borderRadius: 25, overflow: "hidden", boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)', backgroundColor: isDarkMode ? "#0E2B4A" : "#F2F2F2" }}>
-        <DashGrid center={true} style={{ height: '32px', padding: 0, }}>
+      <ListWrapper
+        style={{
+          borderRadius: 25,
+          overflow: 'hidden',
+          boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+          backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+        }}
+      >
+        <DashGrid center={true} style={{ padding: '1rem' }}>
           {!below740 && (
             <Flex alignItems="flex-start" className="justify-content-center m-auto">
               <TYPE.main area="number"></TYPE.main>
             </Flex>
           )}
           <Flex alignItems="flex-start" justifyContent="flex-start" className="h-100 align-items-center">
-            <TYPE.main area="number">Name</TYPE.main>
+            <TYPE.main fontSize={'20px'} area="number">
+              Name
+            </TYPE.main>
           </Flex>
           <Flex alignItems="center" className="justify-content-center m-auto">
             <ClickableText
@@ -349,7 +372,6 @@ function PositionList({ positions }) {
         variant="outlined"
         shape="rounded"
         className="panigation-table-token-page"
-
       />
     </>
   )

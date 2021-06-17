@@ -21,6 +21,9 @@ const ListOptions = styled(AutoRow)`
 const StyleListOptions = styled(ListOptions)`
   margin-top: 2rem;
   margin-bottom: 0.5rem;
+  padding: 0;
+  border: 0;
+  backgroundcolor: transparent;
 `
 
 const StylePanel = styled(Panel)`
@@ -35,7 +38,7 @@ function PairsStatistics({}) {
 
   return (
     <>
-      <StyleListOptions gap="10px" style={{}}>
+      <StyleListOptions gap="10px">
         <RowBetween>
           <TYPE.main fontSize={'2rem'} style={{ whiteSpace: 'nowrap' }}>
             Top Pairs
@@ -45,9 +48,7 @@ function PairsStatistics({}) {
           </AutoRow>
         </RowBetween>
       </StyleListOptions>
-      <Panel style={{}}>
-        <PairList pairs={allPairs} />
-      </Panel>
+      <PairList pairs={allPairs} />
     </>
   )
 }

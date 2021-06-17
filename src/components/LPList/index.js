@@ -66,9 +66,10 @@ const ListWrapper = styled.div``
 const DataText = styled(Flex)`
   align-items: center;
   text-align: center;
+  justify-content: center;
   color: ${({ theme }) => theme.text1};
   & > * {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   @media screen and (max-width: 600px) {
@@ -116,13 +117,6 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
             {below800 ? lp.user.id.slice(0, 4) + '...' + lp.user.id.slice(38, 42) : lp.user.id}
           </CustomLink>
         </DataText>
-
-        {/* {!below1080 && (
-          <DataText area="type" justifyContent="flex-end">
-            {lp.type}
-          </DataText>
-        )} */}
-
         <DataText>
           <CustomLink
             style={{ color: '#3FAAB0', margin: 'auto', minWidth: '115px' }}
@@ -165,24 +159,31 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
       )
     })
 
+  const StyleFlex = styled(Flex)`
+    justify-content: center;
+  `
+  const StyleTypeMain = styled(TYPE.main)`
+    justify-content: center;
+  `
+
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '1rem' }}>
           {!below600 && (
-            <Flex alignItems="center" style={{ justifyContent: 'center' }}>
+            <StyleFlex alignItems="center">
               <TYPE.main area="number">#</TYPE.main>
-            </Flex>
+            </StyleFlex>
           )}
-          <Flex alignItems="center" style={{ justifyContent: 'center' }}>
+          <StyleFlex alignItems="center">
             <TYPE.main area="name">Account</TYPE.main>
-          </Flex>
-          <Flex alignItems="center" style={{ justifyContent: 'center' }}>
+          </StyleFlex>
+          <StyleFlex alignItems="center">
             <TYPE.main area="pair">Pair</TYPE.main>
-          </Flex>
-          <Flex alignItems="center" style={{ justifyContent: 'center' }}>
-            <TYPE.main area="value">Value</TYPE.main>
-          </Flex>
+          </StyleFlex>
+          <StyleFlex alignItems="center">
+            <StyleTypeMain area="value">Value</StyleTypeMain>
+          </StyleFlex>
         </DashGrid>
         <Divider />
         <List p={0}>{!lpList ? <LocalLoader /> : lpList}</List>
