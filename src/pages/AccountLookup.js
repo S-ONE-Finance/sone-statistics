@@ -19,6 +19,14 @@ const AccountWrapper = styled.div`
   }
 `
 
+const StylePanel = styled(Panel)`
+  margin-top: 1.5rem;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  box-shadow: none;
+`
+
 function AccountLookup() {
   // scroll to top
   useEffect(() => {
@@ -31,18 +39,29 @@ function AccountLookup() {
 
   return (
     <PageWrapper>
-      <FullWrapper>
+      <FullWrapper style={{ zIndex: 1 }}>
         <RowBetween>
-          <TYPE.largeHeader>Wallet analytics</TYPE.largeHeader>
+          <TYPE.largeHeader style={{ fontSize: '2.125rem' }}>Wallet analytics</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
         </RowBetween>
         <AccountWrapper>
           <AccountSearch />
         </AccountWrapper>
-        <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
+        <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '2rem' }}>
           Top Liquidity Positions
         </TYPE.main>
-        <Panel>{topLps && topLps.length > 0 ? <LPList lps={topLps} maxItems={200} /> : <LocalLoader />}</Panel>
+        <Panel
+          style={{
+            marginTop: '1.5rem',
+            padding: 0,
+            border: 0,
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          }}
+        >
+          {' '}
+          <LPList lps={topLps} maxItems={100} />
+        </Panel>
       </FullWrapper>
     </PageWrapper>
   )

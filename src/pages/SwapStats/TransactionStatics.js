@@ -2,10 +2,9 @@ import React from 'react'
 import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
-import TopTokenList from '../../components/TokenList'
 import styled from 'styled-components'
-import { useAllTokenData } from '../../contexts/TokenData'
-import { useMedia } from 'react-use'
+import { useGlobalTransactions } from '../../contexts/GlobalData'
+import TxnList from '../../components/TxnList'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -20,26 +19,20 @@ const ListOptions = styled(AutoRow)`
   }
 `
 
-function TokensStatistics({ ...props }) {
-  const allTokens = useAllTokenData()
-
+function TransactionStatics(props) {
+  const transactions = useGlobalTransactions()
   return (
-    <div className="box-main-content-tokens">
+    <div>
       <ListOptions gap="10px">
         <RowBetween>
           <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
-            Top Tokens
+            Transactions
           </TYPE.main>
-          <CustomLink style={{ color: '#3FAAB0' }} to={'/tokens'}>
-            See more
-          </CustomLink>
         </RowBetween>
       </ListOptions>
-      {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-      <TopTokenList tokens={allTokens} />
-      {/* </Panel> */}
+      <TxnList transactions={transactions} />
     </div>
   )
 }
 
-export default TokensStatistics
+export default TransactionStatics

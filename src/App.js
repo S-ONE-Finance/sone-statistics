@@ -22,6 +22,7 @@ import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
+import { useMedia } from 'react-use'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -64,6 +65,10 @@ const Body = styled.div`
   z-index: 9999;
   transition: width 0.25s ease;
   background-color: ${({ theme }) => theme.onlyLight};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding-bottom: 10%;
+    padding-top: 2%;
+  `};
 `
 
 const WarningWrapper = styled.div`
@@ -86,16 +91,17 @@ const WarningBanner = styled.div`
  */
 const LayoutWrapper = ({ children }) => {
   const [isDarkMode] = useDarkModeManager()
+
   return (
     <>
       <HeaderWrapper>
         <Header />
       </HeaderWrapper>
-      <Body id="center" className={isDarkMode ? 'dark-mode' : 'light-mode'}>
+      <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
         {children}
       </Body>
       <Polling />
-      <FooterWrapper>
+      <FooterWrapper style={{ zIndex: 9999 }}>
         <Footer />
       </FooterWrapper>
     </>
@@ -110,7 +116,6 @@ function App() {
   const [latestBlock, headBlock] = useLatestBlocks()
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
-
   return (
     <ApolloProvider client={client}>
       <AppWrapper>

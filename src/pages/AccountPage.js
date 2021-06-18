@@ -21,6 +21,29 @@ import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
+import { useDarkModeManager } from '../contexts/LocalStorage'
+
+const StyledPanel = styled(Panel)`
+  margin-top: 1.5rem !important;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border: 0;
+`
+const StyleAutoColumn = styled(AutoColumn)`
+  margin-left: 10% !important;
+
+  @media (max-width: 800px) {
+    display: flex;
+    width: fit-content;
+    justify-content: space-between;
+    grid-column-gap: 20px;
+    :first-child {
+      margin-left: 20px !important;
+    }
+    margin-left: 0% !important;
+  }
+`
 
 const AccountWrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
@@ -151,7 +174,7 @@ function AccountPage({ account }) {
     })
   }, [])
 
-  const below600 = useMedia('(max-width: 600px)')
+  const below600 = useMedia('(max-height: 600px)')
 
   // adding/removing account from saved accounts
   const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
@@ -160,15 +183,83 @@ function AccountPage({ account }) {
     ;(isBookmarked ? removeAccount : addAccount)(account)
   }, [account, isBookmarked, addAccount, removeAccount])
 
+  // status theme mode
+  const [isDarkMode] = useDarkModeManager()
+
+  const StyleAutoRow = styled(AutoRow)`
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    border-radius: 15px;
+    flex-wrap: wrap;
+    margin: auto;
+    @media (max-width: 800px) {
+      flex-direction: column;
+      align-items: flex-start;
+      grid-column-gap: 20px;
+    }
+  `
+
+  const StylePanel = styled(Panel)`
+    grid-column: 1;
+    border: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+  `
+  const StylePanelBlockPosition = styled(Panel)`
+    flex-wrap: wrap;
+    margin: auto;
+    box-shadow: none;
+    margin-top: 1.5rem;
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+  `
+
+  const TitlteTop = styled(TYPE.main)`
+    margin-top: 3rem !important;
+    margin-bottom: 1.125rem !important;
+  `
+
+  const StyleTitle = styled(TYPE.body)`
+    color: ${isDarkMode ? '#AAAAAA' : '#767676'}
+    font-size: 20px;
+    @media(max-width: 600px){
+      font-size: 13px;
+    }
+  `
+
+  const StyleContentBottom = styled(TYPE.header)`
+    color: ${isDarkMode ? '#FFFFF' : '#767676'}
+    font-size: 24px;
+    @media(max-width: 600px){
+      font-size: 16px;
+    }
+  `
+  const StyleAutoRow2 = styled(AutoRow)`
+    margin: 0px !important;
+    justify-content: space-between;
+  `
+
+  const StylePanel2 = styled(Panel)`
+    height: 100%;
+    margin-bottom: 35px;
+    border: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    padding: 1.25rem;
+    margin: -20px;
+    @media (max-width: 600px) {
+      margin-bottom: 15px !important;
+    }
+  `
+
   return (
     <PageWrapper>
-      <ContentWrapper>
+      <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/accounts">{'Accounts '}</BasicLink>→{' '}
+            <BasicLink to="/accounts">{'Accounts '}</BasicLink>→
             <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
-              {' '}
-              {account?.slice(0, 42)}{' '}
+              {account?.slice(0, 42)}
             </Link>
           </TYPE.body>
           {!below600 && <Search small={true} />}
@@ -178,7 +269,13 @@ function AccountPage({ account }) {
             <span>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
               <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
-                <TYPE.main fontSize={14}>View on Etherscan</TYPE.main>
+                <TYPE.main
+                  className="btn-danger"
+                  fontSize={16}
+                  style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
+                >
+                  View on Etherscan
+                </TYPE.main>
               </Link>
             </span>
             <AccountWrapper>
@@ -194,14 +291,28 @@ function AccountPage({ account }) {
         <DashboardWrapper>
           {showWarning && <Warning>Fees cannot currently be calculated for pairs that include AMPL.</Warning>}
           {!hideLPContent && (
-            <DropdownWrapper>
-              <ButtonDropdown width="100%" onClick={() => setShowDropdown(!showDropdown)} open={showDropdown}>
+            <DropdownWrapper
+              style={{
+                border: 0,
+                borderRadius: 25,
+                backgroundColor: '#F3F3F3',
+                marginBottom: !below600 ? '35px' : '15px',
+              }}
+            >
+              <ButtonDropdown
+                style={{ border: 0, backgroundColor: 'transparent' }}
+                width="100%"
+                onClick={() => setShowDropdown(!showDropdown)}
+                open={showDropdown}
+              >
                 {!activePosition && (
                   <RowFixed>
-                    <StyledIcon>
-                      <Activity size={16} />
+                    <StyledIcon style={{ color: '#333333' }}>
+                      <Activity style={{ color: '#333333' }} size={16} />
                     </StyledIcon>
-                    <TYPE.body ml={'10px'}>All Positions</TYPE.body>
+                    <TYPE.body style={{ color: '#333333' }} ml={'10px'}>
+                      All Positions
+                    </TYPE.body>
                   </RowFixed>
                 )}
                 {activePosition && (
@@ -261,111 +372,82 @@ function AccountPage({ account }) {
             </DropdownWrapper>
           )}
           {!hideLPContent && (
-            <Panel style={{ height: '100%', marginBottom: '1rem' }}>
-              <AutoRow gap="20px">
+            <StylePanel2 className="xxxxxxxx">
+              <StyleAutoRow2>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body>Liquidity (Including Fees)</TYPE.body>
+                    <StyleTitle style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                      Liquidity (Including Fees)
+                    </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <TYPE.header fontSize={'24px'} lineHeight={1}>
+                    <StyleContentBottom lineHeight={1}>
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
                         ? formattedNum(0, true)
                         : '-'}
-                    </TYPE.header>
+                    </StyleContentBottom>
                   </RowFixed>
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body>Fees Earned (Cumulative)</TYPE.body>
+                    <StyleTitle>Fees Earned (Cumulative)</StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <TYPE.header fontSize={'24px'} lineHeight={1} color={aggregateFees && 'green'}>
+                    <StyleContentBottom lineHeight={1} color={aggregateFees && 'green'}>
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
-                    </TYPE.header>
+                    </StyleContentBottom>
                   </RowFixed>
                 </AutoColumn>
-              </AutoRow>
-            </Panel>
+              </StyleAutoRow2>
+            </StylePanel2>
           )}
           {!hideLPContent && (
             <PanelWrapper>
-              <Panel style={{ gridColumn: '1' }}>
+              <StylePanel>
                 {activePosition ? (
                   <PairReturnsChart account={account} position={activePosition} />
                 ) : (
                   <UserChart account={account} position={activePosition} />
                 )}
-              </Panel>
+              </StylePanel>
             </PanelWrapper>
           )}
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Positions
-          </TYPE.main>{' '}
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-            }}
-          >
+          <TitlteTop fontSize={'2.125rem'}>Positions</TitlteTop>
+          <StylePanelBlockPosition>
             <PositionList positions={positions} />
-          </Panel>
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Liquidity Mining Pools
-          </TYPE.main>
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-            }}
-          >
-            {miningPositions && <MiningPositionList miningPositions={miningPositions} />}
-            {!miningPositions && (
-              <AutoColumn gap="8px" justify="flex-start">
-                <TYPE.main>No Staked Liquidity.</TYPE.main>
-                <AutoRow gap="8px" justify="flex-start">
-                  <ButtonLight style={{ padding: '4px 6px', borderRadius: '4px' }}>Learn More</ButtonLight>{' '}
-                </AutoRow>{' '}
-              </AutoColumn>
-            )}
-          </Panel>
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Transactions
-          </TYPE.main>{' '}
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-            }}
-          >
+          </StylePanelBlockPosition>
+          <TitlteTop fontSize={'2.125rem'}>Transactions</TitlteTop>
+          <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
-          </Panel>
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Wallet Stats
-          </TYPE.main>{' '}
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-            }}
-          >
-            <AutoRow gap="20px">
-              <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>{totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}</TYPE.header>
-                <TYPE.main>Total Value Swapped</TYPE.main>
-              </AutoColumn>
-              <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>
+          </StylePanelBlockPosition>
+          <TitlteTop fontSize={'2.125rem'}>Wallet Stats</TitlteTop>
+          <StyledPanel>
+            <StyleAutoRow gap="20px">
+              <StyleAutoColumn gap="8px">
+                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Value Swapped</TYPE.header>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
+                  {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
+                </TYPE.main>
+              </StyleAutoColumn>
+
+              <StyleAutoColumn gap="8px">
+                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Fees Paid</TYPE.header>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
-                </TYPE.header>
-                <TYPE.main>Total Fees Paid</TYPE.main>
-              </AutoColumn>
-              <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>{transactionCount ? transactionCount : '-'}</TYPE.header>
-                <TYPE.main>Total Transactions</TYPE.main>
-              </AutoColumn>
-            </AutoRow>
-          </Panel>
+                </TYPE.main>
+              </StyleAutoColumn>
+              <StyleAutoColumn gap="8px">
+                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Transactions</TYPE.header>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
+                  {transactionCount ? transactionCount : '-'}
+                </TYPE.main>
+              </StyleAutoColumn>
+            </StyleAutoRow>
+          </StyledPanel>
         </DashboardWrapper>
       </ContentWrapper>
     </PageWrapper>

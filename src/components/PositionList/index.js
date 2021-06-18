@@ -16,6 +16,8 @@ import { RowFixed } from '../Row'
 import { ButtonLight } from '../ButtonStyled'
 import { TYPE } from '../../theme'
 import FormattedName from '../FormattedName'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { Pagination } from '@material-ui/lab'
 
 dayjs.extend(utc)
 
@@ -61,7 +63,7 @@ const DashGrid = styled.div`
   }
 
   @media screen and (min-width: 1200px) {
-    grid-template-columns: 35px 2.5fr 1fr 1fr;
+    grid-template-columns: 0.25fr 1fr 1fr 1fr;
     grid-template-areas: 'number name uniswap return';
   }
 
@@ -119,7 +121,8 @@ function PositionList({ positions }) {
   // sorting
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.VALUE)
-
+  // status mode theme page
+  const [isDarkMode] = useDarkModeManager()
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -143,7 +146,11 @@ function PositionList({ positions }) {
 
     return (
       <DashGrid style={{ opacity: poolOwnership > 0 ? 1 : 0.6 }} focus={true}>
-        {!below740 && <DataText area="number">{index}</DataText>}
+        {!below740 && (
+          <DataText className="m-auto" area="number">
+            {index}
+          </DataText>
+        )}
         <DataText area="name" justifyContent="flex-start" alignItems="flex-start">
           <AutoColumn gap="8px" justify="flex-start" align="flex-start">
             <DoubleTokenLogo size={16} a0={position.pair.token0.id} a1={position.pair.token1.id} margin={!below740} />
@@ -164,20 +171,30 @@ function PositionList({ positions }) {
                 href={getPoolLink(position.pair.token0.id, position.pair.token1.id)}
                 style={{ marginRight: '.5rem' }}
               >
-                <ButtonLight style={{ padding: '4px 6px', borderRadius: '4px' }}>Add</ButtonLight>
+                <ButtonLight
+                  className="btn-danger minw-auto h-auto"
+                  style={{ padding: '4px 6px', borderRadius: '4px' }}
+                >
+                  Add
+                </ButtonLight>
               </Link>
               {poolOwnership > 0 && (
                 <Link external href={getPoolLink(position.pair.token0.id, position.pair.token1.id, true)}>
-                  <ButtonLight style={{ padding: '4px 6px', borderRadius: '4px' }}>Remove</ButtonLight>
+                  <ButtonLight
+                    className="btn-secondary minw-auto h-auto text-white"
+                    style={{ padding: '4px 6px', borderRadius: '4px' }}
+                  >
+                    Withdraw
+                  </ButtonLight>
                 </Link>
               )}
             </RowFixed>
           </AutoColumn>
         </DataText>
-        <DataText area="uniswap">
-          <AutoColumn gap="12px" justify="flex-end">
+        <DataText area="uniswap" className="justify-content-center">
+          <AutoColumn gap="12px" justify="center">
             <TYPE.main>{formattedNum(valueUSD, true, true)}</TYPE.main>
-            <AutoColumn gap="4px" justify="flex-end">
+            <AutoColumn gap="4px" justify="center">
               <RowFixed>
                 <TYPE.small fontWeight={400}>
                   {formattedNum(poolOwnership * parseFloat(position.pair.reserve0))}{' '}
@@ -204,12 +221,12 @@ function PositionList({ positions }) {
           </AutoColumn>
         </DataText>
         {!below500 && (
-          <DataText area="return">
-            <AutoColumn gap="12px" justify="flex-end">
+          <DataText area="return" className="justify-content-center">
+            <AutoColumn gap="12px" justify="center">
               <TYPE.main color={'green'}>
                 <RowFixed>{formattedNum(position?.fees.sum, true, true)}</RowFixed>
               </TYPE.main>
-              <AutoColumn gap="4px" justify="flex-end">
+              <AutoColumn gap="4px" justify="center">
                 <RowFixed>
                   <TYPE.small fontWeight={400}>
                     {parseFloat(position.pair.token0.derivedETH)
@@ -276,7 +293,19 @@ function PositionList({ positions }) {
       .slice(ITEMS_PER_PAGE * (page - 1), page * ITEMS_PER_PAGE)
       .map((position, index) => {
         return (
-          <div key={index}>
+          // <div key={index}>
+          <div
+            key={index}
+            className={
+              isDarkMode
+                ? index % 2
+                  ? 'table-row'
+                  : 'table-row-dark-mode'
+                : index % 2
+                ? 'table-row'
+                : 'table-row-light-mode'
+            }
+          >
             <ListItem key={index} index={(page - 1) * 10 + index + 1} position={position} />
             <Divider />
           </div>
@@ -284,54 +313,67 @@ function PositionList({ positions }) {
       })
 
   return (
-    <ListWrapper>
-      <DashGrid center={true} style={{ height: '32px', padding: 0 }}>
-        {!below740 && (
-          <Flex alignItems="flex-start" justifyContent="flexStart">
-            <TYPE.main area="number">#</TYPE.main>
+    <>
+      <ListWrapper
+        style={{
+          borderRadius: 25,
+          overflow: 'hidden',
+          boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+          backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+        }}
+      >
+        <DashGrid center={true} style={{ padding: '1rem' }}>
+          {!below740 && (
+            <Flex alignItems="flex-start" className="justify-content-center m-auto">
+              <TYPE.main area="number"></TYPE.main>
+            </Flex>
+          )}
+          <Flex alignItems="flex-start" justifyContent="flex-start" className="h-100 align-items-center">
+            <TYPE.main fontSize={'20px'} area="number">
+              Name
+            </TYPE.main>
           </Flex>
-        )}
-        <Flex alignItems="flex-start" justifyContent="flex-start">
-          <TYPE.main area="number">Name</TYPE.main>
-        </Flex>
-        <Flex alignItems="center" justifyContent="flexEnd">
-          <ClickableText
-            area="uniswap"
-            onClick={(e) => {
-              setSortedColumn(SORT_FIELD.VALUE)
-              setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
-            }}
-          >
-            {below740 ? 'Value' : 'Liquidity'} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-        {!below500 && (
-          <Flex alignItems="center" justifyContent="flexEnd">
+          <Flex alignItems="center" className="justify-content-center m-auto">
             <ClickableText
-              area="return"
-              onClick={() => {
-                setSortedColumn(SORT_FIELD.UNISWAP_RETURN)
-                setSortDirection(sortedColumn !== SORT_FIELD.UNISWAP_RETURN ? true : !sortDirection)
+              area="uniswap"
+              onClick={(e) => {
+                setSortedColumn(SORT_FIELD.VALUE)
+                setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
               }}
             >
-              {below740 ? 'Fees' : 'Total Fees Earned'}{' '}
-              {sortedColumn === SORT_FIELD.UNISWAP_RETURN ? (!sortDirection ? '↑' : '↓') : ''}
+              {below740 ? 'Value' : 'Liquidity'} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
-        )}
-      </DashGrid>
-      <Divider />
-      <List p={0}>{!positionsSorted ? <LocalLoader /> : positionsSorted}</List>
-      <PageButtons>
-        <div onClick={() => setPage(page === 1 ? page : page - 1)}>
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        <TYPE.body>{'Page ' + page + ' of ' + maxPage}</TYPE.body>
-        <div onClick={() => setPage(page === maxPage ? page : page + 1)}>
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons>
-    </ListWrapper>
+          {!below500 && (
+            <Flex alignItems="center" className="justify-content-center m-auto">
+              <ClickableText
+                area="return"
+                onClick={() => {
+                  setSortedColumn(SORT_FIELD.UNISWAP_RETURN)
+                  setSortDirection(sortedColumn !== SORT_FIELD.UNISWAP_RETURN ? true : !sortDirection)
+                }}
+              >
+                {below740 ? 'Fees' : 'Total Fees Earned'}{' '}
+                {sortedColumn === SORT_FIELD.UNISWAP_RETURN ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
+          )}
+        </DashGrid>
+        <Divider />
+        <List p={0}>{!positionsSorted ? <LocalLoader /> : positionsSorted}</List>
+      </ListWrapper>
+      <Pagination
+        style={{ justifyContent: 'center' }}
+        page={page}
+        onChange={(event, newPage) => {
+          setPage(newPage)
+        }}
+        count={maxPage}
+        variant="outlined"
+        shape="rounded"
+        className="panigation-table-token-page"
+      />
+    </>
   )
 }
 

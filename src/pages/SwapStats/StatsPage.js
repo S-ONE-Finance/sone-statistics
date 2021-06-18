@@ -10,6 +10,9 @@ import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
 import { ReactComponent as IconLink } from '../../assets/link.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import PairsStatistics from './PairsStatistics'
+import AccountStatics from './AccountStatics'
+import TransactionStatics from './TransactionStatics'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -23,12 +26,18 @@ const Title = styled.div`
   `}
 `
 
+const MainWrapper = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   padding-bottom: 10%
+  `}
+`
+
 const StyledGrid = styled(Grid)`
   max-width: 100%;
   margin: 0 auto !important;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    max-width: 90%;
+    max-width: 100%;
   `}
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -41,21 +50,15 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`} aria-labelledby={`tab-${index}`} {...other}>
       {<Box>{children}</Box>}
     </div>
   )
 }
 function a11yProps(index) {
   return {
-    id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    id: `tab-${index}`,
+    'aria-controls': `tabpanel-${index}`,
   }
 }
 
@@ -74,6 +77,16 @@ const customStyleTabbar = makeStyles((theme) => ({
   iconPaddingRight: {
     paddingRight: 7,
     marginBottom: '0px !important',
+  },
+  boxSearchLeft: {
+    marginLeft: 'auto',
+    '@media (max-width: 576px)': {
+      margin: '15px auto 0',
+      width: '100%',
+    },
+    '@media (min-width: 576px) and (max-width: 800px)': {
+      // margin-left: auto;
+    },
   },
 }))
 
@@ -101,7 +114,9 @@ const TabCustom = withStyles((theme) => ({
       justifyContent: 'space-between',
     },
   },
-  selected: {},
+  selected: {
+    backgroundColor: 'red',
+  },
 }))((props) => <Tab disableRipple {...props} />)
 
 function StatsPage() {
@@ -113,27 +128,27 @@ function StatsPage() {
   }
 
   return (
-    <>
-      <PageWrapper className="stats-page">
+    <MainWrapper>
+      <PageWrapper>
         <ContentWrapper style={{ zIndex: 1 }}>
-          <Grid container spacing={3} className="box-first-main">
-            <Grid item lg={4} md={12} mb={0.5} px={2}>
+          <Grid container spacing={0} className="box-first-main">
+            <Grid item lg={4} md={12} mb={0.5} px={0}>
               <Title>Swap Statistics</Title>
             </Grid>
-            <Grid className="box-search_left" item lg={4} md={12} mb={0.5} px={2}>
+            <Grid className={classes.boxSearchLeft} item lg={4} md={12} mb={0.5} px={2} mt={2}>
               <BoxSearch />
             </Grid>
           </Grid>
 
           {/* tab switch */}
-          <StyledGrid container spacing={3}>
+          <StyledGrid container spacing={0}>
             <Grid item xs={12}>
               <Tabs
                 value={indexTabMain}
                 onChange={handleChange}
                 indicatorColor=""
                 textColor="primary"
-                variant="scrollable"
+                variant="fullWidth"
                 scrollButtons="off"
               >
                 <TabCustom
@@ -172,7 +187,7 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconUser className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  icon={<IconUser fontSize="small" className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Accounts"
                   {...a11yProps(3)}
@@ -182,7 +197,12 @@ function StatsPage() {
                     wrapper: classes.iconLabelWrapper,
                     labelContainer: classes.labelContainer,
                   }}
-                  icon={<IconUser className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+                  icon={
+                    <IconUser
+                      style={{ width: 20, height: 20 }}
+                      className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+                    />
+                  }
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label="Transactions"
                   {...a11yProps(4)}
@@ -197,13 +217,13 @@ function StatsPage() {
             <TokensStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={2}>
-            Item Three
+            <PairsStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={3}>
-            Item Four
+            <AccountStatics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={4}>
-            Item Five
+            <TransactionStatics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={5}>
             Item Six
@@ -213,7 +233,7 @@ function StatsPage() {
           </TabPanel>
         </ContentWrapper>
       </PageWrapper>
-    </>
+    </MainWrapper>
   )
 }
 

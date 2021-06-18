@@ -23,7 +23,7 @@ function useLocalStorageContext() {
 }
 
 function reducer(state, { type, payload }) {
-  console.log('state local', state);
+  console.log('state local', state)
   switch (type) {
     case UPDATE_KEY: {
       const { key, value } = payload
@@ -73,7 +73,7 @@ export default function Provider({ children }) {
   }, [])
 
   return (
-    <LocalStorageContext.Provider  value={useMemo(() => [state, { updateKey }], [state, updateKey])}>
+    <LocalStorageContext.Provider value={useMemo(() => [state, { updateKey }], [state, updateKey])}>
       {children}
     </LocalStorageContext.Provider>
   )

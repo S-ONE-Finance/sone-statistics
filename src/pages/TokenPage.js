@@ -35,7 +35,10 @@ import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
 import QuestionHelper from '../components/QuestionHelper'
 import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
-
+import { useDarkModeManager } from '../contexts/LocalStorage'
+// import Button from '@material-ui/core/Button';
+import { useCopyClipboard } from '../hooks'
+import { CustomLink } from '../components/Link'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -116,6 +119,8 @@ function TokenPage({ address, history }) {
     oneDayTxns,
     txnChange,
   } = useTokenData(address)
+  const [isDarkMode] = useDarkModeManager()
+  const [isCopied, setCopied] = useCopyClipboard()
 
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
@@ -197,7 +202,7 @@ function TokenPage({ address, history }) {
         setShow={markAsDismissed}
         address={address}
       />
-      <ContentWrapper>
+      <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
           <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
             <TYPE.body>
@@ -214,11 +219,11 @@ function TokenPage({ address, history }) {
               </Text>
             </Link>
           </AutoRow>
-          {!below600 && <Search small={true} />}
         </RowBetween>
         <WarningGrouping disabled={!dismissed && listedTokens && !listedTokens.includes(address)}>
-          <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem' }}>
+          <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem', zIndex: 1 }}>
             <RowBetween
+              className="box-title-main"
               style={{
                 flexWrap: 'wrap',
                 marginBottom: '2rem',
@@ -244,33 +249,30 @@ function TokenPage({ address, history }) {
                   )}
                 </RowFixed>
               </RowFixed>
-              <span>
-                <RowFixed ml={below500 ? '0' : '2.5rem'} mt={below500 ? '1rem' : '0'}>
-                  {!!!savedTokens[address] && !below800 ? (
-                    <Hover onClick={() => addToken(address, symbol)}>
-                      <StyledIcon>
-                        <PlusCircle style={{ marginRight: '0.5rem' }} />
-                      </StyledIcon>
-                    </Hover>
-                  ) : !below1080 ? (
-                    <StyledIcon>
-                      <Bookmark style={{ marginRight: '0.5rem', opacity: 0.4 }} />
-                    </StyledIcon>
-                  ) : (
-                    <></>
-                  )}
-                  <Link href={getPoolLink(address)} target="_blank">
-                    <ButtonLight color={backgroundColor}>+ Add Liquidity</ButtonLight>
-                  </Link>
-                  <Link href={getSwapLink(address)} target="_blank">
-                    <ButtonDark ml={'.5rem'} mr={below1080 && '.5rem'} color={backgroundColor}>
-                      Trade
-                    </ButtonDark>
-                  </Link>
-                </RowFixed>
-              </span>
+              <RowFixed>{!below600 && <Search small={false} />}</RowFixed>
             </RowBetween>
-
+            <RowBetween
+              style={{
+                flexWrap: 'wrap',
+                marginBottom: '2rem',
+                alignItems: 'flex-start',
+              }}
+            >
+              <RowFixed>
+                <Link href={getPoolLink(address)} target="_blank">
+                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>+ Add Liquidity</ButtonLight>
+                </Link>
+                <Link href={getSwapLink(address)} target="_blank">
+                  <ButtonDark
+                    style={{ backgroundColor: '#F05359', color: '#fff' }}
+                    ml={'.5rem'}
+                    mr={below1080 && '.5rem'}
+                  >
+                    Swap
+                  </ButtonDark>
+                </Link>
+              </RowFixed>
+            </RowBetween>
             <>
               {!below1080 && (
                 <RowFixed>
@@ -284,9 +286,14 @@ function TokenPage({ address, history }) {
                   )}
                 </RowFixed>
               )}
-              <PanelWrapper style={{ marginTop: below1080 ? '0' : '1rem' }}>
+              <PanelWrapper className="column-token" style={{ marginTop: below1080 ? '0' : '1rem' }}>
                 {below1080 && price && (
-                  <Panel>
+                  <Panel
+                    style={{
+                      border: 0,
+                      backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
+                    }}
+                  >
                     <AutoColumn gap="20px">
                       <RowBetween>
                         <TYPE.main>Price</TYPE.main>
@@ -302,28 +309,38 @@ function TokenPage({ address, history }) {
                     </AutoColumn>
                   </Panel>
                 )}
-                <Panel>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Total Liquidity</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main
+                        fontSize={'1.5rem'}
+                        lineHeight={1}
+                        fontWeight={500}
+                        style={{ color: isDarkMode ? '#fff' : '#333333' }}
+                      >
                         {liquidity}
                       </TYPE.main>
                       <TYPE.main>{liquidityChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Volume (24hrs)</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main
+                        fontSize={'1.5rem'}
+                        lineHeight={1}
+                        fontWeight={500}
+                        style={{ color: isDarkMode ? '#fff' : '#333333' }}
+                      >
                         {volume}
                       </TYPE.main>
                       <TYPE.main>{volumeChange}</TYPE.main>
@@ -331,14 +348,19 @@ function TokenPage({ address, history }) {
                   </AutoColumn>
                 </Panel>
 
-                <Panel>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main>Transactions (24hrs)</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main
+                        fontSize={'1.5rem'}
+                        lineHeight={1}
+                        fontWeight={500}
+                        style={{ color: isDarkMode ? '#fff' : '#333333' }}
+                      >
                         {oneDayTxns ? localNumber(oneDayTxns) : 0}
                       </TYPE.main>
                       <TYPE.main>{txnChangeFormatted}</TYPE.main>
@@ -349,6 +371,9 @@ function TokenPage({ address, history }) {
                   style={{
                     gridColumn: below1080 ? '1' : '2/4',
                     gridRow: below1080 ? '' : '1/4',
+                    backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
+                    border: 0,
+                    boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
                   }}
                 >
                   <TokenChart address={address} color={backgroundColor} base={priceUSD} />
@@ -357,33 +382,40 @@ function TokenPage({ address, history }) {
             </>
 
             <RowBetween style={{ marginTop: '3rem' }}>
-              <TYPE.main fontSize={'1.125rem'}>Top Pairs</TYPE.main>
+              <TYPE.main fontSize={'2.125rem'}>Top Pairs</TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
-                <Checkbox
-                  checked={useTracked}
-                  setChecked={() => setUseTracked(!useTracked)}
-                  text={'Hide untracked pairs'}
-                />
-                <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
+                <CustomLink style={{ color: '#3FAAB0' }} to={'/tokens'}>
+                  See more
+                </CustomLink>
+                {/* <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." /> */}
               </AutoRow>
             </RowBetween>
             <Panel
+              className="box-shadow-none"
               rounded
               style={{
                 marginTop: '1.5rem',
-                padding: '1.125rem 0 ',
+                padding: '0 ',
+                backgroundColor: 'transparent',
+                border: 0,
+                boxShadow: '0',
               }}
             >
-              {address && fetchedPairsList ? (
+              {/* {address && fetchedPairsList ? (
                 <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
               ) : (
                 <Loader />
-              )}
+              )} */}
+              <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
             </Panel>
-            <RowBetween mt={40} mb={'1rem'}>
-              <TYPE.main fontSize={'1.125rem'}>Transactions</TYPE.main> <div />
+            <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
+              <TYPE.main fontSize={'2.125rem'}>Transactions</TYPE.main> <div />
             </RowBetween>
-            <Panel rounded>
+            <Panel
+              className="box-shadow-none"
+              rounded
+              style={{ backgroundColor: 'transparent', border: 0, padding: 0 }}
+            >
               {transactions ? <TxnList color={backgroundColor} transactions={transactions} /> : <Loader />}
             </Panel>
             <>
@@ -394,36 +426,59 @@ function TokenPage({ address, history }) {
                 rounded
                 style={{
                   marginTop: '1.5rem',
+                  backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
+                  border: 0,
+                  boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
+                  borderRadius: 15,
                 }}
                 p={20}
               >
-                <TokenDetailsLayout>
+                <TokenDetailsLayout style={{}}>
                   <Column>
-                    <TYPE.main>Symbol</TYPE.main>
-                    <Text style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
-                      <FormattedName text={symbol} maxCharacters={12} />
+                    <TYPE.main style={{ fontWeight: 'bold' }}>Symbol</TYPE.main>
+                    <Text fontSize={'1rem'} style={{ marginTop: '1.5rem' }} fontWeight="400">
+                      <FormattedName
+                        style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
+                        text={symbol}
+                        maxCharacters={12}
+                      />
                     </Text>
                   </Column>
                   <Column>
-                    <TYPE.main>Name</TYPE.main>
-                    <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
-                      <FormattedName text={name} maxCharacters={16} />
+                    <TYPE.main style={{ fontWeight: 'bold' }}>Name</TYPE.main>
+                    <TYPE.main style={{ marginTop: '1.5rem' }} fontSize={'1rem'} fontWeight="400">
+                      <FormattedName
+                        style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
+                        text={name}
+                        maxCharacters={16}
+                      />
                     </TYPE.main>
                   </Column>
                   <Column>
-                    <TYPE.main>Address</TYPE.main>
+                    <TYPE.main style={{ fontWeight: 'bold' }}>Address</TYPE.main>
                     <AutoRow align="flex-end">
-                      <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
+                      <TYPE.main
+                        fontSize={'1rem'}
+                        fontWeight="400"
+                        style={{ color: isDarkMode ? '#AAAAAA' : '#767676', marginTop: '1.5rem' }}
+                      >
                         {address.slice(0, 8) + '...' + address.slice(36, 42)}
                       </TYPE.main>
-                      <CopyHelper toCopy={address} />
                     </AutoRow>
                   </Column>
-                  <ButtonLight color={backgroundColor}>
-                    <Link color={backgroundColor} external href={'https://etherscan.io/address/' + address}>
-                      View on Etherscan ↗
-                    </Link>
-                  </ButtonLight>
+                  <Column className="box-btn-action">
+                    <TYPE.main style={{ fontWeight: 'bold' }}>Action</TYPE.main>
+                    <AutoRow align="flex-end" style={{ marginTop: '1.5rem' }}>
+                      <button className="btn-danger" onClick={() => setCopied(address)}>
+                        Copy Address
+                      </button>
+                      <ButtonLight className="btn-danger ml-1">
+                        <Link color="#fff" external href={'https://etherscan.io/address/' + address}>
+                          View on Etherscan ↗
+                        </Link>
+                      </ButtonLight>
+                    </AutoRow>
+                  </Column>
                 </TokenDetailsLayout>
               </Panel>
             </>

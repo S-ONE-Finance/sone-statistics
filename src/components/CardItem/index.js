@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
 import { Grid, Paper, makeStyles, Box } from '@material-ui/core'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
-import { ThemeContext } from 'styled-components'
-
-CardItem.propTypes = {}
+import styled, { ThemeContext } from 'styled-components'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: 30,
+    '@media (max-width: 800px)': {
+      marginBottom: 15,
+    },
   },
   cardPreview: {
     marginRight: 30,
@@ -38,13 +39,16 @@ function CardItem({ displayPreview, title, valueContainer, descriptionContainer,
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
+
+  const StylePaper = styled(Paper)`
+    background-color: ${theme.bg1Sone} !important;
+    color: #767676 important;
+    border-radius: 20px !important;
+  `
   return (
     <Grid item className={classes.root}>
-      <Paper
-        elevation={2}
-        style={{ background: theme.bg1Sone, color: '#767676', borderRadius: isUpToExtraSmall ? 20 : 25 }}
-      >
-        <Box display="flex" alignItems="center" p={2}>
+      <StylePaper elevation={2}>
+        <Box display="flex" alignItems="center" p={3}>
           {displayPreview && (
             <Box
               className={classes.cardPreview}
@@ -84,7 +88,7 @@ function CardItem({ displayPreview, title, valueContainer, descriptionContainer,
             )}
           </Grid>
         </Box>
-      </Paper>
+      </StylePaper>
     </Grid>
   )
 }

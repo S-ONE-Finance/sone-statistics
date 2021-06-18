@@ -15,6 +15,11 @@ import { useAllTokenData } from '../../contexts/TokenData'
 import { useMedia } from 'react-use'
 import { AutoColumn } from '../../components/Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useAllPairData } from '../../contexts/PairData'
+import PairList from '../../components/PairList'
+import LPList from '../../components/LPList'
+import TxnList from '../../components/TxnList'
+import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +46,22 @@ const useStyles = makeStyles((theme) => ({
   primaryBg: {
     backgroundColor: theme.palette.primary.main,
   },
+  boxCardItems: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  boxItem: {
+    flexBasis: 'calc(100% / 4 - 20px)',
+    '@media (max-width: 800px)': {
+      flexBasis: 'calc(100%)',
+    },
+  },
+  boxMainContentOverview: {
+    marginTop: 30,
+    '@media (max-width: 800px)': {
+      marginTop: 15,
+    },
+  },
 }))
 
 const StyledGrid = styled(Grid)`
@@ -48,11 +69,11 @@ const StyledGrid = styled(Grid)`
   margin: 0 auto !important;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    max-width: 90%;
+    max-width: 100%;
   `}
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    max-width: 400px;
+    max-width: 100%;
     width: 100%;
   `}
 `
@@ -61,7 +82,7 @@ const GridRow = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: 1fr 1fr;
-  column-gap: 6px;
+  column-gap: 19px;
   align-items: start;
   justify-content: space-between;
 `
@@ -84,17 +105,39 @@ function OverviewStatistics(props) {
   const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
+  const allPairs = useAllPairData()
+
+  //accounts
+  const topLps = useTopLps()
+  //Transactions
+  const transactions = useGlobalTransactions()
   // breakpoints
-  const below800 = useMedia('(max-width: 800px)')
+  const below800 = useMedia('max-width: 800px')
+
+  const PanelHight = styled(Panel)`
+    height: 100%;
+    min-height: 300px;
+    z-index: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
+    border: 0;
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+  `
+
+  const PanelLow = styled(Panel)`
+    height: 100%;
+    z-index: 0;
+    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
+    border: 0;
+    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
+  `
 
   return (
-    <div className="box-main-content-overview">
-      <StyledGrid className="box-card-items" container spacing={3}>
-        <Grid item md={6} lg={3} className="card-item">
+    <div className={classes.boxMainContentOverview}>
+      <StyledGrid className={classes.boxCardItems} container spacing={0}>
+        <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
             title="ETH Price"
             colorTextRatioValue="#F05359"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -108,11 +151,10 @@ function OverviewStatistics(props) {
             ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
           />
         </Grid>
-        <Grid item md={6} lg={3} className="card-item">
+        <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
             title="No. Transactions (24h)"
             colorTextRatioValue="#7AC51B"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -126,11 +168,10 @@ function OverviewStatistics(props) {
             ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
           />
         </Grid>
-        <Grid item md={12} lg={3} className="card-item">
+        <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
             title="Pools"
             colorTextRatioValue="#F05359"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -144,11 +185,10 @@ function OverviewStatistics(props) {
             ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
           />
         </Grid>
-        <Grid item md={12} lg={3} className="card-item">
+        <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
             title="Total Fees (24h)"
             colorTextRatioValue="#7AC51B"
-            className="box-item"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -166,52 +206,26 @@ function OverviewStatistics(props) {
       <div className="box-chart">
         {!below800 && (
           <GridRow>
-            <Panel
-              style={{
-                height: '100%',
-                minHeight: '300px',
-                zIndex: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
-                border: 0,
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-              }}
-            >
+            <PanelHight>
               <GlobalChart display="liquidity" />
-            </Panel>
-            <Panel
-              style={{
-                height: '100%',
-                zIndex: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
-                border: 0,
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-              }}
-            >
+            </PanelHight>
+            <PanelLow>
               <GlobalChart display="volume" />
-            </Panel>
+            </PanelLow>
           </GridRow>
         )}
         {below800 && (
           <AutoColumn style={{ marginTop: '6px' }} gap="24px">
-            <Panel
-              style={{
-                height: '100%',
-                minHeight: '300px',
-                zIndex: 0,
-                backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
-                border: 0,
-                boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-              }}
-            >
+            <PanelHight>
               <GlobalChart display="liquidity" />
-            </Panel>
+            </PanelHight>
           </AutoColumn>
         )}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Tokens
             </TYPE.main>
             <CustomLink className="btnLink" to={'/tokens'}>
@@ -219,54 +233,43 @@ function OverviewStatistics(props) {
             </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
         <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Pairs
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
+            <CustomLink className="btnLink" to={'/pairs'}>
               See more
             </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-        <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
+        <PairList pairs={allPairs} />
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Accounts
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
+            <CustomLink className="btnLink" to={'/accounts'}>
               See more
             </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-        <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
+        <LPList lps={topLps} />
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Transactions
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
-              See more
-            </CustomLink>
           </RowBetween>
         </ListOptions>
-        {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
-        <TopTokenList tokens={allTokens} />
-        {/* </Panel> */}
+        <TxnList transactions={transactions} />
       </div>
     </div>
   )
