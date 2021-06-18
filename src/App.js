@@ -22,6 +22,7 @@ import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
+import { useMedia } from 'react-use'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -90,12 +91,13 @@ const WarningBanner = styled.div`
  */
 const LayoutWrapper = ({ children }) => {
   const [isDarkMode] = useDarkModeManager()
+
   return (
     <>
       <HeaderWrapper>
         <Header />
       </HeaderWrapper>
-      <Body id="center" className={isDarkMode ? 'dark-mode' : 'light-mode'}>
+      <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
         {children}
       </Body>
       <Polling />
@@ -114,7 +116,8 @@ function App() {
   const [latestBlock, headBlock] = useLatestBlocks()
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
-
+  const { innerWidth: width, innerHeight: height } = window
+  console.log(window.innerHeight)
   return (
     <ApolloProvider client={client}>
       <AppWrapper>

@@ -174,7 +174,7 @@ function AccountPage({ account }) {
     })
   }, [])
 
-  const below600 = useMedia('(max-width: 600px)')
+  const below600 = useMedia('(max-height: 600px)')
 
   // adding/removing account from saved accounts
   const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
