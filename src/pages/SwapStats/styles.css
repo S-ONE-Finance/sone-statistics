@@ -84,14 +84,14 @@
 
 .light-mode::after {
   content: '';
-  position: absolute;
+  position: fixed;
   width: 100%;
-  background-image: url(../../assets/bg-root.svg);
+  background-image: url(/static/media/bg-root.fb2ade32.svg);
   background-repeat: no-repeat;
-  top: 0;
+  top: 77px;
   bottom: 0;
   left: 0;
-  background-position: center;
+  background-position: initial;
   margin: auto;
   z-index: 0;
 }
@@ -135,19 +135,20 @@
 
 .dark-mode::after {
   content: '';
-  position: absolute;
+  position: fixed;
   width: 100%;
-  background-image: url(../../assets/bg-root-dark.svg);
+  background-image: url(/static/media/bg-root-dark.a96be81c.svg);
   background-repeat: no-repeat;
   top: 0;
   bottom: 0;
   left: 0;
-  background-position: center;
+  background-position: initial;
   margin: auto;
   z-index: 0;
+  background-size: cover;
 }
 
-.dark-mode::before {
+/* .dark-mode::before {
   content: '';
   position: absolute;
   width: 100%;
@@ -159,7 +160,7 @@
   background-position: bottom;
   margin: auto;
   z-index: 0;
-}
+} */
 
 .stats-page .box-search_left {
   margin-left: auto;

@@ -116,8 +116,6 @@ function App() {
   const [latestBlock, headBlock] = useLatestBlocks()
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
-  const { innerWidth: width, innerHeight: height } = window
-  console.log(window.innerHeight)
   return (
     <ApolloProvider client={client}>
       <AppWrapper>
