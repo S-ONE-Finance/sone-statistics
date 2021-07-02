@@ -48,7 +48,7 @@ export const V1_DATA_QUERY = gql`
 
 export const GET_LATEST_BLOCK = gql`
   query blocks {
-    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 9300000 }) {
+    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 10000000 }) {
       id
       number
       timestamp
@@ -185,6 +185,8 @@ export const SHARE_VALUE = (pairAddress, blocks) => {
 }
 
 export const ETH_PRICE = (block) => {
+  console.log('block :>> ', block)
+  console.log('BUNDLE_ID :>> ', BUNDLE_ID)
   const queryString = block
     ? `
     query bundles {
@@ -444,6 +446,8 @@ export const GLOBAL_CHART = gql`
 `
 
 export const GLOBAL_DATA = (block) => {
+  console.log('block 449 :>> ', block)
+  console.log('FACTORY_ADDRESS :>> ', FACTORY_ADDRESS)
   const queryString = ` query uniswapFactories {
       uniswapFactories(
        ${block ? `block: { number: ${block}}` : ``} 
@@ -800,7 +804,7 @@ export const TOKEN_DATA = (tokenAddress, block) => {
 }
 
 export const FILTERED_TRANSACTIONS = gql`
-  query($allPairs: [Bytes]!) {
+  query ($allPairs: [Bytes]!) {
     mints(first: 20, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
       transaction {
         id
