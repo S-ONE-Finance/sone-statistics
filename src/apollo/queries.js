@@ -48,7 +48,7 @@ export const V1_DATA_QUERY = gql`
 
 export const GET_LATEST_BLOCK = gql`
   query blocks {
-    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 9300000 }) {
+    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 10000000 }) {
       id
       number
       timestamp
@@ -800,7 +800,7 @@ export const TOKEN_DATA = (tokenAddress, block) => {
 }
 
 export const FILTERED_TRANSACTIONS = gql`
-  query($allPairs: [Bytes]!) {
+  query ($allPairs: [Bytes]!) {
     mints(first: 20, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
       transaction {
         id
