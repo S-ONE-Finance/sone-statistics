@@ -185,6 +185,8 @@ export const SHARE_VALUE = (pairAddress, blocks) => {
 }
 
 export const ETH_PRICE = (block) => {
+  console.log('block :>> ', block)
+  console.log('BUNDLE_ID :>> ', BUNDLE_ID)
   const queryString = block
     ? `
     query bundles {
@@ -444,6 +446,8 @@ export const GLOBAL_CHART = gql`
 `
 
 export const GLOBAL_DATA = (block) => {
+  console.log('block 449 :>> ', block)
+  console.log('FACTORY_ADDRESS :>> ', FACTORY_ADDRESS)
   const queryString = ` query uniswapFactories {
       uniswapFactories(
        ${block ? `block: { number: ${block}}` : ``} 
