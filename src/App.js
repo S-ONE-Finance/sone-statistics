@@ -188,12 +188,6 @@ function App() {
                 }}
               />
 
-              <Route path="/home">
-                <LayoutWrapper>
-                  <GlobalPage />
-                </LayoutWrapper>
-              </Route>
-
               <Route path="/tokens">
                 <LayoutWrapper>
                   <AllTokensPage />
@@ -222,7 +216,7 @@ function App() {
                   <OverStats />
                 </LayoutWrapper>
               </Route>
-              <Redirect to="/home" />
+              <Redirect to="/swap" />
             </Switch>
           </BrowserRouter>
         ) : (
