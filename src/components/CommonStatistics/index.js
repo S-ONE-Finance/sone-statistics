@@ -7,6 +7,7 @@ import totalStakedIcon from '../../assets/total-staked.svg'
 import soneWhiteIcon from '../../assets/sone_white.svg'
 import styled, { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
+import { S_ONE_APP_URL } from '../../constants/urls'
 
 const useStyles = makeStyles((theme) => ({
   cardPreview: {
@@ -137,10 +138,12 @@ export default function CommonStatistics() {
           <Box display="flex" alignItems="center">
             <a
               rel="noopener noreferrer"
-              href="https://luaswap.org"
+              href={S_ONE_APP_URL + '/#/add'}
               target="_blank"
               style={{ marginRight: 5, color: theme.text10Sone, fontSize: isUpToExtraSmall ? 13 : 16 }}
-            >{`Add Liquidity`}</a>
+            >
+              Add Liquidity
+            </a>
           </Box>
         }
       />

@@ -112,7 +112,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
         <DataText area="name" fontWeight="500" justifyContent="flex-start">
           <CustomLink
             style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap', color: '#3FAAB0', margin: 'auto' }}
-            to={'/account/' + lp.user.id}
+            to={'/swap/account/' + lp.user.id}
           >
             {below800 ? lp.user.id.slice(0, 4) + '...' + lp.user.id.slice(38, 42) : lp.user.id}
           </CustomLink>
@@ -121,7 +121,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
           <CustomLink
             style={{ color: '#3FAAB0', margin: 'auto', minWidth: '115px' }}
             area="pair"
-            to={'/pair/' + lp.pairAddress}
+            to={'/swap/pair/' + lp.pairAddress}
           >
             <RowFixed>
               {!below600 && <DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
@@ -168,7 +168,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
 
   return (
     <>
-      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'}>
+      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '539px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '1rem' }}>
           {!below600 && (
             <StyleFlex alignItems="center">

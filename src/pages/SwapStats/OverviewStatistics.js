@@ -161,7 +161,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {`${reduceFractionDigit(commonData?.totalLiquidity)}`}
                 </Typography>
               </Box>
             }
@@ -170,7 +170,7 @@ function OverviewStatistics(props) {
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
-            title="Pools"
+            title="No. Pools"
             colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -178,7 +178,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {`${reduceFractionDigit(commonData?.totalLiquidity)}`}
                 </Typography>
               </Box>
             }
@@ -228,7 +228,7 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Tokens
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/tokens'}>
+            <CustomLink className="btnLink" to="/swap/tokens">
               See more
             </CustomLink>
           </RowBetween>
@@ -241,7 +241,7 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Pairs
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/pairs'}>
+            <CustomLink className="btnLink" to="/swap/pairs">
               See more
             </CustomLink>
           </RowBetween>
@@ -254,7 +254,7 @@ function OverviewStatistics(props) {
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
               Top Accounts
             </TYPE.main>
-            <CustomLink className="btnLink" to={'/accounts'}>
+            <CustomLink className="btnLink" to="/swap/accounts">
               See more
             </CustomLink>
           </RowBetween>

@@ -39,6 +39,7 @@ import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
 import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
 import { useDarkModeManager } from '../contexts/LocalStorage'
+import { ETHERSCAN_BASE_URL } from '../constants/urls'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -218,7 +219,7 @@ function PairPage({ pairAddress, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[pairAddress] ?? `This pair is not supported.`}
             </TYPE.light>
-            <Link external={true} href={'https://etherscan.io/address/' + pairAddress}>{`More about ${shortenAddress(
+            <Link external={true} href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}>{`More about ${shortenAddress(
               pairAddress
             )}`}</Link>
           </AutoColumn>
@@ -260,7 +261,7 @@ function PairPage({ pairAddress, history }) {
       <ContentWrapperLarge style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/pairs">{'Pairs '}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
+            <BasicLink to="/swap/pairs">{'Pairs '}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
           </TYPE.body>
         </RowBetween>
         <WarningGrouping
@@ -286,9 +287,11 @@ function PairPage({ pairAddress, history }) {
                     <TYPE.main fontSize={below1080 ? '1.5rem' : '2rem'} style={{ margin: '0 1rem' }}>
                       {token0 && token1 ? (
                         <>
-                          <HoverSpan onClick={() => history.push(`/token/${token0?.id}`)}>{token0.symbol}</HoverSpan>
+                          <HoverSpan onClick={() => history.push(`/swap/token/${token0?.id}`)}>
+                            {token0.symbol}
+                          </HoverSpan>
                           <span>-</span>
-                          <HoverSpan onClick={() => history.push(`/token/${token1?.id}`)}>
+                          <HoverSpan onClick={() => history.push(`/swap/token/${token1?.id}`)}>
                             {token1.symbol}
                           </HoverSpan>{' '}
                           Pair
@@ -335,7 +338,7 @@ function PairPage({ pairAddress, history }) {
               }}
             >
               <FixedPanel
-                onClick={() => history.push(`/token/${token0?.id}`)}
+                onClick={() => history.push(`/swap/token/${token0?.id}`)}
                 style={{ backgroundColor: '#F3F3F3', borderRadius: 25, border: 0 }}
               >
                 <RowFixed>
@@ -351,7 +354,7 @@ function PairPage({ pairAddress, history }) {
               </FixedPanel>
               <FixedPanel
                 style={{ backgroundColor: '#F3F3F3', borderRadius: 25, border: 0, color: '#767676' }}
-                onClick={() => history.push(`/token/${token1?.id}`)}
+                onClick={() => history.push(`/swap/token/${token1?.id}`)}
               >
                 <RowFixed>
                   <TokenLogo address={token1?.id} size={'16px'} />
@@ -427,7 +430,7 @@ function PairPage({ pairAddress, history }) {
                       <TYPE.main>Pooled Tokens</TYPE.main>
                       <div />
                     </RowBetween>
-                    <Hover onClick={() => history.push(`/token/${token0?.id}`)} fade={true}>
+                    <Hover onClick={() => history.push(`/swap/token/${token0?.id}`)} fade={true}>
                       <AutoRow gap="4px">
                         <TokenLogo address={token0?.id} />
                         <TYPE.main fontSize={20} lineHeight={1} fontWeight={500}>
@@ -438,7 +441,7 @@ function PairPage({ pairAddress, history }) {
                         </TYPE.main>
                       </AutoRow>
                     </Hover>
-                    <Hover onClick={() => history.push(`/token/${token1?.id}`)} fade={true}>
+                    <Hover onClick={() => history.push(`/swap/token/${token1?.id}`)} fade={true}>
                       <AutoRow gap="4px">
                         <TokenLogo address={token1?.id} />
                         <TYPE.main fontSize={20} lineHeight={1} fontWeight={500}>
@@ -588,7 +591,7 @@ function PairPage({ pairAddress, history }) {
                       </TYPE.main>
                       <AutoRow align="center" style={{ margin: 'auto' }}>
                         <ButtonLight color={backgroundColor} className="btn-danger" style={{ marginTop: 20 }}>
-                          <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
+                          <Link color={backgroundColor} external href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}>
                             View on Etherscan ↗
                           </Link>
                         </ButtonLight>

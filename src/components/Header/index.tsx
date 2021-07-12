@@ -1,19 +1,27 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { Globe, Menu as MenuIcon, Moon, Sun } from 'react-feather'
-import { isMobile } from 'react-device-detect'
 
 import Logo from '../../assets/logo_text_sone.svg'
 import LogoDark from '../../assets/logo_text_white_sone.svg'
 
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import useLanguage from '../../hooks/useLanguage'
-
-import { TYPE } from '../../theme'
 import Row, { RowFixed } from '../Row'
 import Modal from '../Modal'
 import MobileMenu from '../MobileMenu'
+import {
+  S_ONE_APP_URL,
+  S_ONE_BLOG_URL,
+  S_ONE_DOCS_URL,
+  S_ONE_FAQ_URL,
+  S_ONE_TOP_PAGE_URL,
+  S_ONE_WALLET_INTRO_PAGE_URL,
+  S_ONE_WHITE_PAPER_URL,
+} from '../../constants/urls'
+import { Globe, Moon, Sun, Menu as MenuIcon } from 'react-feather'
+import { isMobile } from 'react-device-detect'
+import { TYPE } from '../../theme'
 
 const activeClassName = 'ACTIVE'
 
@@ -44,6 +52,7 @@ const HeaderElement = styled.div`
   align-items: center;
 
   /* addresses safari's lack of support for "gap" */
+
   & > *:not(:first-child) {
     margin-left: 1rem;
   }
@@ -94,6 +103,7 @@ const Title = styled.a`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     justify-self: center;
   `};
+
   :hover {
     cursor: pointer;
   }
@@ -432,55 +442,55 @@ export default function Header() {
         {/*<ClaimModal />*/}
         <HideExtraSmall>
           <HeaderRow>
-            <Title href="https://www.lipsum.com/" target="_blank">
+            <Title href={S_ONE_TOP_PAGE_URL} target="_blank">
               <img width={'100px'} src={darkMode ? LogoDark : Logo} alt="logo" />
             </Title>
             <HeaderMenu>
               <HideSmall>
-                <StyledExternalLink href={'https://www.lipsum.com/'}>S-ONE Wallet</StyledExternalLink>
+                <StyledExternalLink href={S_ONE_WALLET_INTRO_PAGE_URL} target="_blank">
+                  S-ONE Wallet
+                </StyledExternalLink>
               </HideSmall>
               <MenuItem>
-                <StyledNavLink
-                  to={'/swap'}
-                  isActive={(match, { pathname }) =>
-                    Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/add')
-                  }
-                >
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
                   Swap
-                </StyledNavLink>
+                </StyledExternalLink>
                 <SubMenu>
-                  <SubMenuItemNavLink to={'/swap'}>Swap</SubMenuItemNavLink>
-                  <SubMenuItemNavLink id={`pool-nav-link`} to={'/add'}>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
+                    Swap
+                  </SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
                     Liquidity
-                  </SubMenuItemNavLink>
+                  </SubMenuItemExternalLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>
-                <StyledNavLink to={'/uni'}>Staking</StyledNavLink>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+                  Staking
+                </StyledExternalLink>
               </MenuItem>
               <MenuItem>
-                <StyledExternalLink
-                  href={isMobile ? '' : 'https://www.lipsum.com/'}
-                  target={isMobile ? '_self' : '_blank'}
+                <StyledNavLink
+                  to="/swap"
+                  isActive={(match, { pathname }) =>
+                    Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/staking')
+                  }
                 >
                   Stats
-                </StyledExternalLink>
+                </StyledNavLink>
                 <SubMenu>
                   <SubMenuItemNavLink to={'/swap'}>Swap Stats</SubMenuItemNavLink>
                   <SubMenuItemNavLink to={'/staking'}>Staking Stats</SubMenuItemNavLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>
-                <StyledExternalLink
-                  href={isMobile ? '' : 'https://docs.s-one.finance/'}
-                  target={isMobile ? '_self' : '_blank'}
-                >
+                <StyledExternalLink href={isMobile ? '' : S_ONE_DOCS_URL} target={isMobile ? '_self' : '_blank'}>
                   Docs
                 </StyledExternalLink>
                 <ResponsiveTopEndSubMenu>
-                  <SubMenuItemExternalLink href={'https://www.lipsum.com/'}>White Paper</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={'https://www.lipsum.com/'}>FAQ</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={'https://www.lipsum.com/'}>Blog</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL}>White Paper</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_FAQ_URL}>FAQ</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_BLOG_URL}>Blog</SubMenuItemExternalLink>
                 </ResponsiveTopEndSubMenu>
               </MenuItem>
             </HeaderMenu>

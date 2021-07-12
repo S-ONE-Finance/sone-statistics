@@ -478,7 +478,7 @@ export const Search = ({ small = false }) => {
               //format incorrect names
               updateNameData(pair)
               return (
-                <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
+                <BasicLink to={'/swap/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
                   <MenuItem>
                     <DoubleTokenLogo a0={pair?.token0?.id} a1={pair?.token1?.id} margin={true} />
                     <TYPE.body style={{ marginLeft: '10px' }}>
@@ -513,7 +513,7 @@ export const Search = ({ small = false }) => {
             // update displayed names
             updateNameData({ token0: token })
             return (
-              <BasicLink to={'/token/' + token.id} key={token.id} onClick={onDismiss}>
+              <BasicLink to={'/swap/token/' + token.id} key={token.id} onClick={onDismiss}>
                 <MenuItem>
                   <RowFixed>
                     <TokenLogo address={token.id} style={{ marginRight: '10px' }} />

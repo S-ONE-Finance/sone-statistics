@@ -39,6 +39,7 @@ import { useDarkModeManager } from '../contexts/LocalStorage'
 // import Button from '@material-ui/core/Button';
 import { useCopyClipboard } from '../hooks'
 import { CustomLink } from '../components/Link'
+import { ETHERSCAN_BASE_URL } from '../constants/urls'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -184,7 +185,7 @@ function TokenPage({ address, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[address] ?? `This token is not supported.`}
             </TYPE.light>
-            <Link external={true} href={'https://etherscan.io/address/' + address}>{`More about ${shortenAddress(
+            <Link external={true} href={ETHERSCAN_BASE_URL + '/address/' + address}>{`More about ${shortenAddress(
               address
             )}`}</Link>
           </AutoColumn>
@@ -206,13 +207,13 @@ function TokenPage({ address, history }) {
         <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
           <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
             <TYPE.body>
-              <BasicLink to="/tokens">{'Tokens '}</BasicLink>→ {symbol}
+              <BasicLink to="/swap/tokens">{'Tokens '}</BasicLink>→ {symbol}
             </TYPE.body>
             <Link
               style={{ width: 'fit-content' }}
               color={backgroundColor}
               external
-              href={'https://etherscan.io/address/' + address}
+              href={ETHERSCAN_BASE_URL + '/address/' + address}
             >
               <Text style={{ marginLeft: '.15rem' }} fontSize={'14px'} fontWeight={400}>
                 ({address.slice(0, 8) + '...' + address.slice(36, 42)})
@@ -384,7 +385,7 @@ function TokenPage({ address, history }) {
             <RowBetween style={{ marginTop: '3rem' }}>
               <TYPE.main fontSize={'2.125rem'}>Top Pairs</TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
-                <CustomLink style={{ color: '#3FAAB0' }} to={'/tokens'}>
+                <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>
                   See more
                 </CustomLink>
                 {/* <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." /> */}
@@ -473,7 +474,7 @@ function TokenPage({ address, history }) {
                         Copy Address
                       </button>
                       <ButtonLight className="btn-danger ml-1">
-                        <Link color="#fff" external href={'https://etherscan.io/address/' + address}>
+                        <Link color="#fff" external href={ETHERSCAN_BASE_URL + '/address/' + address}>
                           View on Etherscan ↗
                         </Link>
                       </ButtonLight>

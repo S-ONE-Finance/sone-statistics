@@ -80,7 +80,7 @@ function AccountSearch({ history, small }) {
   const [isDarkMode] = useDarkModeManager()
   function handleAccountSearch() {
     if (isAddress(accountValue)) {
-      history.push('/account/' + accountValue)
+      history.push('/swap/account/' + accountValue)
       if (!savedAccounts.includes(accountValue)) {
         addAccount(accountValue)
       }
@@ -126,7 +126,7 @@ function AccountSearch({ history, small }) {
                     <Flex
                       area="account"
                       justifyContent="space-between"
-                      onClick={() => history.push('/account/' + account)}
+                      onClick={() => history.push('/swap/account/' + account)}
                     >
                       <AccountLink>{account?.slice(0, 42)}</AccountLink>
                       <Hover
@@ -156,7 +156,7 @@ function AccountSearch({ history, small }) {
               savedAccounts.map((account) => {
                 return (
                   <RowBetween key={account}>
-                    <ButtonFaded onClick={() => history.push('/account/' + account)}>
+                    <ButtonFaded onClick={() => history.push('/swap/account/' + account)}>
                       {small ? (
                         <TYPE.header>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
                       ) : (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Text } from 'rebass'
 import styled, { keyframes } from 'styled-components'
 import useBlockNumber from '../../hooks/useBlockNumber'
+import { ETHERSCAN_BASE_URL } from '../../constants/urls'
 
 const StyledPolling = styled.div`
   position: fixed;
@@ -78,7 +79,7 @@ export default function Polling() {
   )
 
   return (
-    <a href={`https://etherscan.io/block/${blockNumber}`}>
+    <a href={`${ETHERSCAN_BASE_URL}/block/${blockNumber}`}>
       <StyledPolling>
         <Text fontSize={'16px'} style={{ opacity: isMounted ? '0.2' : '0.6' }}>
           {blockNumber}

@@ -134,9 +134,9 @@ function App() {
             <Route component={GoogleAnalyticsReporter} />
             <Switch>
               <Route
-                exacts
+                exact
                 strict
-                path="/token/:tokenAddress"
+                path="/swap/token/:tokenAddress"
                 render={({ match }) => {
                   if (
                     isAddress(match.params.tokenAddress.toLowerCase()) &&
@@ -153,9 +153,9 @@ function App() {
                 }}
               />
               <Route
-                exacts
+                exact
                 strict
-                path="/pair/:pairAddress"
+                path="/swap/pair/:pairAddress"
                 render={({ match }) => {
                   if (
                     isAddress(match.params.pairAddress.toLowerCase()) &&
@@ -172,9 +172,9 @@ function App() {
                 }}
               />
               <Route
-                exacts
+                exact
                 strict
-                path="/account/:accountAddress"
+                path="/swap/account/:accountAddress"
                 render={({ match }) => {
                   if (isAddress(match.params.accountAddress.toLowerCase())) {
                     return (
@@ -188,30 +188,30 @@ function App() {
                 }}
               />
 
-              <Route path="/tokens">
+              <Route exact strict path="/swap/tokens">
                 <LayoutWrapper>
                   <AllTokensPage />
                 </LayoutWrapper>
               </Route>
 
-              <Route path="/pairs">
+              <Route exact strict path="/swap/pairs">
                 <LayoutWrapper>
                   <AllPairsPage />
                 </LayoutWrapper>
               </Route>
 
-              <Route path="/accounts">
+              <Route exact strict path="/swap/accounts">
                 <LayoutWrapper>
                   <AccountLookup />
                 </LayoutWrapper>
               </Route>
 
-              <Route path="/staking">
+              <Route exact strict path="/staking">
                 <LayoutWrapper>
                   <StakingStats />
                 </LayoutWrapper>
               </Route>
-              <Route path="/swap">
+              <Route exact strict path="/swap">
                 <LayoutWrapper>
                   <OverStats />
                 </LayoutWrapper>

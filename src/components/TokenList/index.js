@@ -189,7 +189,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           <Row>
             {!below680 && <div style={{ marginRight: '1rem', width: '10px' }}>{index}</div>}
             <TokenLogo address={item.id} />
-            <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/token/' + item.id}>
+            <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/swap/token/' + item.id}>
               <FormattedName
                 text={below680 ? item.symbol : item.name}
                 maxCharacters={below600 ? 8 : 16}
@@ -228,7 +228,14 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
     <>
       <Panel
         className="box-table-main"
-        style={{ marginTop: '6px', zIndex: 1, backgroundColor: theme.bgTable, border: 0, padding: 0 }}
+        style={{
+          marginTop: '6px',
+          zIndex: 1,
+          backgroundColor: theme.bgTable,
+          border: 0,
+          padding: 0,
+          minHeight: '542px',
+        }}
       >
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem 1.125rem 1rem 1.125rem' }}>

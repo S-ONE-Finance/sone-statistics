@@ -156,8 +156,8 @@ function PositionList({ positions }) {
             <DoubleTokenLogo size={16} a0={position.pair.token0.id} a1={position.pair.token1.id} margin={!below740} />
           </AutoColumn>
           <AutoColumn gap="8px" justify="flex-start" style={{ marginLeft: '20px' }}>
-            <CustomLink to={'/pair/' + position.pair.id}>
-              <TYPE.main style={{ whiteSpace: 'nowrap' }} to={'/pair/'}>
+            <CustomLink to={'/swap/pair/' + position.pair.id}>
+              <TYPE.main style={{ whiteSpace: 'nowrap' }} to={'/swap/pair/'}>
                 <FormattedName
                   text={position.pair.token0.symbol + '-' + position.pair.token1.symbol}
                   maxCharacters={below740 ? 10 : 18}

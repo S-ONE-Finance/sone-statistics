@@ -87,7 +87,7 @@ function PinnedData({ history, open, setSavedOpen }) {
                 const pair = savedPairs[address]
                 return (
                   <RowBetween key={pair.address}>
-                    <ButtonFaded onClick={() => history.push('/pair/' + address)}>
+                    <ButtonFaded onClick={() => history.push('/swap/pair/' + address)}>
                       <RowFixed>
                         <TYPE.header>
                           <FormattedName
@@ -123,7 +123,7 @@ function PinnedData({ history, open, setSavedOpen }) {
                 const token = savedTokens[address]
                 return (
                   <RowBetween key={address}>
-                    <ButtonFaded onClick={() => history.push('/token/' + address)}>
+                    <ButtonFaded onClick={() => history.push('/swap/token/' + address)}>
                       <RowFixed>
                         <TokenLogo address={address} size={'14px'} />
                         <TYPE.header ml={'6px'}>

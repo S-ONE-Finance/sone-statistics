@@ -30,7 +30,7 @@ function TokensStatistics({ ...props }) {
           <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
             Top Tokens
           </TYPE.main>
-          <CustomLink style={{ color: '#3FAAB0' }} to={'/tokens'}>
+          <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>
             See more
           </CustomLink>
         </RowBetween>
