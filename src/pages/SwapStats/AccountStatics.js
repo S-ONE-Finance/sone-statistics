@@ -29,7 +29,7 @@ function AccountStatics() {
           <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
             Top Accounts
           </TYPE.main>
-          <CustomLink className="btnLink" to={'/accounts'}>
+          <CustomLink className="btnLink" to={'/swap/accounts'}>
             See more
           </CustomLink>
         </RowBetween>

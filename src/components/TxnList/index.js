@@ -174,7 +174,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.TIMESTAMP)
   const [filteredItems, setFilteredItems] = useState()
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
-  const [isDarkMode] = useDarkModeManager();
+  const [isDarkMode] = useDarkModeManager()
   const [currency] = useCurrentCurrency()
 
   useEffect(() => {
@@ -289,18 +289,34 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
           </Link>
         </DataText>
-        <DataText area="value" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>
+        <DataText area="value" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
           {currency === 'ETH' ? 'Ξ ' + formattedNum(item.valueETH) : formattedNum(item.amountUSD, true)}
         </DataText>
         {!below780 && (
           <>
-            <DataText area="amountOther" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>
+            <DataText
+              area="amountOther"
+              style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            >
               {formattedNum(item.token1Amount) + ' '}{' '}
-              <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }} text={item.token1Symbol} maxCharacters={5} margin={true} />
+              <FormattedName
+                style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+                text={item.token1Symbol}
+                maxCharacters={5}
+                margin={true}
+              />
             </DataText>
-            <DataText area="amountToken" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>
+            <DataText
+              area="amountToken"
+              style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            >
               {formattedNum(item.token0Amount) + ' '}{' '}
-              <FormattedName style={{ color: isDarkMode ? "#AAAAAA" : "#767676 " }} text={item.token0Symbol} maxCharacters={5} margin={true} />
+              <FormattedName
+                style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+                text={item.token0Symbol}
+                maxCharacters={5}
+                margin={true}
+              />
             </DataText>
           </>
         )}
@@ -311,14 +327,16 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             </Link>
           </DataText>
         )}
-        <DataText area="time" style={{ justifyContent: 'center', color: isDarkMode ? "#AAAAAA" : "#767676 " }}>{formatTime(item.timestamp)}</DataText>
+        <DataText area="time" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+          {formatTime(item.timestamp)}
+        </DataText>
       </DashGrid>
     )
   }
 
   return (
     <>
-      <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15 }}>
+      <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: '542px' }}>
         <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
           {below780 ? (
             <RowBetween area="txn">
@@ -334,7 +352,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 style={{ fontWeight: 'bold' }}
               >
                 All
-            </SortText>
+              </SortText>
               <SortText
                 onClick={() => {
                   setTxFilter(TXN_TYPE.SWAP)
@@ -343,7 +361,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 style={{ fontWeight: 'bold' }}
               >
                 Swaps
-            </SortText>
+              </SortText>
               <SortText
                 onClick={() => {
                   setTxFilter(TXN_TYPE.ADD)
@@ -352,7 +370,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 style={{ fontWeight: 'bold' }}
               >
                 Adds
-            </SortText>
+              </SortText>
               <SortText
                 onClick={() => {
                   setTxFilter(TXN_TYPE.REMOVE)
@@ -361,7 +379,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 style={{ fontWeight: 'bold' }}
               >
                 Withdraw
-            </SortText>
+              </SortText>
             </RowFixed>
           )}
 
@@ -413,7 +431,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             )}
             {!below1080 && (
               <Flex alignItems="center" justifyContent="center">
-                <TYPE.body area="account" style={{ fontWeight: 'bold' }}>Account</TYPE.body>
+                <TYPE.body area="account" style={{ fontWeight: 'bold' }}>
+                  Account
+                </TYPE.body>
               </Flex>
             )}
             <Flex alignItems="center" justifyContent="center">
@@ -449,8 +469,8 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                         ? 'table-row'
                         : 'table-row-dark-mode'
                       : index % 2
-                        ? 'table-row'
-                        : 'table-row-light-mode'
+                      ? 'table-row'
+                      : 'table-row-light-mode'
                   }
                   style={{ padding: '0 1rem' }}
                 >
@@ -461,7 +481,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             })
           )}
         </List>
-
       </div>
       {/* <PageButtons>
         <div
@@ -491,7 +510,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         variant="outlined"
         shape="rounded"
         className="panigation-table-token-page"
-
       />
     </>
   )

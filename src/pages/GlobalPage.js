@@ -135,7 +135,7 @@ function GlobalPage() {
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
                 Top Tokens
               </TYPE.main>
-              <CustomLink to={'/tokens'}>See All</CustomLink>
+              <CustomLink to={'/swap/tokens'}>See All</CustomLink>
             </RowBetween>
           </ListOptions>
           {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}

@@ -211,7 +211,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             />
             <CustomLink
               style={{ marginLeft: '20px', whiteSpace: 'nowrap' }}
-              to={'/pair/' + pairAddress}
+              to={'/swap/pair/' + pairAddress}
               color={isDarkMode ? '#fff' : '#333333'}
             >
               <FormattedName
@@ -311,7 +311,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
 
   return (
     <>
-      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'}>
+      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '550px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '20px' }}>
           <Flex alignItems="center" className="justify-content-center w-100">
             <TYPE.main area="name" style={{ fontWeight: 'bold' }}>

@@ -206,7 +206,7 @@ function TokenPage({ address, history }) {
         <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
           <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
             <TYPE.body>
-              <BasicLink to="/tokens">{'Tokens '}</BasicLink>→ {symbol}
+              <BasicLink to="/swap/tokens">{'Tokens '}</BasicLink>→ {symbol}
             </TYPE.body>
             <Link
               style={{ width: 'fit-content' }}
@@ -384,7 +384,7 @@ function TokenPage({ address, history }) {
             <RowBetween style={{ marginTop: '3rem' }}>
               <TYPE.main fontSize={'2.125rem'}>Top Pairs</TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
-                <CustomLink style={{ color: '#3FAAB0' }} to={'/tokens'}>
+                <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>
                   See more
                 </CustomLink>
                 {/* <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." /> */}

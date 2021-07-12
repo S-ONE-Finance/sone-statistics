@@ -257,7 +257,7 @@ function AccountPage({ account }) {
       <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/accounts">{'Accounts '}</BasicLink>→
+            <BasicLink to="/swap/accounts">{'Accounts '}</BasicLink>→
             <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
               {account?.slice(0, 42)}
             </Link>
