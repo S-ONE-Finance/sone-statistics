@@ -39,6 +39,7 @@ import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
 import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
 import { useDarkModeManager } from '../contexts/LocalStorage'
+import { ETHERSCAN_BASE_URL } from '../constants/urls'
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -218,7 +219,7 @@ function PairPage({ pairAddress, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[pairAddress] ?? `This pair is not supported.`}
             </TYPE.light>
-            <Link external={true} href={'https://etherscan.io/address/' + pairAddress}>{`More about ${shortenAddress(
+            <Link external={true} href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}>{`More about ${shortenAddress(
               pairAddress
             )}`}</Link>
           </AutoColumn>
@@ -590,7 +591,7 @@ function PairPage({ pairAddress, history }) {
                       </TYPE.main>
                       <AutoRow align="center" style={{ margin: 'auto' }}>
                         <ButtonLight color={backgroundColor} className="btn-danger" style={{ marginTop: 20 }}>
-                          <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
+                          <Link color={backgroundColor} external href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}>
                             View on Etherscan ↗
                           </Link>
                         </ButtonLight>

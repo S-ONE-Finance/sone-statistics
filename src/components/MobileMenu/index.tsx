@@ -7,6 +7,14 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { ReactComponent as Close } from '../../assets/x.svg'
 import Column from '../Column'
+import {
+  S_ONE_APP_URL,
+  S_ONE_BLOG_URL,
+  S_ONE_FAQ_URL,
+  S_ONE_TOP_PAGE_URL,
+  S_ONE_WHITE_PAPER_URL,
+} from '../../constants/urls'
+import { NavLink } from 'react-router-dom'
 
 export const CloseIcon = styled.div`
   position: absolute;
@@ -46,7 +54,7 @@ const ColumnWrapper = styled(Column)<{ padding?: string }>`
 
 const activeClassName = 'ACTIVE'
 
-const StyledNavLink = styled.a.attrs({
+const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
 })`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -119,15 +127,29 @@ export default function MobileMenu({ setIsShowMobileMenu }: MobileMenuProps) {
         <CloseIcon>
           <CloseColor />
         </CloseIcon>
-        <StyledExternalLink href={'https://www.lipsum.com/'}>S-ONE Wallet</StyledExternalLink>
-        <StyledNavLink href={'https://www.lipsum.com/'}>Swap</StyledNavLink>
-        <StyledNavLink href={'https://www.lipsum.com/'}>Liquidity</StyledNavLink>
-        <StyledNavLink href={'https://www.lipsum.com/'}>Staking</StyledNavLink>
-        <StyledExternalLink href={'https://www.lipsum.com/'}>Swap Stats</StyledExternalLink>
-        <StyledExternalLink href={'https://www.lipsum.com/'}>Staking Stats</StyledExternalLink>
-        <StyledExternalLink href={'https://www.lipsum.com/'}>White Paper</StyledExternalLink>
-        <StyledExternalLink href={'https://www.lipsum.com/'}>FAQ</StyledExternalLink>
-        <StyledExternalLink href={'https://www.lipsum.com/'}>Blog</StyledExternalLink>
+        <StyledExternalLink href={S_ONE_TOP_PAGE_URL} target="_blank">
+          S-ONE Wallet
+        </StyledExternalLink>
+        <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
+          Swap
+        </StyledExternalLink>
+        <StyledExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
+          Liquidity
+        </StyledExternalLink>
+        <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+          Staking
+        </StyledExternalLink>
+        <StyledNavLink to="/swap">Swap Stats</StyledNavLink>
+        <StyledNavLink to="/staking">Staking Stats</StyledNavLink>
+        <StyledExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">
+          White Paper
+        </StyledExternalLink>
+        <StyledExternalLink href={S_ONE_FAQ_URL} target="_blank">
+          FAQ
+        </StyledExternalLink>
+        <StyledExternalLink href={S_ONE_BLOG_URL} target="_blank">
+          Blog
+        </StyledExternalLink>
       </Column>
     </ColumnWrapper>
   )

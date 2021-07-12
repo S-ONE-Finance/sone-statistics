@@ -10,6 +10,7 @@ import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
 import { timeframeOptions } from '../constants'
 import Numeral from 'numeral'
+import { ETHERSCAN_BASE_URL } from '../constants/urls'
 
 // format libraries
 const Decimal = toFormat(_Decimal)
@@ -318,10 +319,10 @@ export const setThemeColor = (theme) => document.documentElement.style.setProper
 export const Big = (number) => new BigNumber(number)
 
 export const urls = {
-  showTransaction: (tx) => `https://etherscan.io/tx/${tx}/`,
-  showAddress: (address) => `https://www.etherscan.io/address/${address}/`,
-  showToken: (address) => `https://www.etherscan.io/token/${address}/`,
-  showBlock: (block) => `https://etherscan.io/block/${block}/`,
+  showTransaction: (tx) => `${ETHERSCAN_BASE_URL}/tx/${tx}/`,
+  showAddress: (address) => `${ETHERSCAN_BASE_URL}/address/${address}/`,
+  showToken: (address) => `${ETHERSCAN_BASE_URL}/token/${address}/`,
+  showBlock: (block) => `${ETHERSCAN_BASE_URL}/block/${block}/`,
 }
 
 export const formatTime = (unix) => {

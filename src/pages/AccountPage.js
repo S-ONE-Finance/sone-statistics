@@ -22,6 +22,7 @@ import { useMedia } from 'react-use'
 import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
+import { ETHERSCAN_BASE_URL } from '../constants/urls'
 
 const StyledPanel = styled(Panel)`
   margin-top: 1.5rem !important;
@@ -258,7 +259,7 @@ function AccountPage({ account }) {
         <RowBetween>
           <TYPE.body>
             <BasicLink to="/swap/accounts">{'Accounts '}</BasicLink>→
-            <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
+            <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
               {account?.slice(0, 42)}
             </Link>
           </TYPE.body>
@@ -268,7 +269,7 @@ function AccountPage({ account }) {
           <RowBetween>
             <span>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
-              <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
+              <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
                 <TYPE.main
                   className="btn-danger"
                   fontSize={16}
