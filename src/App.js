@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './apollo/client'
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
-import GlobalPage from './pages/GlobalPage'
+import { Route, Switch, HashRouter, Redirect } from 'react-router-dom'
 import TokenPage from './pages/TokenPage'
 import PairPage from './pages/PairPage'
 import { useGlobalData, useGlobalChartData } from './contexts/GlobalData'
@@ -22,7 +21,6 @@ import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
-import { useMedia } from 'react-use'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -130,7 +128,7 @@ function App() {
         Object.keys(globalData).length > 0 &&
         globalChartData &&
         Object.keys(globalChartData).length > 0 ? (
-          <BrowserRouter>
+          <HashRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>
               <Route
@@ -218,7 +216,7 @@ function App() {
               </Route>
               <Redirect to="/swap" />
             </Switch>
-          </BrowserRouter>
+          </HashRouter>
         ) : (
           <LocalLoader fill="true" />
         )}
