@@ -93,7 +93,7 @@
   left: 0;
   background-position: initial;
   margin: auto;
-  z-index: 0;
+  z-index: -1;
 }
 
 .btn-copy-dark-mode {
@@ -144,7 +144,7 @@
   left: 0;
   background-position: initial;
   margin: auto;
-  z-index: 0;
+  z-index: -1;
   background-size: cover;
 }
 
