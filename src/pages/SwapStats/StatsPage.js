@@ -13,7 +13,7 @@ import { useDarkModeManager } from '../../contexts/LocalStorage'
 import PairsStatistics from './PairsStatistics'
 import AccountStatics from './AccountStatics'
 import TransactionStatics from './TransactionStatics'
-
+import { useTranslation } from 'react-i18next'
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
   font-size: 40px;
@@ -126,6 +126,7 @@ function StatsPage() {
   const handleChange = (event, newValue) => {
     setIndexTabMain(newValue)
   }
+  const { t, i18n } = useTranslation()
 
   return (
     <MainWrapper>
@@ -159,7 +160,7 @@ function StatsPage() {
                   icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
                   // className={classes.btnMain + ` btn-tab-custom`}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Overview"
+                  label={t('Overview')}
                   {...a11yProps(0)}
                 />
                 <TabCustom
@@ -169,7 +170,7 @@ function StatsPage() {
                   }}
                   icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Tokens "
+                  label={t('Tokens')}
                   {...a11yProps(1)}
                 />
                 <TabCustom
@@ -179,7 +180,7 @@ function StatsPage() {
                   }}
                   icon={<IconLink className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Pairs"
+                  label={t('Pairs')}
                   {...a11yProps(2)}
                 />
                 <TabCustom
@@ -189,7 +190,7 @@ function StatsPage() {
                   }}
                   icon={<IconUser fontSize="small" className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Accounts"
+                  label={t('Accounts')}
                   {...a11yProps(3)}
                 />
                 <TabCustom
@@ -204,7 +205,7 @@ function StatsPage() {
                     />
                   }
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Transactions"
+                  label={t('Transactions')}
                   {...a11yProps(4)}
                 />
               </Tabs>

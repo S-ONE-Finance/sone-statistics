@@ -20,6 +20,7 @@ import PairList from '../../components/PairList'
 import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
 import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
+import { useTranslation } from 'react-i18next'
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -106,6 +107,7 @@ function OverviewStatistics(props) {
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
   const allPairs = useAllPairData()
+  const { t, i18n } = useTranslation()
 
   //accounts
   const topLps = useTopLps()
@@ -131,6 +133,8 @@ function OverviewStatistics(props) {
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
 
+  console.log('props', props)
+
   return (
     <div className={classes.boxMainContentOverview}>
       <StyledGrid className={classes.boxCardItems} container spacing={0}>
@@ -153,7 +157,7 @@ function OverviewStatistics(props) {
         </Grid>
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
-            title="No. Transactions (24h)"
+            title={t('No. Transactions (24h)')}
             colorTextRatioValue="#7AC51B"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -170,7 +174,7 @@ function OverviewStatistics(props) {
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
-            title="No. Pools"
+            title={t('No. Pools')}
             colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -226,10 +230,10 @@ function OverviewStatistics(props) {
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Top Tokens
+              {t('Top Tokens')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/tokens">
-              See more
+              {t('See more')}
             </CustomLink>
           </RowBetween>
         </ListOptions>
@@ -239,10 +243,10 @@ function OverviewStatistics(props) {
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Top Pairs
+              {t('Top Pairs')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/pairs">
-              See more
+              {t('See more')}
             </CustomLink>
           </RowBetween>
         </ListOptions>
@@ -252,10 +256,10 @@ function OverviewStatistics(props) {
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Top Accounts
+              {t('Top Accounts')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/accounts">
-              See more
+              {t('See more')}
             </CustomLink>
           </RowBetween>
         </ListOptions>
@@ -265,7 +269,7 @@ function OverviewStatistics(props) {
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
             <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Transactions
+              {t('Transactions')}
             </TYPE.main>
           </RowBetween>
         </ListOptions>

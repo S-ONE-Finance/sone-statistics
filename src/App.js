@@ -108,12 +108,15 @@ const LayoutWrapper = ({ children }) => {
 
 const BLOCK_DIFFERENCE_THRESHOLD = 30
 
-function App() {
+function App({ t }) {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
   const [latestBlock, headBlock] = useLatestBlocks()
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
+
+  console.log('props22222222222', t)
+
   return (
     <ApolloProvider client={client}>
       <AppWrapper>

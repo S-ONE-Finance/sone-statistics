@@ -25,6 +25,7 @@ import { CustomLink } from '../components/Link'
 import { PageWrapper, ContentWrapper } from '../components'
 import CheckBox from '../components/Checkbox'
 import QuestionHelper from '../components/QuestionHelper'
+import { useTranslation } from 'react-i18next'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -66,6 +67,7 @@ function GlobalPage() {
 
   // for tracked data on pairs
   const [useTracked, setUseTracked] = useState(true)
+  const { t, i18n } = useTranslation()
 
   return (
     <PageWrapper>
@@ -133,7 +135,7 @@ function GlobalPage() {
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-                Top Tokens
+                {t('Top Tokens')}
               </TYPE.main>
               <CustomLink to={'/swap/tokens'}>See All</CustomLink>
             </RowBetween>
@@ -144,7 +146,7 @@ function GlobalPage() {
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap' }}>
-                Top Pairs
+                {t('Top Pairs')}
               </TYPE.main>
               <AutoRow gap="4px" width="100%" justifyContent="flex-end">
                 <CheckBox
@@ -162,7 +164,7 @@ function GlobalPage() {
           </Panel>
           <span>
             <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
-              Transactions
+              {t('Transactions')}
             </TYPE.main>
           </span>
           <Panel style={{ margin: '1rem 0' }}>

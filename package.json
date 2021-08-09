@@ -15,8 +15,11 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "axios": "^0.21.1",
+    "i18next": "^20.3.5",
+    "i18next-browser-languagedetector": "^6.1.2",
     "lodash.get": "^4.4.2",
-    "lodash.orderby": "^4.6.0"
+    "lodash.orderby": "^4.6.0",
+    "react-i18next": "^11.11.4"
   },
   "devDependencies": {
     "@popperjs/core": "^2.4.2",

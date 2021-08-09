@@ -11,7 +11,9 @@ import ApplicationContextProvider from './contexts/Application'
 import StakingDataContextProvider from './contexts/StakingData'
 import UserContextProvider from './contexts/User'
 import App from './App'
-
+import './i18n'
+import { I18nextProvider } from 'react-i18next'
+import i18n from './i18n'
 // initialize GA
 const GOOGLE_ANALYTICS_ID = process.env.REACT_APP_GOOGLE_ANALYTICS_ID
 
@@ -64,13 +66,15 @@ function Updaters() {
 
 ReactDOM.render(
   <ContextProviders>
-    <Updaters />
-    <ThemeProvider>
-      <>
-        <GlobalStyle />
-        <App />
-      </>
-    </ThemeProvider>
+    <I18nextProvider i18n={i18n}>
+      <Updaters />
+      <ThemeProvider>
+        <>
+          <GlobalStyle />
+          <App />
+        </>
+      </ThemeProvider>
+    </I18nextProvider>
   </ContextProviders>,
   document.getElementById('root')
 )

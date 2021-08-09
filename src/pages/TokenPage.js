@@ -40,6 +40,8 @@ import { useDarkModeManager } from '../contexts/LocalStorage'
 import { useCopyClipboard } from '../hooks'
 import { CustomLink } from '../components/Link'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { useTranslation } from 'react-i18next'
+
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -122,6 +124,7 @@ function TokenPage({ address, history }) {
   } = useTokenData(address)
   const [isDarkMode] = useDarkModeManager()
   const [isCopied, setCopied] = useCopyClipboard()
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
@@ -261,7 +264,9 @@ function TokenPage({ address, history }) {
             >
               <RowFixed>
                 <Link href={getPoolLink(address)} target="_blank">
-                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>+ Add Liquidity</ButtonLight>
+                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>
+                    + {t('Add Liquidity')}
+                  </ButtonLight>
                 </Link>
                 <Link href={getSwapLink(address)} target="_blank">
                   <ButtonDark
@@ -269,7 +274,7 @@ function TokenPage({ address, history }) {
                     ml={'.5rem'}
                     mr={below1080 && '.5rem'}
                   >
-                    Swap
+                    {t('Swap')}
                   </ButtonDark>
                 </Link>
               </RowFixed>
@@ -332,7 +337,7 @@ function TokenPage({ address, history }) {
                 <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>Volume (24hrs)</TYPE.main>
+                      <TYPE.main>{t('Volume (24h)')}</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -383,10 +388,10 @@ function TokenPage({ address, history }) {
             </>
 
             <RowBetween style={{ marginTop: '3rem' }}>
-              <TYPE.main fontSize={'2.125rem'}>Top Pairs</TYPE.main>
+              <TYPE.main fontSize={'2.125rem'}>{t('Top Pairs')}</TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
                 <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>
-                  See more
+                  {t('See more')}
                 </CustomLink>
                 {/* <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." /> */}
               </AutoRow>
@@ -410,7 +415,7 @@ function TokenPage({ address, history }) {
               <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
             </Panel>
             <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
-              <TYPE.main fontSize={'2.125rem'}>Transactions</TYPE.main> <div />
+              <TYPE.main fontSize={'2.125rem'}>{t('Transactions')}</TYPE.main> <div />
             </RowBetween>
             <Panel
               className="box-shadow-none"
@@ -421,7 +426,7 @@ function TokenPage({ address, history }) {
             </Panel>
             <>
               <RowBetween style={{ marginTop: '3rem' }}>
-                <TYPE.main fontSize={'1.125rem'}>Token Information</TYPE.main>{' '}
+                <TYPE.main fontSize={'1.125rem'}>{t('Token Information')}</TYPE.main>{' '}
               </RowBetween>
               <Panel
                 rounded
@@ -436,7 +441,7 @@ function TokenPage({ address, history }) {
               >
                 <TokenDetailsLayout style={{}}>
                   <Column>
-                    <TYPE.main style={{ fontWeight: 'bold' }}>Symbol</TYPE.main>
+                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Symbol')}</TYPE.main>
                     <Text fontSize={'1rem'} style={{ marginTop: '1.5rem' }} fontWeight="400">
                       <FormattedName
                         style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}

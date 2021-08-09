@@ -22,6 +22,8 @@ import {
 import { Globe, Moon, Sun, Menu as MenuIcon } from 'react-feather'
 import { isMobile } from 'react-device-detect'
 import { TYPE } from '../../theme'
+import i18n from '../../i18n'
+import { withTranslation } from 'react-i18next'
 
 const activeClassName = 'ACTIVE'
 
@@ -425,12 +427,14 @@ const ShowOnlyExtraSmall = styled.div`
     display: inherit;
   `};
 `
-
-export default function Header() {
+function Header({ t }) {
   const [language, setLanguage] = useLanguage()
   const [darkMode, toggleDarkMode] = useDarkModeManager()
 
   const [isShowMobileMenu, setIsShowMobileMenu] = useState(false)
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng)
+  }
 
   return (
     <>
@@ -518,9 +522,9 @@ export default function Header() {
                 </TYPE.language>
               </StyledMenuButtonWithText>
               <ResponsiveBottomRightSubMenu>
-                <SubMenuItemText onClick={() => setLanguage('jp')}>日本語</SubMenuItemText>
-                <SubMenuItemText onClick={() => setLanguage('en')}>English</SubMenuItemText>
-                <SubMenuItemText onClick={() => setLanguage('zh-CN')}>中文</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('jp')}>日本語</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('en')}>English</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('cn')}>中文</SubMenuItemText>
               </ResponsiveBottomRightSubMenu>
             </ResponsiveMenuItem>
             <ShowOnlyExtraSmall>
@@ -534,3 +538,5 @@ export default function Header() {
     </>
   )
 }
+
+export default withTranslation()(Header)

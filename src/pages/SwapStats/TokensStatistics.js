@@ -6,6 +6,7 @@ import TopTokenList from '../../components/TokenList'
 import styled from 'styled-components'
 import { useAllTokenData } from '../../contexts/TokenData'
 import { useMedia } from 'react-use'
+import { useTranslation } from 'react-i18next'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -22,16 +23,17 @@ const ListOptions = styled(AutoRow)`
 
 function TokensStatistics({ ...props }) {
   const allTokens = useAllTokenData()
+  const { t, i18n } = useTranslation()
 
   return (
     <div className="box-main-content-tokens">
       <ListOptions gap="10px">
         <RowBetween>
           <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
-            Top Tokens
+            {t('Top Tokens')}
           </TYPE.main>
           <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>
-            See more
+            {t('See more')}
           </CustomLink>
         </RowBetween>
       </ListOptions>

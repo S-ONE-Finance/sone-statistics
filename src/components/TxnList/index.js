@@ -19,6 +19,7 @@ import { updateNameData } from '../../utils/data'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
 import { ETHERSCAN_BASE_URL } from '../../constants/urls'
+import { useTranslation } from 'react-i18next'
 
 dayjs.extend(utc)
 
@@ -177,6 +178,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
   const [isDarkMode] = useDarkModeManager()
   const [currency] = useCurrentCurrency()
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -394,7 +396,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
               }}
             >
-              Total Value {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Total Value')} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
           {!below780 && (
@@ -408,7 +410,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
                 }}
               >
-                {symbol0Override ? symbol0Override + ' Amount' : 'Token Amount'}{' '}
+                {symbol0Override ? symbol0Override + ' Amount' : `${t('Token Amount')}`}{' '}
                 {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
@@ -425,7 +427,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                     setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
                   }}
                 >
-                  {symbol1Override ? symbol1Override + ' Amount' : 'Token Amount'}{' '}
+                  {symbol1Override ? symbol1Override + ' Amount' : `${t('Token Amount')}`}{' '}
                   {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↑' : '↓') : ''}
                 </ClickableText>
               </Flex>
@@ -433,7 +435,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             {!below1080 && (
               <Flex alignItems="center" justifyContent="center">
                 <TYPE.body area="account" style={{ fontWeight: 'bold' }}>
-                  Account
+                  {t('Accounts')}
                 </TYPE.body>
               </Flex>
             )}
@@ -447,7 +449,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 }}
                 style={{ fontWeight: 'bold' }}
               >
-                Time {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Time')} {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           </>

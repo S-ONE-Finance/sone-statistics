@@ -15,6 +15,8 @@ import DoubleTokenLogo from '../DoubleLogo'
 import { RowFixed } from '../Row'
 import { Pagination } from '@material-ui/lab'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useTranslation } from 'react-i18next'
+
 dayjs.extend(utc)
 
 const PageButtons = styled.div`
@@ -86,6 +88,8 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   const [maxPage, setMaxPage] = useState(1)
   const ITEMS_PER_PAGE = maxItems
   const [isDarkMode] = useDarkModeManager()
+  const { t, i18n } = useTranslation()
+
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -176,10 +180,10 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
             </StyleFlex>
           )}
           <StyleFlex alignItems="center">
-            <TYPE.main area="name">Account</TYPE.main>
+            <TYPE.main area="name">{t('Accounts')}</TYPE.main>
           </StyleFlex>
           <StyleFlex alignItems="center">
-            <TYPE.main area="pair">Pair</TYPE.main>
+            <TYPE.main area="pair">{t('Pairs')}</TYPE.main>
           </StyleFlex>
           <StyleFlex alignItems="center">
             <StyleTypeMain area="value">Value</StyleTypeMain>
