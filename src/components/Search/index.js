@@ -20,6 +20,7 @@ import FormattedName from '../FormattedName'
 import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
   height: 48px;
@@ -180,7 +181,7 @@ export const Search = ({ small = false }) => {
 
   const [searchedTokens, setSearchedTokens] = useState([])
   const [searchedPairs, setSearchedPairs] = useState([])
-
+  const { t, i18n } = useTranslation()
   useEffect(() => {
     async function fetchData() {
       try {
@@ -449,7 +450,7 @@ export const Search = ({ small = false }) => {
               ? 'Search swap...'
               : below700
               ? 'Search pairs and tokens...'
-              : 'Search tokens, pairs and accounts'
+              : `${t('textSearchInpMain')}`
           }
           value={value}
           onChange={(e) => {

@@ -18,6 +18,7 @@ import { TYPE } from '../../theme'
 import FormattedName from '../FormattedName'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
+import { useTranslation } from 'react-i18next'
 
 dayjs.extend(utc)
 
@@ -112,7 +113,7 @@ const SORT_FIELD = {
 function PositionList({ positions }) {
   const below500 = useMedia('(max-width: 500px)')
   const below740 = useMedia('(max-width: 740px)')
-
+  const { t, i18n } = useTranslation()
   // pagination
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -329,8 +330,8 @@ function PositionList({ positions }) {
             </Flex>
           )}
           <Flex alignItems="flex-start" justifyContent="flex-start" className="h-100 align-items-center">
-            <TYPE.main fontSize={'20px'} area="number">
-              Name
+            <TYPE.main fontSize={'20px'} style={{ fontWeight: 'bold' }} area="number">
+              {t('Name')}
             </TYPE.main>
           </Flex>
           <Flex alignItems="center" className="justify-content-center m-auto">
@@ -340,8 +341,10 @@ function PositionList({ positions }) {
                 setSortedColumn(SORT_FIELD.VALUE)
                 setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
               }}
+              fontSize={'20px'}
+              style={{ fontWeight: 'bold' }}
             >
-              {below740 ? 'Value' : 'Liquidity'} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Liquidity')} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
           {!below500 && (
@@ -352,8 +355,10 @@ function PositionList({ positions }) {
                   setSortedColumn(SORT_FIELD.UNISWAP_RETURN)
                   setSortDirection(sortedColumn !== SORT_FIELD.UNISWAP_RETURN ? true : !sortDirection)
                 }}
+                fontSize={'20px'}
+                style={{ fontWeight: 'bold' }}
               >
-                {below740 ? 'Fees' : 'Total Fees Earned'}{' '}
+                {t('Total Fees Earned')}
                 {sortedColumn === SORT_FIELD.UNISWAP_RETURN ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>

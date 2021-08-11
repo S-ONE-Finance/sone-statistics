@@ -354,7 +354,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.ALL}
                 style={{ fontWeight: 'bold' }}
               >
-                All
+                {t('All')}
               </SortText>
               <SortText
                 onClick={() => {
@@ -363,7 +363,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.SWAP}
                 style={{ fontWeight: 'bold' }}
               >
-                Swaps
+                {t('Swaps')}
               </SortText>
               <SortText
                 onClick={() => {
@@ -372,7 +372,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.ADD}
                 style={{ fontWeight: 'bold' }}
               >
-                Adds
+                {t('Adds')}
               </SortText>
               <SortText
                 onClick={() => {
@@ -381,7 +381,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.REMOVE}
                 style={{ fontWeight: 'bold' }}
               >
-                Withdraw
+                {t('Withdraw')}
               </SortText>
             </RowFixed>
           )}
@@ -434,7 +434,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             )}
             {!below1080 && (
               <Flex alignItems="center" justifyContent="center">
-                <TYPE.body area="account" style={{ fontWeight: 'bold' }}>
+                <TYPE.body area="account" style={{ fontWeight: 'bold', fontSize: 16 }}>
                   {t('Accounts')}
                 </TYPE.body>
               </Flex>
@@ -447,7 +447,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortedColumn(SORT_FIELD.TIMESTAMP)
                   setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
                 }}
-                style={{ fontWeight: 'bold' }}
+                style={{ fontWeight: 'bold', fontSize: 16 }}
               >
                 {t('Time')} {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
@@ -485,24 +485,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           )}
         </List>
       </div>
-      {/* <PageButtons>
-        <div
-          onClick={(e) => {
-            setPage(page === 1 ? page : page - 1)
-          }}
-        >
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        <TYPE.body>{'Page ' + page + ' of ' + maxPage}</TYPE.body>
-        <div
-          onClick={(e) => {
-            setPage(page === maxPage ? page : page + 1)
-          }}
-        >
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons> */}
-
       <Pagination
         style={{ justifyContent: 'center' }}
         page={page}

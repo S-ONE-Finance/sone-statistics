@@ -92,6 +92,7 @@ export function localNumber(val) {
 
 export const toNiceDate = (date) => {
   let x = dayjs.utc(dayjs.unix(date)).format('MMM DD')
+  console.log('xxxxxxx3333333', x)
   return x
 }
 

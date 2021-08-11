@@ -86,7 +86,7 @@ function GlobalPage() {
                   <AutoColumn gap="36px">
                     <AutoColumn gap="20px">
                       <RowBetween>
-                        <TYPE.main>Volume (24hrs)</TYPE.main>
+                        <TYPE.main>{t('Volume (24hrs)')}</TYPE.main>
                         <div />
                       </RowBetween>
                       <RowBetween align="flex-end">
@@ -98,7 +98,7 @@ function GlobalPage() {
                     </AutoColumn>
                     <AutoColumn gap="20px">
                       <RowBetween>
-                        <TYPE.main>Total Liquidity</TYPE.main>
+                        <TYPE.main>{t('Total Liquidity')}</TYPE.main>
                         <div />
                       </RowBetween>
                       <RowBetween align="flex-end">
@@ -134,7 +134,7 @@ function GlobalPage() {
           )}
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
-              <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
+              <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
                 {t('Top Tokens')}
               </TYPE.main>
               <CustomLink to={'/swap/tokens'}>See All</CustomLink>
@@ -145,7 +145,7 @@ function GlobalPage() {
           {/* </Panel> */}
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
-              <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap' }}>
+              <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
                 {t('Top Pairs')}
               </TYPE.main>
               <AutoRow gap="4px" width="100%" justifyContent="flex-end">
@@ -163,7 +163,7 @@ function GlobalPage() {
             <PairList pairs={allPairs} useTracked={useTracked} />
           </Panel>
           <span>
-            <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
+            <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem', fontWeight: 'bold' }}>
               {t('Transactions')}
             </TYPE.main>
           </span>

@@ -140,7 +140,7 @@ function OverviewStatistics(props) {
       <StyledGrid className={classes.boxCardItems} container spacing={0}>
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
-            title="ETH Price"
+            title={t('ETH Price')}
             colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -191,7 +191,7 @@ function OverviewStatistics(props) {
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
-            title="Total Fees (24h)"
+            title={t('Total Fees (24h)')}
             colorTextRatioValue="#7AC51B"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -229,7 +229,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
               {t('Top Tokens')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/tokens">
@@ -242,7 +242,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
               {t('Top Pairs')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/pairs">
@@ -255,7 +255,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
               {t('Top Accounts')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/accounts">
@@ -268,7 +268,7 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
               {t('Transactions')}
             </TYPE.main>
           </RowBetween>

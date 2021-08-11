@@ -29,7 +29,7 @@ function AccountStatics() {
     <div className="tab-account">
       <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
         <RowBetween>
-          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
             {t('Top Accounts')}
           </TYPE.main>
           <CustomLink className="btnLink" to={'/swap/accounts'}>

@@ -14,6 +14,7 @@ import DropdownSelect from '../DropdownSelect'
 import CandleStickChart from '../CandleChart'
 import LocalLoader from '../LocalLoader'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useTranslation } from 'react-i18next'
 
 const ChartWrapper = styled.div`
   height: 100%;
@@ -51,6 +52,8 @@ const PairChart = ({ address, color, base0, base1 }) => {
   const isClient = typeof window === 'object'
   const [width, setWidth] = useState(ref?.current?.container?.clientWidth)
   const [height, setHeight] = useState(ref?.current?.container?.clientHeight)
+  const { t, i18n } = useTranslation()
+
   useEffect(() => {
     if (!isClient) {
       return false
@@ -130,7 +133,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
                 setChartFilter(CHART_VIEW.LIQUIDITY)
               }}
             >
-              Liquidity
+              {t('Liquidity')}
             </OptionButton>
             <OptionButton
               active={chartFilter === CHART_VIEW.VOLUME}
@@ -139,7 +142,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
                 setChartFilter(CHART_VIEW.VOLUME)
               }}
             >
-              Volume
+              {t('Volume')}
             </OptionButton>
             <OptionButton
               active={chartFilter === CHART_VIEW.RATE0}
@@ -165,19 +168,19 @@ const PairChart = ({ address, color, base0, base1 }) => {
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
             >
-              1W
+              {t('1W')}
             </OptionButton>
             <OptionButton
               active={timeWindow === timeframeOptions.MONTH}
               onClick={() => setTimeWindow(timeframeOptions.MONTH)}
             >
-              1M
+              {t('1M')}
             </OptionButton>
             <OptionButton
               active={timeWindow === timeframeOptions.ALL_TIME}
               onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
             >
-              All
+              {t('All')}
             </OptionButton>
           </AutoRow>
         </OptionsRow>

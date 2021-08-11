@@ -50,5 +50,34 @@
   "Swap": "Swap",
   "Price": "Price",
   "Total Liquidity": "Total Liquidity",
-  "Reward / Block": "Reward / Block"
+  "Reward / Block": "Reward / Block",
+
+  "S-ONE Wallet": "S-ONE Wallet",
+  "Staking": "Staking",
+  "Stats": "Stats",
+  "Docs": "Docs",
+  "Swap Statistic": "Swap Statistic",
+  "textSearchInpMain": "Search tokens, pairs and accounts",
+
+  "ETH Price": "ETH Price",
+  "No. Pools": "Pools",
+  "Total Fees (24h)": "Total Fees (24h)",
+  "Volume(24hrs)": "Volume(24hrs)",
+  "Volume (7d)": "Volume (7d)",
+  "Fees (24hr)": "Fees (24hr)",
+  "value": "value",
+
+  "All": "All",
+  "Swaps": "Swaps",
+  "Adds": "Adds",
+  "Transactions (24hrs)": "Transactions (24hrs)",
+  "Volume": "Volume",
+  "1W": "1W",
+  "1M": "1M",
+  "D": "D",
+  "H": "H",
+  "View on Etherscan": "View on Etherscan",
+  "Address": "Address",
+  "Pair Address": "Pair Address",
+  "Pair name": "Pair name"
 }

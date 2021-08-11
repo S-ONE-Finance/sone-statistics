@@ -15,6 +15,7 @@ import LocalLoader from '../LocalLoader'
 import { AutoColumn } from '../Column'
 import { Activity } from 'react-feather'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useTranslation } from 'react-i18next'
 
 const ChartWrapper = styled.div`
   height: 100%;
@@ -52,6 +53,8 @@ const TokenChart = ({ address, color, base }) => {
 
   // reset view on new address
   const addressPrev = usePrevious(address)
+  const { t, i18n } = useTranslation()
+
   useEffect(() => {
     if (address !== addressPrev && addressPrev) {
       setChartFilter(CHART_VIEW.LIQUIDITY)
@@ -153,14 +156,14 @@ const TokenChart = ({ address, color, base }) => {
                 onClick={() => setChartFilter(CHART_VIEW.LIQUIDITY)}
                 style={{ marginRight: '6px' }}
               >
-                Liquidity
+                {t('Liquidity')}
               </OptionButton>
               <OptionButton
                 active={chartFilter === CHART_VIEW.VOLUME}
                 onClick={() => setChartFilter(CHART_VIEW.VOLUME)}
                 style={{ marginRight: '6px' }}
               >
-                Volume
+                {t('Volume')}
               </OptionButton>
               <OptionButton
                 active={chartFilter === CHART_VIEW.PRICE}
@@ -168,7 +171,7 @@ const TokenChart = ({ address, color, base }) => {
                   setChartFilter(CHART_VIEW.PRICE)
                 }}
               >
-                Price
+                {t('Price')}
               </OptionButton>
             </RowFixed>
             {chartFilter === CHART_VIEW.PRICE && (
@@ -202,19 +205,19 @@ const TokenChart = ({ address, color, base }) => {
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
             >
-              1W
+              {t('1W')}
             </OptionButton>
             <OptionButton
               active={timeWindow === timeframeOptions.MONTH}
               onClick={() => setTimeWindow(timeframeOptions.MONTH)}
             >
-              1M
+              {t('1M')}
             </OptionButton>
             <OptionButton
               active={timeWindow === timeframeOptions.ALL_TIME}
               onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
             >
-              All
+              {t('All')}
             </OptionButton>
           </AutoRow>
         </RowBetween>

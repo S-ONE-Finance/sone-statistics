@@ -40,6 +40,8 @@ import HoverText from '../components/HoverText'
 import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { useTranslation } from 'react-i18next'
+
 const DashboardWrapper = styled.div`
   width: 100%;
 `
@@ -199,6 +201,7 @@ function PairPage({ pairAddress, history }) {
   const below600 = useMedia('(max-width: 600px)')
 
   const [dismissed, markAsDismissed] = usePathDismissed(history.location.pathname)
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
     window.scrollTo({
@@ -294,7 +297,7 @@ function PairPage({ pairAddress, history }) {
                           <HoverSpan onClick={() => history.push(`/swap/token/${token1?.id}`)}>
                             {token1.symbol}
                           </HoverSpan>{' '}
-                          Pair
+                          {t('Pairs')}
                         </>
                       ) : (
                         ''
@@ -322,7 +325,7 @@ function PairPage({ pairAddress, history }) {
                       mr={below1080 && '.5rem'}
                       style={{ backgroundColor: '#F05359', color: '#fff' }}
                     >
-                      Swap
+                      {t('Swap')}
                     </ButtonDark>
                   </Link>
                 </RowFixed>
@@ -372,7 +375,7 @@ function PairPage({ pairAddress, history }) {
               {!below1080 && (
                 <RowFixed>
                   <TYPE.main fontSize={'2.125rem'} mr="6px">
-                    Pair Stats
+                    {t('Pair Stats')}
                   </TYPE.main>
                   {showUSDWaning ? (
                     <HoverText text={UNTRACKED_COPY}>
@@ -399,7 +402,7 @@ function PairPage({ pairAddress, history }) {
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>Volume (24hrs) </TYPE.main>
+                      <TYPE.main>{t('Volume (24hrs)')} </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -413,7 +416,7 @@ function PairPage({ pairAddress, history }) {
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>Fees (24hrs)</TYPE.main>
+                      <TYPE.main>{t('Fees (24hr)')}</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -427,7 +430,7 @@ function PairPage({ pairAddress, history }) {
                 <StylePanel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>Pooled Tokens</TYPE.main>
+                      <TYPE.main>{t('Pooled Tokens')}</TYPE.main>
                       <div />
                     </RowBetween>
                     <Hover onClick={() => history.push(`/swap/token/${token0?.id}`)} fade={true}>
@@ -472,8 +475,8 @@ function PairPage({ pairAddress, history }) {
                   />
                 </Panel>
               </PanelWrapper>
-              <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem' }}>
-                Transactions
+              <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem', fontWeight: 'bold' }}>
+                {t('Transactions')}
               </TYPE.main>{' '}
               <Panel
                 style={{
@@ -487,7 +490,9 @@ function PairPage({ pairAddress, history }) {
                 {transactions ? <TxnList transactions={transactions} /> : <Loader />}
               </Panel>
               <RowBetween style={{ marginTop: '3rem' }}>
-                <TYPE.main fontSize={'2.125rem'}>Pair Information</TYPE.main>{' '}
+                <TYPE.main fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+                  {t('Pair Information')}
+                </TYPE.main>{' '}
               </RowBetween>
               <Panel
                 rounded
@@ -503,9 +508,9 @@ function PairPage({ pairAddress, history }) {
                     <ItemPairInfomation>
                       <TYPE.main
                         className="font-weight-bold f-20"
-                        style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}
+                        style={{ color: isDarkMode ? '#FFFFFF' : '#333333', fontWeight: 'bold' }}
                       >
-                        Pair Name
+                        {t('Pair Name')}
                       </TYPE.main>
                       <TYPE.main style={{ margin: 'auto' }}>
                         <RowFixed>
@@ -532,7 +537,7 @@ function PairPage({ pairAddress, history }) {
                         className="font-weight-bold f-20"
                         style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}
                       >
-                        Pair Address
+                        {t('Pair Address')}
                       </TYPE.main>
                       <AutoRow align="center" style={{ margin: 'auto' }}>
                         <TYPE.main style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}>
@@ -550,7 +555,7 @@ function PairPage({ pairAddress, history }) {
                       >
                         <RowFixed>
                           <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} />{' '}
-                          <span style={{ marginLeft: '4px' }}>Address</span>
+                          <span style={{ marginLeft: '4px' }}>{t('Address')}</span>
                         </RowFixed>
                       </TYPE.main>
                       <AutoRow align="center" style={{ margin: 'auto' }}>
@@ -564,9 +569,9 @@ function PairPage({ pairAddress, history }) {
                   <Column style={{ height: '100%', width: '100%' }}>
                     <ItemPairInfomation>
                       <TYPE.main>
-                        <RowFixed>
+                        <RowFixed style={{ fontWeight: 'bold' }} className="f-20">
                           <FormattedName text={token1?.symbol ?? ''} maxCharacters={8} />{' '}
-                          <span style={{ marginLeft: '4px' }}>Address</span>
+                          <span style={{ marginLeft: '4px' }}>{t('Address')}</span>
                         </RowFixed>
                       </TYPE.main>
                       <AutoRow align="center" style={{ margin: 'auto' }}>
@@ -585,14 +590,14 @@ function PairPage({ pairAddress, history }) {
                             className="font-weight-bold f-20"
                             style={{ color: isDarkMode ? '#FFFFFF' : '#333333' }}
                           >
-                            Action
+                            {t('Action')}
                           </TYPE.main>
                         </RowFixed>
                       </TYPE.main>
                       <AutoRow align="center" style={{ margin: 'auto' }}>
                         <ButtonLight color={backgroundColor} className="btn-danger" style={{ marginTop: 20 }}>
                           <Link color={backgroundColor} external href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}>
-                            View on Etherscan ↗
+                            {t('View on Etherscan')} ↗
                           </Link>
                         </ButtonLight>
                       </AutoRow>

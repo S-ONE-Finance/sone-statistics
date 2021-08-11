@@ -186,7 +186,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
             <TYPE.main area="pair">{t('Pairs')}</TYPE.main>
           </StyleFlex>
           <StyleFlex alignItems="center">
-            <StyleTypeMain area="value">Value</StyleTypeMain>
+            <StyleTypeMain area="value">{t('Value')}</StyleTypeMain>
           </StyleFlex>
         </DashGrid>
         <Divider />

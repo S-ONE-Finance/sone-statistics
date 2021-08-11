@@ -23,6 +23,7 @@ import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { useTranslation } from 'react-i18next'
 
 const StyledPanel = styled(Panel)`
   margin-top: 1.5rem !important;
@@ -117,7 +118,7 @@ function AccountPage({ account }) {
   const transactions = useUserTransactions(account)
   const positions = useUserPositions(account)
   const miningPositions = useMiningPositions(account)
-
+  const { t, i18n } = useTranslation()
   // get data for user stats
   const transactionCount = transactions?.swaps?.length + transactions?.burns?.length + transactions?.mints?.length
 
@@ -243,11 +244,12 @@ function AccountPage({ account }) {
 
   const StylePanel2 = styled(Panel)`
     height: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 35px !important;
     border: 0;
-    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
-    padding: 1.25rem;
-    margin: -20px;
+    background-color: ${isDarkMode ? '#0E2B4A !important' : '#F2F2F2 !important'};
+    padding: 1.25rem !important;
+    box-shadow: none !important;
+    // margin: -20px ;
     @media (max-width: 600px) {
       margin-bottom: 15px !important;
     }
@@ -258,7 +260,7 @@ function AccountPage({ account }) {
       <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/swap/accounts">{'Accounts '}</BasicLink>→
+            <BasicLink to="/swap/accounts">{t('Accounts')}</BasicLink>→
             <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
               {account?.slice(0, 42)}
             </Link>
@@ -275,7 +277,7 @@ function AccountPage({ account }) {
                   fontSize={16}
                   style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
                 >
-                  View on Etherscan
+                  {t('View on Etherscan')}
                 </TYPE.main>
               </Link>
             </span>
@@ -373,12 +375,12 @@ function AccountPage({ account }) {
             </DropdownWrapper>
           )}
           {!hideLPContent && (
-            <StylePanel2 className="xxxxxxxx">
+            <StylePanel2 className="hideLPContent">
               <StyleAutoRow2>
                 <AutoColumn gap="10px">
                   <RowBetween>
                     <StyleTitle style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
-                      Liquidity (Including Fees)
+                      {t('Liquidity (Including Fees)')}
                     </StyleTitle>
                     <div />
                   </RowBetween>
@@ -394,7 +396,7 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <StyleTitle>Fees Earned (Cumulative)</StyleTitle>
+                    <StyleTitle>{t('Fees Earned (Cumulative)')}</StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
@@ -417,15 +419,21 @@ function AccountPage({ account }) {
               </StylePanel>
             </PanelWrapper>
           )}
-          <TitlteTop fontSize={'2.125rem'}>Positions</TitlteTop>
+          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+            {t('Positions')}
+          </TitlteTop>
           <StylePanelBlockPosition>
             <PositionList positions={positions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={'2.125rem'}>Transactions</TitlteTop>
+          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+            {t('Transactions')}
+          </TitlteTop>
           <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={'2.125rem'}>Wallet Stats</TitlteTop>
+          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+            {t('Wallet Stats')}
+          </TitlteTop>
           <StyledPanel>
             <StyleAutoRow gap="20px">
               <StyleAutoColumn gap="8px">

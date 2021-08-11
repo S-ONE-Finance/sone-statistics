@@ -42,7 +42,7 @@ function PairsStatistics({}) {
     <>
       <StyleListOptions gap="10px">
         <RowBetween>
-          <TYPE.main fontSize={'2rem'} style={{ whiteSpace: 'nowrap' }}>
+          <TYPE.main fontSize={'2rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
             {t('Top Pairs')}
           </TYPE.main>
           <AutoRow gap="4px" width="100%" justifyContent="flex-end">

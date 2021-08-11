@@ -8,6 +8,7 @@ import soneWhiteIcon from '../../assets/sone_white.svg'
 import styled, { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
 import { S_ONE_APP_URL } from '../../constants/urls'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   cardPreview: {
@@ -87,6 +88,7 @@ export default function CommonStatistics() {
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
+  const { t, i18n } = useTranslation()
 
   const handleCalculateStakeRate = (staked, liquidity) => {
     return `${reduceFractionDigit((staked / liquidity) * 100 || 0, 1)}%`
@@ -123,7 +125,7 @@ export default function CommonStatistics() {
             />
           </Box>
         }
-        title="Total Liquidity"
+        title={t('Total Liquidity')}
         valueContainer={
           <Box display="flex" alignItems="center">
             <Typography
@@ -142,7 +144,7 @@ export default function CommonStatistics() {
               target="_blank"
               style={{ marginRight: 5, color: theme.text10Sone, fontSize: isUpToExtraSmall ? 13 : 16 }}
             >
-              Add Liquidity
+              {t('Add Liquidity')}
             </a>
           </Box>
         }
