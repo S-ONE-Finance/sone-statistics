@@ -89,7 +89,7 @@ export default function CommonStatistics() {
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
   const { t, i18n } = useTranslation()
-
+  console.log('i18ni18ni18n', i18n.language)
   const handleCalculateStakeRate = (staked, liquidity) => {
     return `${reduceFractionDigit((staked / liquidity) * 100 || 0, 1)}%`
   }
@@ -166,7 +166,7 @@ export default function CommonStatistics() {
             />
           </Box>
         }
-        title="Total Value Staked"
+        title={t('Total Value Staked')}
         valueContainer={
           <Box display="flex" alignItems="center">
             <Typography className={classes.cardValue} style={{ color: theme.text6Sone }}>{`$${reduceFractionDigit(
@@ -174,7 +174,11 @@ export default function CommonStatistics() {
             )}`}</Typography>
           </Box>
         }
-        descriptionContainer={`${handleCalculateStakeRate(totalStaked, commonData?.totalLiquidity)} of Total Liquidity`}
+        descriptionContainer={
+          i18n.language === 'jp'
+            ? `${t('of Total Liquidity')} ${handleCalculateStakeRate(totalStaked, commonData?.totalLiquidity)}`
+            : `${handleCalculateStakeRate(totalStaked, commonData?.totalLiquidity)} ${t('of Total Liquidity')}`
+        }
       />
       <CardItem
         displayPreview={
@@ -193,7 +197,7 @@ export default function CommonStatistics() {
             />
           </Box>
         }
-        title="SONE Token Price"
+        title={t('SONE Token Price')}
         valueContainer={
           <Box display="flex" alignItems="center">
             <Typography className={classes.cardValue} style={{ color: theme.text6Sone }}>{`$${reduceFractionDigit(
@@ -202,7 +206,7 @@ export default function CommonStatistics() {
             )}`}</Typography>
           </Box>
         }
-        descriptionContainer={`Total Supply: ${reduceLongNumber(commonData?.totalSupply)} SONE`}
+        descriptionContainer={`${t('Total Supply')}: ${reduceLongNumber(commonData?.totalSupply)} SONE`}
       />
     </StyledGrid>
   )

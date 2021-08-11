@@ -8,6 +8,7 @@ import useDashboardData from '../hooks/useDashboardData'
 import { POOL_CONFIG, TOKEN_ADDRESS, TOKEN_ICON } from '../constants/tokens'
 import { setCacheCommon, setCachePools } from '../utils/storage'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -51,7 +52,7 @@ const Dashboard = () => {
   const { commonData, setCommonData, setPools } = useDashboardData()
   const [firstTime, setFirstTime] = useState(true)
   const priceInterval = useRef(null)
-
+  const { t, i18n } = useTranslation()
   const reloadCommonData = () => {
     // Get token prices
     Promise.all([
@@ -184,7 +185,7 @@ const Dashboard = () => {
       <Wrapper>
         <div>
           <Box mb={0.5} px={4}>
-            <Title>Staking Statistics</Title>
+            <Title>{t('Staking Statistics')}</Title>
           </Box>
           <Box mb={2}>
             <CommonStatistics />

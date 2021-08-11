@@ -2,7 +2,7 @@
   "Staking Statistics": "運用データ",
   "98.9% of Total Liquidity": "合計預入額の98.9%",
   "SONE Token Price": "SONEトークン価格",
-  "Total Supply: 198.75M SONE": "合計供給量: 198.75M SONE",
+  "Total Supply": "合計供給量",
   "Staked Value": "運用額",
   "Locked Value": "ロック金額",
   "S-ONE FINANCE Statistics": "S-ONE FINANCE データ",
@@ -78,5 +78,8 @@
   "View on Etherscan": "Etherscaを見る",
   "Address": "アドレス",
   "Pair Address": "トークンペアアドレス",
-  "Pair name": "トークン名称"
+  "Pair name": "トークン名称",
+
+  "Total Value Staked": "合計運用額",
+  "of Total Liquidity": "合計預入額の"
 }
