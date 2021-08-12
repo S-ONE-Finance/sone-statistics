@@ -374,25 +374,27 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           </List>
         </ListWrapper>
       </Panel>
-      <div className={classes.navigation}>
-        <Pagination
-          style={{ justifyContent: 'center', padding: 0 }}
-          page={page}
-          onChange={(event, newPage) => {
-            setPage(newPage)
-          }}
-          count={maxPage}
-          variant="outlined"
-          shape="rounded"
-          className="panigation-table"
-          classes={{
-            root: classes.root, // class name, e.g. `classes-nesting-root-x`
-          }}
-        />
-        <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
-          {filteredList.length}/page
+      {filteredList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {filteredList.length}/page
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

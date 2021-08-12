@@ -420,25 +420,27 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         <Divider />
         <List p={0}>{!pairList ? <LocalLoader /> : pairList}</List>
       </ListWrapper>
-      <div className={classes.navigation}>
-        <Pagination
-          style={{ justifyContent: 'center', padding: 0 }}
-          page={page}
-          onChange={(event, newPage) => {
-            setPage(newPage)
-          }}
-          count={maxPage}
-          variant="outlined"
-          shape="rounded"
-          className="panigation-table"
-          classes={{
-            root: classes.root, // class name, e.g. `classes-nesting-root-x`
-          }}
-        />
-        <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
-          {pairList.length}/page
+      {pairList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {pairList.length}/page
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
