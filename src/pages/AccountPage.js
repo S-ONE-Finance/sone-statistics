@@ -437,20 +437,20 @@ function AccountPage({ account }) {
           <StyledPanel>
             <StyleAutoRow gap="20px">
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Value Swapped</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Value Swapped')}</TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
 
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Fees Paid</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Fees Paid')}</TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Transactions</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Transactions')}</TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {transactionCount ? transactionCount : '-'}
                 </TYPE.main>

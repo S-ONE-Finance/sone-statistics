@@ -20,6 +20,7 @@ import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
 import { ETHERSCAN_BASE_URL } from '../../constants/urls'
 import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles'
 
 dayjs.extend(utc)
 
@@ -57,7 +58,7 @@ const DashGrid = styled.div`
 
     &:first-child {
       justify-content: flex-start;
-      text-align: left;
+      text-align: left;Transactions
       width: 100px;
     }
   }
@@ -134,6 +135,25 @@ const SortText = styled.button`
   }
 `
 
+const useStyles = makeStyles({
+  navigation: {
+    marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+})
+
 const SORT_FIELD = {
   VALUE: 'amountUSD',
   AMOUNT0: 'token0Amount',
@@ -179,6 +199,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [isDarkMode] = useDarkModeManager()
   const [currency] = useCurrentCurrency()
   const { t, i18n } = useTranslation()
+  const classes = useStyles()
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -396,7 +417,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
               }}
             >
-              {t('Total Value')} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Total Value')}
             </ClickableText>
           </Flex>
           {!below780 && (
@@ -449,7 +470,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 }}
                 style={{ fontWeight: 'bold', fontSize: 16 }}
               >
-                {t('Time')} {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Time')}
               </ClickableText>
             </Flex>
           </>
@@ -485,17 +506,27 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           )}
         </List>
       </div>
-      <Pagination
-        style={{ justifyContent: 'center' }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table-token-page"
-      />
+      {filteredList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {filteredList.length}/page
+          </div>
+        </div>
+      )}
     </>
   )
 }

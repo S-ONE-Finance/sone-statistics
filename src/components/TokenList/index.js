@@ -115,7 +115,23 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
+    // marginTop: 25,
+  },
+  navigation: {
     marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
   },
   outlined: {
     border: '1px solid red',
@@ -190,7 +206,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
       <DashGrid style={{ height: '48px' }} focus={true}>
         <DataText area="name" fontWeight="500">
           <Row>
-            {!below680 && <div style={{ marginRight: '1rem', width: '10px' }}>{index}</div>}
+            {!below680 && <div style={{ marginRight: '40px', width: '10px' }}>{index}</div>}
             <TokenLogo address={item.id} />
             <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/swap/token/' + item.id}>
               <FormattedName
@@ -227,6 +243,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
     )
   }
 
+  // console.log('filteredList',filteredList);
+
   return (
     <>
       <Panel
@@ -242,7 +260,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
       >
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem 1.125rem 1rem 1.125rem' }}>
-            <Flex alignItems="center" className="justify-content-center w-100 text-center">
+            <Flex alignItems="center" className="justify-content-center w-100 text-center f-20 font-weight-bold">
               <ClickableText
                 color="text"
                 area="name"
@@ -260,7 +278,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="symbol"
-                  className="justify-content-center w-100 text-center"
+                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
                   onClick={() => {
                     setSortedColumn(SORT_FIELD.SYMBOL)
                     setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
@@ -275,7 +293,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             <Flex alignItems="center">
               <ClickableText
                 area="liq"
-                className="justify-content-center w-100 text-center"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.LIQ)
                   setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
@@ -288,7 +306,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             <Flex alignItems="center">
               <ClickableText
                 area="vol"
-                className="justify-content-center w-100 text-center"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
                 onClick={() => {
                   setSortedColumn(useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL)
                   setSortDirection(
@@ -304,7 +322,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="price"
-                  className="justify-content-center w-100 text-center"
+                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
                   onClick={(e) => {
                     setSortedColumn(SORT_FIELD.PRICE)
                     setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
@@ -318,7 +336,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="change"
-                  className="justify-content-center w-100 text-center"
+                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
                   onClick={(e) => {
                     setSortedColumn(SORT_FIELD.CHANGE)
                     setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)
@@ -356,20 +374,25 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           </List>
         </ListWrapper>
       </Panel>
-      <Pagination
-        style={{ justifyContent: 'center', padding: 0 }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table"
-        classes={{
-          root: classes.root, // class name, e.g. `classes-nesting-root-x`
-        }}
-      />
+      <div className={classes.navigation}>
+        <Pagination
+          style={{ justifyContent: 'center', padding: 0 }}
+          page={page}
+          onChange={(event, newPage) => {
+            setPage(newPage)
+          }}
+          count={maxPage}
+          variant="outlined"
+          shape="rounded"
+          className="panigation-table"
+          classes={{
+            root: classes.root, // class name, e.g. `classes-nesting-root-x`
+          }}
+        />
+        <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+          {filteredList.length}/page
+        </div>
+      </div>
     </>
   )
 }

@@ -317,7 +317,9 @@ function PairPage({ pairAddress, history }) {
                   }}
                 >
                   <Link external href={getPoolLink(token0?.id, token1?.id)}>
-                    <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>+ Add Liquidity</ButtonLight>
+                    <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>
+                      + {t('Add Liquidity')}
+                    </ButtonLight>
                   </Link>
                   <Link external href={getSwapLink(token0?.id, token1?.id)}>
                     <ButtonDark
@@ -388,7 +390,7 @@ function PairPage({ pairAddress, history }) {
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>Total Liquidity </TYPE.main>
+                      <TYPE.main>{t('Total Liquidity')} </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -402,7 +404,7 @@ function PairPage({ pairAddress, history }) {
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Volume (24hrs)')} </TYPE.main>
+                      <TYPE.main>{t('Volume (24h)')} </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">

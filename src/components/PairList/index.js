@@ -19,6 +19,8 @@ import { AutoColumn } from '../Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
 import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles'
+
 dayjs.extend(utc)
 
 const PageButtons = styled.div`
@@ -106,6 +108,25 @@ const DataText = styled(Flex)`
   }
 `
 
+const useStyles = makeStyles({
+  navigation: {
+    marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+})
+
 const SORT_FIELD = {
   LIQ: 0,
   VOL: 1,
@@ -156,6 +177,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.LIQ)
 
+  const classes = useStyles()
   // i18n
   const { t, i18n } = useTranslation()
 
@@ -176,7 +198,6 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
 
   const ListItem = ({ pairAddress, index }) => {
     const pairData = pairs[pairAddress]
-
     if (pairData && pairData.token0 && pairData.token1) {
       const liquidity = formattedNum(
         !!pairData.trackedReserveUSD ? pairData.trackedReserveUSD : pairData.reserveUSD,
@@ -313,16 +334,21 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         )
       })
 
+  // console.log('pairList', pairList);
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '550px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '20px' }}>
-          <Flex alignItems="center" className="justify-content-center w-100">
-            <TYPE.main area="name" style={{ fontWeight: 'bold' }}>
+          <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
+            <TYPE.main area="name" style={{ fontWeight: 'bold', fontSize: 20 }}>
               {t('Name')}
             </TYPE.main>
           </Flex>
-          <Flex alignItems="center" justifyContent="center" className="justify-content-center w-100">
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            className="justify-content-center w-100  f-20 font-weight-bold"
+          >
             <ClickableText
               area="liq"
               style={{ fontWeight: 'bold' }}
@@ -331,10 +357,10 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                 setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
               }}
             >
-              {t('Liquidity')} {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Liquidity')}
             </ClickableText>
           </Flex>
-          <Flex alignItems="center" className="justify-content-center w-100">
+          <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
             <ClickableText
               area="vol"
               style={{ fontWeight: 'bold' }}
@@ -348,7 +374,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             </ClickableText>
           </Flex>
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100">
+            <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
               <ClickableText
                 style={{ fontWeight: 'bold' }}
                 area="volWeek"
@@ -362,7 +388,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             </Flex>
           )}
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100">
+            <Flex alignItems="center" className="justify-content-center w-100  f-20 font-weight-bold">
               <ClickableText
                 area="fees"
                 style={{ fontWeight: 'bold' }}
@@ -376,7 +402,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             </Flex>
           )}
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100">
+            <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
               <ClickableText
                 area="apy"
                 style={{ fontWeight: 'bold' }}
@@ -394,17 +420,25 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         <Divider />
         <List p={0}>{!pairList ? <LocalLoader /> : pairList}</List>
       </ListWrapper>
-      <Pagination
-        style={{ justifyContent: 'center' }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table-token-page"
-      />
+      <div className={classes.navigation}>
+        <Pagination
+          style={{ justifyContent: 'center', padding: 0 }}
+          page={page}
+          onChange={(event, newPage) => {
+            setPage(newPage)
+          }}
+          count={maxPage}
+          variant="outlined"
+          shape="rounded"
+          className="panigation-table"
+          classes={{
+            root: classes.root, // class name, e.g. `classes-nesting-root-x`
+          }}
+        />
+        <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+          {pairList.length}/page
+        </div>
+      </div>
     </>
   )
 }

@@ -16,6 +16,7 @@ import { RowFixed } from '../Row'
 import { Pagination } from '@material-ui/lab'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles'
 
 dayjs.extend(utc)
 
@@ -44,7 +45,7 @@ const List = styled(Box)`
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 0.1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.1fr 1fr 1fr 0.35fr;
   grid-template-areas: 'number name pair value';
   padding: 0 4px;
 
@@ -78,6 +79,24 @@ const DataText = styled(Flex)`
     font-size: 13px;
   }
 `
+const useStyles = makeStyles({
+  navigation: {
+    marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+})
 
 function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   const below600 = useMedia('(max-width: 600px)')
@@ -89,6 +108,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   const ITEMS_PER_PAGE = maxItems
   const [isDarkMode] = useDarkModeManager()
   const { t, i18n } = useTranslation()
+  const classes = useStyles()
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -169,40 +189,56 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   const StyleTypeMain = styled(TYPE.main)`
     justify-content: center;
   `
-
+  console.log('lpList', lpList)
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '539px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '1rem' }}>
           {!below600 && (
             <StyleFlex alignItems="center">
-              <TYPE.main area="number">#</TYPE.main>
+              <TYPE.main area="number" className="f-20 font-weight-bold"></TYPE.main>
             </StyleFlex>
           )}
           <StyleFlex alignItems="center">
-            <TYPE.main area="name">{t('Accounts')}</TYPE.main>
+            <TYPE.main area="name" className="f-20 font-weight-bold">
+              {t('Accounts')}
+            </TYPE.main>
           </StyleFlex>
           <StyleFlex alignItems="center">
-            <TYPE.main area="pair">{t('Pairs')}</TYPE.main>
+            <TYPE.main area="pair" className="f-20 font-weight-bold">
+              {t('Pairs')}
+            </TYPE.main>
           </StyleFlex>
           <StyleFlex alignItems="center">
-            <StyleTypeMain area="value">{t('Value')}</StyleTypeMain>
+            <StyleTypeMain area="value" className="f-20 font-weight-bold">
+              {t('Value')}
+            </StyleTypeMain>
           </StyleFlex>
         </DashGrid>
         <Divider />
         <List p={0}>{!lpList ? <LocalLoader /> : lpList}</List>
       </ListWrapper>
-      <Pagination
-        style={{ justifyContent: 'center' }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table-token-page"
-      />
+      {lpList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {lpList.length}/page
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxMainContentOverview: {
-    marginTop: 30,
+    marginTop: 0,
     '@media (max-width: 800px)': {
       marginTop: 15,
     },

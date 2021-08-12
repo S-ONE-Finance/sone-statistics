@@ -458,7 +458,7 @@ function TokenPage({ address, history }) {
                     </Text>
                   </Column>
                   <Column>
-                    <TYPE.main style={{ fontWeight: 'bold' }}>Name</TYPE.main>
+                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Name')}</TYPE.main>
                     <TYPE.main style={{ marginTop: '1.5rem' }} fontSize={'1rem'} fontWeight="400">
                       <FormattedName
                         style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
@@ -468,7 +468,7 @@ function TokenPage({ address, history }) {
                     </TYPE.main>
                   </Column>
                   <Column>
-                    <TYPE.main style={{ fontWeight: 'bold' }}>Address</TYPE.main>
+                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Address')}</TYPE.main>
                     <AutoRow align="flex-end">
                       <TYPE.main
                         fontSize={'1rem'}
@@ -480,14 +480,14 @@ function TokenPage({ address, history }) {
                     </AutoRow>
                   </Column>
                   <Column className="box-btn-action">
-                    <TYPE.main style={{ fontWeight: 'bold' }}>Action</TYPE.main>
+                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Action')}</TYPE.main>
                     <AutoRow align="flex-end" style={{ marginTop: '1.5rem' }}>
                       <button className="btn-danger" onClick={() => setCopied(address)}>
-                        Copy Address
+                        {t('Copy Address')}
                       </button>
                       <ButtonLight className="btn-danger ml-1">
                         <Link color="#fff" external href={ETHERSCAN_BASE_URL + '/address/' + address}>
-                          View on Etherscan ↗
+                          {t('View on Etherscan')} ↗
                         </Link>
                       </ButtonLight>
                     </AutoRow>
