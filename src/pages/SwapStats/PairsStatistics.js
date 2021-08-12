@@ -46,7 +46,9 @@ function PairsStatistics({}) {
             {t('Top Pairs')}
           </TYPE.main>
           <AutoRow gap="4px" width="100%" justifyContent="flex-end">
-            <CustomLink to={'/swap/pairs'}>{t('See All')}</CustomLink>
+            <CustomLink className="btnLink" to={'/swap/pairs'}>
+              {t('See more')}
+            </CustomLink>
           </AutoRow>
         </RowBetween>
       </StyleListOptions>

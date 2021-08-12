@@ -262,11 +262,11 @@ function PairPage({ pairAddress, history }) {
       </StyleDiv>
 
       <ContentWrapperLarge style={{ zIndex: 1 }}>
-        <RowBetween>
+        {/* <RowBetween>
           <TYPE.body>
-            <BasicLink to="/swap/pairs">{'Pairs '}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
+            <BasicLink to="/swap/pairs">{'Pairs'}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
           </TYPE.body>
-        </RowBetween>
+        </RowBetween> */}
         <WarningGrouping
           disabled={
             !dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))
@@ -305,7 +305,9 @@ function PairPage({ pairAddress, history }) {
                     </TYPE.main>
                   </RowFixed>
                 </RowFixed>
-                <RowFixed>{!below600 && <Search small={false} />}</RowFixed>
+                <RowFixed style={below1080 ? { width: '100%' } : { width: '50%' }}>
+                  {!below600 && <Search small={false} />}
+                </RowFixed>
               </div>
               <div>
                 <RowFixed
@@ -317,7 +319,7 @@ function PairPage({ pairAddress, history }) {
                   }}
                 >
                   <Link external href={getPoolLink(token0?.id, token1?.id)}>
-                    <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>
+                    <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff', fontSize: 24 }}>
                       + {t('Add Liquidity')}
                     </ButtonLight>
                   </Link>
@@ -325,7 +327,7 @@ function PairPage({ pairAddress, history }) {
                     <ButtonDark
                       ml={!below1080 && '.5rem'}
                       mr={below1080 && '.5rem'}
-                      style={{ backgroundColor: '#F05359', color: '#fff' }}
+                      style={{ backgroundColor: '#F05359', color: '#fff', fontSize: 24 }}
                     >
                       {t('Swap')}
                     </ButtonDark>
@@ -376,9 +378,9 @@ function PairPage({ pairAddress, history }) {
             <>
               {!below1080 && (
                 <RowFixed>
-                  <TYPE.main fontSize={'2.125rem'} mr="6px">
+                  {/* <TYPE.main fontSize={'2.125rem'} mr="6px">
                     {t('Pair Stats')}
-                  </TYPE.main>
+                  </TYPE.main> */}
                   {showUSDWaning ? (
                     <HoverText text={UNTRACKED_COPY}>
                       <WarningIcon />
@@ -390,55 +392,55 @@ function PairPage({ pairAddress, history }) {
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Total Liquidity')} </TYPE.main>
+                      <TYPE.main className="font-24">{t('Total Liquidity')} </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main className="font-28" lineHeight={1} fontWeight={500}>
                         {formattedLiquidity}
                       </TYPE.main>
-                      <TYPE.main>{liquidityChange}</TYPE.main>
+                      <TYPE.main className="font-24">{liquidityChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </StylePanel>
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Volume (24h)')} </TYPE.main>
+                      <TYPE.main className="font-24">{t('Volume (24h)')} </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main className="font-28" lineHeight={1} fontWeight={500}>
                         {volume}
                       </TYPE.main>
-                      <TYPE.main>{volumeChange}</TYPE.main>
+                      <TYPE.main className="font-24">{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </StylePanel>
                 <StylePanel>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Fees (24hr)')}</TYPE.main>
+                      <TYPE.main className="font-24">{t('Fees (24hr)')}</TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
-                      <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                      <TYPE.main className="font-28" fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
                         {fees}
                       </TYPE.main>
-                      <TYPE.main>{volumeChange}</TYPE.main>
+                      <TYPE.main className="font-24">{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </StylePanel>
                 <StylePanel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Pooled Tokens')}</TYPE.main>
+                      <TYPE.main className="font-24">{t('Pooled Tokens')}</TYPE.main>
                       <div />
                     </RowBetween>
                     <Hover onClick={() => history.push(`/swap/token/${token0?.id}`)} fade={true}>
                       <AutoRow gap="4px">
                         <TokenLogo address={token0?.id} />
-                        <TYPE.main fontSize={20} lineHeight={1} fontWeight={500}>
+                        <TYPE.main fontSize={32} lineHeight={1} fontWeight={500}>
                           <RowFixed>
                             {reserve0 ? formattedNum(reserve0) : ''}{' '}
                             <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} margin={true} />
@@ -449,7 +451,7 @@ function PairPage({ pairAddress, history }) {
                     <Hover onClick={() => history.push(`/swap/token/${token1?.id}`)} fade={true}>
                       <AutoRow gap="4px">
                         <TokenLogo address={token1?.id} />
-                        <TYPE.main fontSize={20} lineHeight={1} fontWeight={500}>
+                        <TYPE.main fontSize={32} lineHeight={1} fontWeight={500}>
                           <RowFixed>
                             {reserve1 ? formattedNum(reserve1) : ''}{' '}
                             <FormattedName text={token1?.symbol ?? ''} maxCharacters={8} margin={true} />
@@ -463,7 +465,7 @@ function PairPage({ pairAddress, history }) {
                   style={{
                     gridColumn: below1080 ? '1' : '2/4',
                     gridRow: below1080 ? '' : '1/5',
-                    backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
+                    backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
                     border: 0,
                     boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
                     borderRadius: 25,

@@ -204,7 +204,7 @@ function AccountPage({ account }) {
   const StylePanel = styled(Panel)`
     grid-column: 1;
     border: 0;
-    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    background-color: ${isDarkMode ? '#0E2B4A' : '#FFF'};
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
   const StylePanelBlockPosition = styled(Panel)`
@@ -239,7 +239,7 @@ function AccountPage({ account }) {
   `
   const StyleAutoRow2 = styled(AutoRow)`
     margin: 0px !important;
-    justify-content: space-between;
+    // justify-content: ;
   `
 
   const StylePanel2 = styled(Panel)`
@@ -259,13 +259,13 @@ function AccountPage({ account }) {
     <PageWrapper>
       <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween>
-          <TYPE.body>
+          {/* <TYPE.body>
             <BasicLink to="/swap/accounts">{t('Accounts')}</BasicLink>→
             <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
               {account?.slice(0, 42)}
             </Link>
-          </TYPE.body>
-          {!below600 && <Search small={true} />}
+          </TYPE.body> */}
+          {/* {!below600 && <Search small={true} />} */}
         </RowBetween>
         <Header>
           <RowBetween>
@@ -281,14 +281,14 @@ function AccountPage({ account }) {
                 </TYPE.main>
               </Link>
             </span>
-            <AccountWrapper>
+            {/* <AccountWrapper>
               <StyledIcon>
                 <Bookmark
                   onClick={handleBookmarkClick}
                   style={{ opacity: isBookmarked ? 0.8 : 0.4, cursor: 'pointer' }}
                 />
               </StyledIcon>
-            </AccountWrapper>
+            </AccountWrapper> */}
           </RowBetween>
         </Header>
         <DashboardWrapper>
@@ -377,15 +377,15 @@ function AccountPage({ account }) {
           {!hideLPContent && (
             <StylePanel2 className="hideLPContent">
               <StyleAutoRow2>
-                <AutoColumn gap="10px">
+                <AutoColumn gap="10px" style={{ marginRight: 85 }}>
                   <RowBetween>
-                    <StyleTitle style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                    <StyleTitle fontSize={20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
                       {t('Liquidity (Including Fees)')}
                     </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1}>
+                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
@@ -396,11 +396,13 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <StyleTitle>{t('Fees Earned (Cumulative)')}</StyleTitle>
+                    <StyleTitle fontSize={20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                      {t('Fees Earned (Cumulative)')}
+                    </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1} color={aggregateFees && 'green'}>
+                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
                     </StyleContentBottom>
                   </RowFixed>

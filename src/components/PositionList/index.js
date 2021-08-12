@@ -194,7 +194,7 @@ function PositionList({ positions }) {
         </DataText>
         <DataText area="uniswap" className="justify-content-center">
           <AutoColumn gap="12px" justify="center">
-            <TYPE.main>{formattedNum(valueUSD, true, true)}</TYPE.main>
+            <TYPE.main fontSize={'16px'}>{formattedNum(valueUSD, true, true)}</TYPE.main>
             <AutoColumn gap="4px" justify="center">
               <RowFixed>
                 <TYPE.small fontWeight={400}>
@@ -204,7 +204,7 @@ function PositionList({ positions }) {
                   text={position.pair.token0.symbol}
                   maxCharacters={below740 ? 10 : 18}
                   margin={true}
-                  fontSize={'11px'}
+                  fontSize={'13px'}
                 />
               </RowFixed>
               <RowFixed>
@@ -215,7 +215,7 @@ function PositionList({ positions }) {
                   text={position.pair.token1.symbol}
                   maxCharacters={below740 ? 10 : 18}
                   margin={true}
-                  fontSize={'11px'}
+                  fontSize={'13px'}
                 />
               </RowFixed>
             </AutoColumn>
@@ -225,7 +225,7 @@ function PositionList({ positions }) {
           <DataText area="return" className="justify-content-center">
             <AutoColumn gap="12px" justify="center">
               <TYPE.main color={'green'}>
-                <RowFixed>{formattedNum(position?.fees.sum, true, true)}</RowFixed>
+                <RowFixed fontSize={'16px'}>{formattedNum(position?.fees.sum, true, true)}</RowFixed>
               </TYPE.main>
               <AutoColumn gap="4px" justify="center">
                 <RowFixed>
@@ -242,7 +242,7 @@ function PositionList({ positions }) {
                     text={position.pair.token0.symbol}
                     maxCharacters={below740 ? 10 : 18}
                     margin={true}
-                    fontSize={'11px'}
+                    fontSize={'13px'}
                   />
                 </RowFixed>
                 <RowFixed>
@@ -259,7 +259,7 @@ function PositionList({ positions }) {
                     text={position.pair.token1.symbol}
                     maxCharacters={below740 ? 10 : 18}
                     margin={true}
-                    fontSize={'11px'}
+                    fontSize={'13px'}
                   />
                 </RowFixed>
               </AutoColumn>
@@ -330,7 +330,7 @@ function PositionList({ positions }) {
             </Flex>
           )}
           <Flex alignItems="flex-start" justifyContent="flex-start" className="h-100 align-items-center">
-            <TYPE.main fontSize={'20px'} style={{ fontWeight: 'bold' }} area="number">
+            <TYPE.main fontSize={'20px'} style={{ fontWeight: 'bold', width: 150, textAlign: 'center' }} area="number">
               {t('Name')}
             </TYPE.main>
           </Flex>
@@ -344,7 +344,7 @@ function PositionList({ positions }) {
               fontSize={'20px'}
               style={{ fontWeight: 'bold' }}
             >
-              {t('Liquidity')} {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Liquidity')}
             </ClickableText>
           </Flex>
           {!below500 && (
@@ -359,7 +359,6 @@ function PositionList({ positions }) {
                 style={{ fontWeight: 'bold' }}
               >
                 {t('Total Fees Earned')}
-                {sortedColumn === SORT_FIELD.UNISWAP_RETURN ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           )}

@@ -79,5 +79,7 @@
   "View on Etherscan": "View on Etherscan",
   "Address": "Address",
   "Pair Address": "Pair Address",
-  "Pair name": "Pair name"
+  "Pair name": "Pair name",
+  "Swap Stats": "Swap Stats",
+  "Staking stats": "Staking stats"
 }

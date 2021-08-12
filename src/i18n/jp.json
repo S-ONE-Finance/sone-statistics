@@ -81,5 +81,7 @@
   "Pair name": "トークン名称",
 
   "Total Value Staked": "合計運用額",
-  "of Total Liquidity": "合計預入額の"
+  "of Total Liquidity": "合計預入額の",
+  "Swap Stats": "取引データ",
+  "Staking stats": "運用データ"
 }

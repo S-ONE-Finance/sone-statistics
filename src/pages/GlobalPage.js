@@ -137,7 +137,9 @@ function GlobalPage() {
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
                 {t('Top Tokens')}
               </TYPE.main>
-              <CustomLink to={'/swap/tokens'}>See All</CustomLink>
+              <CustomLink className="btnLink" to={'/swap/tokens'}>
+                {t('See more')}
+              </CustomLink>
             </RowBetween>
           </ListOptions>
           {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}
@@ -155,7 +157,9 @@ function GlobalPage() {
                   text={'Hide untracked pairs'}
                 />
                 <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
-                <CustomLink to={'/pairs'}>See All</CustomLink>
+                <CustomLink className="btnLink" to={'/pairs'}>
+                  {t('See more')}
+                </CustomLink>
               </AutoRow>
             </RowBetween>
           </ListOptions>

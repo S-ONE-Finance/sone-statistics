@@ -420,7 +420,7 @@ export const Search = ({ small = false }) => {
   })
 
   return (
-    <Container small={small} style={{ zIndex: 100 }}>
+    <Container small={small} style={{ zIndex: 100, width: '100%' }}>
       <Wrapper
         open={showMenu}
         shadow={true}
