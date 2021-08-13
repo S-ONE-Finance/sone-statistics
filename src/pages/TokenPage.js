@@ -207,7 +207,7 @@ function TokenPage({ address, history }) {
         address={address}
       />
       <ContentWrapper style={{ zIndex: 1 }}>
-        <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
+        {/* <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
           <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
             <TYPE.body>
               <BasicLink to="/swap/tokens">{'Tokens '}</BasicLink>→ {symbol}
@@ -223,7 +223,7 @@ function TokenPage({ address, history }) {
               </Text>
             </Link>
           </AutoRow>
-        </RowBetween>
+        </RowBetween> */}
         <WarningGrouping disabled={!dismissed && listedTokens && !listedTokens.includes(address)}>
           <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem', zIndex: 1 }}>
             <RowBetween

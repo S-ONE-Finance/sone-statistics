@@ -431,8 +431,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
                 }}
               >
-                {symbol0Override ? symbol0Override + ' Amount' : `${t('Token Amount')}`}{' '}
-                {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↑' : '↓') : ''}
+                {symbol0Override ? symbol0Override + ' Amount' : `${t('Token Amount')}`}
+                {''}
+                {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↓' : '↑') : ''}
               </ClickableText>
             </Flex>
           )}
@@ -448,8 +449,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                     setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
                   }}
                 >
-                  {symbol1Override ? symbol1Override + ' Amount' : `${t('Token Amount')}`}{' '}
-                  {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↑' : '↓') : ''}
+                  {symbol1Override ? symbol1Override + ' Amount' : `${t('Token Amount')}`}
+                  {''}
+                  {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↓' : '↑') : ''}
                 </ClickableText>
               </Flex>
             )}
@@ -471,6 +473,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 style={{ fontWeight: 'bold', fontSize: 16 }}
               >
                 {t('Time')}
+                {sortedColumn === SORT_FIELD.TIMESTAMP ? (sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           </>

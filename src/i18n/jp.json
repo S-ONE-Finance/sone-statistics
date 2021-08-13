@@ -45,7 +45,7 @@
   "Total Fees Paid": "合計支払い手数料",
   "Total Transactions": "合計取引数",
   "Liquidity": "預入額",
-  "Add Liquidity": "預入",
+  "Add Liquidity": "トークンを預ける",
 
   "Swap": "取引",
   "Price": "価格",
@@ -83,5 +83,5 @@
   "Total Value Staked": "合計運用額",
   "of Total Liquidity": "合計預入額の",
   "Swap Stats": "取引データ",
-  "Staking stats": "運用データ"
+  "Staking Stats": "運用データ"
 }

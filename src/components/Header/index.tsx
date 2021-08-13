@@ -221,7 +221,7 @@ const SubMenuItemNavLink = styled(NavLink)`
   color: ${({ theme }) => theme.text1Sone};
   font-size: 18px;
   font-weight: 400;
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -244,7 +244,7 @@ const SubMenuItemExternalLink = styled.a<{ isActive?: boolean }>`
   color: ${({ theme }) => theme.text1Sone};
   font-size: 18px;
   font-weight: 400;
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -268,7 +268,7 @@ const SubMenuItemText = styled.span`
   color: ${({ theme }) => theme.text1Sone};
   font-size: 18px;
   font-weight: 400;
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -459,7 +459,8 @@ function Header() {
                   {t('S-ONE Wallet')}
                 </StyledExternalLink>
               </HideSmall>
-              <MenuItem>
+
+              {/* <MenuItem>
                 <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
                   {t('Swap')}
                 </StyledExternalLink>
@@ -471,13 +472,41 @@ function Header() {
                     {t('Liquidity')}
                   </SubMenuItemExternalLink>
                 </SubMenu>
-              </MenuItem>
+              </MenuItem> */}
+
               <MenuItem>
+                <StyledNavLink
+                  to="/swap"
+                  isActive={(match, { pathname }) =>
+                    Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/staking')
+                  }
+                >
+                  {t('Swap')}
+                </StyledNavLink>
+                <SubMenu>
+                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/add'}>{t('Staking Stats')}</SubMenuItemNavLink>
+                </SubMenu>
+              </MenuItem>
+
+              <MenuItem>
+                <StyledNavLink
+                  to="/staking"
+                  isActive={(match, { pathname }) =>
+                    Boolean(match) || pathname.startsWith('/staking') || pathname.startsWith('/staking')
+                  }
+                >
+                  {t('Staking')}
+                </StyledNavLink>
+              </MenuItem>
+
+              {/* <MenuItem>
                 <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
                   {t('Staking')}
                 </StyledExternalLink>
-              </MenuItem>
-              <MenuItem>
+              </MenuItem> */}
+
+              {/* <MenuItem>
                 <StyledNavLink
                   to="/swap"
                   isActive={(match, { pathname }) =>
@@ -490,7 +519,29 @@ function Header() {
                   <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
                   <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
                 </SubMenu>
+              </MenuItem> */}
+              <MenuItem>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/stats'} target="_blank">
+                  {t('Stats')}
+                </StyledExternalLink>
+                <SubMenu>
+                  {/* <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
+                    {t('Swap Stats')}
+                  </SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+                    {t('Staking Stats')}
+                  </SubMenuItemExternalLink> */}
+                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
+                </SubMenu>
               </MenuItem>
+              {/* 
+              <MenuItem>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+                  {t('Staking')}
+                </StyledExternalLink>
+              </MenuItem> */}
+
               <MenuItem>
                 <StyledExternalLink href={isMobile ? '' : S_ONE_DOCS_URL} target={isMobile ? '_self' : '_blank'}>
                   {t('Docs')}
