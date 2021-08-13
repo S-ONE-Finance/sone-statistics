@@ -205,6 +205,7 @@ function StatsPage() {
                       className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
                     />
                   }
+                  style={{ marginRight: 0 }}
                   className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
                   label={t('Transactions')}
                   {...a11yProps(4)}
@@ -226,12 +227,6 @@ function StatsPage() {
           </TabPanel>
           <TabPanel value={indexTabMain} index={4}>
             <TransactionStatics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={5}>
-            Item Six
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={6}>
-            Item Seven
           </TabPanel>
         </ContentWrapper>
       </PageWrapper>

@@ -129,13 +129,28 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
     return (
       <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
         {!below600 && (
-          <DataText area="number" fontWeight="500" style={{ justifyContent: 'center', margin: 'auto' }}>
+          <DataText
+            area="number"
+            fontWeight="500"
+            style={{ justifyContent: 'center', margin: 'auto', fontWeight: 400 }}
+            className={
+              isDarkMode
+                ? 'justify-content-center font-weight-normal color-gray2'
+                : 'justify-content-center font-weight-normal color-gray'
+            }
+          >
             {index}
           </DataText>
         )}
         <DataText area="name" fontWeight="500" justifyContent="flex-start">
           <CustomLink
-            style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap', color: '#3FAAB0', margin: 'auto' }}
+            style={{
+              marginLeft: below600 ? 0 : '1rem',
+              whiteSpace: 'nowrap',
+              color: '#3FAAB0',
+              margin: 'auto',
+              fontWeight: 400,
+            }}
             to={'/swap/account/' + lp.user.id}
           >
             {below800 ? lp.user.id.slice(0, 4) + '...' + lp.user.id.slice(38, 42) : lp.user.id}
@@ -147,13 +162,25 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
             area="pair"
             to={'/swap/pair/' + lp.pairAddress}
           >
-            <RowFixed>
+            <RowFixed
+              className={
+                isDarkMode ? 'justify-content-center font-weight-normal' : 'justify-content-center font-weight-normal'
+              }
+            >
               {!below600 && <DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
               {lp.pairName}
             </RowFixed>
           </CustomLink>
         </DataText>
-        <DataText style={{ margin: 'auto', minWidth: !below600 ? '200px' : 'auto' }} area="value">
+        <DataText
+          style={{ margin: 'auto', minWidth: !below600 ? '200px' : 'auto' }}
+          area="value"
+          className={
+            isDarkMode
+              ? 'justify-content-center font-weight-normal color-gray2'
+              : 'justify-content-center font-weight-normal color-gray'
+          }
+        >
           {formattedNum(lp.usd, true)}
         </DataText>
       </DashGrid>

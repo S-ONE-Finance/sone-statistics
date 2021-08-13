@@ -204,39 +204,100 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   const ListItem = ({ item, index }) => {
     return (
       <DashGrid style={{ height: '48px' }} focus={true}>
-        <DataText area="name" fontWeight="500">
+        <DataText area="name" fontWeight="400">
           <Row>
-            {!below680 && <div style={{ marginRight: '40px', width: '10px' }}>{index}</div>}
+            {!below680 && (
+              <div
+                style={{ marginRight: '40px', width: '10px' }}
+                className={
+                  isDarkMode
+                    ? 'justify-content-center font-weight-normal color-gray2'
+                    : 'justify-content-center font-weight-normal color-gray'
+                }
+              >
+                {index}
+              </div>
+            )}
             <TokenLogo address={item.id} />
-            <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/swap/token/' + item.id}>
+            <CustomLink
+              style={{ marginLeft: '16px', whiteSpace: 'nowrap', color: '#767676' }}
+              to={'/swap/token/' + item.id}
+            >
               <FormattedName
                 text={below680 ? item.symbol : item.name}
                 maxCharacters={below600 ? 8 : 16}
                 adjustSize={true}
                 link={true}
+                fontSize={'16px'}
+                className="justify-content-center font-weight-normal color-gray"
               />
             </CustomLink>
           </Row>
         </DataText>
         {!below680 && (
-          <DataText area="symbol" color="text" fontWeight="500" className="justify-content-center">
-            <FormattedName text={item.symbol} maxCharacters={5} />
+          <DataText
+            area="symbol"
+            style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontWeight="400"
+            className="justify-content-center font-weight-normal"
+          >
+            <FormattedName
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              className="font-weight-normal"
+              text={item.symbol}
+              maxCharacters={5}
+            />
           </DataText>
         )}
-        <DataText area="liq" className="justify-content-center">
+        <DataText
+          area="liq"
+          fontSize={'16px'}
+          style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          fontWeight="400"
+          className={
+            isDarkMode
+              ? 'justify-content-center font-weight-normal color-gray2'
+              : 'justify-content-center font-weight-normal color-gray'
+          }
+        >
           {formattedNum(item.totalLiquidityUSD, true)}
         </DataText>
-        <DataText area="vol" className="justify-content-center">
+        <DataText
+          area="vol"
+          fontSize={'16px'}
+          style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          fontWeight="400"
+          className={
+            isDarkMode
+              ? 'justify-content-center font-weight-normal color-gray2'
+              : 'justify-content-center font-weight-normal color-gray'
+          }
+        >
           {formattedNum(item.oneDayVolumeUSD, true)}
         </DataText>
         {!below1080 && (
-          <DataText area="price" color="text" fontWeight="500" className="justify-content-center">
-            {formattedNum(item.priceUSD, true)}
+          <DataText
+            area="price"
+            fontSize={'16px'}
+            style={{ color: '#767676', fontWeight: 400 }}
+            fontWeight="400"
+            className="justify-content-center font-weight-normal color-gray"
+          >
+            <div className="justify-content-center font-weight-normal color-gray">
+              {formattedNum(item.priceUSD, true)}
+            </div>
           </DataText>
         )}
         {!below1080 && (
-          <DataText area="change" className="justify-content-center">
-            {formattedPercent(item.priceChangeUSD)}
+          <DataText
+            area="change"
+            style={{ color: '#767676' }}
+            fontWeight="400"
+            className="justify-content-center font-weight-normal color-gray"
+          >
+            <div className="justify-content-center font-weight-normal color-gray">
+              {formattedPercent(item.priceChangeUSD)}
+            </div>
           </DataText>
         )}
       </DashGrid>

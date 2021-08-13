@@ -19,8 +19,28 @@ import FormattedName from '../FormattedName'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
 import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles'
 
 dayjs.extend(utc)
+
+const useStyles = makeStyles({
+  navigation: {
+    marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+})
 
 const PageButtons = styled.div`
   width: 100%;
@@ -124,6 +144,8 @@ function PositionList({ positions }) {
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.VALUE)
   // status mode theme page
   const [isDarkMode] = useDarkModeManager()
+  const classes = useStyles()
+
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -148,7 +170,7 @@ function PositionList({ positions }) {
     return (
       <DashGrid style={{ opacity: poolOwnership > 0 ? 1 : 0.6 }} focus={true}>
         {!below740 && (
-          <DataText className="m-auto" area="number">
+          <DataText className="f-20 justify-content-center align-items-center mr-auto ml-auto" area="number">
             {index}
           </DataText>
         )}
@@ -162,6 +184,7 @@ function PositionList({ positions }) {
                 <FormattedName
                   text={position.pair.token0.symbol + '-' + position.pair.token1.symbol}
                   maxCharacters={below740 ? 10 : 18}
+                  fontSize={'16px'}
                 />
               </TYPE.main>
             </CustomLink>
@@ -173,8 +196,9 @@ function PositionList({ positions }) {
                 style={{ marginRight: '.5rem' }}
               >
                 <ButtonLight
+                  fontSize={'16px'}
                   className="btn-danger minw-auto h-auto"
-                  style={{ padding: '4px 6px', borderRadius: '4px' }}
+                  style={{ padding: '4px 6px', borderRadius: '15px', fontWeight: '400' }}
                 >
                   Add
                 </ButtonLight>
@@ -182,8 +206,9 @@ function PositionList({ positions }) {
               {poolOwnership > 0 && (
                 <Link external href={getPoolLink(position.pair.token0.id, position.pair.token1.id, true)}>
                   <ButtonLight
-                    className="btn-secondary minw-auto h-auto text-white"
-                    style={{ padding: '4px 6px', borderRadius: '4px' }}
+                    fontSize={'15px'}
+                    className="btn-secondary minw-auto h-auto"
+                    style={{ padding: '4px 6px', borderRadius: '15px', color: '#333333', fontWeight: '400' }}
                   >
                     Withdraw
                   </ButtonLight>
@@ -320,7 +345,7 @@ function PositionList({ positions }) {
           borderRadius: 25,
           overflow: 'hidden',
           boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-          backgroundColor: isDarkMode ? '#0E2B4A' : '#F2F2F2',
+          backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
         }}
       >
         <DashGrid center={true} style={{ padding: '1rem' }}>
@@ -345,6 +370,7 @@ function PositionList({ positions }) {
               style={{ fontWeight: 'bold' }}
             >
               {t('Liquidity')}
+              {sortedColumn === SORT_FIELD.VALUE ? (sortDirection ? '↓' : '↑') : ''}
             </ClickableText>
           </Flex>
           {!below500 && (
@@ -359,6 +385,7 @@ function PositionList({ positions }) {
                 style={{ fontWeight: 'bold' }}
               >
                 {t('Total Fees Earned')}
+                {sortedColumn === SORT_FIELD.UNISWAP_RETURN ? (sortDirection ? '↓' : '↑') : ''}
               </ClickableText>
             </Flex>
           )}
@@ -366,7 +393,7 @@ function PositionList({ positions }) {
         <Divider />
         <List p={0}>{!positionsSorted ? <LocalLoader /> : positionsSorted}</List>
       </ListWrapper>
-      <Pagination
+      {/* <Pagination
         style={{ justifyContent: 'center' }}
         page={page}
         onChange={(event, newPage) => {
@@ -376,7 +403,28 @@ function PositionList({ positions }) {
         variant="outlined"
         shape="rounded"
         className="panigation-table-token-page"
-      />
+      /> */}
+      {positionsSorted && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {positionsSorted.length}/page
+          </div>
+        </div>
+      )}
     </>
   )
 }

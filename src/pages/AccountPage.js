@@ -24,11 +24,12 @@ import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
 import { useTranslation } from 'react-i18next'
+import BoxSearch from '../components/Search'
 
 const StyledPanel = styled(Panel)`
   margin-top: 1.5rem !important;
   padding: 0;
-  background-color: transparent;
+  background-color: 'red';
   box-shadow: none;
   border: 0;
 `
@@ -74,12 +75,11 @@ const Flyout = styled.div`
   top: 38px;
   left: -1px;
   width: 100%;
-  background-color: ${({ theme }) => theme.bg1};
   z-index: 999;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   padding-top: 4px;
-  border: 1px solid #edeef2;
+  border: 0;
   border-top: none;
 `
 
@@ -190,7 +190,7 @@ function AccountPage({ account }) {
 
   const StyleAutoRow = styled(AutoRow)`
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
-    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
     border-radius: 15px;
     flex-wrap: wrap;
     margin: auto;
@@ -265,22 +265,32 @@ function AccountPage({ account }) {
               {account?.slice(0, 42)}
             </Link>
           </TYPE.body> */}
-          {/* {!below600 && <Search small={true} />} */}
+          {/* {!below600 && <BoxSearch/>} */}
         </RowBetween>
         <Header>
           <RowBetween>
-            <span>
-              <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
-              <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
-                <TYPE.main
-                  className="btn-danger"
-                  fontSize={16}
-                  style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
-                >
-                  {t('View on Etherscan')}
-                </TYPE.main>
-              </Link>
-            </span>
+            <div className="w-100">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <TYPE.header fontSize={32}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
+                <div style={{ width: '40%' }}>
+                  <BoxSearch />
+                </div>
+              </div>
+              <div style={{ width: '15%', maxWidth: 218 }}>
+                <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
+                  <TYPE.main
+                    className="btn-danger"
+                    fontSize={16}
+                    style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
+                  >
+                    {t('View on Etherscan')}
+                  </TYPE.main>
+                </Link>
+              </div>
+            </div>
+            {/* <AccountWrapper> */}
+
+            {/* </AccountWrapper> */}
             {/* <AccountWrapper>
               <StyledIcon>
                 <Bookmark
@@ -300,6 +310,8 @@ function AccountPage({ account }) {
                 borderRadius: 25,
                 backgroundColor: '#F3F3F3',
                 marginBottom: !below600 ? '35px' : '15px',
+                borderBottomLeftRadius: showDropdown ? 0 : 25,
+                borderBottomRightRadius: showDropdown ? 0 : 25,
               }}
             >
               <ButtonDropdown
@@ -313,7 +325,7 @@ function AccountPage({ account }) {
                     <StyledIcon style={{ color: '#333333' }}>
                       <Activity style={{ color: '#333333' }} size={16} />
                     </StyledIcon>
-                    <TYPE.body style={{ color: '#333333' }} ml={'10px'}>
+                    <TYPE.body fontSize={'16px'} style={{ color: '#333333' }} ml={'10px'}>
                       All Positions
                     </TYPE.body>
                   </RowFixed>
@@ -328,7 +340,7 @@ function AccountPage({ account }) {
                 )}
               </ButtonDropdown>
               {showDropdown && (
-                <Flyout>
+                <Flyout style={{ backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3 ' }}>
                   <AutoColumn gap="0px">
                     {positions?.map((p, i) => {
                       if (p.pair.token1.symbol === 'WETH') {

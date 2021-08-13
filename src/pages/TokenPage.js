@@ -142,8 +142,8 @@ function TokenPage({ address, history }) {
   const transactions = useTokenTransactions(address)
 
   // price
-  const price = priceUSD ? formattedNum(priceUSD, true) : ''
-  const priceChange = priceChangeUSD ? formattedPercent(priceChangeUSD) : ''
+  const price = priceUSD ? formattedNum(priceUSD, true) : '0'
+  const priceChange = priceChangeUSD ? formattedPercent(priceChangeUSD) : '0'
 
   // volume
   const volume = formattedNum(!!oneDayVolumeUSD ? oneDayVolumeUSD : oneDayVolumeUT, true)
@@ -230,14 +230,14 @@ function TokenPage({ address, history }) {
               className="box-title-main"
               style={{
                 flexWrap: 'wrap',
-                marginBottom: '2rem',
+                marginBottom: '1rem',
                 alignItems: 'flex-start',
               }}
             >
               <RowFixed style={{ flexWrap: 'wrap' }}>
                 <RowFixed style={{ alignItems: 'baseline' }}>
                   <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
-                  <TYPE.main fontSize={below1080 ? '1.5rem' : '2rem'} fontWeight={500} style={{ margin: '0 1rem' }}>
+                  <TYPE.main fontSize={below1080 ? '1.5rem' : '36px'} fontWeight={500} style={{ margin: '0 1rem' }}>
                     <RowFixed gap="6px">
                       <FormattedName text={name ? name + ' ' : ''} maxCharacters={16} style={{ marginRight: '6px' }} />{' '}
                       {formattedSymbol ? `(${formattedSymbol})` : ''}
@@ -245,32 +245,42 @@ function TokenPage({ address, history }) {
                   </TYPE.main>{' '}
                   {!below1080 && (
                     <>
-                      <TYPE.main fontSize={'1.5rem'} fontWeight={500} style={{ marginRight: '1rem' }}>
+                      <TYPE.main
+                        className="font-36 font-weight-500 color-dark"
+                        fontWeight={500}
+                        style={{ marginRight: '1rem' }}
+                      >
                         {price}
                       </TYPE.main>
-                      {priceChange}
+                      <div
+                        className={
+                          priceChange >= 0 ? 'font-24 color-blue font-weight-500' : 'font-24 color-red font-weight-500'
+                        }
+                      >{`${priceChange}%`}</div>
                     </>
                   )}
                 </RowFixed>
               </RowFixed>
-              <RowFixed>{!below600 && <Search small={false} />}</RowFixed>
+              <RowFixed style={below1080 ? { width: '100%' } : { width: '40%' }}>
+                {!below600 && <Search small={false} />}
+              </RowFixed>
             </RowBetween>
             <RowBetween
               style={{
                 flexWrap: 'wrap',
-                marginBottom: '2rem',
+                marginBottom: '1rem',
                 alignItems: 'flex-start',
               }}
             >
               <RowFixed>
                 <Link href={getPoolLink(address)} target="_blank">
-                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff' }}>
+                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}>
                     + {t('Add Liquidity')}
                   </ButtonLight>
                 </Link>
                 <Link href={getSwapLink(address)} target="_blank">
                   <ButtonDark
-                    style={{ backgroundColor: '#F05359', color: '#fff' }}
+                    style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
                     ml={'.5rem'}
                     mr={below1080 && '.5rem'}
                   >
@@ -282,9 +292,9 @@ function TokenPage({ address, history }) {
             <>
               {!below1080 && (
                 <RowFixed>
-                  <TYPE.main fontSize={'1.125rem'} mr="6px">
+                  {/* <TYPE.main fontSize={'1.125rem'} mr="6px">
                     Token Stats
-                  </TYPE.main>
+                  </TYPE.main> */}
                   {usingUtVolume && (
                     <HoverText text={UNTRACKED_COPY}>
                       <WarningIcon />
@@ -315,10 +325,16 @@ function TokenPage({ address, history }) {
                     </AutoColumn>
                   </Panel>
                 )}
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', borderRadius: 25 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Total Liquidity')}</TYPE.main>
+                      <TYPE.main
+                        className={
+                          isDarkMode ? 'font-weight-normal f-24 color-gray2' : 'font-weight-normal f-24 color-gray'
+                        }
+                      >
+                        {t('Total Liquidity')}
+                      </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -334,10 +350,16 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', borderRadius: 25 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Volume (24h)')}</TYPE.main>
+                      <TYPE.main
+                        className={
+                          isDarkMode ? 'font-weight-normal f-24 color-gray2' : 'font-weight-normal f-24 color-gray'
+                        }
+                      >
+                        {t('Volume (24h)')}
+                      </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -354,10 +376,16 @@ function TokenPage({ address, history }) {
                   </AutoColumn>
                 </Panel>
 
-                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
+                <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', borderRadius: 25 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
-                      <TYPE.main>{t('Transactions (24hrs)')}</TYPE.main>
+                      <TYPE.main
+                        className={
+                          isDarkMode ? 'font-weight-normal f-24 color-gray2' : 'font-weight-normal f-24 color-gray'
+                        }
+                      >
+                        {t('Transactions (24hrs)')}
+                      </TYPE.main>
                       <div />
                     </RowBetween>
                     <RowBetween align="flex-end">
@@ -377,7 +405,7 @@ function TokenPage({ address, history }) {
                   style={{
                     gridColumn: below1080 ? '1' : '2/4',
                     gridRow: below1080 ? '' : '1/4',
-                    backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
+                    backgroundColor: isDarkMode ? '#0E2B4A' : '#fff',
                     border: 0,
                     boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
                   }}

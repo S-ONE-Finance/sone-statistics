@@ -227,7 +227,18 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
       return (
         <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
           <DataText area="name" fontWeight="500">
-            {!below600 && <div style={{ marginRight: '20px', width: '10px', fontWeight: 400 }}>{index}</div>}
+            {!below600 && (
+              <div
+                style={{
+                  marginRight: '20px',
+                  width: '10px',
+                  fontWeight: 400,
+                  color: isDarkMode ? '#AAAAAA' : '#767676 ',
+                }}
+              >
+                {index}
+              </div>
+            )}
             <DoubleTokenLogo
               size={below600 ? 16 : 20}
               a0={pairData.token0.id}
@@ -244,6 +255,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                 maxCharacters={below600 ? 8 : 16}
                 adjustSize={true}
                 link={true}
+                className="text-dark"
               />
             </CustomLink>
           </DataText>
@@ -280,7 +292,11 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             </DataText>
           )}
           {!below1080 && (
-            <DataText area="apy" className="justify-content-center w-100">
+            <DataText
+              area="apy"
+              className="justify-content-center w-100"
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            >
               {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}
             </DataText>
           )}

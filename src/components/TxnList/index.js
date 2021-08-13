@@ -308,7 +308,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const ListItem = ({ item }) => {
     return (
       <DashGrid style={{ height: '48px' }}>
-        <DataText area="txn" fontWeight="500" className="justify-content-center w-100">
+        <DataText area="txn" fontWeight="400" className="justify-content-center w-100">
           <Link color="#3FAAB0" external href={urls.showTransaction(item.hash)}>
             {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
           </Link>

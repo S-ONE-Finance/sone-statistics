@@ -98,6 +98,10 @@ const ListOptions = styled(AutoRow)`
     font-size: 1rem;
   }
 `
+const TitleOverView = styled.div`
+    font-weight: 'bold',
+    font-size: 40px,
+  `
 
 function OverviewStatistics(props) {
   const classes = useStyles()
@@ -137,6 +141,11 @@ function OverviewStatistics(props) {
 
   return (
     <div className={classes.boxMainContentOverview}>
+      <div>
+        <p style={{ fontSize: 40, margin: '10px 0' }} className="font-weight-bold">
+          Overview
+        </p>
+      </div>
       <StyledGrid className={classes.boxCardItems} container spacing={0}>
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
@@ -169,7 +178,7 @@ function OverviewStatistics(props) {
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`+0.03%`}</p>}
           />
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
@@ -203,7 +212,7 @@ function OverviewStatistics(props) {
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`+0.03%`}</p>}
           />
         </Grid>
       </StyledGrid>
