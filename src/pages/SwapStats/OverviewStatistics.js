@@ -142,7 +142,10 @@ function OverviewStatistics(props) {
   return (
     <div className={classes.boxMainContentOverview}>
       <div>
-        <p style={{ fontSize: 40, margin: '10px 0' }} className="font-weight-bold">
+        <p
+          style={{ fontSize: 40, margin: '10px 0', color: isDarkMode ? '#fff' : '#333333' }}
+          className="font-weight-bold"
+        >
           Overview
         </p>
       </div>

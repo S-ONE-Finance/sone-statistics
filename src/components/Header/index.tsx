@@ -459,21 +459,6 @@ function Header() {
                   {t('S-ONE Wallet')}
                 </StyledExternalLink>
               </HideSmall>
-
-              {/* <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
-                  {t('Swap')}
-                </StyledExternalLink>
-                <SubMenu>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
-                    {t('Swap')}
-                  </SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
-                    {t('Liquidity')}
-                  </SubMenuItemExternalLink>
-                </SubMenu>
-              </MenuItem> */}
-
               <MenuItem>
                 <StyledNavLink
                   to="/swap"
@@ -535,13 +520,6 @@ function Header() {
                   <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
                 </SubMenu>
               </MenuItem>
-              {/* 
-              <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
-                  {t('Staking')}
-                </StyledExternalLink>
-              </MenuItem> */}
-
               <MenuItem>
                 <StyledExternalLink href={isMobile ? '' : S_ONE_DOCS_URL} target={isMobile ? '_self' : '_blank'}>
                   {t('Docs')}

@@ -202,6 +202,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
 
   const ListItem = ({ item, index }) => {
+    // console.log('formattedPercent(item.priceChangeUSD)', item.priceChangeUSD);
     return (
       <DashGrid style={{ height: '48px' }} focus={true}>
         <DataText area="name" fontWeight="400">
@@ -296,7 +297,15 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             className="justify-content-center font-weight-normal color-gray"
           >
             <div className="justify-content-center font-weight-normal color-gray">
-              {formattedPercent(item.priceChangeUSD)}
+              {item.priceChangeUSD >= 0 ? (
+                <p className="d-flex color-blue">
+                  +<span>{formattedPercent(item.priceChangeUSD)}</span>
+                </p>
+              ) : (
+                <p className="d-flex color-red">
+                  -<span>{formattedPercent(item.priceChangeUSD)}</span>
+                </p>
+              )}
             </div>
           </DataText>
         )}

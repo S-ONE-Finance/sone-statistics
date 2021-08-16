@@ -295,9 +295,18 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             <DataText
               area="apy"
               className="justify-content-center w-100"
-              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              // style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
             >
-              {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}
+              {pairData.oneDayVolumeUSD ? (
+                <p className="d-flex color-blue">
+                  +<span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+                </p>
+              ) : (
+                <p className="d-flex color-blue">
+                  +<span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+                </p>
+              )}
+              {/* {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)} */}
             </DataText>
           )}
         </DashGrid>
