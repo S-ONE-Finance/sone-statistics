@@ -55,7 +55,7 @@ const DashGrid = styled.div`
       &:first-child {
         justify-content: flex-start;
       }
-    }
+    }0xc0e2d7d9279846b80eacdea57220ab2333bc049d
   }
 
   @media screen and (min-width: 1080px) {

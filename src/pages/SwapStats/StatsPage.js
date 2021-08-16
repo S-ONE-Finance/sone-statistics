@@ -6,14 +6,14 @@ import { PageWrapper, ContentWrapper } from '../../components'
 import OverviewStatistics from './OverviewStatistics'
 import TokensStatistics from './TokensStatistics'
 import './styles.css'
-import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
-import { ReactComponent as IconLink } from '../../assets/link.svg'
-import { ReactComponent as IconUser } from '../../assets/user.svg'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import PairsStatistics from './PairsStatistics'
 import AccountStatics from './AccountStatics'
 import TransactionStatics from './TransactionStatics'
 import { useTranslation } from 'react-i18next'
+import { Link, Route, useRouteMatch } from 'react-router-dom'
+import TabComponent from '../../components/TabComponent'
+import TokenPage from '../TokenPage'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -36,7 +36,7 @@ const MainWrapper = styled.div`
 const StyledGrid = styled(Grid)`
   max-width: 100%;
   margin: 0 auto !important;
-
+  CircleImage
   ${({ theme }) => theme.mediaWidth.upToMedium`
     max-width: 100%;
   `}
@@ -121,6 +121,8 @@ const TabCustom = withStyles((theme) => ({
 }))((props) => <Tab disableRipple {...props} />)
 
 function StatsPage() {
+  const { url, path } = useRouteMatch()
+
   const classes = customStyleTabbar()
   const [indexTabMain, setIndexTabMain] = useState(0)
   const [isDarkMode] = useDarkModeManager()
@@ -145,75 +147,26 @@ function StatsPage() {
           {/* tab switch */}
           <StyledGrid container spacing={0}>
             <Grid item xs={12}>
-              <Tabs
-                value={indexTabMain}
-                onChange={handleChange}
-                indicatorColor=""
-                textColor="primary"
-                variant="fullWidth"
-                scrollButtons="off"
-              >
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  // className={classes.btnMain + ` btn-tab-custom`}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label={t('Overview')}
-                  {...a11yProps(0)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label={t('Tokens')}
-                  {...a11yProps(1)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<IconLink className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label={t('Pairs')}
-                  {...a11yProps(2)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<IconUser fontSize="small" className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label={t('Accounts')}
-                  {...a11yProps(3)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={
-                    <IconUser
-                      style={{ width: 20, height: 20 }}
-                      className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
-                    />
-                  }
-                  style={{ marginRight: 0 }}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label={t('Transactions')}
-                  {...a11yProps(4)}
-                />
-              </Tabs>
+              <TabComponent indexTabMain={indexTabMain} handleChange={handleChange} />
             </Grid>
           </StyledGrid>
           <TabPanel value={indexTabMain} index={0}>
+            <div>
+              <ul>
+                <li>
+                  <Link to={`${url}/token/shoes`}>Shoes</Link>
+                </li>
+                <li>
+                  <Link to={`${url}/boots`}>Boots</Link>
+                </li>
+                <li>
+                  <Link to={`${url}/footwear`}>Footwear</Link>
+                </li>
+              </ul>
+              <Route path={`${path}/:name`}>
+                <TokenPage />
+              </Route>
+            </div>
             <OverviewStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={1}>

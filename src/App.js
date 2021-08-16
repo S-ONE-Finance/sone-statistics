@@ -21,6 +21,8 @@ import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
+import StatsPage from './pages/SwapStats/StatsPage'
+import TabComponent from './components/TabComponent'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -115,8 +117,6 @@ function App({ t }) {
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
 
-  console.log('props22222222222', t)
-
   return (
     <ApolloProvider client={client}>
       <AppWrapper>
@@ -134,7 +134,7 @@ function App({ t }) {
           <HashRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>
-              <Route
+              {/* <Route
                 exact
                 strict
                 path="/swap/token/:tokenAddress"
@@ -152,8 +152,8 @@ function App({ t }) {
                     return <Redirect to="/home" />
                   }
                 }}
-              />
-              <Route
+              /> */}
+              {/* <Route
                 exact
                 strict
                 path="/swap/pair/:pairAddress"
@@ -187,9 +187,8 @@ function App({ t }) {
                     return <Redirect to="/home" />
                   }
                 }}
-              />
-
-              <Route exact strict path="/swap/tokens">
+              /> */}
+              {/* <Route exact strict path="/swap/tokens">
                 <LayoutWrapper>
                   <AllTokensPage />
                 </LayoutWrapper>
@@ -211,7 +210,7 @@ function App({ t }) {
                 <LayoutWrapper>
                   <StakingStats />
                 </LayoutWrapper>
-              </Route>
+              </Route> */}
               <Route exact strict path="/swap">
                 <LayoutWrapper>
                   <OverStats />

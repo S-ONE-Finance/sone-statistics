@@ -207,23 +207,6 @@ function TokenPage({ address, history }) {
         address={address}
       />
       <ContentWrapper style={{ zIndex: 1 }}>
-        {/* <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
-          <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
-            <TYPE.body>
-              <BasicLink to="/swap/tokens">{'Tokens '}</BasicLink>→ {symbol}
-            </TYPE.body>
-            <Link
-              style={{ width: 'fit-content' }}
-              color={backgroundColor}
-              external
-              href={ETHERSCAN_BASE_URL + '/address/' + address}
-            >
-              <Text style={{ marginLeft: '.15rem' }} fontSize={'14px'} fontWeight={400}>
-                ({address.slice(0, 8) + '...' + address.slice(36, 42)})
-              </Text>
-            </Link>
-          </AutoRow>
-        </RowBetween> */}
         <WarningGrouping disabled={!dismissed && listedTokens && !listedTokens.includes(address)}>
           <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem', zIndex: 1 }}>
             <RowBetween
@@ -437,11 +420,6 @@ function TokenPage({ address, history }) {
                 boxShadow: '0',
               }}
             >
-              {/* {address && fetchedPairsList ? (
-                <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
-              ) : (
-                <Loader />
-              )} */}
               <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
             </Panel>
             <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
