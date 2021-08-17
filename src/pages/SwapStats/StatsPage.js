@@ -151,22 +151,6 @@ function StatsPage() {
             </Grid>
           </StyledGrid>
           <TabPanel value={indexTabMain} index={0}>
-            <div>
-              <ul>
-                <li>
-                  <Link to={`${url}/token/shoes`}>Shoes</Link>
-                </li>
-                <li>
-                  <Link to={`${url}/boots`}>Boots</Link>
-                </li>
-                <li>
-                  <Link to={`${url}/footwear`}>Footwear</Link>
-                </li>
-              </ul>
-              <Route path={`${path}/:name`}>
-                <TokenPage />
-              </Route>
-            </div>
             <OverviewStatistics />
           </TabPanel>
           <TabPanel value={indexTabMain} index={1}>

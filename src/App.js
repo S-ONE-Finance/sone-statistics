@@ -134,7 +134,7 @@ function App({ t }) {
           <HashRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>
-              {/* <Route
+              <Route
                 exact
                 strict
                 path="/swap/token/:tokenAddress"
@@ -152,8 +152,8 @@ function App({ t }) {
                     return <Redirect to="/home" />
                   }
                 }}
-              /> */}
-              {/* <Route
+              />
+              <Route
                 exact
                 strict
                 path="/swap/pair/:pairAddress"
@@ -187,8 +187,8 @@ function App({ t }) {
                     return <Redirect to="/home" />
                   }
                 }}
-              /> */}
-              {/* <Route exact strict path="/swap/tokens">
+              />
+              <Route exact strict path="/swap/tokens">
                 <LayoutWrapper>
                   <AllTokensPage />
                 </LayoutWrapper>
@@ -210,7 +210,7 @@ function App({ t }) {
                 <LayoutWrapper>
                   <StakingStats />
                 </LayoutWrapper>
-              </Route> */}
+              </Route>
               <Route exact strict path="/swap">
                 <LayoutWrapper>
                   <OverStats />
