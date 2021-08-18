@@ -21,7 +21,6 @@ import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
-import StatsPage from './pages/SwapStats/StatsPage'
 import TabComponent from './components/TabComponent'
 
 const AppWrapper = styled.div`
@@ -91,6 +90,29 @@ const WarningBanner = styled.div`
  */
 const LayoutWrapper = ({ children }) => {
   const [isDarkMode] = useDarkModeManager()
+  // const [index, setIndex] = useIndexTabManager()
+  // console.log('index LayoutWrapper', index);
+  return (
+    <>
+      <HeaderWrapper>
+        <Header />
+      </HeaderWrapper>
+      <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
+        <div style={{ padding: '100px 0' }}>
+          <TabComponent />
+          {children}
+        </div>
+      </Body>
+      <Polling />
+      <FooterWrapper style={{ zIndex: 9999 }}>
+        <Footer />
+      </FooterWrapper>
+    </>
+  )
+}
+
+const LayoutWrapper2 = ({ children }) => {
+  const [isDarkMode] = useDarkModeManager()
 
   return (
     <>
@@ -98,6 +120,7 @@ const LayoutWrapper = ({ children }) => {
         <Header />
       </HeaderWrapper>
       <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
+        {/* <TabComponent /> */}
         {children}
       </Body>
       <Polling />
@@ -134,7 +157,6 @@ function App({ t }) {
           <HashRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>
-              {/* 
               <Route
                 exact
                 strict
@@ -205,17 +227,11 @@ function App({ t }) {
                 <LayoutWrapper>
                   <AccountLookup />
                 </LayoutWrapper>
-              </Route> 
-            */}
-              {/* <Route exact strict path="/swap">
-                <LayoutWrapper>
-                  <OverStats />
-                </LayoutWrapper>
-              </Route> */}
+              </Route>
               <Route exact strict path="/staking">
-                <LayoutWrapper>
+                <LayoutWrapper2>
                   <StakingStats />
-                </LayoutWrapper>
+                </LayoutWrapper2>
               </Route>
 
               <Route
@@ -230,7 +246,7 @@ function App({ t }) {
                   )
                 }}
               />
-              {/* <Redirect to="/swap" /> */}
+              <Redirect to="/swap" />
             </Switch>
           </HashRouter>
         ) : (

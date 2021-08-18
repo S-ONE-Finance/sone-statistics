@@ -6,7 +6,7 @@ import { PageWrapper, ContentWrapper } from '../../components'
 import OverviewStatistics from './OverviewStatistics'
 import TokensStatistics from './TokensStatistics'
 import './styles.css'
-import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useDarkModeManager, useIndexTabManager } from '../../contexts/LocalStorage'
 import PairsStatistics from './PairsStatistics'
 import AccountStatics from './AccountStatics'
 import TransactionStatics from './TransactionStatics'
@@ -126,51 +126,31 @@ const TabCustom = withStyles((theme) => ({
 
 function StatsPage({ ...props }) {
   const { url, path } = useRouteMatch()
+  const [indexTab, setIndex] = useIndexTabManager()
   const { match } = props
   const classes = customStyleTabbar()
-  const [indexTabMain, setIndexTabMain] = useState(0)
   const [isDarkMode] = useDarkModeManager()
-  const handleChange = (event, newValue) => {
-    setIndexTabMain(newValue)
-  }
   const { t, i18n } = useTranslation()
+
   return (
     <MainWrapper>
       <PageWrapper>
         <ContentWrapper style={{ zIndex: 1 }}>
-          <Grid container spacing={0} className="box-first-main">
-            <Grid item lg={4} md={12} mb={0.5} px={0}>
-              <Title>{t('Swap Statistic')}</Title>
-            </Grid>
-            <Grid className={classes.boxSearchLeft} item lg={4} md={12} mb={0.5} px={2} mt={2}>
-              <BoxSearch />
-            </Grid>
-          </Grid>
-
           {/* tab switch */}
-          <StyledGrid container spacing={0}>
-            <Grid item xs={12}>
-              <TabComponent indexTabMain={indexTabMain} handleChange={handleChange} />
-            </Grid>
-          </StyledGrid>
-
+          <TabPanel value={indexTab} index={0}>
+            <OverviewStatistics />
+          </TabPanel>
           <div>
-            <TabPanel value={indexTabMain} index={0}>
-              <Route key="allTokenPage" path={`${url}/tokens`}>
-                <AllTokensPage />
-              </Route>
-              <OverviewStatistics />
-            </TabPanel>
-            <TabPanel value={indexTabMain} index={1}>
+            <TabPanel value={indexTab} index={1}>
               <TokensStatistics />
             </TabPanel>
-            <TabPanel value={indexTabMain} index={2}>
+            <TabPanel value={indexTab} index={2}>
               <PairsStatistics />
             </TabPanel>
-            <TabPanel value={indexTabMain} index={3}>
+            <TabPanel value={indexTab} index={3}>
               <AccountStatics />
             </TabPanel>
-            <TabPanel value={indexTabMain} index={4}>
+            <TabPanel value={indexTab} index={4}>
               <TransactionStatics />
             </TabPanel>
           </div>

@@ -216,7 +216,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   const StyleTypeMain = styled(TYPE.main)`
     justify-content: center;
   `
-  console.log('lpList', lpList)
+  // console.log('lpList', lpList)
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '539px' }}>
