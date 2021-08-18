@@ -11,9 +11,13 @@ import PairsStatistics from './PairsStatistics'
 import AccountStatics from './AccountStatics'
 import TransactionStatics from './TransactionStatics'
 import { useTranslation } from 'react-i18next'
-import { Link, Route, useRouteMatch } from 'react-router-dom'
+import { Link, Route, useRouteMatch, Switch, HashRouter, Redirect } from 'react-router-dom'
 import TabComponent from '../../components/TabComponent'
 import TokenPage from '../TokenPage'
+import { isAddress } from '../../utils'
+import { TOKEN_BLACKLIST } from '../../constants'
+import AllTokensPage from '../AllTokensPage'
+// import TokenPage from '../TokenPage'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -120,9 +124,9 @@ const TabCustom = withStyles((theme) => ({
   },
 }))((props) => <Tab disableRipple {...props} />)
 
-function StatsPage() {
+function StatsPage({ ...props }) {
   const { url, path } = useRouteMatch()
-
+  const { match } = props
   const classes = customStyleTabbar()
   const [indexTabMain, setIndexTabMain] = useState(0)
   const [isDarkMode] = useDarkModeManager()
@@ -130,7 +134,6 @@ function StatsPage() {
     setIndexTabMain(newValue)
   }
   const { t, i18n } = useTranslation()
-
   return (
     <MainWrapper>
       <PageWrapper>
@@ -150,21 +153,27 @@ function StatsPage() {
               <TabComponent indexTabMain={indexTabMain} handleChange={handleChange} />
             </Grid>
           </StyledGrid>
-          <TabPanel value={indexTabMain} index={0}>
-            <OverviewStatistics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={1}>
-            <TokensStatistics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={2}>
-            <PairsStatistics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={3}>
-            <AccountStatics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={4}>
-            <TransactionStatics />
-          </TabPanel>
+
+          <div>
+            <TabPanel value={indexTabMain} index={0}>
+              <Route key="allTokenPage" path={`${url}/tokens`}>
+                <AllTokensPage />
+              </Route>
+              <OverviewStatistics />
+            </TabPanel>
+            <TabPanel value={indexTabMain} index={1}>
+              <TokensStatistics />
+            </TabPanel>
+            <TabPanel value={indexTabMain} index={2}>
+              <PairsStatistics />
+            </TabPanel>
+            <TabPanel value={indexTabMain} index={3}>
+              <AccountStatics />
+            </TabPanel>
+            <TabPanel value={indexTabMain} index={4}>
+              <TransactionStatics />
+            </TabPanel>
+          </div>
         </ContentWrapper>
       </PageWrapper>
     </MainWrapper>

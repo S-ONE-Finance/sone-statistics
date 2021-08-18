@@ -134,6 +134,7 @@ function App({ t }) {
           <HashRouter>
             <Route component={GoogleAnalyticsReporter} />
             <Switch>
+              {/* 
               <Route
                 exact
                 strict
@@ -204,19 +205,32 @@ function App({ t }) {
                 <LayoutWrapper>
                   <AccountLookup />
                 </LayoutWrapper>
-              </Route>
-
+              </Route> 
+            */}
+              {/* <Route exact strict path="/swap">
+                <LayoutWrapper>
+                  <OverStats />
+                </LayoutWrapper>
+              </Route> */}
               <Route exact strict path="/staking">
                 <LayoutWrapper>
                   <StakingStats />
                 </LayoutWrapper>
               </Route>
-              <Route exact strict path="/swap">
-                <LayoutWrapper>
-                  <OverStats />
-                </LayoutWrapper>
-              </Route>
-              <Redirect to="/swap" />
+
+              <Route
+                exact
+                strict
+                path="/swap"
+                render={({ match }) => {
+                  return (
+                    <LayoutWrapper>
+                      <OverStats match={match} />
+                    </LayoutWrapper>
+                  )
+                }}
+              />
+              {/* <Redirect to="/swap" /> */}
             </Switch>
           </HashRouter>
         ) : (
