@@ -15,6 +15,7 @@ import {
   S_ONE_WHITE_PAPER_URL,
 } from '../../constants/urls'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const CloseIcon = styled.div`
   position: absolute;
@@ -120,6 +121,7 @@ export default function MobileMenu({ setIsShowMobileMenu }: MobileMenuProps) {
   const closeModal = useCallback(() => {
     setIsShowMobileMenu(false)
   }, [setIsShowMobileMenu])
+  const { t, i18n } = useTranslation()
 
   return (
     <ColumnWrapper onClick={closeModal}>
@@ -128,27 +130,27 @@ export default function MobileMenu({ setIsShowMobileMenu }: MobileMenuProps) {
           <CloseColor />
         </CloseIcon>
         <StyledExternalLink href={S_ONE_TOP_PAGE_URL} target="_blank">
-          S-ONE Wallet
+          {t('S-ONE Wallet')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
-          Swap
+          {t('Swap')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
-          Liquidity
+          {t('Liquidity')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
-          Staking
+          {t('Staking')}
         </StyledExternalLink>
-        <StyledNavLink to="/swap">Swap Stats</StyledNavLink>
-        <StyledNavLink to="/staking">Staking Stats</StyledNavLink>
+        <StyledNavLink to="/swap">{t('Swap Stats')}</StyledNavLink>
+        <StyledNavLink to="/staking">{t('Staking Stats')}</StyledNavLink>
         <StyledExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">
-          White Paper
+          {t('White Paper')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_FAQ_URL} target="_blank">
-          FAQ
+          {t('FAQ')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_BLOG_URL} target="_blank">
-          Blog
+          {t('Blog')}
         </StyledExternalLink>
       </Column>
     </ColumnWrapper>

@@ -24,6 +24,7 @@ import useDashboardData from '../../hooks/useDashboardData'
 import { reduceFractionDigit } from '../../utils/number.js'
 import { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -243,7 +244,7 @@ export default function PoolTable() {
   const pools = useDashboardData((store) => store.pools)
   const classes = useStyles()
   const theme = useContext(ThemeContext)
-
+  const { t, i18n } = useTranslation()
   const getSortedPools = (pools, sortData) => {
     const sortingCols = Object.keys(sortData)
 
@@ -288,7 +289,7 @@ export default function PoolTable() {
                   className={classes.tableHeaderText}
                   style={{ color: theme.text1Sone, marginLeft: isUpToExtraSmall ? 0 : '3vw' }}
                 >
-                  Pair
+                  {t('Pairs')}
                 </Typography>
                 {sortData.name &&
                   (sortData.name === 'asc' ? (
@@ -326,7 +327,7 @@ export default function PoolTable() {
                 className={classes.tableHeaderText}
                 style={{ color: theme.text1Sone, textAlign: isUpToExtraSmall ? 'center' : 'unset' }}
               >
-                Staked Value
+                {t('Staked Value')}
               </Typography>
             </TableCell>
             <TableCell
@@ -337,7 +338,7 @@ export default function PoolTable() {
             >
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Typography className={classes.tableHeaderText} style={{ color: theme.text1Sone }}>
-                  Locked Value
+                  {t('Locked Value')}
                 </Typography>
                 {sortData.usdValue &&
                   (sortData.usdValue === 'asc' ? (
@@ -355,7 +356,7 @@ export default function PoolTable() {
             >
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Typography className={classes.tableHeaderText} style={{ color: theme.text1Sone }}>
-                  Reward / Block
+                  {t('Reward / Block')}
                 </Typography>
                 {sortData.newRewardPerBlock &&
                   (sortData.newRewardPerBlock === 'asc' ? (

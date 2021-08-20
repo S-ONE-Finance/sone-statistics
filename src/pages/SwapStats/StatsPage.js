@@ -6,13 +6,18 @@ import { PageWrapper, ContentWrapper } from '../../components'
 import OverviewStatistics from './OverviewStatistics'
 import TokensStatistics from './TokensStatistics'
 import './styles.css'
-import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
-import { ReactComponent as IconLink } from '../../assets/link.svg'
-import { ReactComponent as IconUser } from '../../assets/user.svg'
-import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useDarkModeManager, useIndexTabManager } from '../../contexts/LocalStorage'
 import PairsStatistics from './PairsStatistics'
 import AccountStatics from './AccountStatics'
 import TransactionStatics from './TransactionStatics'
+import { useTranslation } from 'react-i18next'
+import { Link, Route, useRouteMatch, Switch, HashRouter, Redirect } from 'react-router-dom'
+import TabComponent from '../../components/TabComponent'
+import TokenPage from '../TokenPage'
+import { isAddress } from '../../utils'
+import { TOKEN_BLACKLIST } from '../../constants'
+import AllTokensPage from '../AllTokensPage'
+// import TokenPage from '../TokenPage'
 
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
@@ -35,7 +40,7 @@ const MainWrapper = styled.div`
 const StyledGrid = styled(Grid)`
   max-width: 100%;
   margin: 0 auto !important;
-
+  CircleImage
   ${({ theme }) => theme.mediaWidth.upToMedium`
     max-width: 100%;
   `}
@@ -119,118 +124,36 @@ const TabCustom = withStyles((theme) => ({
   },
 }))((props) => <Tab disableRipple {...props} />)
 
-function StatsPage() {
+function StatsPage({ ...props }) {
+  const { url, path } = useRouteMatch()
+  const [indexTab, setIndex] = useIndexTabManager()
+  const { match } = props
   const classes = customStyleTabbar()
-  const [indexTabMain, setIndexTabMain] = useState(0)
   const [isDarkMode] = useDarkModeManager()
-  const handleChange = (event, newValue) => {
-    setIndexTabMain(newValue)
-  }
+  const { t, i18n } = useTranslation()
 
   return (
     <MainWrapper>
       <PageWrapper>
         <ContentWrapper style={{ zIndex: 1 }}>
-          <Grid container spacing={0} className="box-first-main">
-            <Grid item lg={4} md={12} mb={0.5} px={0}>
-              <Title>Swap Statistics</Title>
-            </Grid>
-            <Grid className={classes.boxSearchLeft} item lg={4} md={12} mb={0.5} px={2} mt={2}>
-              <BoxSearch />
-            </Grid>
-          </Grid>
-
           {/* tab switch */}
-          <StyledGrid container spacing={0}>
-            <Grid item xs={12}>
-              <Tabs
-                value={indexTabMain}
-                onChange={handleChange}
-                indicatorColor=""
-                textColor="primary"
-                variant="fullWidth"
-                scrollButtons="off"
-              >
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  // className={classes.btnMain + ` btn-tab-custom`}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Overview"
-                  {...a11yProps(0)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Tokens "
-                  {...a11yProps(1)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<IconLink className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Pairs"
-                  {...a11yProps(2)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={<IconUser fontSize="small" className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Accounts"
-                  {...a11yProps(3)}
-                />
-                <TabCustom
-                  classes={{
-                    wrapper: classes.iconLabelWrapper,
-                    labelContainer: classes.labelContainer,
-                  }}
-                  icon={
-                    <IconUser
-                      style={{ width: 20, height: 20 }}
-                      className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
-                    />
-                  }
-                  className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
-                  label="Transactions"
-                  {...a11yProps(4)}
-                />
-              </Tabs>
-            </Grid>
-          </StyledGrid>
-          <TabPanel value={indexTabMain} index={0}>
+          <TabPanel value={indexTab} index={0}>
             <OverviewStatistics />
           </TabPanel>
-          <TabPanel value={indexTabMain} index={1}>
-            <TokensStatistics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={2}>
-            <PairsStatistics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={3}>
-            <AccountStatics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={4}>
-            <TransactionStatics />
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={5}>
-            Item Six
-          </TabPanel>
-          <TabPanel value={indexTabMain} index={6}>
-            Item Seven
-          </TabPanel>
+          <div>
+            <TabPanel value={indexTab} index={1}>
+              <TokensStatistics />
+            </TabPanel>
+            <TabPanel value={indexTab} index={2}>
+              <PairsStatistics />
+            </TabPanel>
+            <TabPanel value={indexTab} index={3}>
+              <AccountStatics />
+            </TabPanel>
+            <TabPanel value={indexTab} index={4}>
+              <TransactionStatics />
+            </TabPanel>
+          </div>
         </ContentWrapper>
       </PageWrapper>
     </MainWrapper>

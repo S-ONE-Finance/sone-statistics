@@ -19,6 +19,8 @@ import { updateNameData } from '../../utils/data'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
 import { ETHERSCAN_BASE_URL } from '../../constants/urls'
+import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles'
 
 dayjs.extend(utc)
 
@@ -56,7 +58,7 @@ const DashGrid = styled.div`
 
     &:first-child {
       justify-content: flex-start;
-      text-align: left;
+      text-align: left;Transactions
       width: 100px;
     }
   }
@@ -133,6 +135,25 @@ const SortText = styled.button`
   }
 `
 
+const useStyles = makeStyles({
+  navigation: {
+    marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+})
+
 const SORT_FIELD = {
   VALUE: 'amountUSD',
   AMOUNT0: 'token0Amount',
@@ -177,6 +198,8 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
   const [isDarkMode] = useDarkModeManager()
   const [currency] = useCurrentCurrency()
+  const { t, i18n } = useTranslation()
+  const classes = useStyles()
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -285,7 +308,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const ListItem = ({ item }) => {
     return (
       <DashGrid style={{ height: '48px' }}>
-        <DataText area="txn" fontWeight="500" className="justify-content-center w-100">
+        <DataText area="txn" fontWeight="400" className="justify-content-center w-100">
           <Link color="#3FAAB0" external href={urls.showTransaction(item.hash)}>
             {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
           </Link>
@@ -335,6 +358,8 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     )
   }
 
+  console.log('filteredList transaction', filteredItems)
+
   return (
     <>
       <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: '542px' }}>
@@ -352,7 +377,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.ALL}
                 style={{ fontWeight: 'bold' }}
               >
-                All
+                {t('All')}
               </SortText>
               <SortText
                 onClick={() => {
@@ -361,7 +386,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.SWAP}
                 style={{ fontWeight: 'bold' }}
               >
-                Swaps
+                {t('Swaps')}
               </SortText>
               <SortText
                 onClick={() => {
@@ -370,7 +395,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.ADD}
                 style={{ fontWeight: 'bold' }}
               >
-                Adds
+                {t('Adds')}
               </SortText>
               <SortText
                 onClick={() => {
@@ -379,7 +404,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 active={txFilter === TXN_TYPE.REMOVE}
                 style={{ fontWeight: 'bold' }}
               >
-                Withdraw
+                {t('Withdraw')}
               </SortText>
             </RowFixed>
           )}
@@ -394,7 +419,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
               }}
             >
-              Total Value {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Total Value')}
             </ClickableText>
           </Flex>
           {!below780 && (
@@ -408,8 +433,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
                 }}
               >
-                {symbol0Override ? symbol0Override + ' Amount' : 'Token Amount'}{' '}
-                {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↑' : '↓') : ''}
+                {symbol0Override ? symbol0Override + ' Amount' : `${t('Token Amount')}`}
+                {''}
+                {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↓' : '↑') : ''}
               </ClickableText>
             </Flex>
           )}
@@ -425,15 +451,16 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                     setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
                   }}
                 >
-                  {symbol1Override ? symbol1Override + ' Amount' : 'Token Amount'}{' '}
-                  {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↑' : '↓') : ''}
+                  {symbol1Override ? symbol1Override + ' Amount' : `${t('Token Amount')}`}
+                  {''}
+                  {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↓' : '↑') : ''}
                 </ClickableText>
               </Flex>
             )}
             {!below1080 && (
               <Flex alignItems="center" justifyContent="center">
-                <TYPE.body area="account" style={{ fontWeight: 'bold' }}>
-                  Account
+                <TYPE.body area="account" style={{ fontWeight: 'bold', fontSize: 16 }}>
+                  {t('Accounts')}
                 </TYPE.body>
               </Flex>
             )}
@@ -445,9 +472,10 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortedColumn(SORT_FIELD.TIMESTAMP)
                   setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
                 }}
-                style={{ fontWeight: 'bold' }}
+                style={{ fontWeight: 'bold', fontSize: 16 }}
               >
-                Time {sortedColumn === SORT_FIELD.TIMESTAMP ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Time')}
+                {sortedColumn === SORT_FIELD.TIMESTAMP ? (sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           </>
@@ -483,35 +511,27 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           )}
         </List>
       </div>
-      {/* <PageButtons>
-        <div
-          onClick={(e) => {
-            setPage(page === 1 ? page : page - 1)
-          }}
-        >
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
+      {filteredList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {filteredList.length}/page
+          </div>
         </div>
-        <TYPE.body>{'Page ' + page + ' of ' + maxPage}</TYPE.body>
-        <div
-          onClick={(e) => {
-            setPage(page === maxPage ? page : page + 1)
-          }}
-        >
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons> */}
-
-      <Pagination
-        style={{ justifyContent: 'center' }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table-token-page"
-      />
+      )}
     </>
   )
 }

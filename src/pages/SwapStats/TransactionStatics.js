@@ -5,6 +5,7 @@ import { CustomLink } from '../../components/Link'
 import styled from 'styled-components'
 import { useGlobalTransactions } from '../../contexts/GlobalData'
 import TxnList from '../../components/TxnList'
+import { useTranslation } from 'react-i18next'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -21,12 +22,14 @@ const ListOptions = styled(AutoRow)`
 
 function TransactionStatics(props) {
   const transactions = useGlobalTransactions()
+  const { t, i18n } = useTranslation()
+
   return (
     <div>
       <ListOptions gap="10px">
         <RowBetween>
           <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
-            Transactions
+            {t('Transactions')}
           </TYPE.main>
         </RowBetween>
       </ListOptions>

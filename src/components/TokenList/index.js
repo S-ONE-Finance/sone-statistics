@@ -18,6 +18,7 @@ import { Pagination } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import Panel from '../../components/Panel'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { useTranslation } from 'react-i18next'
 dayjs.extend(utc)
 
 const List = styled(Box)`
@@ -54,7 +55,7 @@ const DashGrid = styled.div`
       &:first-child {
         justify-content: flex-start;
       }
-    }
+    }0xc0e2d7d9279846b80eacdea57220ab2333bc049d
   }
 
   @media screen and (min-width: 1080px) {
@@ -114,7 +115,23 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
+    // marginTop: 25,
+  },
+  navigation: {
     marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
   },
   outlined: {
     border: '1px solid red',
@@ -137,6 +154,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   const below680 = useMedia('(max-width: 680px)')
   const below600 = useMedia('(max-width: 600px)')
 
+  // i18n
+  const { t, i18n } = useTranslation()
   // style theme
   const theme = useContext(ThemeContext)
 
@@ -183,46 +202,118 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
 
   const ListItem = ({ item, index }) => {
+    // console.log('formattedPercent(item.priceChangeUSD)', item.priceChangeUSD);
     return (
       <DashGrid style={{ height: '48px' }} focus={true}>
-        <DataText area="name" fontWeight="500">
+        <DataText area="name" fontWeight="400">
           <Row>
-            {!below680 && <div style={{ marginRight: '1rem', width: '10px' }}>{index}</div>}
+            {!below680 && (
+              <div
+                style={{ marginRight: '40px', width: '10px' }}
+                className={
+                  isDarkMode
+                    ? 'justify-content-center font-weight-normal color-gray2'
+                    : 'justify-content-center font-weight-normal color-gray'
+                }
+              >
+                {index}
+              </div>
+            )}
             <TokenLogo address={item.id} />
-            <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/swap/token/' + item.id}>
+            <CustomLink
+              style={{ marginLeft: '16px', whiteSpace: 'nowrap', color: '#767676' }}
+              to={'/swap/token/' + item.id}
+            >
               <FormattedName
                 text={below680 ? item.symbol : item.name}
                 maxCharacters={below600 ? 8 : 16}
                 adjustSize={true}
                 link={true}
+                fontSize={'16px'}
+                className="justify-content-center font-weight-normal color-gray"
               />
             </CustomLink>
           </Row>
         </DataText>
         {!below680 && (
-          <DataText area="symbol" color="text" fontWeight="500" className="justify-content-center">
-            <FormattedName text={item.symbol} maxCharacters={5} />
+          <DataText
+            area="symbol"
+            style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontWeight="400"
+            className="justify-content-center font-weight-normal"
+          >
+            <FormattedName
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              className="font-weight-normal"
+              text={item.symbol}
+              maxCharacters={5}
+            />
           </DataText>
         )}
-        <DataText area="liq" className="justify-content-center">
+        <DataText
+          area="liq"
+          fontSize={'16px'}
+          style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          fontWeight="400"
+          className={
+            isDarkMode
+              ? 'justify-content-center font-weight-normal color-gray2'
+              : 'justify-content-center font-weight-normal color-gray'
+          }
+        >
           {formattedNum(item.totalLiquidityUSD, true)}
         </DataText>
-        <DataText area="vol" className="justify-content-center">
+        <DataText
+          area="vol"
+          fontSize={'16px'}
+          style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          fontWeight="400"
+          className={
+            isDarkMode
+              ? 'justify-content-center font-weight-normal color-gray2'
+              : 'justify-content-center font-weight-normal color-gray'
+          }
+        >
           {formattedNum(item.oneDayVolumeUSD, true)}
         </DataText>
         {!below1080 && (
-          <DataText area="price" color="text" fontWeight="500" className="justify-content-center">
-            {formattedNum(item.priceUSD, true)}
+          <DataText
+            area="price"
+            fontSize={'16px'}
+            style={{ color: '#767676', fontWeight: 400 }}
+            fontWeight="400"
+            className="justify-content-center font-weight-normal color-gray"
+          >
+            <div className="justify-content-center font-weight-normal color-gray">
+              {formattedNum(item.priceUSD, true)}
+            </div>
           </DataText>
         )}
         {!below1080 && (
-          <DataText area="change" className="justify-content-center">
-            {formattedPercent(item.priceChangeUSD)}
+          <DataText
+            area="change"
+            style={{ color: '#767676' }}
+            fontWeight="400"
+            className="justify-content-center font-weight-normal color-gray"
+          >
+            <div className="justify-content-center font-weight-normal">
+              {item.priceChangeUSD >= 0 ? (
+                <p className="d-flex color-blue">
+                  <span>{formattedPercent(item.priceChangeUSD)}</span>
+                </p>
+              ) : (
+                <p className="d-flex color-red">
+                  <span>{formattedPercent(item.priceChangeUSD)}</span>
+                </p>
+              )}
+            </div>
           </DataText>
         )}
       </DashGrid>
     )
   }
+
+  // console.log('filteredList',filteredList);
 
   return (
     <>
@@ -239,7 +330,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
       >
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem 1.125rem 1rem 1.125rem' }}>
-            <Flex alignItems="center" className="justify-content-center w-100 text-center">
+            <Flex alignItems="center" className="justify-content-center w-100 text-center f-20 font-weight-bold">
               <ClickableText
                 color="text"
                 area="name"
@@ -249,20 +340,22 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
                   setSortDirection(sortedColumn !== SORT_FIELD.NAME ? true : !sortDirection)
                 }}
               >
-                {below680 ? 'Symbol' : 'Name'} {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Name')}
+                {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
             {!below680 && (
               <Flex alignItems="center">
                 <ClickableText
                   area="symbol"
-                  className="justify-content-center w-100 text-center"
+                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
                   onClick={() => {
                     setSortedColumn(SORT_FIELD.SYMBOL)
                     setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
                   }}
                 >
-                  Symbol {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
+                  {t('Symbol')}
+                  {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
                 </ClickableText>
               </Flex>
             )}
@@ -270,19 +363,20 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             <Flex alignItems="center">
               <ClickableText
                 area="liq"
-                className="justify-content-center w-100 text-center"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.LIQ)
                   setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
                 }}
               >
-                Liquidity {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Liquidity')}
+                {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
             <Flex alignItems="center">
               <ClickableText
                 area="vol"
-                className="justify-content-center w-100 text-center"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
                 onClick={() => {
                   setSortedColumn(useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL)
                   setSortDirection(
@@ -290,7 +384,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
                   )
                 }}
               >
-                Volume (24hrs)
+                {t('Volume (24hrs)')}
                 {sortedColumn === (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
@@ -298,13 +392,13 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="price"
-                  className="justify-content-center w-100 text-center"
+                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
                   onClick={(e) => {
                     setSortedColumn(SORT_FIELD.PRICE)
                     setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
                   }}
                 >
-                  Price {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
+                  {t('Price')} {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
                 </ClickableText>
               </Flex>
             )}
@@ -312,13 +406,13 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               <Flex alignItems="center">
                 <ClickableText
                   area="change"
-                  className="justify-content-center w-100 text-center"
+                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
                   onClick={(e) => {
                     setSortedColumn(SORT_FIELD.CHANGE)
                     setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)
                   }}
                 >
-                  Price Change (24hrs)
+                  {t('Price Change (24h)')}
                   {sortedColumn === SORT_FIELD.CHANGE ? (!sortDirection ? '↑' : '↓') : ''}
                 </ClickableText>
               </Flex>
@@ -350,20 +444,27 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           </List>
         </ListWrapper>
       </Panel>
-      <Pagination
-        style={{ justifyContent: 'center', padding: 0 }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table"
-        classes={{
-          root: classes.root, // class name, e.g. `classes-nesting-root-x`
-        }}
-      />
+      {filteredList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {filteredList.length}/page
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -22,6 +22,8 @@ import {
 import { Globe, Moon, Sun, Menu as MenuIcon } from 'react-feather'
 import { isMobile } from 'react-device-detect'
 import { TYPE } from '../../theme'
+import i18n from '../../i18n'
+import { withTranslation, useTranslation } from 'react-i18next'
 
 const activeClassName = 'ACTIVE'
 
@@ -219,7 +221,7 @@ const SubMenuItemNavLink = styled(NavLink)`
   color: ${({ theme }) => theme.text1Sone};
   font-size: 18px;
   font-weight: 400;
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -242,7 +244,7 @@ const SubMenuItemExternalLink = styled.a<{ isActive?: boolean }>`
   color: ${({ theme }) => theme.text1Sone};
   font-size: 18px;
   font-weight: 400;
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -266,7 +268,7 @@ const SubMenuItemText = styled.span`
   color: ${({ theme }) => theme.text1Sone};
   font-size: 18px;
   font-weight: 400;
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -425,12 +427,18 @@ const ShowOnlyExtraSmall = styled.div`
     display: inherit;
   `};
 `
-
-export default function Header() {
-  const [language, setLanguage] = useLanguage()
+function Header() {
+  const [language, setLanguage] = useState()
   const [darkMode, toggleDarkMode] = useDarkModeManager()
 
   const [isShowMobileMenu, setIsShowMobileMenu] = useState(false)
+  const changeLanguage = (lng) => {
+    setLanguage(lng)
+    i18n.changeLanguage(lng)
+  }
+
+  const { t, i18n } = useTranslation()
+  console.log('language1111111', language)
 
   return (
     <>
@@ -448,27 +456,9 @@ export default function Header() {
             <HeaderMenu>
               <HideSmall>
                 <StyledExternalLink href={S_ONE_WALLET_INTRO_PAGE_URL} target="_blank">
-                  S-ONE Wallet
+                  {t('S-ONE Wallet')}
                 </StyledExternalLink>
               </HideSmall>
-              <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
-                  Swap
-                </StyledExternalLink>
-                <SubMenu>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
-                    Swap
-                  </SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
-                    Liquidity
-                  </SubMenuItemExternalLink>
-                </SubMenu>
-              </MenuItem>
-              <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
-                  Staking
-                </StyledExternalLink>
-              </MenuItem>
               <MenuItem>
                 <StyledNavLink
                   to="/swap"
@@ -476,16 +466,63 @@ export default function Header() {
                     Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/staking')
                   }
                 >
-                  Stats
+                  {t('Swap')}
                 </StyledNavLink>
                 <SubMenu>
-                  <SubMenuItemNavLink to={'/swap'}>Swap Stats</SubMenuItemNavLink>
-                  <SubMenuItemNavLink to={'/staking'}>Staking Stats</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/add'}>{t('Staking Stats')}</SubMenuItemNavLink>
+                </SubMenu>
+              </MenuItem>
+
+              <MenuItem>
+                <StyledNavLink
+                  to="/staking"
+                  isActive={(match, { pathname }) =>
+                    Boolean(match) || pathname.startsWith('/staking') || pathname.startsWith('/staking')
+                  }
+                >
+                  {t('Staking')}
+                </StyledNavLink>
+              </MenuItem>
+
+              {/* <MenuItem>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+                  {t('Staking')}
+                </StyledExternalLink>
+              </MenuItem> */}
+
+              {/* <MenuItem>
+                <StyledNavLink
+                  to="/swap"
+                  isActive={(match, { pathname }) =>
+                    Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/staking')
+                  }
+                >
+                  {t('Stats')}
+                </StyledNavLink>
+                <SubMenu>
+                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
+                </SubMenu>
+              </MenuItem> */}
+              <MenuItem>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/stats'} target="_blank">
+                  {t('Stats')}
+                </StyledExternalLink>
+                <SubMenu>
+                  {/* <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
+                    {t('Swap Stats')}
+                  </SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+                    {t('Staking Stats')}
+                  </SubMenuItemExternalLink> */}
+                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>
                 <StyledExternalLink href={isMobile ? '' : S_ONE_DOCS_URL} target={isMobile ? '_self' : '_blank'}>
-                  Docs
+                  {t('Docs')}
                 </StyledExternalLink>
                 <ResponsiveTopEndSubMenu>
                   <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL}>White Paper</SubMenuItemExternalLink>
@@ -514,13 +551,13 @@ export default function Header() {
                 <Globe size={20} />
                 {/* Only support 3 languages */}
                 <TYPE.language style={{ marginLeft: '5px' }}>
-                  {language === 'en' ? 'EN' : language === 'jp' ? '日本語' : language === 'zh-CN' ? '中文' : 'EN'}
+                  {language === 'en' ? 'EN' : language === 'jp' ? '日本語' : language === 'cn' ? '中文' : 'EN'}
                 </TYPE.language>
               </StyledMenuButtonWithText>
               <ResponsiveBottomRightSubMenu>
-                <SubMenuItemText onClick={() => setLanguage('jp')}>日本語</SubMenuItemText>
-                <SubMenuItemText onClick={() => setLanguage('en')}>English</SubMenuItemText>
-                <SubMenuItemText onClick={() => setLanguage('zh-CN')}>中文</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('jp')}>日本語</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('en')}>English</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('cn')}>中文</SubMenuItemText>
               </ResponsiveBottomRightSubMenu>
             </ResponsiveMenuItem>
             <ShowOnlyExtraSmall>
@@ -534,3 +571,5 @@ export default function Header() {
     </>
   )
 }
+
+export default withTranslation()(Header)

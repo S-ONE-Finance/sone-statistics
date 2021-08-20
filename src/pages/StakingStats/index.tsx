@@ -4,6 +4,7 @@ import CommonStatistics from '../../components/CommonStatistics'
 import PoolTable from '../../components/PoolTable'
 import styled from 'styled-components'
 import DashboardDataUpdater from './DashboardDataUpdater'
+import { useTranslation } from 'react-i18next'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -44,12 +45,14 @@ const Title = styled.div`
 `
 
 const Dashboard = () => {
+  const { t, i18n } = useTranslation()
+
   return (
     <DashboardDataUpdater>
       <Wrapper>
         <div>
           <Box mb={0.5} px={4}>
-            <Title>Staking Statistics</Title>
+            <Title>{t('Staking Statistics')}</Title>
           </Box>
           <Box mb={2}>
             <CommonStatistics />

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Grid, makeStyles, Box, Typography } from '@material-ui/core'
 import CardItem from '../../components/CardItem'
 import styled, { ThemeContext } from 'styled-components'
@@ -11,7 +11,7 @@ import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
-import { useAllTokenData } from '../../contexts/TokenData'
+import { useAllTokenData, useTokenTransactions } from '../../contexts/TokenData'
 import { useMedia } from 'react-use'
 import { AutoColumn } from '../../components/Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
@@ -20,6 +20,9 @@ import PairList from '../../components/PairList'
 import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
 import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
+import { useTranslation } from 'react-i18next'
+// import { useTokenData, , useTokenPairs } from '../contexts/TokenData'
+
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxMainContentOverview: {
-    marginTop: 30,
+    marginTop: 0,
     '@media (max-width: 800px)': {
       marginTop: 15,
     },
@@ -97,6 +100,10 @@ const ListOptions = styled(AutoRow)`
     font-size: 1rem;
   }
 `
+const TitleOverView = styled.div`
+    font-weight: 'bold',
+    font-size: 40px,
+  `
 
 function OverviewStatistics(props) {
   const classes = useStyles()
@@ -106,6 +113,11 @@ function OverviewStatistics(props) {
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
   const allPairs = useAllPairData()
+  const { t, i18n } = useTranslation()
+  const [totalTransaction, setTotalTranSaction] = useState(0)
+  const [totalFee24h, setTotalFee24h] = useState(0)
+  // all transactions with this token
+  // const transactions = useTokenTransactions()
 
   //accounts
   const topLps = useTopLps()
@@ -113,6 +125,21 @@ function OverviewStatistics(props) {
   const transactions = useGlobalTransactions()
   // breakpoints
   const below800 = useMedia('max-width: 800px')
+  useEffect(() => {
+    if (!transactions) {
+      return
+    }
+    totalTransactionAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions])
+
+  useEffect(() => {
+    if (!allPairs) {
+      return
+    }
+    totalFee24hAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allPairs])
 
   const PanelHight = styled(Panel)`
     height: 100%;
@@ -130,13 +157,51 @@ function OverviewStatistics(props) {
     border: 0;
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
+  const totalTransactionAPI = () => {
+    const total = transactions?.mints.length + transactions?.burns.length + transactions?.swaps.length
+    setTotalTranSaction(total)
+  }
+
+  // const fees = formattedNum(
+  //   pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * 0.003 : pairData.oneDayVolumeUntracked * 0.003,
+  //   true
+  // )
+  const totalFee24hAPI = () => {
+    var totalFees = 0
+    var totalOneDayVolumeUSD = 0
+    var totalOneDayVolumeUntracked = 0
+    Object.values(allPairs).map((item) => {
+      if (item.oneDayVolumeUSD) {
+        totalOneDayVolumeUSD += item.oneDayVolumeUSD
+      }
+      // else if (item.oneDayVolumeUntracked) {
+      //   totalOneDayVolumeUntracked += item.oneDayVolumeUntracked
+      // }
+      else {
+        return
+      }
+      console.log('itemsssssss', item.oneDayVolumeUSD)
+    })
+    totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
+    setTotalFee24h(totalFees)
+    console.log('totalFees', totalFees)
+  }
+  // console.log('commonData1111',)
 
   return (
     <div className={classes.boxMainContentOverview}>
+      <div>
+        <p
+          style={{ fontSize: 40, margin: '10px 0', color: isDarkMode ? '#fff' : '#333333' }}
+          className="font-weight-bold"
+        >
+          Overview
+        </p>
+      </div>
       <StyledGrid className={classes.boxCardItems} container spacing={0}>
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
-            title="ETH Price"
+            title={t('ETH Price')}
             colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -144,7 +209,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {reduceFractionDigit(commonData?.totalLiquidity)}
                 </Typography>
               </Box>
             }
@@ -153,7 +218,7 @@ function OverviewStatistics(props) {
         </Grid>
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
-            title="No. Transactions (24h)"
+            title={t('No. Transactions (24h)')}
             colorTextRatioValue="#7AC51B"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -161,16 +226,16 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {totalTransaction}
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`+0.03%`}</p>}
           />
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
-            title="No. Pools"
+            title={t('No. Pools')}
             colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -178,7 +243,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {Object.keys(allPairs).length}
                 </Typography>
               </Box>
             }
@@ -187,7 +252,7 @@ function OverviewStatistics(props) {
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
-            title="Total Fees (24h)"
+            title={t('Total Fees (24h)')}
             colorTextRatioValue="#7AC51B"
             valueContainer={
               <Box display="flex" alignItems="center">
@@ -195,11 +260,11 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {totalFee24h}
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`+0.03%`}</p>}
           />
         </Grid>
       </StyledGrid>
@@ -225,11 +290,11 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Top Tokens
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+              {t('Top Tokens')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/tokens">
-              See more
+              {t('See more')}
             </CustomLink>
           </RowBetween>
         </ListOptions>
@@ -238,11 +303,11 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Top Pairs
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+              {t('Top Pairs')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/pairs">
-              See more
+              {t('See more')}
             </CustomLink>
           </RowBetween>
         </ListOptions>
@@ -251,11 +316,11 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Top Accounts
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+              {t('Top Accounts')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/accounts">
-              See more
+              {t('See more')}
             </CustomLink>
           </RowBetween>
         </ListOptions>
@@ -264,8 +329,8 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem' }}>
-              Transactions
+            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+              {t('Transactions')}
             </TYPE.main>
           </RowBetween>
         </ListOptions>

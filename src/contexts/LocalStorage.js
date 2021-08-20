@@ -2,8 +2,11 @@ import React, { createContext, useContext, useReducer, useMemo, useCallback, use
 
 const UNISWAP = 'UNISWAP'
 
-const VERSION = 'VERSION'
 const CURRENT_VERSION = 0
+const CURRENT_TAB = 0
+
+const VERSION = 'VERSION'
+
 const LAST_SAVED = 'LAST_SAVED'
 const DISMISSED_PATHS = 'DISMISSED_PATHS'
 const SAVED_ACCOUNTS = 'SAVED_ACCOUNTS'
@@ -12,7 +15,9 @@ const SAVED_PAIRS = 'SAVED_PAIRS'
 
 const DARK_MODE = 'DARK_MODE'
 
-const UPDATABLE_KEYS = [DARK_MODE, DISMISSED_PATHS, SAVED_ACCOUNTS, SAVED_PAIRS, SAVED_TOKENS]
+const INDEX_TAB = 'INDEX_TAB'
+
+const UPDATABLE_KEYS = [DARK_MODE, DISMISSED_PATHS, SAVED_ACCOUNTS, SAVED_PAIRS, SAVED_TOKENS, INDEX_TAB]
 
 const UPDATE_KEY = 'UPDATE_KEY'
 
@@ -50,6 +55,7 @@ function init() {
     [SAVED_ACCOUNTS]: [],
     [SAVED_TOKENS]: {},
     [SAVED_PAIRS]: {},
+    [INDEX_TAB]: CURRENT_TAB,
   }
 
   try {
@@ -87,6 +93,20 @@ export function Updater() {
   })
 
   return null
+}
+
+// Index tab
+export function useIndexTabManager() {
+  const [state, { updateKey }] = useLocalStorageContext()
+  // console.log('useIndexTabManager', state);
+  const currentIndexTAB = state[INDEX_TAB]
+  const currentlastSave = state[LAST_SAVED]
+  console.log('useIndexTabManager currentIndexTAB', state)
+  function setIndexTab(params) {
+    console.log('useIndexTabManager params', currentlastSave !== state[LAST_SAVED] ? 0 : params)
+    updateKey(INDEX_TAB, params)
+  }
+  return [currentIndexTAB, setIndexTab]
 }
 
 export function useDarkModeManager() {

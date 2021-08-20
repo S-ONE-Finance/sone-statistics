@@ -5,6 +5,7 @@ import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import LPList from '../../components/LPList'
 import { useTopLps } from '../../contexts/GlobalData'
+import { useTranslation } from 'react-i18next'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -22,15 +23,17 @@ const StyleDiv = styled.div`
 
 function AccountStatics() {
   const topLps = useTopLps()
+  const { t, i18n } = useTranslation()
+
   return (
     <div className="tab-account">
       <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
         <RowBetween>
-          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
-            Top Accounts
+          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+            {t('Top Accounts')}
           </TYPE.main>
           <CustomLink className="btnLink" to={'/swap/accounts'}>
-            See more
+            {t('See more')}
           </CustomLink>
         </RowBetween>
       </ListOptions>

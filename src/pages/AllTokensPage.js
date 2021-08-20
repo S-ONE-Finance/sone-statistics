@@ -11,6 +11,7 @@ import Search from '../components/Search'
 import { useMedia } from 'react-use'
 import styled from 'styled-components'
 import { useDarkModeManager } from '../contexts/LocalStorage'
+import { useTranslation } from 'react-i18next'
 
 function AllTokensPage() {
   const allTokens = useAllTokenData()
@@ -22,6 +23,7 @@ function AllTokensPage() {
   const below600 = useMedia('(max-width: 800px)')
 
   const [isDarkMode] = useDarkModeManager()
+  const { t, i18n } = useTranslation()
 
   const StylePanel = styled(Panel)`
     padding: 0;
@@ -32,10 +34,10 @@ function AllTokensPage() {
   return (
     <PageWrapper>
       <FullWrapper>
-        <RowBetween>
-          <TYPE.largeHeader fontSize={'2.125rem'}>Top Tokens</TYPE.largeHeader>
+        {/* <RowBetween>
+          <TYPE.largeHeader fontSize={'2.125rem'}>{t('Top Tokens')}</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
-        </RowBetween>
+        </RowBetween> */}
 
         <StylePanel>
           <TopTokenList tokens={allTokens} itemMax={50} />

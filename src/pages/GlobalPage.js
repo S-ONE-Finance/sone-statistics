@@ -25,6 +25,7 @@ import { CustomLink } from '../components/Link'
 import { PageWrapper, ContentWrapper } from '../components'
 import CheckBox from '../components/Checkbox'
 import QuestionHelper from '../components/QuestionHelper'
+import { useTranslation } from 'react-i18next'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -66,6 +67,7 @@ function GlobalPage() {
 
   // for tracked data on pairs
   const [useTracked, setUseTracked] = useState(true)
+  const { t, i18n } = useTranslation()
 
   return (
     <PageWrapper>
@@ -84,7 +86,7 @@ function GlobalPage() {
                   <AutoColumn gap="36px">
                     <AutoColumn gap="20px">
                       <RowBetween>
-                        <TYPE.main>Volume (24hrs)</TYPE.main>
+                        <TYPE.main>{t('Volume (24hrs)')}</TYPE.main>
                         <div />
                       </RowBetween>
                       <RowBetween align="flex-end">
@@ -96,7 +98,7 @@ function GlobalPage() {
                     </AutoColumn>
                     <AutoColumn gap="20px">
                       <RowBetween>
-                        <TYPE.main>Total Liquidity</TYPE.main>
+                        <TYPE.main>{t('Total Liquidity')}</TYPE.main>
                         <div />
                       </RowBetween>
                       <RowBetween align="flex-end">
@@ -132,10 +134,12 @@ function GlobalPage() {
           )}
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
-              <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-                Top Tokens
+              <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+                {t('Top Tokens')}
               </TYPE.main>
-              <CustomLink to={'/swap/tokens'}>See All</CustomLink>
+              <CustomLink className="btnLink" to={'/swap/tokens'}>
+                {t('See more')}
+              </CustomLink>
             </RowBetween>
           </ListOptions>
           {/* <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}> */}
@@ -143,8 +147,8 @@ function GlobalPage() {
           {/* </Panel> */}
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
-              <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap' }}>
-                Top Pairs
+              <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+                {t('Top Pairs')}
               </TYPE.main>
               <AutoRow gap="4px" width="100%" justifyContent="flex-end">
                 <CheckBox
@@ -153,7 +157,9 @@ function GlobalPage() {
                   text={'Hide untracked pairs'}
                 />
                 <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
-                <CustomLink to={'/pairs'}>See All</CustomLink>
+                <CustomLink className="btnLink" to={'/pairs'}>
+                  {t('See more')}
+                </CustomLink>
               </AutoRow>
             </RowBetween>
           </ListOptions>
@@ -161,8 +167,8 @@ function GlobalPage() {
             <PairList pairs={allPairs} useTracked={useTracked} />
           </Panel>
           <span>
-            <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
-              Transactions
+            <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem', fontWeight: 'bold' }}>
+              {t('Transactions')}
             </TYPE.main>
           </span>
           <Panel style={{ margin: '1rem 0' }}>

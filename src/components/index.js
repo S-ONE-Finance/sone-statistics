@@ -121,7 +121,6 @@ export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding-top: 108px;
   padding-bottom: 80px;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`

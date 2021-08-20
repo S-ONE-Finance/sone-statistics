@@ -40,10 +40,10 @@ function AccountLookup() {
   return (
     <PageWrapper>
       <FullWrapper style={{ zIndex: 1 }}>
-        <RowBetween>
+        {/* <RowBetween>
           <TYPE.largeHeader style={{ fontSize: '2.125rem' }}>Wallet analytics</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
-        </RowBetween>
+        </RowBetween> */}
         <AccountWrapper>
           <AccountSearch />
         </AccountWrapper>

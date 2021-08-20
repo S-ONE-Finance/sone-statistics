@@ -19,15 +19,17 @@ import Link from '../components/Link'
 import { FEE_WARNING_TOKENS } from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
-import Search from '../components/Search'
+// import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { useTranslation } from 'react-i18next'
+// import BoxSearch from '../components/Search'
 
 const StyledPanel = styled(Panel)`
   margin-top: 1.5rem !important;
   padding: 0;
-  background-color: transparent;
+  background-color: 'red';
   box-shadow: none;
   border: 0;
 `
@@ -73,12 +75,11 @@ const Flyout = styled.div`
   top: 38px;
   left: -1px;
   width: 100%;
-  background-color: ${({ theme }) => theme.bg1};
   z-index: 999;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   padding-top: 4px;
-  border: 1px solid #edeef2;
+  border: 0;
   border-top: none;
 `
 
@@ -117,7 +118,7 @@ function AccountPage({ account }) {
   const transactions = useUserTransactions(account)
   const positions = useUserPositions(account)
   const miningPositions = useMiningPositions(account)
-
+  const { t, i18n } = useTranslation()
   // get data for user stats
   const transactionCount = transactions?.swaps?.length + transactions?.burns?.length + transactions?.mints?.length
 
@@ -189,7 +190,7 @@ function AccountPage({ account }) {
 
   const StyleAutoRow = styled(AutoRow)`
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
-    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
     border-radius: 15px;
     flex-wrap: wrap;
     margin: auto;
@@ -203,7 +204,7 @@ function AccountPage({ account }) {
   const StylePanel = styled(Panel)`
     grid-column: 1;
     border: 0;
-    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
+    background-color: ${isDarkMode ? '#0E2B4A' : '#FFF'};
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
   const StylePanelBlockPosition = styled(Panel)`
@@ -238,16 +239,17 @@ function AccountPage({ account }) {
   `
   const StyleAutoRow2 = styled(AutoRow)`
     margin: 0px !important;
-    justify-content: space-between;
+    // justify-content: ;
   `
 
   const StylePanel2 = styled(Panel)`
     height: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 35px !important;
     border: 0;
-    background-color: ${isDarkMode ? '#0E2B4A' : '#F2F2F2'};
-    padding: 1.25rem;
-    margin: -20px;
+    background-color: ${isDarkMode ? '#0E2B4A !important' : '#F2F2F2 !important'};
+    padding: 1.25rem !important;
+    box-shadow: none !important;
+    // margin: -20px ;
     @media (max-width: 600px) {
       margin-bottom: 15px !important;
     }
@@ -257,36 +259,46 @@ function AccountPage({ account }) {
     <PageWrapper>
       <ContentWrapper style={{ zIndex: 1 }}>
         <RowBetween>
-          <TYPE.body>
-            <BasicLink to="/swap/accounts">{'Accounts '}</BasicLink>→
+          {/* <TYPE.body>
+            <BasicLink to="/swap/accounts">{t('Accounts')}</BasicLink>→
             <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
               {account?.slice(0, 42)}
             </Link>
-          </TYPE.body>
-          {!below600 && <Search small={true} />}
+          </TYPE.body> */}
+          {/* {!below600 && <BoxSearch/>} */}
         </RowBetween>
         <Header>
           <RowBetween>
-            <span>
-              <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
-              <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
-                <TYPE.main
-                  className="btn-danger"
-                  fontSize={16}
-                  style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
-                >
-                  View on Etherscan
-                </TYPE.main>
-              </Link>
-            </span>
-            <AccountWrapper>
+            <div className="w-100">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <TYPE.header fontSize={32}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
+                {/* <div style={{ width: '40%' }}>
+                  <BoxSearch />
+                </div> */}
+              </div>
+              <div style={{ width: '15%', maxWidth: 218 }}>
+                <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
+                  <TYPE.main
+                    className="btn-danger"
+                    fontSize={16}
+                    style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
+                  >
+                    {t('View on Etherscan')}
+                  </TYPE.main>
+                </Link>
+              </div>
+            </div>
+            {/* <AccountWrapper> */}
+
+            {/* </AccountWrapper> */}
+            {/* <AccountWrapper>
               <StyledIcon>
                 <Bookmark
                   onClick={handleBookmarkClick}
                   style={{ opacity: isBookmarked ? 0.8 : 0.4, cursor: 'pointer' }}
                 />
               </StyledIcon>
-            </AccountWrapper>
+            </AccountWrapper> */}
           </RowBetween>
         </Header>
         <DashboardWrapper>
@@ -298,6 +310,8 @@ function AccountPage({ account }) {
                 borderRadius: 25,
                 backgroundColor: '#F3F3F3',
                 marginBottom: !below600 ? '35px' : '15px',
+                borderBottomLeftRadius: showDropdown ? 0 : 25,
+                borderBottomRightRadius: showDropdown ? 0 : 25,
               }}
             >
               <ButtonDropdown
@@ -311,7 +325,7 @@ function AccountPage({ account }) {
                     <StyledIcon style={{ color: '#333333' }}>
                       <Activity style={{ color: '#333333' }} size={16} />
                     </StyledIcon>
-                    <TYPE.body style={{ color: '#333333' }} ml={'10px'}>
+                    <TYPE.body fontSize={'16px'} style={{ color: '#333333' }} ml={'10px'}>
                       All Positions
                     </TYPE.body>
                   </RowFixed>
@@ -326,7 +340,7 @@ function AccountPage({ account }) {
                 )}
               </ButtonDropdown>
               {showDropdown && (
-                <Flyout>
+                <Flyout style={{ backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3 ' }}>
                   <AutoColumn gap="0px">
                     {positions?.map((p, i) => {
                       if (p.pair.token1.symbol === 'WETH') {
@@ -373,17 +387,17 @@ function AccountPage({ account }) {
             </DropdownWrapper>
           )}
           {!hideLPContent && (
-            <StylePanel2 className="xxxxxxxx">
+            <StylePanel2 className="hideLPContent">
               <StyleAutoRow2>
-                <AutoColumn gap="10px">
+                <AutoColumn gap="10px" style={{ marginRight: 85 }}>
                   <RowBetween>
-                    <StyleTitle style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
-                      Liquidity (Including Fees)
+                    <StyleTitle fontSize={20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                      {t('Liquidity (Including Fees)')}
                     </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1}>
+                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
@@ -394,11 +408,13 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <StyleTitle>Fees Earned (Cumulative)</StyleTitle>
+                    <StyleTitle fontSize={20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                      {t('Fees Earned (Cumulative)')}
+                    </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1} color={aggregateFees && 'green'}>
+                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
                     </StyleContentBottom>
                   </RowFixed>
@@ -417,32 +433,38 @@ function AccountPage({ account }) {
               </StylePanel>
             </PanelWrapper>
           )}
-          <TitlteTop fontSize={'2.125rem'}>Positions</TitlteTop>
+          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+            {t('Positions')}
+          </TitlteTop>
           <StylePanelBlockPosition>
             <PositionList positions={positions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={'2.125rem'}>Transactions</TitlteTop>
+          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+            {t('Transactions')}
+          </TitlteTop>
           <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={'2.125rem'}>Wallet Stats</TitlteTop>
+          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+            {t('Wallet Stats')}
+          </TitlteTop>
           <StyledPanel>
             <StyleAutoRow gap="20px">
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Value Swapped</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Value Swapped')}</TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
 
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Fees Paid</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Fees Paid')}</TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>Total Transactions</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Transactions')}</TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {transactionCount ? transactionCount : '-'}
                 </TYPE.main>

@@ -7,6 +7,7 @@ import { formattedNum, localNumber } from '../../utils'
 
 import UniPrice from '../UniPrice'
 import { TYPE } from '../../theme'
+import { useTranslation } from 'react-i18next'
 
 const Header = styled.div`
   width: 100%;
@@ -31,6 +32,7 @@ export default function GlobalStats() {
   const [ethPrice] = useEthPrice()
   const formattedEthPrice = ethPrice ? formattedNum(ethPrice, true) : '-'
   const oneDayFees = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD * 0.003, true) : ''
+  const { t, i18n } = useTranslation()
 
   return (
     <Header>

@@ -21,6 +21,7 @@ import StakingStats from './pages/StakingStats'
 import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
+import TabComponent from './components/TabComponent'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -89,6 +90,29 @@ const WarningBanner = styled.div`
  */
 const LayoutWrapper = ({ children }) => {
   const [isDarkMode] = useDarkModeManager()
+  // const [index, setIndex] = useIndexTabManager()
+  // console.log('index LayoutWrapper', index);
+  return (
+    <>
+      <HeaderWrapper>
+        <Header />
+      </HeaderWrapper>
+      <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
+        <div style={{ padding: '100px 0' }}>
+          <TabComponent />
+          {children}
+        </div>
+      </Body>
+      <Polling />
+      <FooterWrapper style={{ zIndex: 9999 }}>
+        <Footer />
+      </FooterWrapper>
+    </>
+  )
+}
+
+const LayoutWrapper2 = ({ children }) => {
+  const [isDarkMode] = useDarkModeManager()
 
   return (
     <>
@@ -96,6 +120,7 @@ const LayoutWrapper = ({ children }) => {
         <Header />
       </HeaderWrapper>
       <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
+        {/* <TabComponent /> */}
         {children}
       </Body>
       <Polling />
@@ -108,12 +133,13 @@ const LayoutWrapper = ({ children }) => {
 
 const BLOCK_DIFFERENCE_THRESHOLD = 30
 
-function App() {
+function App({ t }) {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
   const [latestBlock, headBlock] = useLatestBlocks()
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
+
   return (
     <ApolloProvider client={client}>
       <AppWrapper>
@@ -185,7 +211,6 @@ function App() {
                   }
                 }}
               />
-
               <Route exact strict path="/swap/tokens">
                 <LayoutWrapper>
                   <AllTokensPage />
@@ -203,17 +228,24 @@ function App() {
                   <AccountLookup />
                 </LayoutWrapper>
               </Route>
-
               <Route exact strict path="/staking">
-                <LayoutWrapper>
+                <LayoutWrapper2>
                   <StakingStats />
-                </LayoutWrapper>
+                </LayoutWrapper2>
               </Route>
-              <Route exact strict path="/swap">
-                <LayoutWrapper>
-                  <OverStats />
-                </LayoutWrapper>
-              </Route>
+
+              <Route
+                exact
+                strict
+                path="/swap"
+                render={({ match }) => {
+                  return (
+                    <LayoutWrapper>
+                      <OverStats match={match} />
+                    </LayoutWrapper>
+                  )
+                }}
+              />
               <Redirect to="/swap" />
             </Switch>
           </HashRouter>

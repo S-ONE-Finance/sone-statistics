@@ -18,6 +18,9 @@ import { PAIR_BLACKLIST } from '../../constants'
 import { AutoColumn } from '../Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
+import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles'
+
 dayjs.extend(utc)
 
 const PageButtons = styled.div`
@@ -105,6 +108,25 @@ const DataText = styled(Flex)`
   }
 `
 
+const useStyles = makeStyles({
+  navigation: {
+    marginTop: 25,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxNavigation: {
+    height: 32,
+    marginLeft: 10,
+    border: '1px solid #c4c4c4',
+    width: 82,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+})
+
 const SORT_FIELD = {
   LIQ: 0,
   VOL: 1,
@@ -155,6 +177,10 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.LIQ)
 
+  const classes = useStyles()
+  // i18n
+  const { t, i18n } = useTranslation()
+
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -172,7 +198,6 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
 
   const ListItem = ({ pairAddress, index }) => {
     const pairData = pairs[pairAddress]
-
     if (pairData && pairData.token0 && pairData.token1) {
       const liquidity = formattedNum(
         !!pairData.trackedReserveUSD ? pairData.trackedReserveUSD : pairData.reserveUSD,
@@ -202,7 +227,18 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
       return (
         <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
           <DataText area="name" fontWeight="500">
-            {!below600 && <div style={{ marginRight: '20px', width: '10px' }}>{index}</div>}
+            {!below600 && (
+              <div
+                style={{
+                  marginRight: '20px',
+                  width: '10px',
+                  fontWeight: 400,
+                  color: isDarkMode ? '#AAAAAA' : '#767676 ',
+                }}
+              >
+                {index}
+              </div>
+            )}
             <DoubleTokenLogo
               size={below600 ? 16 : 20}
               a0={pairData.token0.id}
@@ -219,6 +255,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                 maxCharacters={below600 ? 8 : 16}
                 adjustSize={true}
                 link={true}
+                className="text-dark"
               />
             </CustomLink>
           </DataText>
@@ -255,8 +292,21 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             </DataText>
           )}
           {!below1080 && (
-            <DataText area="apy" className="justify-content-center w-100">
-              {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}
+            <DataText
+              area="apy"
+              className="justify-content-center w-100"
+              // style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            >
+              {pairData.oneDayVolumeUSD ? (
+                <p className="d-flex color-blue">
+                  <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+                </p>
+              ) : (
+                <p className="d-flex color-blue">
+                  <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+                </p>
+              )}
+              {/* {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)} */}
             </DataText>
           )}
         </DashGrid>
@@ -309,16 +359,21 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         )
       })
 
+  // console.log('pairList', pairList);
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '550px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '20px' }}>
-          <Flex alignItems="center" className="justify-content-center w-100">
-            <TYPE.main area="name" style={{ fontWeight: 'bold' }}>
-              Name
+          <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
+            <TYPE.main area="name" style={{ fontWeight: 'bold', fontSize: 20 }}>
+              {t('Name')}
             </TYPE.main>
           </Flex>
-          <Flex alignItems="center" justifyContent="center" className="justify-content-center w-100">
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            className="justify-content-center w-100  f-20 font-weight-bold"
+          >
             <ClickableText
               area="liq"
               style={{ fontWeight: 'bold' }}
@@ -327,10 +382,10 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                 setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
               }}
             >
-              Liquidity {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
+              {t('Liquidity')}
             </ClickableText>
           </Flex>
-          <Flex alignItems="center" className="justify-content-center w-100">
+          <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
             <ClickableText
               area="vol"
               style={{ fontWeight: 'bold' }}
@@ -339,12 +394,12 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                 setSortDirection(sortedColumn !== SORT_FIELD.VOL ? true : !sortDirection)
               }}
             >
-              Volume (24hrs)
+              {t('Volume (24h)')}
               {sortedColumn === SORT_FIELD.VOL ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100">
+            <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
               <ClickableText
                 style={{ fontWeight: 'bold' }}
                 area="volWeek"
@@ -353,12 +408,12 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                   setSortDirection(sortedColumn !== SORT_FIELD.VOL_7DAYS ? true : !sortDirection)
                 }}
               >
-                Volume (7d) {sortedColumn === SORT_FIELD.VOL_7DAYS ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Volume (7d)')} {sortedColumn === SORT_FIELD.VOL_7DAYS ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           )}
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100">
+            <Flex alignItems="center" className="justify-content-center w-100  f-20 font-weight-bold">
               <ClickableText
                 area="fees"
                 style={{ fontWeight: 'bold' }}
@@ -367,12 +422,12 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                   setSortDirection(sortedColumn !== SORT_FIELD.FEES ? true : !sortDirection)
                 }}
               >
-                Fees (24hr) {sortedColumn === SORT_FIELD.FEES ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('Fees (24hr)')} {sortedColumn === SORT_FIELD.FEES ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
           )}
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100">
+            <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
               <ClickableText
                 area="apy"
                 style={{ fontWeight: 'bold' }}
@@ -381,7 +436,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                   setSortDirection(sortedColumn !== SORT_FIELD.APY ? true : !sortDirection)
                 }}
               >
-                1y Fees / Liquidity {sortedColumn === SORT_FIELD.APY ? (!sortDirection ? '↑' : '↓') : ''}
+                {t('1y Fees / Liquidity')} {sortedColumn === SORT_FIELD.APY ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
               {/* <QuestionHelper text={'Based on 24hr volume annualized'} /> */}
             </Flex>
@@ -390,17 +445,27 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         <Divider />
         <List p={0}>{!pairList ? <LocalLoader /> : pairList}</List>
       </ListWrapper>
-      <Pagination
-        style={{ justifyContent: 'center' }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table-token-page"
-      />
+      {pairList && (
+        <div className={classes.navigation}>
+          <Pagination
+            style={{ justifyContent: 'center', padding: 0 }}
+            page={page}
+            onChange={(event, newPage) => {
+              setPage(newPage)
+            }}
+            count={maxPage}
+            variant="outlined"
+            shape="rounded"
+            className="panigation-table"
+            classes={{
+              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            }}
+          />
+          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
+            {pairList.length}/page
+          </div>
+        </div>
+      )}
     </>
   )
 }
