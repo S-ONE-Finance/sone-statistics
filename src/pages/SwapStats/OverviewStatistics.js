@@ -260,7 +260,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {totalFee24h}
+                  {Math.round(totalFee24h)}
                 </Typography>
               </Box>
             }
