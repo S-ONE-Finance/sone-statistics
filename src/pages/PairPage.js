@@ -306,9 +306,7 @@ function PairPage({ pairAddress, history }) {
                     </TYPE.main>
                   </RowFixed>
                 </RowFixed>
-                <RowFixed style={below1080 ? { width: '100%' } : { width: '40%' }}>
-                  {!below600 && <Search small={false} />}
-                </RowFixed>
+                <RowFixed style={below1080 ? { width: '100%' } : { width: '40%' }}>{!below600 && <div></div>}</RowFixed>
               </div>
               <div>
                 <RowFixed

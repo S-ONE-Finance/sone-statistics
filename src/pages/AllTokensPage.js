@@ -34,10 +34,10 @@ function AllTokensPage() {
   return (
     <PageWrapper>
       <FullWrapper>
-        <RowBetween>
+        {/* <RowBetween>
           <TYPE.largeHeader fontSize={'2.125rem'}>{t('Top Tokens')}</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
-        </RowBetween>
+        </RowBetween> */}
 
         <StylePanel>
           <TopTokenList tokens={allTokens} itemMax={50} />

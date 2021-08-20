@@ -358,6 +358,8 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     )
   }
 
+  console.log('filteredList transaction', filteredItems)
+
   return (
     <>
       <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: '542px' }}>

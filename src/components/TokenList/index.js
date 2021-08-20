@@ -296,14 +296,14 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             fontWeight="400"
             className="justify-content-center font-weight-normal color-gray"
           >
-            <div className="justify-content-center font-weight-normal color-gray">
+            <div className="justify-content-center font-weight-normal">
               {item.priceChangeUSD >= 0 ? (
                 <p className="d-flex color-blue">
-                  +<span>{formattedPercent(item.priceChangeUSD)}</span>
+                  <span>{formattedPercent(item.priceChangeUSD)}</span>
                 </p>
               ) : (
                 <p className="d-flex color-red">
-                  -<span>{formattedPercent(item.priceChangeUSD)}</span>
+                  <span>{formattedPercent(item.priceChangeUSD)}</span>
                 </p>
               )}
             </div>

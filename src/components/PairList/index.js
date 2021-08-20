@@ -299,11 +299,11 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             >
               {pairData.oneDayVolumeUSD ? (
                 <p className="d-flex color-blue">
-                  +<span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+                  <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
                 </p>
               ) : (
                 <p className="d-flex color-blue">
-                  +<span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+                  <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
                 </p>
               )}
               {/* {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)} */}

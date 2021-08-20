@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Grid, makeStyles, Box, Typography } from '@material-ui/core'
 import CardItem from '../../components/CardItem'
 import styled, { ThemeContext } from 'styled-components'
@@ -11,7 +11,7 @@ import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
-import { useAllTokenData } from '../../contexts/TokenData'
+import { useAllTokenData, useTokenTransactions } from '../../contexts/TokenData'
 import { useMedia } from 'react-use'
 import { AutoColumn } from '../../components/Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
@@ -21,6 +21,8 @@ import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
 import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
+// import { useTokenData, , useTokenPairs } from '../contexts/TokenData'
+
 OverviewStatistics.propTypes = {}
 
 const useStyles = makeStyles((theme) => ({
@@ -112,6 +114,10 @@ function OverviewStatistics(props) {
   const [isDarkMode] = useDarkModeManager()
   const allPairs = useAllPairData()
   const { t, i18n } = useTranslation()
+  const [totalTransaction, setTotalTranSaction] = useState(0)
+  const [totalFee24h, setTotalFee24h] = useState(0)
+  // all transactions with this token
+  // const transactions = useTokenTransactions()
 
   //accounts
   const topLps = useTopLps()
@@ -119,6 +125,21 @@ function OverviewStatistics(props) {
   const transactions = useGlobalTransactions()
   // breakpoints
   const below800 = useMedia('max-width: 800px')
+  useEffect(() => {
+    if (!transactions) {
+      return
+    }
+    totalTransactionAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions])
+
+  useEffect(() => {
+    if (!allPairs) {
+      return
+    }
+    totalFee24hAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allPairs])
 
   const PanelHight = styled(Panel)`
     height: 100%;
@@ -136,8 +157,36 @@ function OverviewStatistics(props) {
     border: 0;
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
+  const totalTransactionAPI = () => {
+    const total = transactions?.mints.length + transactions?.burns.length + transactions?.swaps.length
+    setTotalTranSaction(total)
+  }
 
-  console.log('props', props)
+  // const fees = formattedNum(
+  //   pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * 0.003 : pairData.oneDayVolumeUntracked * 0.003,
+  //   true
+  // )
+  const totalFee24hAPI = () => {
+    var totalFees = 0
+    var totalOneDayVolumeUSD = 0
+    var totalOneDayVolumeUntracked = 0
+    Object.values(allPairs).map((item) => {
+      if (item.oneDayVolumeUSD) {
+        totalOneDayVolumeUSD += item.oneDayVolumeUSD
+      }
+      // else if (item.oneDayVolumeUntracked) {
+      //   totalOneDayVolumeUntracked += item.oneDayVolumeUntracked
+      // }
+      else {
+        return
+      }
+      console.log('itemsssssss', item.oneDayVolumeUSD)
+    })
+    totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
+    setTotalFee24h(totalFees)
+    console.log('totalFees', totalFees)
+  }
+  // console.log('commonData1111',)
 
   return (
     <div className={classes.boxMainContentOverview}>
@@ -160,7 +209,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {reduceFractionDigit(commonData?.totalLiquidity)}
                 </Typography>
               </Box>
             }
@@ -177,7 +226,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {totalTransaction}
                 </Typography>
               </Box>
             }
@@ -194,7 +243,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {Object.keys(allPairs).length}
                 </Typography>
               </Box>
             }
@@ -211,7 +260,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {`$${reduceFractionDigit(commonData?.totalLiquidity)}`}
+                  {totalFee24h}
                 </Typography>
               </Box>
             }

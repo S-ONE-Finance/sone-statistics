@@ -19,12 +19,12 @@ import Link from '../components/Link'
 import { FEE_WARNING_TOKENS } from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
-import Search from '../components/Search'
+// import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
 import { useTranslation } from 'react-i18next'
-import BoxSearch from '../components/Search'
+// import BoxSearch from '../components/Search'
 
 const StyledPanel = styled(Panel)`
   margin-top: 1.5rem !important;
@@ -272,9 +272,9 @@ function AccountPage({ account }) {
             <div className="w-100">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <TYPE.header fontSize={32}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
-                <div style={{ width: '40%' }}>
+                {/* <div style={{ width: '40%' }}>
                   <BoxSearch />
-                </div>
+                </div> */}
               </div>
               <div style={{ width: '15%', maxWidth: 218 }}>
                 <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">

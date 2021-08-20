@@ -232,6 +232,8 @@ function TokenPage({ address, history }) {
                         className="font-36 font-weight-500 color-dark"
                         fontWeight={500}
                         style={{ marginRight: '1rem' }}
+                        Add
+                        Liquidity
                       >
                         {price}
                       </TYPE.main>
@@ -239,14 +241,16 @@ function TokenPage({ address, history }) {
                         className={
                           priceChange >= 0 ? 'font-24 color-blue font-weight-500' : 'font-24 color-red font-weight-500'
                         }
-                      >{`${priceChange}%`}</div>
+                      >
+                        {priceChange}
+                      </div>
                     </>
                   )}
                 </RowFixed>
               </RowFixed>
-              <RowFixed style={below1080 ? { width: '100%' } : { width: '40%' }}>
+              {/* <RowFixed style={below1080 ? { width: '100%' } : { width: '40%' }}>
                 {!below600 && <Search small={false} />}
-              </RowFixed>
+              </RowFixed> */}
             </RowBetween>
             <RowBetween
               style={{

@@ -36,10 +36,10 @@ function AllPairsPage() {
   return (
     <PageWrapper>
       <FullWrapper>
-        <RowBetween>
+        {/* <RowBetween>
           <TYPE.largeHeader>Top Pairs</TYPE.largeHeader>
           {!below800 && <Search small={true} />}
-        </RowBetween>
+        </RowBetween> */}
         <AutoRow gap="4px">
           <CheckBox checked={useTracked} setChecked={() => setUseTracked(!useTracked)} text={'Hide untracked pairs'} />
           <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
