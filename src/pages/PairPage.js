@@ -514,7 +514,7 @@ function PairPage({ pairAddress, history }) {
                 }}
                 p={20}
               >
-                <TokenDetailsLayout style={{ maxHeight: !below600 ? '82px' : 'auto', columnGap: '10%' }}>
+                <TokenDetailsLayout style={{ maxHeight: !below600 ? '82px' : 'auto', columnGap: '9%' }}>
                   <Column style={{ height: '100%', width: '100%' }}>
                     <ItemPairInfomation>
                       <TYPE.main

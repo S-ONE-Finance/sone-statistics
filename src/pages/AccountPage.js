@@ -190,7 +190,7 @@ function AccountPage({ account }) {
 
   const StyleAutoRow = styled(AutoRow)`
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
-    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
+    background-color: ${isDarkMode ? '#0E2B4A !important' : '#fff !important'};
     border-radius: 15px;
     flex-wrap: wrap;
     margin: auto;
@@ -397,7 +397,7 @@ function AccountPage({ account }) {
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
+                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: isDarkMode ? '#fff' : '#111111' }}>
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
@@ -414,7 +414,7 @@ function AccountPage({ account }) {
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
+                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: isDarkMode ? '#fff' : '#111111' }}>
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
                     </StyleContentBottom>
                   </RowFixed>

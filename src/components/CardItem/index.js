@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
   },
   positive: {
-    color: 'green',
+    color: '#87d128',
   },
   negative: {
     color: 'red',

@@ -22,6 +22,7 @@ import TxnList from '../../components/TxnList'
 import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
 // import { useTokenData, , useTokenPairs } from '../contexts/TokenData'
+import { useMediaQuery } from 'react-responsive'
 
 OverviewStatistics.propTypes = {}
 
@@ -41,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
   },
   positive: {
-    color: 'green',
+    color: '#7AC51B',
   },
   negative: {
-    color: 'red',
+    color: '#F05359',
   },
   primaryBg: {
     backgroundColor: theme.palette.primary.main,
@@ -124,7 +125,10 @@ function OverviewStatistics(props) {
   //Transactions
   const transactions = useGlobalTransactions()
   // breakpoints
-  const below800 = useMedia('max-width: 800px')
+  const below800 = useMedia('min-width: 800px')
+  // const below600 = useMediaQuery('max-width: 600px')
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+
   useEffect(() => {
     if (!transactions) {
       return
@@ -184,10 +188,9 @@ function OverviewStatistics(props) {
     })
     totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
     setTotalFee24h(totalFees)
-    console.log('totalFees', totalFees)
   }
   // console.log('commonData1111',)
-
+  // console.log('below600', below600)
   return (
     <div className={classes.boxMainContentOverview}>
       <div>
@@ -269,7 +272,7 @@ function OverviewStatistics(props) {
         </Grid>
       </StyledGrid>
       <div className="box-chart">
-        {!below800 && (
+        {!isMobile && (
           <GridRow>
             <PanelHight>
               <GlobalChart display="liquidity" />
@@ -279,12 +282,14 @@ function OverviewStatistics(props) {
             </PanelLow>
           </GridRow>
         )}
-        {below800 && (
+        {isMobile && (
+          // <GridRow>
           <AutoColumn style={{ marginTop: '6px' }} gap="24px">
             <PanelHight>
               <GlobalChart display="liquidity" />
             </PanelHight>
           </AutoColumn>
+          // </GridRow>
         )}
       </div>
       <div>

@@ -376,6 +376,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 }}
                 active={txFilter === TXN_TYPE.ALL}
                 style={{ fontWeight: 'bold' }}
+                className="f-20"
               >
                 {t('All')}
               </SortText>
@@ -385,6 +386,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 }}
                 active={txFilter === TXN_TYPE.SWAP}
                 style={{ fontWeight: 'bold' }}
+                className="f-20"
               >
                 {t('Swaps')}
               </SortText>
@@ -394,6 +396,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 }}
                 active={txFilter === TXN_TYPE.ADD}
                 style={{ fontWeight: 'bold' }}
+                className="f-20"
               >
                 {t('Adds')}
               </SortText>
@@ -403,6 +406,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 }}
                 active={txFilter === TXN_TYPE.REMOVE}
                 style={{ fontWeight: 'bold' }}
+                className="f-20"
               >
                 {t('Withdraw')}
               </SortText>
@@ -414,6 +418,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               color="textDim"
               area="value"
               style={{ fontWeight: 'bold' }}
+              className="f-20"
               onClick={(e) => {
                 setSortedColumn(SORT_FIELD.VALUE)
                 setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
@@ -428,6 +433,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 area="amountToken"
                 color="textDim"
                 style={{ fontWeight: 'bold' }}
+                className="f-20"
                 onClick={() => {
                   setSortedColumn(SORT_FIELD.AMOUNT0)
                   setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
@@ -446,6 +452,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   area="amountOther"
                   color="textDim"
                   style={{ fontWeight: 'bold' }}
+                  className="f-20"
                   onClick={() => {
                     setSortedColumn(SORT_FIELD.AMOUNT1)
                     setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
@@ -459,7 +466,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             )}
             {!below1080 && (
               <Flex alignItems="center" justifyContent="center">
-                <TYPE.body area="account" style={{ fontWeight: 'bold', fontSize: 16 }}>
+                <TYPE.body area="account" style={{ fontWeight: 'bold', fontSize: 20 }}>
                   {t('Accounts')}
                 </TYPE.body>
               </Flex>
@@ -472,7 +479,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortedColumn(SORT_FIELD.TIMESTAMP)
                   setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
                 }}
-                style={{ fontWeight: 'bold', fontSize: 16 }}
+                style={{ fontWeight: 'bold', fontSize: 20 }}
               >
                 {t('Time')}
                 {sortedColumn === SORT_FIELD.TIMESTAMP ? (sortDirection ? '↑' : '↓') : ''}

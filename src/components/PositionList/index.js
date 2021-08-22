@@ -176,7 +176,7 @@ function PositionList({ positions }) {
         )}
         <DataText area="name" justifyContent="flex-start" alignItems="flex-start">
           <AutoColumn gap="8px" justify="flex-start" align="flex-start">
-            <DoubleTokenLogo size={16} a0={position.pair.token0.id} a1={position.pair.token1.id} margin={!below740} />
+            <DoubleTokenLogo size={26} a0={position.pair.token0.id} a1={position.pair.token1.id} margin={!below740} />
           </AutoColumn>
           <AutoColumn gap="8px" justify="flex-start" style={{ marginLeft: '20px' }}>
             <CustomLink to={'/swap/pair/' + position.pair.id}>
@@ -185,6 +185,7 @@ function PositionList({ positions }) {
                   text={position.pair.token0.symbol + '-' + position.pair.token1.symbol}
                   maxCharacters={below740 ? 10 : 18}
                   fontSize={'16px'}
+                  style={{ fontWeight: 'bold' }}
                 />
               </TYPE.main>
             </CustomLink>
@@ -393,17 +394,7 @@ function PositionList({ positions }) {
         <Divider />
         <List p={0}>{!positionsSorted ? <LocalLoader /> : positionsSorted}</List>
       </ListWrapper>
-      {/* <Pagination
-        style={{ justifyContent: 'center' }}
-        page={page}
-        onChange={(event, newPage) => {
-          setPage(newPage)
-        }}
-        count={maxPage}
-        variant="outlined"
-        shape="rounded"
-        className="panigation-table-token-page"
-      /> */}
+
       {positionsSorted && (
         <div className={classes.navigation}>
           <Pagination
