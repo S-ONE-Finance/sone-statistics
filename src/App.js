@@ -231,7 +231,7 @@ function App({ t }) {
                   <AccountLookup />
                 </LayoutWrapper>
               </Route>
-              <Route exact strict path="/staking">
+              <Route exact strict path="/stats-staking">
                 <LayoutWrapper2>
                   <StakingStats />
                 </LayoutWrapper2>
@@ -240,7 +240,7 @@ function App({ t }) {
               <Route
                 exact
                 strict
-                path="/swap"
+                path="/stats-swap"
                 render={({ match }) => {
                   return (
                     <LayoutWrapper>
@@ -249,7 +249,7 @@ function App({ t }) {
                   )
                 }}
               />
-              <Redirect to="/swap" />
+              <Redirect to="/stats-swap" />
             </Switch>
           </HashRouter>
         ) : (

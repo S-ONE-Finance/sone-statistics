@@ -6,7 +6,6 @@ import Logo from '../../assets/logo_text_sone.svg'
 import LogoDark from '../../assets/logo_text_white_sone.svg'
 
 import { useDarkModeManager } from '../../contexts/LocalStorage'
-import useLanguage from '../../hooks/useLanguage'
 import Row, { RowFixed } from '../Row'
 import Modal from '../Modal'
 import MobileMenu from '../MobileMenu'
@@ -38,10 +37,9 @@ const HeaderFrame = styled.div`
   position: absolute;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 0 80px;
-  z-index: 3;
+  z-index: 999;
   background-color: ${({ theme }) => theme.bg1Sone};
   box-sizing: border-box;
-
   ${({ theme }) => theme.mediaWidth.upToLarge`
     grid-template-columns: 1fr;
     padding: 0 1rem;
@@ -194,6 +192,7 @@ const ResponsiveTopEndSubMenu = styled(SubMenu)`
     left: unset;
     transform: none;
     right: 0;
+    
   `}
 `
 
@@ -205,6 +204,7 @@ const ResponsiveBottomRightSubMenu = styled(SubMenu)`
     transform: none;
     left: unset;
     right: 0;
+    bottom: 118px
   `}
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -438,7 +438,7 @@ function Header() {
   }
 
   const { t, i18n } = useTranslation()
-  console.log('language1111111', language)
+  console.log('language1111111', i18n)
 
   return (
     <>
@@ -484,40 +484,21 @@ function Header() {
                   {t('Staking')}
                 </StyledNavLink>
               </MenuItem>
-
-              {/* <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
-                  {t('Staking')}
-                </StyledExternalLink>
-              </MenuItem> */}
-
-              {/* <MenuItem>
+              <MenuItem>
+                {/* <StyledExternalLink href={S_ONE_APP_URL + '/#/stats'} target="_blank">
+                  {t('Stats')}
+                </StyledExternalLink> */}
                 <StyledNavLink
-                  to="/swap"
+                  to="/stats"
                   isActive={(match, { pathname }) =>
-                    Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/staking')
+                    Boolean(match) || pathname.startsWith('/stats-swap') || pathname.startsWith('/staking')
                   }
                 >
                   {t('Stats')}
                 </StyledNavLink>
                 <SubMenu>
-                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
-                  <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
-                </SubMenu>
-              </MenuItem> */}
-              <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + '/#/stats'} target="_blank">
-                  {t('Stats')}
-                </StyledExternalLink>
-                <SubMenu>
-                  {/* <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
-                    {t('Swap Stats')}
-                  </SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
-                    {t('Staking Stats')}
-                  </SubMenuItemExternalLink> */}
-                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
-                  <SubMenuItemNavLink to={'/staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/stats-swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemNavLink to={'/stats-staking'}>{t('Staking Stats')}</SubMenuItemNavLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>

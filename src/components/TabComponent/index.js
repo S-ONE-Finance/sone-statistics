@@ -72,11 +72,6 @@ const customStyleTabbar = makeStyles((theme) => ({
   },
 }))
 
-const MainWrapper = styled.div`
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-   padding-bottom: 10%
-  `}
-`
 const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
   font-size: 40px;
@@ -105,7 +100,6 @@ function TabComponent(_props) {
   const history = useHistory()
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
-  console.log('TabComponent index', indexTab)
   return (
     <ContentWrapper style={{ zIndex: 1 }}>
       <Grid container spacing={0} className="box-first-main">
@@ -170,6 +164,7 @@ function TabComponent(_props) {
             />
           }
           className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
+          style={{ minWidth: i18n.language === 'jp' ? 135 : 120 }}
           label={t('Pairs')}
           {...a11yProps(2)}
         />
