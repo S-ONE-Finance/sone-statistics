@@ -22,6 +22,7 @@ import Polling from './components/Polling'
 import OverStats from './pages/SwapStats/StatsPage'
 import { useDarkModeManager } from './contexts/LocalStorage'
 import TabComponent from './components/TabComponent'
+import { useMediaQuery } from 'react-responsive'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -90,6 +91,7 @@ const WarningBanner = styled.div`
  */
 const LayoutWrapper = ({ children }) => {
   const [isDarkMode] = useDarkModeManager()
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
   // const [index, setIndex] = useIndexTabManager()
   // console.log('index LayoutWrapper', index);
   return (
@@ -98,7 +100,7 @@ const LayoutWrapper = ({ children }) => {
         <Header />
       </HeaderWrapper>
       <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
-        <div style={{ padding: '100px 0' }}>
+        <div style={{ padding: isMobile ? '20px 0' : '100px 0' }}>
           <TabComponent />
           {children}
         </div>
@@ -137,6 +139,7 @@ function App({ t }) {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
   const [latestBlock, headBlock] = useLatestBlocks()
+
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
 

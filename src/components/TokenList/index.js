@@ -183,6 +183,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
       }
       setMaxPage(Math.floor(formattedTokens.length / itemMax) + extraPages)
     }
+    Pagination
   }, [tokens, formattedTokens, itemMax])
 
   const filteredList = useMemo(() => {

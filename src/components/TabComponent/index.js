@@ -1,15 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { ReactComponent as CircleImage } from '../../assets/circle-dot.svg'
-import { ReactComponent as IconLink } from '../../assets/link.svg'
+import React, { useContext } from 'react'
+import { ReactComponent as CircleImage } from '../../assets/icon_overview.svg'
+import { ReactComponent as IconCoin } from '../../assets/icon_coin.svg'
+import { ReactComponent as IconTransactionCoin } from '../../assets/icon-transaction-coin.svg'
+import { ReactComponent as IconPairs } from '../../assets/icon-coin-pair.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
 import { useDarkModeManager, useIndexTabManager } from '../../contexts/LocalStorage'
 import styled, { ThemeContext } from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import { PageWrapper, ContentWrapper } from '../index'
-import { Grid, makeStyles, Box, Tab, Tabs, withStyles } from '@material-ui/core'
+import { ContentWrapper } from '../index'
+import { Grid, makeStyles, Tab, Tabs, withStyles } from '@material-ui/core'
 import BoxSearch from '../Search'
 import { useHistory } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 
+// icon-transaction-coin.svg
 const TabCustom = withStyles((theme) => ({
   root: {
     textTransform: 'none',
@@ -58,11 +62,12 @@ const customStyleTabbar = makeStyles((theme) => ({
   boxSearchLeft: {
     marginLeft: 'auto',
     '@media (max-width: 576px)': {
-      margin: '15px auto 0',
+      margin: '19px auto 15px',
       width: '100%',
     },
     '@media (min-width: 576px) and (max-width: 800px)': {
       // margin-left: auto;
+      marginBottom: '15px !important',
     },
   },
 }))
@@ -80,7 +85,7 @@ const Title = styled.div`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     font-size: 20px;
     font-weight: 700;
-    text-align: left;
+    text-align: center;
   `}
 `
 
@@ -98,6 +103,8 @@ function TabComponent(_props) {
   const { t, i18n } = useTranslation()
   const [indexTab, setIndex] = useIndexTabManager()
   const history = useHistory()
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+
   console.log('TabComponent index', indexTab)
   return (
     <ContentWrapper style={{ zIndex: 1 }}>
@@ -125,7 +132,12 @@ function TabComponent(_props) {
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
           }}
-          icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+          icon={
+            <CircleImage
+              style={{ width: isMobile ? 16 : 23, height: isMobile ? 16 : 23 }}
+              className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+            />
+          }
           // className={classes.btnMain + ` btn-tab-custom`}
           className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
           label={t('Overview')}
@@ -136,7 +148,12 @@ function TabComponent(_props) {
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
           }}
-          icon={<CircleImage className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+          icon={
+            <IconCoin
+              style={{ width: isMobile ? 18 : 25, height: isMobile ? 18 : 25 }}
+              className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+            />
+          }
           className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
           label={t('Tokens')}
           {...a11yProps(1)}
@@ -146,7 +163,12 @@ function TabComponent(_props) {
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
           }}
-          icon={<IconLink className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+          icon={
+            <IconPairs
+              style={{ width: isMobile ? 18 : 25, height: isMobile ? 18 : 25 }}
+              className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+            />
+          }
           className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
           label={t('Pairs')}
           {...a11yProps(2)}
@@ -156,7 +178,13 @@ function TabComponent(_props) {
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
           }}
-          icon={<IconUser fontSize="small" className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />}
+          icon={
+            <IconUser
+              style={{ width: isMobile ? 16 : 30, height: isMobile ? 16 : 30 }}
+              fontSize="small"
+              className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+            />
+          }
           className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
           label={t('Accounts')}
           {...a11yProps(3)}
@@ -167,7 +195,10 @@ function TabComponent(_props) {
             labelContainer: classes.labelContainer,
           }}
           icon={
-            <IconUser style={{ width: 20, height: 20 }} className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'} />
+            <IconTransactionCoin
+              style={{ width: 30, height: 30 }}
+              className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}
+            />
           }
           style={{ marginRight: 0 }}
           className={isDarkMode ? 'btn-tab-custom btn-dark-mode' : 'btn-tab-custom btn-light-mode'}
