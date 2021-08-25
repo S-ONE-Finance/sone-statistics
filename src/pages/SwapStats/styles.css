@@ -164,20 +164,6 @@
   border: 2px solid #3faab0;
 }
 
-/* .light-mode::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  background-image: url(../../assets/bg-root.svg);
-  background-repeat: no-repeat;
-  top: 0;
-  bottom: 6%;
-  left: 0;
-  background-position: bottom;
-  margin: auto;
-  z-index: 0;
-} */
-
 .dark-mode::after {
   content: '';
   position: fixed;
@@ -192,20 +178,6 @@
   z-index: -1;
   background-size: cover;
 }
-
-/* .dark-mode::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  background-image: url(../../assets/bg-root-dark.svg);
-  background-repeat: no-repeat;
-  top: 0;
-  bottom: 6%;
-  left: 0;
-  background-position: bottom;
-  margin: auto;
-  z-index: 0;
-} */
 
 .stats-page .box-search_left {
   margin-left: auto;
@@ -537,4 +509,19 @@ div.MuiTabs-flexContainer {
     grid-template-rows: initial;
     gap: 20px;
   }
+}
+
+#demo-customized-select {
+  padding-right: 5px;
+}
+.MuiInput-underline::after,
+#demo-customized-select .MuiInput-underline::before {
+  display: none !important;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 0 !important;
+}
+.MuiSelect-icon {
+  color: #fff !important;
 }

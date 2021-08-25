@@ -20,6 +20,8 @@ import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 dayjs.extend(utc)
 
@@ -119,11 +121,12 @@ const useStyles = makeStyles({
     height: 32,
     marginLeft: 10,
     border: '1px solid #c4c4c4',
-    width: 82,
+    minWidth: 90,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    textAlign: 'center',
   },
 })
 
@@ -162,7 +165,7 @@ const formatDataText = (value, trackedValue, supressWarning = false) => {
   )
 }
 
-function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = false }) {
+function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false }) {
   const below600 = useMedia('(max-width: 600px)')
   const below740 = useMedia('(max-width: 740px)')
   const below1080 = useMedia('(max-width: 1080px)')
@@ -170,7 +173,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
   // pagination
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-  const ITEMS_PER_PAGE = maxItems
+  const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(maxItems)
   const [isDarkMode] = useDarkModeManager()
 
   // sorting
@@ -359,10 +362,13 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         )
       })
 
-  // console.log('pairList', pairList);
+  const handleChangePagePanigation = (event) => {
+    setITEMS_PER_PAGE(event.target.value)
+    return
+  }
   return (
     <>
-      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '550px' }}>
+      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '302px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '20px' }}>
           <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
             <TYPE.main area="name" style={{ fontWeight: 'bold', fontSize: 20 }}>
@@ -458,12 +464,21 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
             shape="rounded"
             className="panigation-table"
             classes={{
-              root: classes.root, // class name, e.g. `classes-nesting-root-x`
+              root: classes.root,
             }}
           />
-          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
-            {pairList.length}/page
-          </div>
+          <Select
+            className={classes.boxNavigation}
+            style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}
+            labelId="demo-customized-select-label"
+            id="demo-customized-select"
+            value={ITEMS_PER_PAGE}
+            onChange={handleChangePagePanigation}
+          >
+            <MenuItem value={5}>5/Page</MenuItem>
+            <MenuItem value={10}>10/Page</MenuItem>
+            <MenuItem value={100}>100/Page</MenuItem>
+          </Select>
         </div>
       )}
     </>

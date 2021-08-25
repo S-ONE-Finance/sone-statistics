@@ -166,10 +166,6 @@ function OverviewStatistics(props) {
     setTotalTranSaction(total)
   }
 
-  // const fees = formattedNum(
-  //   pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * 0.003 : pairData.oneDayVolumeUntracked * 0.003,
-  //   true
-  // )
   const totalFee24hAPI = () => {
     var totalFees = 0
     var totalOneDayVolumeUSD = 0
@@ -177,20 +173,14 @@ function OverviewStatistics(props) {
     Object.values(allPairs).map((item) => {
       if (item.oneDayVolumeUSD) {
         totalOneDayVolumeUSD += item.oneDayVolumeUSD
-      }
-      // else if (item.oneDayVolumeUntracked) {
-      //   totalOneDayVolumeUntracked += item.oneDayVolumeUntracked
-      // }
-      else {
+      } else {
         return
       }
-      // console.log('itemsssssss', item.oneDayVolumeUSD)
     })
     totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
     setTotalFee24h(totalFees)
   }
-  // console.log('commonData1111',)
-  // console.log('below600', below600)
+
   return (
     <div className={classes.boxMainContentOverview}>
       <div style={isMobile ? { display: 'none' } : { display: 'block' }}>
