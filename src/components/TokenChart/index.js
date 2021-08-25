@@ -4,7 +4,7 @@ import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, 
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 
 import { toK, toNiceDate, toNiceDateYear, formattedNum, getTimeframe } from '../../utils'
-import { OptionButton } from '../ButtonStyled'
+import { OptionButton, StyleButtonComponent } from '../ButtonStyled'
 import { darken } from 'polished'
 import { useMedia, usePrevious } from 'react-use'
 import { timeframeOptions } from '../../constants'
@@ -176,7 +176,7 @@ const TokenChart = ({ address, color, base }) => {
             </RowFixed>
             {chartFilter === CHART_VIEW.PRICE && (
               <AutoRow gap="4px">
-                <PriceOption
+                <StyleButtonComponent
                   active={frequency === DATA_FREQUENCY.DAY}
                   onClick={() => {
                     setTimeWindow(timeframeOptions.MONTH)
@@ -184,41 +184,41 @@ const TokenChart = ({ address, color, base }) => {
                   }}
                 >
                   D
-                </PriceOption>
-                <PriceOption
+                </StyleButtonComponent>
+                <StyleButtonComponent
                   active={frequency === DATA_FREQUENCY.HOUR}
                   onClick={() => setFrequency(DATA_FREQUENCY.HOUR)}
                 >
                   H
-                </PriceOption>
-                <PriceOption
+                </StyleButtonComponent>
+                <StyleButtonComponent
                   active={frequency === DATA_FREQUENCY.LINE}
                   onClick={() => setFrequency(DATA_FREQUENCY.LINE)}
                 >
                   <Activity size={14} />
-                </PriceOption>
+                </StyleButtonComponent>
               </AutoRow>
             )}
           </AutoColumn>
           <AutoRow justify="flex-end" gap="6px" align="flex-start">
-            <OptionButton
+            <StyleButtonComponent
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
             >
               {t('1W')}
-            </OptionButton>
-            <OptionButton
+            </StyleButtonComponent>
+            <StyleButtonComponent
               active={timeWindow === timeframeOptions.MONTH}
               onClick={() => setTimeWindow(timeframeOptions.MONTH)}
             >
               {t('1M')}
-            </OptionButton>
-            <OptionButton
+            </StyleButtonComponent>
+            <StyleButtonComponent
               active={timeWindow === timeframeOptions.ALL_TIME}
               onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
             >
               {t('All')}
-            </OptionButton>
+            </StyleButtonComponent>
           </AutoRow>
         </RowBetween>
       )}

@@ -17,6 +17,8 @@ import { Pagination } from '@material-ui/lab'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 dayjs.extend(utc)
 
@@ -90,11 +92,12 @@ const useStyles = makeStyles({
     height: 32,
     marginLeft: 10,
     border: '1px solid #c4c4c4',
-    width: 82,
+    width: 90,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    textAlign: 'center',
   },
 })
 
@@ -105,7 +108,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
   // pagination
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-  const ITEMS_PER_PAGE = maxItems
+  const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(maxItems)
   const [isDarkMode] = useDarkModeManager()
   const { t, i18n } = useTranslation()
   const classes = useStyles()
@@ -216,6 +219,12 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
   const StyleTypeMain = styled(TYPE.main)`
     justify-content: center;
   `
+
+  const handleChangePagePanigation = (event) => {
+    setITEMS_PER_PAGE(event.target.value)
+    return
+  }
+
   return (
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '302px' }}>
@@ -237,7 +246,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
           </StyleFlex>
           <StyleFlex alignItems="center">
             <StyleTypeMain area="value" className="f-20 font-weight-bold">
-              {t('Value')}
+              {t('Liquidity')}
             </StyleTypeMain>
           </StyleFlex>
         </DashGrid>
@@ -260,9 +269,18 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
           />
-          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
-            {lpList.length}/page
-          </div>
+          <Select
+            className={classes.boxNavigation}
+            style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}
+            labelId="demo-customized-select-label"
+            id="demo-customized-select"
+            value={ITEMS_PER_PAGE}
+            onChange={handleChangePagePanigation}
+          >
+            <MenuItem value={5}>5/Page</MenuItem>
+            <MenuItem value={10}>10/Page</MenuItem>
+            <MenuItem value={100}>100/Page</MenuItem>
+          </Select>
         </div>
       )}
     </>

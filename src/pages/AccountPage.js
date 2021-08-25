@@ -251,19 +251,19 @@ function AccountPage({ account }) {
           <RowBetween>
             <div
               className="w-100"
-              style={isMobile && { marginTop: 20, display: 'flex', justifyContent: 'space-between' }}
+              style={isMobile ? { marginTop: '20px', display: 'flex', justifyContent: 'space-between' } : ''}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <TYPE.header fontSize={isMobile ? 13 : 32}>
                   {account?.slice(0, 6) + '...' + account?.slice(38, 42)}
                 </TYPE.header>
               </div>
-              <div style={{ width: isMobile ? 144 : '15%', maxWidth: 218 }}>
+              <div style={{ width: isMobile ? '144px' : '15%', maxWidth: 218 }}>
                 <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
                   <TYPE.main
                     className="btn-danger"
                     fontSize={isMobile ? 13 : 16}
-                    style={{ margin: !below600 ? '15px 0 35px' : '15px 0', minWidth: isMobile && 144 }}
+                    style={{ margin: !below600 ? '15px 0 35px' : '15px 0', minWidth: isMobile ? 144 : 'auto' }}
                   >
                     {t('View on Etherscan')}
                   </TYPE.main>
@@ -311,7 +311,7 @@ function AccountPage({ account }) {
                 )}
               </ButtonDropdown>
               {showDropdown && (
-                <Flyout style={{ backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3 ' }}>
+                <Flyout style={{ backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3' }}>
                   <AutoColumn gap="0px">
                     {positions?.map((p, i) => {
                       if (p.pair.token1.symbol === 'WETH') {
@@ -383,7 +383,7 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <StyleTitle fontSize={isMobile ? 13 : 20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                    <StyleTitle fontSize={isMobile ? 13 : 20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}>
                       {t('Fees Earned (Cumulative)')}
                     </StyleTitle>
                     <div />

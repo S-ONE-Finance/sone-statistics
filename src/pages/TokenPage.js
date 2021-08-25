@@ -255,13 +255,13 @@ function TokenPage({ address, history }) {
             >
               <RowFixed>
                 <Link href={getPoolLink(address)} target="_blank">
-                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}>
+                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35, fontSize: 24 }}>
                     + {t('Add Liquidity')}
                   </ButtonLight>
                 </Link>
                 <Link href={getSwapLink(address)} target="_blank">
                   <ButtonDark
-                    style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
+                    style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35, fontSize: 24, width: 101 }}
                     ml={'.5rem'}
                     mr={below1080 && '.5rem'}
                   >
@@ -320,14 +320,14 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main
-                        fontSize={'1.5rem'}
+                        fontSize={28}
                         lineHeight={1}
                         fontWeight={500}
                         style={{ color: isDarkMode ? '#fff' : '#333333' }}
                       >
                         {liquidity}
                       </TYPE.main>
-                      <TYPE.main>{liquidityChange}</TYPE.main>
+                      <TYPE.main fontSize={24}>{liquidityChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -345,14 +345,14 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main
-                        fontSize={'1.5rem'}
+                        fontSize={28}
                         lineHeight={1}
                         fontWeight={500}
                         style={{ color: isDarkMode ? '#fff' : '#333333' }}
                       >
                         {volume}
                       </TYPE.main>
-                      <TYPE.main>{volumeChange}</TYPE.main>
+                      <TYPE.main fontSize={24}>{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -371,14 +371,14 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main
-                        fontSize={'1.5rem'}
+                        fontSize={28}
                         lineHeight={1}
                         fontWeight={500}
                         style={{ color: isDarkMode ? '#fff' : '#333333' }}
                       >
                         {oneDayTxns ? localNumber(oneDayTxns) : 0}
                       </TYPE.main>
-                      <TYPE.main>{txnChangeFormatted}</TYPE.main>
+                      <TYPE.main fontSize={24}>{txnChangeFormatted}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>

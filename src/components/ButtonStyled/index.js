@@ -138,15 +138,31 @@ export function ButtonCustom({ children, bgColor, color, ...rest }) {
 }
 
 export const OptionButton = styled.div`
-  font-weight: 500;
+  font-weight: 400;
   width: fit-content;
   white-space: nowrap;
   padding: 6px;
-  border-radius: 6px;
+  border-radius: 25px;
   border: 1px solid ${({ theme }) => theme.bg4};
   background-color: ${({ active, theme }) => active && theme.bg3};
   color: ${({ theme }) => theme.text1};
+  font-size: 16px;
+  min-width: 80px;
+  text-align: center;
+  :hover {
+    cursor: ${({ disabled }) => !disabled && 'pointer'};
+  }
+`
 
+export const StyleButtonComponent = styled.div`
+  font-weight: 400;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.bg4};
+  background-color: ${({ active, theme }) => active && theme.bg3};
+  color: ${({ theme }) => theme.text1};
+  font-size: 20px;
+  text-align: center;
   :hover {
     cursor: ${({ disabled }) => !disabled && 'pointer'};
   }

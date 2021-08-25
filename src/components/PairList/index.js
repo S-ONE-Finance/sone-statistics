@@ -389,6 +389,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
               }}
             >
               {t('Liquidity')}
+              {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
           <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
