@@ -98,7 +98,7 @@ const useStyles = makeStyles({
   },
 })
 
-function LPList({ lps, disbaleLinks, maxItems = 10 }) {
+function LPList({ lps, disbaleLinks, maxItems = 5 }) {
   const below600 = useMedia('(max-width: 600px)')
   const below800 = useMedia('(max-width: 800px)')
 
@@ -216,10 +216,9 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   const StyleTypeMain = styled(TYPE.main)`
     justify-content: center;
   `
-  // console.log('lpList', lpList)
   return (
     <>
-      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '539px' }}>
+      <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '302px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '1rem' }}>
           {!below600 && (
             <StyleFlex alignItems="center">

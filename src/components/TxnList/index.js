@@ -21,6 +21,8 @@ import { Pagination } from '@material-ui/lab'
 import { ETHERSCAN_BASE_URL } from '../../constants/urls'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 dayjs.extend(utc)
 
@@ -146,11 +148,12 @@ const useStyles = makeStyles({
     height: 32,
     marginLeft: 10,
     border: '1px solid #c4c4c4',
-    width: 82,
+    width: 90,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    textAlign: 'center',
   },
 })
 
@@ -167,8 +170,6 @@ const TXN_TYPE = {
   ADD: 'Adds',
   REMOVE: 'Removes',
 }
-
-const ITEMS_PER_PAGE = 10
 
 function getTransactionType(event, symbol0, symbol1) {
   const formattedS0 = symbol0?.length > 8 ? symbol0.slice(0, 7) + '...' : symbol0
@@ -201,6 +202,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const { t, i18n } = useTranslation()
   const classes = useStyles()
 
+  const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(5)
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -358,11 +360,14 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     )
   }
 
-  console.log('filteredList transaction', filteredItems)
+  const handleChangePagePanigation = (event) => {
+    setITEMS_PER_PAGE(event.target.value)
+    return
+  }
 
   return (
     <>
-      <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: '542px' }}>
+      <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: 302 }}>
         <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
           {below780 ? (
             <RowBetween area="txn">
@@ -534,9 +539,18 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
           />
-          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
-            {filteredList.length}/page
-          </div>
+          <Select
+            className={classes.boxNavigation}
+            style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}
+            labelId="demo-customized-select-label"
+            id="demo-customized-select"
+            value={ITEMS_PER_PAGE}
+            onChange={handleChangePagePanigation}
+          >
+            <MenuItem value={5}>5/Page</MenuItem>
+            <MenuItem value={10}>10/Page</MenuItem>
+            <MenuItem value={100}>100/Page</MenuItem>
+          </Select>
         </div>
       )}
     </>

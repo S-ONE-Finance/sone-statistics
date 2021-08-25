@@ -19,6 +19,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import Panel from '../../components/Panel'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { useTranslation } from 'react-i18next'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+
 dayjs.extend(utc)
 
 const List = styled(Box)`
@@ -127,11 +130,12 @@ const useStyles = makeStyles({
     height: 32,
     marginLeft: 10,
     border: '1px solid #c4c4c4',
-    width: 82,
+    width: 90,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    textAlign: 'center',
   },
   outlined: {
     border: '1px solid red',
@@ -139,7 +143,7 @@ const useStyles = makeStyles({
 })
 
 // @TODO rework into virtualized list
-function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
+function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -153,6 +157,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   const below1080 = useMedia('(max-width: 1080px)')
   const below680 = useMedia('(max-width: 680px)')
   const below600 = useMedia('(max-width: 600px)')
+
+  const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(itemMax)
 
   // i18n
   const { t, i18n } = useTranslation()
@@ -313,7 +319,10 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
     )
   }
 
-  // console.log('filteredList',filteredList);
+  const handleChangePagePanigation = (event) => {
+    setITEMS_PER_PAGE(event.target.value)
+    return
+  }
 
   return (
     <>
@@ -325,7 +334,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           backgroundColor: theme.bgTable,
           border: 0,
           padding: 0,
-          minHeight: '542px',
+          minHeight: 302,
         }}
       >
         <ListWrapper>
@@ -460,9 +469,18 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
           />
-          <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
-            {filteredList.length}/page
-          </div>
+          <Select
+            className={classes.boxNavigation}
+            style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}
+            labelId="demo-customized-select-label"
+            id="demo-customized-select"
+            value={ITEMS_PER_PAGE}
+            onChange={handleChangePagePanigation}
+          >
+            <MenuItem value={5}>5/Page</MenuItem>
+            <MenuItem value={10}>10/Page</MenuItem>
+            <MenuItem value={100}>100/Page</MenuItem>
+          </Select>
         </div>
       )}
     </>
