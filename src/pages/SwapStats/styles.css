@@ -393,6 +393,9 @@ div.MuiTabs-flexContainer {
 }
 
 @media (max-width: 600px) {
+  .f-20 {
+    font-size: 16px !important;
+  }
   .light-mode::after {
     display: none;
   }
@@ -491,7 +494,7 @@ div.MuiTabs-flexContainer {
     margin: auto 0;
     width: auto;
     margin-top: 14px;
-    min-height: auto;
+    min-height: 45px;
     margin-right: 5px;
     max-width: 130px;
   }

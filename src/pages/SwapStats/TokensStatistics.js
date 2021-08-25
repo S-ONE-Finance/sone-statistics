@@ -13,8 +13,8 @@ const ListOptions = styled(AutoRow)`
   width: 100%;
   font-size: 1.25rem;
   font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
   @media screen and (max-width: 640px) {
     font-size: 1rem;
     margin-top: 1rem;

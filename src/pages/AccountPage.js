@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
-import { useUserTransactions, useUserPositions, useMiningPositions } from '../contexts/User'
+import { useUserTransactions, useUserPositions } from '../contexts/User'
 import TxnList from '../components/TxnList'
 import Panel from '../components/Panel'
 import { formattedNum } from '../utils'
@@ -9,22 +9,19 @@ import { AutoColumn } from '../components/Column'
 import UserChart from '../components/UserChart'
 import PairReturnsChart from '../components/PairReturnsChart'
 import PositionList from '../components/PositionList'
-import MiningPositionList from '../components/MiningPositionList'
 import { TYPE } from '../theme'
-import { ButtonDropdown, ButtonLight } from '../components/ButtonStyled'
+import { ButtonDropdown } from '../components/ButtonStyled'
 import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
-import { Bookmark, Activity } from 'react-feather'
+import { Activity } from 'react-feather'
 import Link from '../components/Link'
 import { FEE_WARNING_TOKENS } from '../constants'
-import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
-// import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
 import { useTranslation } from 'react-i18next'
-// import BoxSearch from '../components/Search'
+import { useMediaQuery } from 'react-responsive'
 
 const StyledPanel = styled(Panel)`
   margin-top: 1.5rem !important;
@@ -46,15 +43,6 @@ const StyleAutoColumn = styled(AutoColumn)`
     }
     margin-left: 0% !important;
   }
-`
-
-const AccountWrapper = styled.div`
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 6px 16px;
-  border-radius: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const Header = styled.div``
@@ -117,10 +105,10 @@ function AccountPage({ account }) {
   // get data for this account
   const transactions = useUserTransactions(account)
   const positions = useUserPositions(account)
-  const miningPositions = useMiningPositions(account)
   const { t, i18n } = useTranslation()
   // get data for user stats
   const transactionCount = transactions?.swaps?.length + transactions?.burns?.length + transactions?.mints?.length
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
   // get derived totals
   let totalSwappedUSD = useMemo(() => {
@@ -190,7 +178,7 @@ function AccountPage({ account }) {
 
   const StyleAutoRow = styled(AutoRow)`
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
-    background-color: ${isDarkMode ? '#0E2B4A' : '#fff'};
+    background-color: ${isDarkMode ? '#0E2B4A !important' : '#fff !important'};
     border-radius: 15px;
     flex-wrap: wrap;
     margin: auto;
@@ -258,47 +246,30 @@ function AccountPage({ account }) {
   return (
     <PageWrapper>
       <ContentWrapper style={{ zIndex: 1 }}>
-        <RowBetween>
-          {/* <TYPE.body>
-            <BasicLink to="/swap/accounts">{t('Accounts')}</BasicLink>→
-            <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
-              {account?.slice(0, 42)}
-            </Link>
-          </TYPE.body> */}
-          {/* {!below600 && <BoxSearch/>} */}
-        </RowBetween>
+        <RowBetween></RowBetween>
         <Header>
           <RowBetween>
-            <div className="w-100">
+            <div
+              className="w-100"
+              style={isMobile && { marginTop: 20, display: 'flex', justifyContent: 'space-between' }}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <TYPE.header fontSize={32}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
-                {/* <div style={{ width: '40%' }}>
-                  <BoxSearch />
-                </div> */}
+                <TYPE.header fontSize={isMobile ? 13 : 32}>
+                  {account?.slice(0, 6) + '...' + account?.slice(38, 42)}
+                </TYPE.header>
               </div>
-              <div style={{ width: '15%', maxWidth: 218 }}>
+              <div style={{ width: isMobile ? 144 : '15%', maxWidth: 218 }}>
                 <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
                   <TYPE.main
                     className="btn-danger"
-                    fontSize={16}
-                    style={{ margin: !below600 ? '15px 0 35px' : '15px 0' }}
+                    fontSize={isMobile ? 13 : 16}
+                    style={{ margin: !below600 ? '15px 0 35px' : '15px 0', minWidth: isMobile && 144 }}
                   >
                     {t('View on Etherscan')}
                   </TYPE.main>
                 </Link>
               </div>
             </div>
-            {/* <AccountWrapper> */}
-
-            {/* </AccountWrapper> */}
-            {/* <AccountWrapper>
-              <StyledIcon>
-                <Bookmark
-                  onClick={handleBookmarkClick}
-                  style={{ opacity: isBookmarked ? 0.8 : 0.4, cursor: 'pointer' }}
-                />
-              </StyledIcon>
-            </AccountWrapper> */}
           </RowBetween>
         </Header>
         <DashboardWrapper>
@@ -391,13 +362,17 @@ function AccountPage({ account }) {
               <StyleAutoRow2>
                 <AutoColumn gap="10px" style={{ marginRight: 85 }}>
                   <RowBetween>
-                    <StyleTitle fontSize={20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                    <StyleTitle fontSize={isMobile ? 13 : 20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
                       {t('Liquidity (Including Fees)')}
                     </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
+                    <StyleContentBottom
+                      lineHeight={1}
+                      fontSize={isMobile ? 16 : 24}
+                      style={{ color: isDarkMode ? '#fff' : '#111111' }}
+                    >
                       {positionValue
                         ? formattedNum(positionValue, true)
                         : positionValue === 0
@@ -408,13 +383,17 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <StyleTitle fontSize={20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+                    <StyleTitle fontSize={isMobile ? 13 : 20} style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
                       {t('Fees Earned (Cumulative)')}
                     </StyleTitle>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
-                    <StyleContentBottom lineHeight={1} fontSize={24} style={{ color: '#111111' }}>
+                    <StyleContentBottom
+                      lineHeight={1}
+                      fontSize={isMobile ? 16 : 24}
+                      style={{ color: isDarkMode ? '#fff' : '#111111' }}
+                    >
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
                     </StyleContentBottom>
                   </RowFixed>
@@ -433,19 +412,19 @@ function AccountPage({ account }) {
               </StylePanel>
             </PanelWrapper>
           )}
-          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+          <TitlteTop fontSize={isMobile ? 20 : '2.125rem'} style={{ fontWeight: 'bold' }}>
             {t('Positions')}
           </TitlteTop>
           <StylePanelBlockPosition>
             <PositionList positions={positions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+          <TitlteTop fontSize={isMobile ? 20 : '2.125rem'} style={{ fontWeight: 'bold' }}>
             {t('Transactions')}
           </TitlteTop>
           <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+          <TitlteTop fontSize={isMobile ? 20 : '2.125rem'} style={{ fontWeight: 'bold' }}>
             {t('Wallet Stats')}
           </TitlteTop>
           <StyledPanel>

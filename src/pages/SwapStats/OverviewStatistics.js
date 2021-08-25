@@ -22,6 +22,7 @@ import TxnList from '../../components/TxnList'
 import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
 // import { useTokenData, , useTokenPairs } from '../contexts/TokenData'
+import { useMediaQuery } from 'react-responsive'
 
 OverviewStatistics.propTypes = {}
 
@@ -41,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
   },
   positive: {
-    color: 'green',
+    color: '#7AC51B',
   },
   negative: {
-    color: 'red',
+    color: '#F05359',
   },
   primaryBg: {
     backgroundColor: theme.palette.primary.main,
@@ -124,7 +125,10 @@ function OverviewStatistics(props) {
   //Transactions
   const transactions = useGlobalTransactions()
   // breakpoints
-  const below800 = useMedia('max-width: 800px')
+  const below800 = useMedia('min-width: 800px')
+  // const below600 = useMediaQuery('max-width: 600px')
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+
   useEffect(() => {
     if (!transactions) {
       return
@@ -180,22 +184,21 @@ function OverviewStatistics(props) {
       else {
         return
       }
-      console.log('itemsssssss', item.oneDayVolumeUSD)
+      // console.log('itemsssssss', item.oneDayVolumeUSD)
     })
     totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
     setTotalFee24h(totalFees)
-    console.log('totalFees', totalFees)
   }
   // console.log('commonData1111',)
-
+  // console.log('below600', below600)
   return (
     <div className={classes.boxMainContentOverview}>
-      <div>
+      <div style={isMobile ? { display: 'none' } : { display: 'block' }}>
         <p
           style={{ fontSize: 40, margin: '10px 0', color: isDarkMode ? '#fff' : '#333333' }}
           className="font-weight-bold"
         >
-          Overview
+          {t('Overview')}
         </p>
       </div>
       <StyledGrid className={classes.boxCardItems} container spacing={0}>
@@ -260,7 +263,7 @@ function OverviewStatistics(props) {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {totalFee24h}
+                  {Math.round(totalFee24h)}
                 </Typography>
               </Box>
             }
@@ -269,7 +272,7 @@ function OverviewStatistics(props) {
         </Grid>
       </StyledGrid>
       <div className="box-chart">
-        {!below800 && (
+        {!isMobile && (
           <GridRow>
             <PanelHight>
               <GlobalChart display="liquidity" />
@@ -279,18 +282,23 @@ function OverviewStatistics(props) {
             </PanelLow>
           </GridRow>
         )}
-        {below800 && (
+        {isMobile && (
+          // <GridRow>
           <AutoColumn style={{ marginTop: '6px' }} gap="24px">
             <PanelHight>
               <GlobalChart display="liquidity" />
             </PanelHight>
           </AutoColumn>
+          // </GridRow>
         )}
       </div>
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+            <TYPE.main
+              fontSize={isMobile ? '20px' : '40px'}
+              style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}
+            >
               {t('Top Tokens')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/tokens">
@@ -303,7 +311,10 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+            <TYPE.main
+              fontSize={isMobile ? '20px' : '40px'}
+              style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}
+            >
               {t('Top Pairs')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/pairs">
@@ -316,7 +327,10 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+            <TYPE.main
+              fontSize={isMobile ? '20px' : '40px'}
+              style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}
+            >
               {t('Top Accounts')}
             </TYPE.main>
             <CustomLink className="btnLink" to="/swap/accounts">
@@ -329,7 +343,10 @@ function OverviewStatistics(props) {
       <div>
         <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
           <RowBetween>
-            <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}>
+            <TYPE.main
+              fontSize={isMobile ? '20px' : '40px'}
+              style={{ whiteSpace: 'nowrap', marginBottom: '1rem', fontWeight: 'bold' }}
+            >
               {t('Transactions')}
             </TYPE.main>
           </RowBetween>

@@ -26,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
   },
   positive: {
-    color: 'green',
+    color: '#7AC51B',
   },
   negative: {
-    color: 'red',
+    color: '#F05359',
   },
   primaryBg: {
     backgroundColor: theme.palette.primary.main,

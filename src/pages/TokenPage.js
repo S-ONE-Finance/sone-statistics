@@ -13,27 +13,22 @@ import Column, { AutoColumn } from '../components/Column'
 import { ButtonLight, ButtonDark } from '../components/ButtonStyled'
 import TxnList from '../components/TxnList'
 import TokenChart from '../components/TokenChart'
-import { BasicLink } from '../components/Link'
-import Search from '../components/Search'
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink, localNumber } from '../utils'
 import { useTokenData, useTokenTransactions, useTokenPairs } from '../contexts/TokenData'
 import { TYPE, ThemedBackground } from '../theme'
 import { transparentize } from 'polished'
 import { useColor } from '../hooks'
-import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
 import { useDataForList } from '../contexts/PairData'
 import { useEffect } from 'react'
 import Warning from '../components/Warning'
 import { usePathDismissed, useSavedTokens } from '../contexts/LocalStorage'
-import { Hover, PageWrapper, ContentWrapper, StyledIcon, BlockedWrapper, BlockedMessageWrapper } from '../components'
-import { PlusCircle, Bookmark, AlertCircle } from 'react-feather'
+import { PageWrapper, ContentWrapper, BlockedWrapper, BlockedMessageWrapper } from '../components'
+import { AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
 import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
-import QuestionHelper from '../components/QuestionHelper'
-import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 // import Button from '@material-ui/core/Button';
@@ -159,16 +154,16 @@ function TokenPage({ address, history }) {
   const txnChangeFormatted = formattedPercent(txnChange)
 
   const below1080 = useMedia('(max-width: 1080px)')
-  const below800 = useMedia('(max-width: 800px)')
-  const below600 = useMedia('(max-width: 600px)')
-  const below500 = useMedia('(max-width: 500px)')
+  // const below800 = useMedia('(max-width: 800px)')
+  // const below600 = useMedia('(max-width: 600px)')
+  // const below500 = useMedia('(max-width: 500px)')
 
   // format for long symbol
   const LENGTH = below1080 ? 10 : 16
   const formattedSymbol = symbol?.length > LENGTH ? symbol.slice(0, LENGTH) + '...' : symbol
 
   const [dismissed, markAsDismissed] = usePathDismissed(history.location.pathname)
-  const [savedTokens, addToken] = useSavedTokens()
+  // const [savedTokens, addToken] = useSavedTokens()
   const listedTokens = useListedTokens()
 
   useEffect(() => {
@@ -407,7 +402,7 @@ function TokenPage({ address, history }) {
                 {t('Top Pairs')}
               </TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
-                <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>
+                <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/pairs'}>
                   {t('See more')}
                 </CustomLink>
                 {/* <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." /> */}

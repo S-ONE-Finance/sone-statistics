@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     // borderColor: theme.palette.secondary.main,
   },
   positive: {
-    color: 'green',
+    color: '#87d128',
   },
   negative: {
     color: 'red',
