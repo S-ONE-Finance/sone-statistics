@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import { Grid, Paper, makeStyles, Box } from '@material-ui/core'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
 import styled, { ThemeContext } from 'styled-components'
+import { useMediaQuery } from 'react-responsive'
+import { useDarkModeManager } from '../../contexts/LocalStorage'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,11 +41,20 @@ function CardItem({ displayPreview, title, valueContainer, descriptionContainer,
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+  const [isDarkMode] = useDarkModeManager()
 
   const StylePaper = styled(Paper)`
-    background-color: ${theme.bg1Sone} !important;
+    background-color: ${isMobile
+      ? isDarkMode
+        ? '#0E2B4A'
+        : '#F3F3F3'
+      : !isDarkMode
+      ? '#FFFFFF'
+      : '#0E2B4A'} !important;
     color: #767676 important;
     border-radius: 20px !important;
+    box-shadow: ${isMobile ? 'none' : '0px 2px 20px rgba(0, 0, 0, 0.18)'} !important;
   `
   return (
     <Grid item className={classes.root}>

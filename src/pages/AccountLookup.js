@@ -8,23 +8,12 @@ import LPList from '../components/LPList'
 import styled from 'styled-components'
 import AccountSearch from '../components/AccountSearch'
 import { useTopLps } from '../contexts/GlobalData'
-import LocalLoader from '../components/LocalLoader'
-import { RowBetween } from '../components/Row'
 import { useMedia } from 'react-use'
-import Search from '../components/Search'
 
 const AccountWrapper = styled.div`
   @media screen and (max-width: 600px) {
     width: 100%;
   }
-`
-
-const StylePanel = styled(Panel)`
-  margin-top: 1.5rem;
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  box-shadow: none;
 `
 
 function AccountLookup() {
@@ -34,8 +23,6 @@ function AccountLookup() {
   }, [])
 
   const topLps = useTopLps()
-
-  const below600 = useMedia('(max-width: 600px)')
 
   return (
     <PageWrapper>

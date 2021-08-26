@@ -11,15 +11,14 @@ import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import TopTokenList from '../../components/TokenList'
-import { useAllTokenData, useTokenTransactions } from '../../contexts/TokenData'
-import { useMedia } from 'react-use'
+import { useAllTokenData } from '../../contexts/TokenData'
 import { AutoColumn } from '../../components/Column'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { useAllPairData } from '../../contexts/PairData'
 import PairList from '../../components/PairList'
 import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
-import { useGlobalData, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
+import { useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
 // import { useTokenData, , useTokenPairs } from '../contexts/TokenData'
 import { useMediaQuery } from 'react-responsive'
@@ -106,7 +105,7 @@ const TitleOverView = styled.div`
     font-size: 40px,
   `
 
-function OverviewStatistics(props) {
+function OverviewStatistics() {
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
@@ -125,7 +124,7 @@ function OverviewStatistics(props) {
   //Transactions
   const transactions = useGlobalTransactions()
   // breakpoints
-  const below800 = useMedia('min-width: 800px')
+  // const below800 = useMedia('min-width: 800px')
   // const below600 = useMediaQuery('max-width: 600px')
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 

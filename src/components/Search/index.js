@@ -167,9 +167,10 @@ export const Search = ({ small = false }) => {
   useTokenData(value)
   usePairData(value)
   const below1080 = useMedia('(min-width: 1080px)')
-  const below700 = useMedia('(max-width: 700px)')
-  const below470 = useMedia('(max-width: 470px)')
-  const below410 = useMedia('(max-width: 410px)')
+  // responsive
+  // const below700 = useMedia('(max-width: 700px)')
+  // const below470 = useMedia('(max-width: 470px)')
+  // const below410 = useMedia('(max-width: 410px)')
 
   useEffect(() => {
     if (value !== '') {
@@ -441,17 +442,7 @@ export const Search = ({ small = false }) => {
           large={!small}
           type={'text'}
           ref={wrapperRef}
-          placeholder={
-            small
-              ? ''
-              : below410
-              ? 'Search...'
-              : below470
-              ? 'Search swap...'
-              : below700
-              ? 'Search pairs and tokens...'
-              : `${t('textSearchInpMain')}`
-          }
+          placeholder={` ${t('textSearchInpMain')}`}
           value={value}
           onChange={(e) => {
             setValue(e.target.value)

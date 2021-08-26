@@ -367,7 +367,6 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
-
                 <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', borderRadius: 25 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>
