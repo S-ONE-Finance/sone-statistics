@@ -19,9 +19,7 @@ import {
   S_ONE_WHITE_PAPER_URL,
 } from '../../constants/urls'
 import { Globe, Moon, Sun, Menu as MenuIcon } from 'react-feather'
-import { isMobile } from 'react-device-detect'
 import { TYPE } from '../../theme'
-import i18n from '../../i18n'
 import { withTranslation, useTranslation } from 'react-i18next'
 
 const activeClassName = 'ACTIVE'

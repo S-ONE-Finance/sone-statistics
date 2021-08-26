@@ -28,8 +28,8 @@ const TabCustom = withStyles((theme) => ({
     backgroundColor: useContext(ThemeContext).gray,
     color: useContext(ThemeContext).colorModeButton,
     '&:hover': {
-      color: '',
-      opacity: 1,
+      // color: '',
+      // opacity: 1,
     },
     '&$selected': {
       color: '#fff',
@@ -40,7 +40,7 @@ const TabCustom = withStyles((theme) => ({
     },
   },
   selected: {
-    backgroundColor: 'red',
+    backgroundColor: '#F05359',
   },
 }))((props) => <Tab disableRipple {...props} />)
 
