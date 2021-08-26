@@ -25,6 +25,7 @@ import {
   splitQuery,
 } from '../utils'
 import { timeframeOptions, TRACKED_OVERRIDES } from '../constants'
+import { useLatestBlocks } from './Application'
 import { updateNameData } from '../utils/data'
 import useBlockNumber from '../hooks/useBlockNumber'
 
@@ -588,7 +589,7 @@ export function Updater() {
 export function useHourlyRateData(pairAddress, timeWindow) {
   const [state, { updateHourlyData }] = usePairDataContext()
   const chartData = state?.[pairAddress]?.hourlyData?.[timeWindow]
-  const blockNumber = useBlockNumber()
+  const [latestBlock] = useLatestBlocks()
 
   useEffect(() => {
     const currentTime = dayjs.utc()
@@ -597,13 +598,13 @@ export function useHourlyRateData(pairAddress, timeWindow) {
       timeWindow === timeframeOptions.ALL_TIME ? 1589760000 : currentTime.subtract(1, windowSize).startOf('hour').unix()
 
     async function fetch() {
-      let data = await getHourlyRateData(pairAddress, startTime, blockNumber)
+      let data = await getHourlyRateData(pairAddress, startTime, latestBlock)
       updateHourlyData(pairAddress, data, timeWindow)
     }
     if (!chartData) {
       fetch()
     }
-  }, [chartData, timeWindow, pairAddress, updateHourlyData, blockNumber])
+  }, [chartData, timeWindow, pairAddress, updateHourlyData, latestBlock])
 
   return chartData
 }

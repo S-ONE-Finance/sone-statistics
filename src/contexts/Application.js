@@ -166,6 +166,38 @@ export default function Provider({ children }) {
   )
 }
 
+export function useLatestBlocks() {
+  const [state, { updateLatestBlock, updateHeadBlock }] = useApplicationContext()
+
+  const latestBlock = state?.[LATEST_BLOCK]
+  const headBlock = state?.[HEAD_BLOCK]
+
+  useEffect(() => {
+    async function fetch() {
+      healthClient
+        .query({
+          query: SUBGRAPH_HEALTH,
+        })
+        .then((res) => {
+          const syncedBlock = res.data.indexingStatusForCurrentVersion.chains[0].latestBlock.number
+          const headBlock = res.data.indexingStatusForCurrentVersion.chains[0].chainHeadBlock.number
+          if (syncedBlock && headBlock) {
+            updateLatestBlock(syncedBlock)
+            updateHeadBlock(headBlock)
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+    if (!latestBlock) {
+      fetch()
+    }
+  }, [latestBlock, updateHeadBlock, updateLatestBlock])
+
+  return [latestBlock, headBlock]
+}
+
 export function useCurrentCurrency() {
   const [state, { update }] = useApplicationContext()
   const toggleCurrency = useCallback(() => {
