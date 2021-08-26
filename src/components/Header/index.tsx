@@ -460,39 +460,19 @@ function Header() {
                 </StyledExternalLink>
               </HideSmall>
               <MenuItem>
-                <StyledNavLink
-                  to="/swap"
-                  isActive={(match, { pathname }) =>
-                    Boolean(match) || pathname.startsWith('/swap') || pathname.startsWith('/staking')
-                  }
-                >
-                  {t('Swap')}
-                </StyledNavLink>
+                <StyledExternalLink href={S_ONE_APP_URL + "/#/swap"} target="_blank">{t('Swap')}</StyledExternalLink>
                 <SubMenu>
-                  <SubMenuItemNavLink to={'/swap'}>{t('Swap Stats')}</SubMenuItemNavLink>
-                  <SubMenuItemNavLink to={'/add'}>{t('Staking Stats')}</SubMenuItemNavLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/swap"} target="_blank">{t('Swap')}</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/add"} target="_blank">{t('Add Liquidity')}</SubMenuItemExternalLink>
                 </SubMenu>
               </MenuItem>
-
               <MenuItem>
-                <StyledNavLink
-                  to="/staking"
-                  isActive={(match, { pathname }) =>
-                    Boolean(match) || pathname.startsWith('/staking') || pathname.startsWith('/staking')
-                  }
-                >
-                  {t('Staking')}
-                </StyledNavLink>
+                <StyledExternalLink href={S_ONE_APP_URL + "/#/staking"} target="_blank">{t('Staking')}</StyledExternalLink>
               </MenuItem>
               <MenuItem>
-                {/* <StyledExternalLink href={S_ONE_APP_URL + '/#/stats'} target="_blank">
-                  {t('Stats')}
-                </StyledExternalLink> */}
                 <StyledNavLink
                   to="/stats"
-                  isActive={(match, { pathname }) =>
-                    Boolean(match) || pathname.startsWith('/stats-swap') || pathname.startsWith('/staking')
-                  }
+                  isActive={() => true}
                 >
                   {t('Stats')}
                 </StyledNavLink>
@@ -502,13 +482,13 @@ function Header() {
                 </SubMenu>
               </MenuItem>
               <MenuItem>
-                <StyledExternalLink href={isMobile ? '' : S_ONE_DOCS_URL} target={isMobile ? '_self' : '_blank'}>
+                <StyledExternalLink href={S_ONE_DOCS_URL} target="_blank">
                   {t('Docs')}
                 </StyledExternalLink>
                 <ResponsiveTopEndSubMenu>
-                  <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL}>White Paper</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_FAQ_URL}>FAQ</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_BLOG_URL}>Blog</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">White Paper</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_FAQ_URL} target="_blank">FAQ</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_BLOG_URL} target="_blank">Blog</SubMenuItemExternalLink>
                 </ResponsiveTopEndSubMenu>
               </MenuItem>
             </HeaderMenu>
