@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -204,7 +204,7 @@ const ResponsiveBottomRightSubMenu = styled(SubMenu)`
     transform: none;
     left: unset;
     right: 0;
-    bottom: 118px
+    z-index: 9999
   `}
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -385,7 +385,7 @@ const HeaderControls = styled.div`
     bottom: 0px;
     left: 0px;
     width: 100%;
-    z-index: 99;
+    z-index: 99999;
     height: 72px;
     background-color: ${({ theme }) => theme.bg1Sone};
   `};
@@ -428,7 +428,7 @@ const ShowOnlyExtraSmall = styled.div`
   `};
 `
 function Header() {
-  const [language, setLanguage] = useState()
+  const [language, setLanguage] = useState('')
   const [darkMode, toggleDarkMode] = useDarkModeManager()
 
   const [isShowMobileMenu, setIsShowMobileMenu] = useState(false)
@@ -438,7 +438,11 @@ function Header() {
   }
 
   const { t, i18n } = useTranslation()
-  console.log('language1111111', i18n)
+
+  useEffect(() => {
+    const languageI18n = i18n.language
+    setLanguage(languageI18n)
+  }, [i18n.language])
 
   return (
     <>

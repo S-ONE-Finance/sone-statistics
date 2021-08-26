@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar } from 'recharts'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
-
 import { toK, toNiceDate, toNiceDateYear, formattedNum, getTimeframe } from '../../utils'
 import { OptionButton, StyleButtonComponent } from '../ButtonStyled'
 import { darken } from 'polished'
@@ -108,7 +107,7 @@ const TokenChart = ({ address, color, base }) => {
   }, [prevWindow, timeWindow])
 
   const below1080 = useMedia('(max-width: 1080px)')
-  const below600 = useMedia('(max-width: 600px)')
+  const below600 = useMedia('(max-height: 600px)')
 
   let utcStartTime = getTimeframe(timeWindow)
   const domain = [(dataMin) => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax']

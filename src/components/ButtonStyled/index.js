@@ -156,6 +156,8 @@ export const OptionButton = styled.div`
 
 export const StyleButtonComponent = styled.div`
   font-weight: 400;
+  width: fit-content;
+  white-space: nowrap;
   padding: 6px;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.bg4};

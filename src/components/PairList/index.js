@@ -83,7 +83,7 @@ const DataText = styled(Flex)`
   color: ${({ theme }) => theme.text1};
 
   & > * {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   @media screen and (max-width: 600px) {
@@ -211,7 +211,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
       )
 
       return (
-        <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
+        <DashGrid style={{ height: below600 ? '48px' : 'auto' }} disbaleLinks={disbaleLinks} focus={true}>
           <DataText area="name" fontWeight="500">
             {!below600 && (
               <div

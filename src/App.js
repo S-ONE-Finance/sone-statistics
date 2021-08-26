@@ -106,7 +106,7 @@ const LayoutWrapper = ({ children }) => {
         </div>
       </Body>
       <Polling />
-      <FooterWrapper style={{ zIndex: 9999 }}>
+      <FooterWrapper style={{ zIndex: 10 }}>
         <Footer />
       </FooterWrapper>
     </>
@@ -126,7 +126,7 @@ const LayoutWrapper2 = ({ children }) => {
         {children}
       </Body>
       <Polling />
-      <FooterWrapper style={{ zIndex: 9999 }}>
+      <FooterWrapper style={{ zIndex: 10 }}>
         <Footer />
       </FooterWrapper>
     </>

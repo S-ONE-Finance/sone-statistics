@@ -441,17 +441,7 @@ export const Search = ({ small = false }) => {
           large={!small}
           type={'text'}
           ref={wrapperRef}
-          placeholder={
-            small
-              ? ''
-              : below410
-              ? 'Search...'
-              : below470
-              ? 'Search swap...'
-              : below700
-              ? 'Search pairs and tokens...'
-              : `${t('textSearchInpMain')}`
-          }
+          placeholder={` ${t('textSearchInpMain')}`}
           value={value}
           onChange={(e) => {
             setValue(e.target.value)

@@ -104,7 +104,14 @@ function TabComponent(_props) {
   return (
     <ContentWrapper style={{ zIndex: 1 }}>
       <Grid container spacing={0} className="box-first-main">
-        <Grid item lg={4} md={12} mb={0.5} px={0}>
+        <Grid
+          item
+          lg={4}
+          md={12}
+          mb={0.5}
+          px={0}
+          style={{ textAlign: isMobile ? 'center' : 'left', width: isMobile ? '100%' : 'auto' }}
+        >
           <Title>{t('Swap Statistic')}</Title>
         </Grid>
         <Grid className={classes.boxSearchLeft} item lg={5} md={12} mb={0.5} px={2} mt={2}>
