@@ -1,10 +1,10 @@
 // THE GRAPH URLS
-export const CLIENT_URL = process.env.REACT_APP_CLIENT_URL ?? ''
+export const SWAP_CLIENT_URL = process.env.REACT_APP_SWAP_CLIENT_URL ?? ''
 export const HEALTH_CLIENT_URL = process.env.REACT_APP_HEALTH_CLIENT_URL ?? ''
 export const STAKING_CLIENT_URL = process.env.REACT_APP_STAKING_CLIENT_URL ?? ''
 export const BLOCK_CLIENT_URL = process.env.REACT_APP_BLOCK_CLIENT_URL ?? ''
 
-if (CLIENT_URL === '') throw new Error(`REACT_APP_CLIENT_URL not found.`)
+if (SWAP_CLIENT_URL === '') throw new Error(`REACT_APP_CLIENT_URL not found.`)
 if (HEALTH_CLIENT_URL === '') throw new Error(`REACT_APP_HEALTH_CLIENT_URL not found.`)
 if (STAKING_CLIENT_URL === '') throw new Error(`REACT_APP_STAKING_CLIENT_URL not found.`)
 if (BLOCK_CLIENT_URL === '') throw new Error(`REACT_APP_BLOCK_CLIENT_URL not found.`)
