@@ -133,26 +133,13 @@ const LayoutWrapper2 = ({ children }) => {
   )
 }
 
-const BLOCK_DIFFERENCE_THRESHOLD = 30
-
 function App({ t }) {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
-  const [latestBlock, headBlock] = useLatestBlocks()
-
-  // show warning
-  const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
 
   return (
     <ApolloProvider client={client}>
       <AppWrapper>
-        {showWarning && (
-          <WarningWrapper>
-            <WarningBanner>
-              {`Warning: The data on this site has only synced to Ethereum block ${latestBlock} (out of ${headBlock}). Please check back soon.`}
-            </WarningBanner>
-          </WarningWrapper>
-        )}
         {globalData &&
         Object.keys(globalData).length > 0 &&
         globalChartData &&

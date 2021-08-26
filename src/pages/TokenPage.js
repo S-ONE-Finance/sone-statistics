@@ -154,8 +154,8 @@ function TokenPage({ address, history }) {
 
   const below1080 = useMedia('(max-width: 1080px)')
   // const below800 = useMedia('(max-width: 800px)')
-  // const below600 = useMedia('(max-width: 600px)')
-  // const below500 = useMedia('(max-width: 500px)')
+  const below600 = useMedia('(max-width: 600px)')
+  const below500 = useMedia('(max-width: 500px)')
 
   // format for long symbol
   const LENGTH = below1080 ? 10 : 16
@@ -212,39 +212,32 @@ function TokenPage({ address, history }) {
               }}
             >
               <RowFixed style={{ flexWrap: 'wrap' }}>
-                <RowFixed style={{ alignItems: 'baseline' }}>
-                  <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
-                  <TYPE.main fontSize={below1080 ? '1.5rem' : '36px'} fontWeight={500} style={{ margin: '0 1rem' }}>
+                <RowFixed style={{ alignItems: below500 ? 'center' : 'baseline' }}>
+                  <TokenLogo address={address} size={below500 ? '24px' : '32px'} style={{ alignSelf: 'center' }} />
+                  <TYPE.main fontSize={below1080 ? '13px' : '36px'} fontWeight={500} style={{ margin: '0 1rem' }}>
                     <RowFixed gap="6px">
                       <FormattedName text={name ? name + ' ' : ''} maxCharacters={16} style={{ marginRight: '6px' }} />{' '}
                       {formattedSymbol ? `(${formattedSymbol})` : ''}
                     </RowFixed>
-                  </TYPE.main>{' '}
-                  {!below1080 && (
-                    <>
-                      <TYPE.main
-                        className="font-36 font-weight-500 color-dark"
-                        fontWeight={500}
-                        style={{ marginRight: '1rem' }}
-                        Add
-                        Liquidity
-                      >
-                        {price}
-                      </TYPE.main>
-                      <div
-                        className={
-                          priceChange >= 0 ? 'font-24 color-blue font-weight-500' : 'font-24 color-red font-weight-500'
-                        }
-                      >
-                        {priceChange}
-                      </div>
-                    </>
-                  )}
+                  </TYPE.main>
+                  <TYPE.main
+                    className="font-weight-500 color-dark"
+                    fontWeight={500}
+                    style={{ marginRight: '1rem' }}
+                    Add
+                    Liquidity
+                    fontSize={below500 ? 13 : 36}
+                  >
+                    {price}
+                  </TYPE.main>
+                  <div
+                    fontSize={below500 ? 13 : 24}
+                    className={priceChange >= 0 ? 'color-blue font-weight-500' : 'color-red font-weight-500'}
+                  >
+                    {priceChange}
+                  </div>
                 </RowFixed>
               </RowFixed>
-              {/* <RowFixed style={below1080 ? { width: '100%' } : { width: '40%' }}>
-                {!below600 && <Search small={false} />}
-              </RowFixed> */}
             </RowBetween>
             <RowBetween
               style={{
@@ -254,14 +247,27 @@ function TokenPage({ address, history }) {
               }}
             >
               <RowFixed>
-                <Link href={getPoolLink(address)} target="_blank">
-                  <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}>
+                <Link href={getPoolLink(address)} target="_blank" style={{ order: below500 ? 1 : 0 }}>
+                  <ButtonLight
+                    style={{
+                      backgroundColor: '#F05359',
+                      color: '#fff',
+                      borderRadius: 35,
+                      fontSize: below500 ? 13 : 24,
+                    }}
+                  >
                     + {t('Add Liquidity')}
                   </ButtonLight>
                 </Link>
-                <Link href={getSwapLink(address)} target="_blank">
+                <Link href={getSwapLink(address)} target="_blank" style={{ order: below500 ? 0 : 1 }}>
                   <ButtonDark
-                    style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
+                    style={{
+                      backgroundColor: '#F05359',
+                      color: '#fff',
+                      borderRadius: 35,
+                      fontSize: below500 ? 13 : 24,
+                      width: below500 ? 56 : 101,
+                    }}
                     ml={'.5rem'}
                     mr={below1080 && '.5rem'}
                   >
@@ -283,7 +289,10 @@ function TokenPage({ address, history }) {
                   )}
                 </RowFixed>
               )}
-              <PanelWrapper className="column-token" style={{ marginTop: below1080 ? '0' : '1rem' }}>
+              <PanelWrapper
+                className="column-token"
+                style={{ marginTop: below1080 ? '0' : '1rem', gap: below500 ? 20 : 6 }}
+              >
                 {below1080 && price && (
                   <Panel
                     style={{
@@ -293,15 +302,19 @@ function TokenPage({ address, history }) {
                   >
                     <AutoColumn gap="20px">
                       <RowBetween>
-                        <TYPE.main>Price</TYPE.main>
+                        <TYPE.main
+                          fontSize={below500 ? 13 : 24}
+                          className={isDarkMode ? 'font-weight-normal color-gray2' : 'font-weight-normal color-gray'}
+                        >
+                          Price
+                        </TYPE.main>
                         <div />
                       </RowBetween>
                       <RowBetween align="flex-end">
-                        {' '}
-                        <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={500}>
+                        <TYPE.main fontSize={below500 ? 20 : 28} lineHeight={1} fontWeight={500}>
                           {price}
                         </TYPE.main>
-                        <TYPE.main>{priceChange}</TYPE.main>
+                        <TYPE.main fontSize={below500 ? 16 : 24}>{priceChange}</TYPE.main>
                       </RowBetween>
                     </AutoColumn>
                   </Panel>
@@ -310,9 +323,8 @@ function TokenPage({ address, history }) {
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main
-                        className={
-                          isDarkMode ? 'font-weight-normal f-24 color-gray2' : 'font-weight-normal f-24 color-gray'
-                        }
+                        fontSize={below500 ? 13 : 24}
+                        className={isDarkMode ? 'font-weight-normal color-gray2' : 'font-weight-normal color-gray'}
                       >
                         {t('Total Liquidity')}
                       </TYPE.main>
@@ -320,14 +332,14 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main
-                        fontSize={'1.5rem'}
+                        fontSize={below500 ? 20 : 28}
                         lineHeight={1}
                         fontWeight={500}
                         style={{ color: isDarkMode ? '#fff' : '#333333' }}
                       >
                         {liquidity}
                       </TYPE.main>
-                      <TYPE.main>{liquidityChange}</TYPE.main>
+                      <TYPE.main fontSize={below500 ? 16 : 24}>{liquidityChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -335,9 +347,8 @@ function TokenPage({ address, history }) {
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main
-                        className={
-                          isDarkMode ? 'font-weight-normal f-24 color-gray2' : 'font-weight-normal f-24 color-gray'
-                        }
+                        fontSize={below500 ? 13 : 24}
+                        className={isDarkMode ? 'font-weight-normal color-gray2' : 'font-weight-normal color-gray'}
                       >
                         {t('Volume (24h)')}
                       </TYPE.main>
@@ -345,14 +356,14 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main
-                        fontSize={'1.5rem'}
+                        fontSize={below500 ? 20 : 28}
                         lineHeight={1}
                         fontWeight={500}
                         style={{ color: isDarkMode ? '#fff' : '#333333' }}
                       >
                         {volume}
                       </TYPE.main>
-                      <TYPE.main>{volumeChange}</TYPE.main>
+                      <TYPE.main fontSize={below500 ? 16 : 24}>{volumeChange}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -361,9 +372,8 @@ function TokenPage({ address, history }) {
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main
-                        className={
-                          isDarkMode ? 'font-weight-normal f-24 color-gray2' : 'font-weight-normal f-24 color-gray'
-                        }
+                        fontSize={below500 ? 13 : 24}
+                        className={isDarkMode ? 'font-weight-normal color-gray2' : 'font-weight-normal color-gray'}
                       >
                         {t('Transactions (24hrs)')}
                       </TYPE.main>
@@ -371,14 +381,14 @@ function TokenPage({ address, history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main
-                        fontSize={'1.5rem'}
+                        fontSize={below500 ? 20 : 28}
                         lineHeight={1}
                         fontWeight={500}
                         style={{ color: isDarkMode ? '#fff' : '#333333' }}
                       >
                         {oneDayTxns ? localNumber(oneDayTxns) : 0}
                       </TYPE.main>
-                      <TYPE.main>{txnChangeFormatted}</TYPE.main>
+                      <TYPE.main fontSize={below500 ? 16 : 24}>{txnChangeFormatted}</TYPE.main>
                     </RowBetween>
                   </AutoColumn>
                 </Panel>
@@ -397,7 +407,7 @@ function TokenPage({ address, history }) {
             </>
 
             <RowBetween style={{ marginTop: '3rem' }}>
-              <TYPE.main fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+              <TYPE.main fontSize={below500 ? 16 : 40} style={{ fontWeight: 'bold' }}>
                 {t('Top Pairs')}
               </TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
@@ -421,7 +431,7 @@ function TokenPage({ address, history }) {
               <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} useTracked={useTracked} />
             </Panel>
             <RowBetween mt={40} mb={'1rem'} style={{ zIndex: 1 }}>
-              <TYPE.main fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+              <TYPE.main fontSize={below500 ? 16 : 40} style={{ fontWeight: 'bold' }}>
                 {t('Transactions')}
               </TYPE.main>{' '}
               <div />
@@ -435,7 +445,7 @@ function TokenPage({ address, history }) {
             </Panel>
             <>
               <RowBetween style={{ marginTop: '3rem' }}>
-                <TYPE.main fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+                <TYPE.main fontSize={below500 ? 16 : 40} style={{ fontWeight: 'bold' }}>
                   {t('Token Information')}
                 </TYPE.main>{' '}
               </RowBetween>
@@ -452,8 +462,10 @@ function TokenPage({ address, history }) {
               >
                 <TokenDetailsLayout style={{}}>
                   <Column>
-                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Symbol')}</TYPE.main>
-                    <Text fontSize={'1rem'} style={{ marginTop: '1.5rem' }} fontWeight="400">
+                    <TYPE.main style={{ fontWeight: 'bold' }} fontSize={below600 ? 13 : 20}>
+                      {t('Symbol')}
+                    </TYPE.main>
+                    <Text fontSize={below600 ? 13 : 16} style={{ marginTop: '1.5rem' }} fontWeight="400">
                       <FormattedName
                         style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
                         text={symbol}
@@ -462,8 +474,10 @@ function TokenPage({ address, history }) {
                     </Text>
                   </Column>
                   <Column>
-                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Name')}</TYPE.main>
-                    <TYPE.main style={{ marginTop: '1.5rem' }} fontSize={'1rem'} fontWeight="400">
+                    <TYPE.main fontSize={below600 ? 13 : 20} style={{ fontWeight: 'bold' }}>
+                      {t('Name')}
+                    </TYPE.main>
+                    <TYPE.main style={{ marginTop: '1.5rem' }} fontSize={below600 ? 13 : 16} fontWeight="400">
                       <FormattedName
                         style={{ color: isDarkMode ? '#AAAAAA' : '#767676' }}
                         text={name}
@@ -472,10 +486,12 @@ function TokenPage({ address, history }) {
                     </TYPE.main>
                   </Column>
                   <Column>
-                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Address')}</TYPE.main>
+                    <TYPE.main style={{ fontWeight: 'bold' }} fontSize={below600 ? 13 : 20}>
+                      {t('Address')}
+                    </TYPE.main>
                     <AutoRow align="flex-end">
                       <TYPE.main
-                        fontSize={'1rem'}
+                        fontSize={below600 ? 13 : 16}
                         fontWeight="400"
                         style={{ color: isDarkMode ? '#AAAAAA' : '#767676', marginTop: '1.5rem' }}
                       >
@@ -484,13 +500,20 @@ function TokenPage({ address, history }) {
                     </AutoRow>
                   </Column>
                   <Column className="box-btn-action">
-                    <TYPE.main style={{ fontWeight: 'bold' }}>{t('Action')}</TYPE.main>
-                    <AutoRow align="flex-end" style={{ marginTop: '1.5rem' }}>
-                      <button className="btn-danger" onClick={() => setCopied(address)}>
+                    <TYPE.main style={{ fontWeight: 'bold' }} fontSize={below600 ? 13 : 20}>
+                      {t('Action')}
+                    </TYPE.main>
+                    <AutoRow align="flex-end" style={{ marginTop: '1.5rem' }} fontSize={below600 ? 13 : 16}>
+                      <button className="btn-danger" onClick={() => setCopied(address)} fontSize={below600 ? 13 : 16}>
                         {t('Copy Address')}
                       </button>
                       <ButtonLight className="btn-danger ml-1">
-                        <Link color="#fff" external href={ETHERSCAN_BASE_URL + '/address/' + address}>
+                        <Link
+                          color="#fff"
+                          external
+                          href={ETHERSCAN_BASE_URL + '/address/' + address}
+                          fontSize={below600 ? 13 : 16}
+                        >
                           {t('View on Etherscan')} ↗
                         </Link>
                       </ButtonLight>

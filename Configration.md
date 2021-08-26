@@ -24,7 +24,7 @@ export const FACTORY_ADDRESS = '0xB6EF230f01008e04b83E61807ed710F5BABc8Ddd'
 //  Example
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/danielpham765/soneswap',
+    uri: 'https://api.thegraph.com/subgraphs/name/s-one-system/sone-swap-ropsten',
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -33,7 +33,7 @@ export const client = new ApolloClient({
 // .
 export const v1Client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/danielpham765/soneswap',
+    uri: 'https://api.thegraph.com/subgraphs/name/s-one-system/sone-swap-ropsten',
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -42,7 +42,7 @@ export const v1Client = new ApolloClient({
 // .
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/danielpham765/ethereum-block-info',
+    uri: 'https://api.thegraph.com/subgraphs/name/blocklytics/ropsten-blocks',
   }),
   cache: new InMemoryCache(),
 })
@@ -56,6 +56,6 @@ export const blockClient = new ApolloClient({
 ```js
 //  Example
 const graphRoute = axios.create({
-  baseURL: 'https://api.thegraph.com/subgraphs/name/danielpham765/soneswap',
+  baseURL: 'https://api.thegraph.com/subgraphs/name/s-one-system/sone-swap-ropsten',
 })
 ```

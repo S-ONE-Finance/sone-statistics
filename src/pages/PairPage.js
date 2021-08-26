@@ -312,16 +312,20 @@ function PairPage({ pairAddress, history }) {
                     marginLeft: 0,
                   }}
                 >
-                  <Link external href={getPoolLink(token0?.id, token1?.id)}>
-                    <ButtonLight style={{ backgroundColor: '#F05359', color: '#fff', fontSize: 24, borderRadius: 35 }}>
+                  <Link external href={getPoolLink(token0?.id, token1?.id)} style={{ order: below600 ? 1 : 0 }}>
+                    <ButtonLight
+                      style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
+                      fontSize={below600 ? 13 : 24}
+                    >
                       + {t('Add Liquidity')}
                     </ButtonLight>
                   </Link>
-                  <Link external href={getSwapLink(token0?.id, token1?.id)}>
+                  <Link external href={getSwapLink(token0?.id, token1?.id)} style={{ order: below600 ? 0 : 1 }}>
                     <ButtonDark
                       ml={!below1080 && '.5rem'}
                       mr={below1080 && '.5rem'}
-                      style={{ backgroundColor: '#F05359', color: '#fff', fontSize: 24, borderRadius: 35 }}
+                      style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
+                      fontSize={below600 ? 13 : 24}
                     >
                       {t('Swap')}
                     </ButtonDark>
@@ -372,7 +376,7 @@ function PairPage({ pairAddress, history }) {
             <>
               {!below1080 && (
                 <RowFixed>
-                  {/* <TYPE.main fontSize={'2.125rem'} mr="6px">
+                  {/* <TYPE.main fontSize={below600 ? 16 : 40} mr="6px">
                     {t('Pair Stats')}
                   </TYPE.main> */}
                   {showUSDWaning ? (
@@ -481,7 +485,7 @@ function PairPage({ pairAddress, history }) {
                   />
                 </Panel>
               </PanelWrapper>
-              <TYPE.main fontSize={'2.125rem'} style={{ marginTop: '3rem', fontWeight: 'bold' }}>
+              <TYPE.main fontSize={below600 ? 16 : 40} style={{ marginTop: '3rem', fontWeight: 'bold' }}>
                 {t('Transactions')}
               </TYPE.main>{' '}
               <Panel
@@ -496,7 +500,7 @@ function PairPage({ pairAddress, history }) {
                 {transactions ? <TxnList transactions={transactions} /> : <Loader />}
               </Panel>
               <RowBetween style={{ marginTop: '3rem' }}>
-                <TYPE.main fontSize={'2.125rem'} style={{ fontWeight: 'bold' }}>
+                <TYPE.main fontSize={below600 ? 16 : 40} style={{ fontWeight: 'bold' }}>
                   {t('Pair Information')}
                 </TYPE.main>{' '}
               </RowBetween>

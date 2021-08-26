@@ -69,7 +69,7 @@ const Input = styled.input`
   outline: none;
   width: 100%;
   color: ${({ theme }) => theme.text1};
-  font-size: ${({ large }) => (large ? '20px' : '14px')};
+  font-size: ${({ large }) => (large ? '22px' : '14px')};
 
   ::placeholder {
     color: ${({ theme }) => theme.text3};

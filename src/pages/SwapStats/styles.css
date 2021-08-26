@@ -58,6 +58,7 @@
 }
 .color-blue {
   color: #87d128 !important;
+  font-weight: 400 !important;
 }
 .font-weight-normal {
   font-weight: normal !important;
@@ -96,7 +97,9 @@
 .font-weight-bold {
   font-weight: bold !important;
 }
-
+.f-24 {
+  font-size: 24px !important;
+}
 .f-20 {
   font-size: 20px !important;
 }

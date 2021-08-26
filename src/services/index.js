@@ -9,7 +9,7 @@ const route = axios.create({
   baseURL: 'https://wallet.tomochain.com/api/luaswap',
 })
 const graphRoute = axios.create({
-  baseURL: 'https://api.thegraph.com/subgraphs/name/danielpham765/soneswap',
+  baseURL: 'https://api.thegraph.com/subgraphs/name/s-one-system/sone-swap-ropsten',
 })
 
 const getTokenPrice = (token, callback) => {

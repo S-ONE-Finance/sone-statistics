@@ -460,20 +460,25 @@ function Header() {
                 </StyledExternalLink>
               </HideSmall>
               <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + "/#/swap"} target="_blank">{t('Swap')}</StyledExternalLink>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
+                  {t('Swap')}
+                </StyledExternalLink>
                 <SubMenu>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/swap"} target="_blank">{t('Swap')}</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/add"} target="_blank">{t('Add Liquidity')}</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
+                    {t('Swap')}
+                  </SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
+                    {t('Liquidity')}
+                  </SubMenuItemExternalLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>
-                <StyledExternalLink href={S_ONE_APP_URL + "/#/staking"} target="_blank">{t('Staking')}</StyledExternalLink>
+                <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">
+                  {t('Staking')}
+                </StyledExternalLink>
               </MenuItem>
               <MenuItem>
-                <StyledNavLink
-                  to="/stats"
-                  isActive={() => true}
-                >
+                <StyledNavLink to="/stats" isActive={() => true}>
                   {t('Stats')}
                 </StyledNavLink>
                 <SubMenu>
@@ -486,9 +491,15 @@ function Header() {
                   {t('Docs')}
                 </StyledExternalLink>
                 <ResponsiveTopEndSubMenu>
-                  <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">White Paper</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_FAQ_URL} target="_blank">FAQ</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_BLOG_URL} target="_blank">Blog</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">
+                    White Paper
+                  </SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_FAQ_URL} target="_blank">
+                    FAQ
+                  </SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_BLOG_URL} target="_blank">
+                    Blog
+                  </SubMenuItemExternalLink>
                 </ResponsiveTopEndSubMenu>
               </MenuItem>
             </HeaderMenu>
