@@ -4,6 +4,7 @@ import { ReactComponent as IconCoin } from '../../assets/icon_coin.svg'
 import { ReactComponent as IconTransactionCoin } from '../../assets/icon-transaction-coin.svg'
 import { ReactComponent as IconPairs } from '../../assets/icon-coin-pair.svg'
 import { ReactComponent as IconUser } from '../../assets/user.svg'
+import { ReactComponent as IconAccount } from '../../assets/account.svg'
 import { useDarkModeManager, useIndexTabManager } from '../../contexts/LocalStorage'
 import styled, { ThemeContext } from 'styled-components'
 import { useTranslation } from 'react-i18next'
@@ -106,7 +107,7 @@ function TabComponent(_props) {
         <Grid item lg={4} md={12} mb={0.5} px={0}>
           <Title>{t('Swap Statistic')}</Title>
         </Grid>
-        <Grid className={classes.boxSearchLeft} item lg={4} md={12} mb={0.5} px={2} mt={2}>
+        <Grid className={classes.boxSearchLeft} item lg={5} md={12} mb={0.5} px={2} mt={2}>
           <BoxSearch />
         </Grid>
       </Grid>
@@ -174,7 +175,7 @@ function TabComponent(_props) {
             labelContainer: classes.labelContainer,
           }}
           icon={
-            <IconUser
+            <IconAccount
               style={{ width: isMobile ? 16 : 30, height: isMobile ? 16 : 30 }}
               fontSize="small"
               className={isDarkMode ? 'iconDarkMode' : 'iconLightMode'}

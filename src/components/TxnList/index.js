@@ -430,6 +430,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               }}
             >
               {t('Total Value')}
+              {sortedColumn === SORT_FIELD.VALUE ? (sortDirection ? '↓' : '↑') : ''}
             </ClickableText>
           </Flex>
           {!below780 && (

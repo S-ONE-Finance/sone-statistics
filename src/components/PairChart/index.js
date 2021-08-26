@@ -4,7 +4,7 @@ import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, 
 import { RowBetween, AutoRow } from '../Row'
 
 import { toK, toNiceDate, toNiceDateYear, formattedNum, getTimeframe } from '../../utils'
-import { OptionButton } from '../ButtonStyled'
+import { OptionButton, StyleButtonComponent } from '../ButtonStyled'
 import { darken } from 'polished'
 import { usePairChartData, useHourlyRateData, usePairData } from '../../contexts/PairData'
 import { timeframeOptions } from '../../constants'
@@ -165,24 +165,24 @@ const PairChart = ({ address, color, base0, base1 }) => {
             </OptionButton>
           </AutoRow>
           <AutoRow justify="flex-end" gap="6px">
-            <OptionButton
+            <StyleButtonComponent
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
             >
               {t('1W')}
-            </OptionButton>
-            <OptionButton
+            </StyleButtonComponent>
+            <StyleButtonComponent
               active={timeWindow === timeframeOptions.MONTH}
               onClick={() => setTimeWindow(timeframeOptions.MONTH)}
             >
               {t('1M')}
-            </OptionButton>
-            <OptionButton
+            </StyleButtonComponent>
+            <StyleButtonComponent
               active={timeWindow === timeframeOptions.ALL_TIME}
               onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
             >
               {t('All')}
-            </OptionButton>
+            </StyleButtonComponent>
           </AutoRow>
         </OptionsRow>
       )}

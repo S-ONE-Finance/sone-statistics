@@ -184,12 +184,12 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
   useEffect(() => {
     if (tokens && formattedTokens) {
       let extraPages = 1
-      if (formattedTokens.length % itemMax === 0) {
+      if (formattedTokens.length % ITEMS_PER_PAGE === 0) {
         extraPages = 0
       }
-      setMaxPage(Math.floor(formattedTokens.length / itemMax) + extraPages)
+      setMaxPage(Math.floor(formattedTokens.length / ITEMS_PER_PAGE) + extraPages)
     }
-  }, [tokens, formattedTokens, itemMax])
+  }, [tokens, formattedTokens, ITEMS_PER_PAGE])
 
   const filteredList = useMemo(() => {
     return (
@@ -203,12 +203,11 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
             ? (sortDirection ? -1 : 1) * 1
             : (sortDirection ? -1 : 1) * -1
         })
-        .slice(itemMax * (page - 1), page * itemMax)
+        .slice(ITEMS_PER_PAGE * (page - 1), page * ITEMS_PER_PAGE)
     )
-  }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
+  }, [formattedTokens, ITEMS_PER_PAGE, page, sortDirection, sortedColumn])
 
   const ListItem = ({ item, index }) => {
-    // console.log('formattedPercent(item.priceChangeUSD)', item.priceChangeUSD);
     return (
       <DashGrid style={{ height: '48px' }} focus={true}>
         <DataText area="name" fontWeight="400">
@@ -393,7 +392,7 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
                   )
                 }}
               >
-                {t('Volume (24hrs)')}
+                {t('Volume (24h)')}
                 {sortedColumn === (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>

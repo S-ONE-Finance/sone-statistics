@@ -443,12 +443,12 @@ export function formattedPercent(percent, useBrackets = false) {
   }
   if (fixedPercent > 0) {
     if (fixedPercent > 100) {
-      return <Text fontWeight={500} color="#7AC51B">{`+${percent?.toFixed(0).toLocaleString()}%`}</Text>
+      return <Text fontWeight={400} color="#7AC51B">{`+${percent?.toFixed(0).toLocaleString()}%`}</Text>
     } else {
-      return <Text fontWeight={500} color="#7AC51B">{`+${fixedPercent}%`}</Text>
+      return <Text fontWeight={400} color="#7AC51B">{`+${fixedPercent}%`}</Text>
     }
   } else {
-    return <Text fontWeight={500} color="#F05359">{`${fixedPercent}%`}</Text>
+    return <Text fontWeight={400} color="#F05359">{`${fixedPercent}%`}</Text>
   }
 }
 
