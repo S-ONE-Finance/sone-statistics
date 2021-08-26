@@ -463,7 +463,7 @@ function Header() {
                 <StyledExternalLink href={S_ONE_APP_URL + "/#/swap"} target="_blank">{t('Swap')}</StyledExternalLink>
                 <SubMenu>
                   <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/swap"} target="_blank">{t('Swap')}</SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/add"} target="_blank">{t('Add Liquidity')}</SubMenuItemExternalLink>
+                  <SubMenuItemExternalLink href={S_ONE_APP_URL + "/#/add"} target="_blank">{t('Liquidity')}</SubMenuItemExternalLink>
                 </SubMenu>
               </MenuItem>
               <MenuItem>
