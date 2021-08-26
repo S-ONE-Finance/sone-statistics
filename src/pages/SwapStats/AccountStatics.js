@@ -6,6 +6,7 @@ import { CustomLink } from '../../components/Link'
 import LPList from '../../components/LPList'
 import { useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
+import { useMedia } from 'react-use'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -24,12 +25,13 @@ const StyleDiv = styled.div`
 function AccountStatics() {
   const topLps = useTopLps()
   const { t, i18n } = useTranslation()
+  const below600 = useMedia('(max-width: 600px)')
 
   return (
     <div className="tab-account">
       <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
         <RowBetween>
-          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+          <TYPE.main fontSize={below600 ? 20 : 40} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
             {t('Top Accounts')}
           </TYPE.main>
           <CustomLink className="btnLink" to={'/swap/accounts'}>

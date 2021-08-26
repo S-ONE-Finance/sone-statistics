@@ -371,7 +371,13 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
           {below780 ? (
             <RowBetween area="txn">
-              <DropdownSelect options={TXN_TYPE} active={txFilter} setActive={setTxFilter} color={color} />
+              <DropdownSelect
+                style={{ border: 0 }}
+                options={TXN_TYPE}
+                active={txFilter}
+                setActive={setTxFilter}
+                color={color}
+              />
             </RowBetween>
           ) : (
             <RowFixed area="txn" gap="10px" pl={4}>
@@ -484,7 +490,8 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   setSortedColumn(SORT_FIELD.TIMESTAMP)
                   setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
                 }}
-                style={{ fontWeight: 'bold', fontSize: 20 }}
+                className="f-20"
+                style={{ fontWeight: 'bold' }}
               >
                 {t('Time')}
                 {sortedColumn === SORT_FIELD.TIMESTAMP ? (sortDirection ? '↑' : '↓') : ''}
