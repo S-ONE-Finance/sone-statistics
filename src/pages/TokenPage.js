@@ -117,8 +117,8 @@ function TokenPage({ address, history }) {
     txnChange,
   } = useTokenData(address)
   const [isDarkMode] = useDarkModeManager()
-  const [isCopied, setCopied] = useCopyClipboard()
-  const { t, i18n } = useTranslation()
+  const [, setCopied] = useCopyClipboard()
+  const { t } = useTranslation()
 
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
@@ -172,7 +172,7 @@ function TokenPage({ address, history }) {
     })
   }, [])
 
-  const [useTracked, setUseTracked] = useState(true)
+  const [useTracked] = useState(true)
 
   if (TOKEN_BLACKLIST.includes(address)) {
     return (

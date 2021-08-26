@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { formatTime, formattedNum, urls } from '../../utils'
+import { formattedNum, formatTime, urls } from '../../utils'
 import { useMedia } from 'react-use'
 import { useCurrentCurrency } from '../../contexts/Application'
-import { RowFixed, RowBetween } from '../Row'
+import { RowBetween, RowFixed } from '../Row'
 
 import LocalLoader from '../LocalLoader'
 import { Box, Flex, Text } from 'rebass'
@@ -25,24 +25,6 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
 dayjs.extend(utc)
-
-const PageButtons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 2em;
-  margin-bottom: 0.5em;
-`
-
-const Arrow = styled.div`
-  color: #2f80ed;
-  opacity: ${(props) => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
-`
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
@@ -199,10 +181,11 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
   const [isDarkMode] = useDarkModeManager()
   const [currency] = useCurrentCurrency()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const classes = useStyles()
 
-  const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(5)
+  const [ITEMS_PER_PAGE, SET_ITEMS_PER_PAGE] = useState(5)
+
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -288,7 +271,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         setMaxPage(Math.floor(filtered.length / ITEMS_PER_PAGE) + extraPages)
       }
     }
-  }, [transactions, txFilter])
+  }, [ITEMS_PER_PAGE, transactions, txFilter])
 
   useEffect(() => {
     setPage(1)
@@ -360,9 +343,8 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     )
   }
 
-  const handleChangePagePanigation = (event) => {
-    setITEMS_PER_PAGE(event.target.value)
-    return
+  const handleChangePagePagination = (event) => {
+    SET_ITEMS_PER_PAGE(event.target.value)
   }
 
   return (
@@ -553,7 +535,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             labelId="demo-customized-select-label"
             id="demo-customized-select"
             value={ITEMS_PER_PAGE}
-            onChange={handleChangePagePanigation}
+            onChange={handleChangePagePagination}
           >
             <MenuItem value={5}>5/Page</MenuItem>
             <MenuItem value={10}>10/Page</MenuItem>

@@ -161,7 +161,7 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
   const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(itemMax)
 
   // i18n
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   // style theme
   const theme = useContext(ThemeContext)
 

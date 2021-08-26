@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './apollo/client'
-import { Route, Switch, HashRouter, Redirect } from 'react-router-dom'
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import TokenPage from './pages/TokenPage'
 import PairPage from './pages/PairPage'
-import { useGlobalData, useGlobalChartData } from './contexts/GlobalData'
+import { useGlobalChartData, useGlobalData } from './contexts/GlobalData'
 import { isAddress } from './utils'
 import AccountPage from './pages/AccountPage'
 import AllTokensPage from './pages/AllTokensPage'
@@ -137,7 +137,9 @@ const BLOCK_DIFFERENCE_THRESHOLD = 30
 
 function App({ t }) {
   const globalData = useGlobalData()
+  console.log(`globalData`, globalData)
   const globalChartData = useGlobalChartData()
+  console.log(`globalChartData`, globalChartData)
   const [latestBlock, headBlock] = useLatestBlocks()
 
   // show warning

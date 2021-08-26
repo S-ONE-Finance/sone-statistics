@@ -25,7 +25,7 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react/prop-types": "off",
-    // "prettier/prettier": "error",
-    "prettier/prettier": "off"
+    "prettier/prettier": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }

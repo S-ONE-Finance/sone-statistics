@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import {
   makeStyles,
   Typography,
@@ -20,7 +20,6 @@ import {
   ArrowDropUp as ArrowDropUpIcon,
 } from '@material-ui/icons'
 import _orderBy from 'lodash.orderby'
-import useDashboardData from '../../hooks/useDashboardData'
 import { reduceFractionDigit } from '../../utils/number.js'
 import { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
@@ -54,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     minHeight: 200,
     border: 'none',
-    // borderColor: theme.palette.secondary.main,
   },
   positive: {
     color: '#87d128',
@@ -62,12 +60,6 @@ const useStyles = makeStyles((theme) => ({
   negative: {
     color: 'red',
   },
-  // iconSwapRight: {
-  //   animation: "swappingRight 5s linear infinite",
-  // },
-  // iconSwapLeft: {
-  //   animation: "swappingLeft 5s linear infinite",
-  // },
   redirectBtn: {
     fontSize: 12,
     wordBreak: 'keep-all',
@@ -97,18 +89,18 @@ const LoadingIndicator = () => {
 const PoolRow = ({ row }) => {
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
-  const commonData = useDashboardData((store) => store.commonData)
+  const commonData = {}
   const classes = useStyles()
 
   const handleForwardToPool = ({ poolSymbol }, event) => {
-    event.preventDefault()
+    // event.preventDefault()
     // const link = document.createElement("a");
     // link.href = `https://luaswap.org/#/farms/${poolSymbol}`;
     // link.target = "_blank";
     // document.body.appendChild(link);
     // link.click();
     // document.body.remove(link);
-    window.open(`https://luaswap.org/#/farms/${poolSymbol}`, '_blank').focus()
+    // window.open(`https://luaswap.org/#/farms/${poolSymbol}`, '_blank').focus()
   }
 
   return (
@@ -240,20 +232,21 @@ const PoolRow = ({ row }) => {
 
 export default function PoolTable() {
   const isUpToExtraSmall = useIsUpToExtraSmall()
-  const [sortData, setSortData] = useState({})
-  const pools = useDashboardData((store) => store.pools)
   const classes = useStyles()
   const theme = useContext(ThemeContext)
-  const { t, i18n } = useTranslation()
-  const getSortedPools = (pools, sortData) => {
-    const sortingCols = Object.keys(sortData)
+  const { t } = useTranslation()
 
+  const isLoading = false
+  const pools = []
+  const [sortData, setSortData] = useState({})
+
+  const getSortedPools = useCallback(() => {
+    const sortingCols = Object.keys(sortData)
     if (sortingCols.length) {
       return _orderBy(pools, sortingCols, Object.values(sortData))
     }
-
     return pools
-  }
+  }, [pools, sortData])
 
   const handleSort = (name) => {
     setSortData((oldData) => ({
@@ -261,7 +254,9 @@ export default function PoolTable() {
     }))
   }
 
-  return pools?.length > 0 ? (
+  return isLoading ? (
+    <LoadingIndicator />
+  ) : (
     <TableContainer
       component={Paper}
       elevation={2}
@@ -369,13 +364,11 @@ export default function PoolTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {getSortedPools(pools, sortData).map((row, rowIdx) => {
+          {getSortedPools().map((row, rowIdx) => {
             return <PoolRow key={row.poolAddress} row={{ rowIdx, ...row }} />
           })}
         </TableBody>
       </Table>
     </TableContainer>
-  ) : (
-    <LoadingIndicator />
   )
 }

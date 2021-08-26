@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Grid, makeStyles, Box, Typography } from '@material-ui/core'
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core'
 import CardItem from '../../components/CardItem'
 import styled, { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
 import { reduceFractionDigit } from '../../utils/number'
-import useDashboardData from '../../hooks/useDashboardData'
 import Panel from '../../components/Panel'
 import GlobalChart from '../../components/GlobalChart'
 import { AutoRow, RowBetween } from '../../components/Row'
@@ -20,7 +19,6 @@ import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
 import { useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
-// import { useTokenData, , useTokenPairs } from '../contexts/TokenData'
 import { useMediaQuery } from 'react-responsive'
 
 OverviewStatistics.propTypes = {}
@@ -100,30 +98,22 @@ const ListOptions = styled(AutoRow)`
     font-size: 1rem;
   }
 `
-const TitleOverView = styled.div`
-    font-weight: 'bold',
-    font-size: 40px,
-  `
 
 function OverviewStatistics() {
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
-  const { commonData } = useDashboardData()
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
   const allPairs = useAllPairData()
-  const { t, i18n } = useTranslation()
-  const [totalTransaction, setTotalTranSaction] = useState(0)
+  const { t } = useTranslation()
+  const [totalTransaction, setTotalTransaction] = useState(0)
   const [totalFee24h, setTotalFee24h] = useState(0)
-  // all transactions with this token
-  // const transactions = useTokenTransactions()
 
   //accounts
   const topLps = useTopLps()
   //Transactions
   const transactions = useGlobalTransactions()
-  // breakpoints
   // const below800 = useMedia('min-width: 800px')
   // const below600 = useMediaQuery('max-width: 600px')
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
@@ -162,18 +152,17 @@ function OverviewStatistics() {
   `
   const totalTransactionAPI = () => {
     const total = transactions?.mints.length + transactions?.burns.length + transactions?.swaps.length
-    setTotalTranSaction(total)
+    setTotalTransaction(total)
   }
 
+  // BUG: Total Fee không đúng.
   const totalFee24hAPI = () => {
     var totalFees = 0
     var totalOneDayVolumeUSD = 0
     var totalOneDayVolumeUntracked = 0
-    Object.values(allPairs).map((item) => {
+    Object.values(allPairs).forEach((item) => {
       if (item.oneDayVolumeUSD) {
         totalOneDayVolumeUSD += item.oneDayVolumeUSD
-      } else {
-        return
       }
     })
     totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
@@ -201,7 +190,7 @@ function OverviewStatistics() {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {reduceFractionDigit(commonData?.totalLiquidity)}
+                  {reduceFractionDigit(888888888)}
                 </Typography>
               </Box>
             }

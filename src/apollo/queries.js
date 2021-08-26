@@ -872,3 +872,130 @@ export const FILTERED_TRANSACTIONS = gql`
     }
   }
 `
+
+export const liquidityPositionSubsetQuery = gql`
+  query liquidityPositionSubsetQuery($first: Int! = 1000, $user: Bytes!) {
+    liquidityPositions(first: $first, where: { user: $user }) {
+      id
+      liquidityTokenBalance
+      user {
+        id
+      }
+      pair {
+        id
+      }
+    }
+  }
+`
+
+export const pairTokenFieldsQuery = gql`
+  fragment pairTokenFields on Token {
+    id
+    name
+    symbol
+    decimals
+    totalSupply
+    derivedETH
+  }
+`
+
+export const pairFieldsQuery = gql`
+  fragment pairFields on Pair {
+    id
+    reserveUSD
+    reserveETH
+    volumeUSD
+    untrackedVolumeUSD
+    trackedReserveETH
+    token0 {
+      ...pairTokenFields
+    }
+    token1 {
+      ...pairTokenFields
+    }
+    reserve0
+    reserve1
+    token0Price
+    token1Price
+    totalSupply
+    txCount
+  }
+  ${pairTokenFieldsQuery}
+`
+
+export const pairSubsetQuery = gql`
+  query pairSubsetQuery(
+    $first: Int! = 1000
+    $pairAddresses: [Bytes]!
+    $orderBy: String! = "trackedReserveETH"
+    $orderDirection: String! = "desc"
+  ) {
+    pairs(first: $first, orderBy: $orderBy, orderDirection: $orderDirection, where: { id_in: $pairAddresses }) {
+      ...pairFields
+    }
+  }
+  ${pairFieldsQuery}
+`
+
+export const poolsQuery = gql`
+  query poolsQuery(
+    $first: Int! = 1000
+    $skip: Int! = 0
+    $orderBy: String! = "timestamp"
+    $orderDirection: String! = "desc"
+  ) {
+    pools(first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection) {
+      id
+      owner {
+        id
+        sonePerBlock
+        totalAllocPoint
+        bonusMultiplier
+      }
+      pair
+      allocPoint
+      lastRewardBlock
+      accSonePerShare
+      balance
+      userCount
+      soneHarvested
+      soneHarvestedUSD
+    }
+  }
+`
+
+const blockFieldsQuery = gql`
+  fragment blockFields on Block {
+    id
+    number
+    timestamp
+  }
+`
+
+export const blocksQuery = gql`
+  query blocksQuery($first: Int! = 1000, $skip: Int! = 0, $start: Int!, $end: Int!) {
+    blocks(
+      first: $first
+      skip: $skip
+      orderBy: number
+      orderDirection: desc
+      where: { timestamp_gt: $start, timestamp_lt: $end, number_gt: 9300000 }
+    ) {
+      ...blockFields
+    }
+  }
+  ${blockFieldsQuery}
+`
+
+export const sonePriceQuery = (soneAddress) => gql`
+  {
+    token(id: "${soneAddress}") {
+      id
+      name
+      derivedETH
+    }
+    bundle(id: "1") {
+      ethPrice
+    }
+  }
+`

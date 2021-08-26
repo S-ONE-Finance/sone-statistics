@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar } from 'recharts'
-import { RowBetween, AutoRow } from '../Row'
+import { Area, AreaChart, Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { AutoRow, RowBetween } from '../Row'
 
-import { toK, toNiceDate, toNiceDateYear, formattedNum, getTimeframe } from '../../utils'
+import { formattedNum, getTimeframe, toK, toNiceDate, toNiceDateYear } from '../../utils'
 import { OptionButton, StyleButtonComponent } from '../ButtonStyled'
 import { darken } from 'polished'
-import { usePairChartData, useHourlyRateData, usePairData } from '../../contexts/PairData'
+import { useHourlyRateData, usePairChartData, usePairData } from '../../contexts/PairData'
 import { timeframeOptions } from '../../constants'
 import { useMedia } from 'react-use'
 import { EmptyCard } from '..'
@@ -53,7 +53,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
   const isClient = typeof window === 'object'
   const [width, setWidth] = useState(ref?.current?.container?.clientWidth)
   const [height, setHeight] = useState(ref?.current?.container?.clientHeight)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!isClient) {

@@ -57,7 +57,7 @@ export default function CopyHelper({ toCopy }) {
             className={
               isDarkMode
                 ? 'box-btn-copy-dark-mode d-flex justify-content-center align-items-center'
-                : 'box-btn-copy-light-mode d-flex justify-content-center align-items-center' + ''
+                : 'box-btn-copy-light-mode d-flex justify-content-center align-items-center'
             }
           >
             <Copy size={'18'} className={isDarkMode ? 'btn-copy-dark-mode' : 'btn-copy-light-mode'} />

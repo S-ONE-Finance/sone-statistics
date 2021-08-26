@@ -1,0 +1,46 @@
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
+import { CHAIN_ID, SONE_ADDRESS, SONE_PRICE_MINIMUM } from '../constants'
+import { client } from '../apollo/client'
+import { sonePriceQuery } from '../apollo/queries'
+import { reduceFractionDigit } from '../utils/number'
+
+/**
+ * 1 SONE === `useSoneInUSD()` USDT.
+ */
+export default function useOneSoneInUSD(): number {
+  const { data: sonePrice } = useQuery<number>(
+    'useOneSoneInUSD',
+    async () => {
+      const data = await client.query({
+        query: sonePriceQuery(SONE_ADDRESS[CHAIN_ID].toLowerCase())
+      })
+
+      const ethPrice = +data.data.bundle.ethPrice
+      const derivedETH = +data.data.token.derivedETH
+
+      if (isNaN(ethPrice) || isNaN(derivedETH)) {
+        throw new Error('Error when fetch data in useOneSoneInUSD')
+      }
+
+      return ethPrice * derivedETH
+    }
+  )
+
+  return useMemo(() => sonePrice ?? SONE_PRICE_MINIMUM, [sonePrice])
+}
+
+export function useSoneInUSD(numberOfSone?: number): number | undefined {
+  const oneSoneInUSD = useOneSoneInUSD()
+
+  return useMemo(() => (numberOfSone === undefined || isNaN(numberOfSone) ? undefined : numberOfSone * oneSoneInUSD), [
+    numberOfSone,
+    oneSoneInUSD
+  ])
+}
+
+export function useFormattedSoneInUSD(numberOfSone?: number): string {
+  const soneInUSD = useSoneInUSD(numberOfSone)
+
+  return useMemo(() => soneInUSD === undefined ? '--' : reduceFractionDigit(soneInUSD.toString(), 6), [soneInUSD])
+}

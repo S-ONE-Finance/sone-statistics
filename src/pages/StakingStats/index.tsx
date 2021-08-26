@@ -3,7 +3,6 @@ import { Box } from '@material-ui/core'
 import CommonStatistics from '../../components/CommonStatistics'
 import PoolTable from '../../components/PoolTable'
 import styled from 'styled-components'
-import DashboardDataUpdater from './DashboardDataUpdater'
 import { useTranslation } from 'react-i18next'
 
 const Wrapper = styled.div`
@@ -44,26 +43,22 @@ const Title = styled.div`
   `}
 `
 
-const Dashboard = () => {
-  const { t, i18n } = useTranslation()
+export default function Dashboard() {
+  const { t } = useTranslation()
 
   return (
-    <DashboardDataUpdater>
-      <Wrapper>
-        <div>
-          <Box mb={0.5} px={4}>
-            <Title>{t('Staking Statistics')}</Title>
-          </Box>
-          <Box mb={2}>
-            <CommonStatistics />
-          </Box>
-          <Box px={2}>
-            <PoolTable />
-          </Box>
-        </div>
-      </Wrapper>
-    </DashboardDataUpdater>
+    <Wrapper>
+      <div>
+        <Box mb={0.5} px={4}>
+          <Title>{t('Staking Statistics')}</Title>
+        </Box>
+        <Box mb={2}>
+          <CommonStatistics />
+        </Box>
+        <Box px={2}>
+          <PoolTable />
+        </Box>
+      </div>
+    </Wrapper>
   )
 }
-
-export default Dashboard

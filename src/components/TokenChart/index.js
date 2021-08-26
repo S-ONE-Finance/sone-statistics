@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar } from 'recharts'
+import { Area, AreaChart, Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
-import { toK, toNiceDate, toNiceDateYear, formattedNum, getTimeframe } from '../../utils'
+import { formattedNum, getTimeframe, toK, toNiceDate, toNiceDateYear } from '../../utils'
 import { OptionButton, StyleButtonComponent } from '../ButtonStyled'
 import { darken } from 'polished'
 import { useMedia, usePrevious } from 'react-use'
@@ -23,10 +23,6 @@ const ChartWrapper = styled.div`
   @media screen and (max-width: 600px) {
     min-height: 200px;
   }
-`
-
-const PriceOption = styled(OptionButton)`
-  border-radius: 2px;
 `
 
 const CHART_VIEW = {
@@ -52,7 +48,7 @@ const TokenChart = ({ address, color, base }) => {
 
   // reset view on new address
   const addressPrev = usePrevious(address)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (address !== addressPrev && addressPrev) {

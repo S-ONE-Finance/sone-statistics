@@ -3,26 +3,18 @@ import { withRouter } from 'react-router-dom'
 import 'feather-icons'
 import styled from 'styled-components'
 import Panel from '../components/Panel'
-import {
-  PageWrapper,
-  ContentWrapperLarge,
-  StyledIcon,
-  BlockedWrapper,
-  BlockedMessageWrapper,
-} from '../components/index'
+import { BlockedMessageWrapper, BlockedWrapper, ContentWrapperLarge, PageWrapper } from '../components/index'
 import { AutoRow, RowBetween, RowFixed } from '../components/Row'
 import Column, { AutoColumn } from '../components/Column'
-import { ButtonLight, ButtonDark } from '../components/ButtonStyled'
+import { ButtonDark, ButtonLight } from '../components/ButtonStyled'
 import PairChart from '../components/PairChart'
 import Link from '../components/Link'
 import TxnList from '../components/TxnList'
 import Loader from '../components/LocalLoader'
-import { BasicLink } from '../components/Link'
-import Search from '../components/Search'
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink, shortenAddress } from '../utils'
 import { useColor } from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
-import { TYPE, ThemedBackground } from '../theme'
+import { ThemedBackground, TYPE } from '../theme'
 import { transparentize } from 'polished'
 import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
@@ -31,14 +23,13 @@ import TokenLogo from '../components/TokenLogo'
 import { Hover } from '../components'
 import { useEthPrice } from '../contexts/GlobalData'
 import Warning from '../components/Warning'
-import { usePathDismissed, useSavedPairs } from '../contexts/LocalStorage'
+import { useDarkModeManager, usePathDismissed } from '../contexts/LocalStorage'
 
-import { Bookmark, PlusCircle, AlertCircle } from 'react-feather'
+import { AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
-import { useDarkModeManager } from '../contexts/LocalStorage'
+import { BLOCKED_WARNINGS, PAIR_BLACKLIST, UNTRACKED_COPY } from '../constants'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
 import { useTranslation } from 'react-i18next'
 
@@ -201,7 +192,7 @@ function PairPage({ pairAddress, history }) {
   const below600 = useMedia('(max-width: 600px)')
 
   const [dismissed, markAsDismissed] = usePathDismissed(history.location.pathname)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     window.scrollTo({
@@ -209,8 +200,6 @@ function PairPage({ pairAddress, history }) {
       top: 0,
     })
   }, [])
-
-  const [savedPairs, addPair] = useSavedPairs()
 
   const listedTokens = useListedTokens()
 
@@ -237,14 +226,7 @@ function PairPage({ pairAddress, history }) {
     background-color: ${isDarkMode ? '#0E2B4A' : '#F3F3F3'};
     margin-bottom: 20;
   `
-  // const StylePanelPairChart = styled(Panel)`
-  //   gridColumn: ${below1080 ? 1 : 2/4};
-  //   gridRow: below1080 ? '' : '1/5';
-  //   backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3';
-  //   border: 0;
-  //   boxShadow: '0px 8px 17px rgba(0, 0, 0, 0.18)',
-  //   borderRadius: 25
-  // `
+
   const StyleDiv = styled.div`
     z-index: 2;
   `

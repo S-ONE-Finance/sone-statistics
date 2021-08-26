@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Grid, Paper, makeStyles, Box, Typography } from '@material-ui/core'
+import React, { useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import { reduceFractionDigit, reduceLongNumber } from '../../utils/number'
-import useDashboardData from '../../hooks/useDashboardData'
 import totalLiquidityIcon from '../../assets/total-liquidity.svg'
 import totalStakedIcon from '../../assets/total-staked.svg'
 import soneWhiteIcon from '../../assets/sone_white.svg'
 import styled, { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
 import { S_ONE_APP_URL } from '../../constants/urls'
-import { useTranslation } from 'react-i18next'
+import useFarms from '../../hooks/useFarms'
 
 const useStyles = makeStyles((theme) => ({
   cardPreview: {
@@ -83,28 +84,19 @@ const CardItem = ({ displayPreview, title, valueContainer, descriptionContainer 
 }
 
 export default function CommonStatistics() {
-  const { commonData, pools } = useDashboardData()
   const [totalStaked, setTotalStaked] = useState(0)
   const classes = useStyles()
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
   const { t, i18n } = useTranslation()
-  console.log('i18ni18ni18n', i18n.language)
+  const farms = useFarms()
+  console.log(`farms`, farms.map(farm => farm))
+
   const handleCalculateStakeRate = (staked, liquidity) => {
     return `${reduceFractionDigit((staked / liquidity) * 100 || 0, 1)}%`
   }
 
-  useEffect(() => {
-    if (pools && pools.length > 0) {
-      let _totalStaked = 0
-
-      pools.forEach((item) => {
-        _totalStaked += item.usdValue
-      })
-
-      setTotalStaked(_totalStaked)
-    }
-  }, [pools])
+  const commonData = {}
 
   return (
     <StyledGrid container spacing={3}>
