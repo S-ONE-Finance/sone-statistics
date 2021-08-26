@@ -12,7 +12,6 @@ import { withRouter } from 'react-router-dom'
 import { formattedNum, formattedPercent } from '../../utils'
 import DoubleTokenLogo from '../DoubleLogo'
 import FormattedName from '../FormattedName'
-import QuestionHelper from '../QuestionHelper'
 import { TYPE } from '../../theme'
 import { PAIR_BLACKLIST } from '../../constants'
 import { AutoColumn } from '../Column'
@@ -24,24 +23,6 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
 dayjs.extend(utc)
-
-const PageButtons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 2em;
-  margin-bottom: 0.5em;
-`
-
-const Arrow = styled.div`
-  color: ${({ theme }) => theme.primary1};
-  opacity: ${(props) => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
-`
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
@@ -102,11 +83,13 @@ const DataText = styled(Flex)`
   color: ${({ theme }) => theme.text1};
 
   & > * {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   @media screen and (max-width: 600px) {
-    font-size: 12px;
+    & > * {
+      font-size: 13px;
+    }
   }
 `
 
@@ -259,6 +242,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
                 adjustSize={true}
                 link={true}
                 className="text-dark"
+                fontSize={below600 ? 13 : 20}
+                fontWeight={400}
               />
             </CustomLink>
           </DataText>
@@ -266,6 +251,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             area="liq"
             className="justify-content-center w-100"
             style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontSize={below600 ? 13 : 20}
+            fontWeight={400}
           >
             {formatDataText(liquidity, pairData.trackedReserveUSD)}
           </DataText>
@@ -273,6 +260,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             area="vol"
             className="justify-content-center w-100"
             style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontSize={below600 ? 13 : 20}
+            fontWeight={400}
           >
             {formatDataText(volume, pairData.oneDayVolumeUSD)}
           </DataText>
@@ -281,6 +270,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
               area="volWeek"
               className="justify-content-center w-100"
               style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              fontSize={below600 ? 13 : 20}
+              fontWeight={400}
             >
               {formatDataText(weekVolume, pairData.oneWeekVolumeUSD)}
             </DataText>
@@ -290,6 +281,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
               area="fees"
               className="justify-content-center w-100"
               style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              fontSize={below600 ? 13 : 20}
+              fontWeight={400}
             >
               {formatDataText(fees, pairData.oneDayVolumeUSD)}
             </DataText>
@@ -299,6 +292,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
               area="apy"
               className="justify-content-center w-100"
               // style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              fontSize={below600 ? 13 : 20}
+              fontWeight={400}
             >
               {pairData.oneDayVolumeUSD ? (
                 <p className="d-flex color-blue">
@@ -370,19 +365,15 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
     <>
       <ListWrapper className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ minHeight: '302px' }}>
         <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '20px' }}>
-          <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
-            <TYPE.main area="name" style={{ fontWeight: 'bold', fontSize: 20 }}>
+          <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
+            <TYPE.main area="name" style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}>
               {t('Name')}
             </TYPE.main>
           </Flex>
-          <Flex
-            alignItems="center"
-            justifyContent="center"
-            className="justify-content-center w-100  f-20 font-weight-bold"
-          >
+          <Flex alignItems="center" justifyContent="center" className="justify-content-center w-100 font-weight-bold">
             <ClickableText
               area="liq"
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
               onClick={(e) => {
                 setSortedColumn(SORT_FIELD.LIQ)
                 setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
@@ -392,10 +383,10 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
               {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
-          <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
+          <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
             <ClickableText
               area="vol"
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
               onClick={(e) => {
                 setSortedColumn(SORT_FIELD.VOL)
                 setSortDirection(sortedColumn !== SORT_FIELD.VOL ? true : !sortDirection)
@@ -406,9 +397,9 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             </ClickableText>
           </Flex>
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
+            <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
               <ClickableText
-                style={{ fontWeight: 'bold' }}
+                style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
                 area="volWeek"
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.VOL_7DAYS)
@@ -420,10 +411,10 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             </Flex>
           )}
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100  f-20 font-weight-bold">
+            <Flex alignItems="center" className="justify-content-center w-100  font-weight-bold">
               <ClickableText
                 area="fees"
-                style={{ fontWeight: 'bold' }}
+                style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.FEES)
                   setSortDirection(sortedColumn !== SORT_FIELD.FEES ? true : !sortDirection)
@@ -434,10 +425,10 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             </Flex>
           )}
           {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100 f-20 font-weight-bold">
+            <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
               <ClickableText
                 area="apy"
-                style={{ fontWeight: 'bold' }}
+                style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.APY)
                   setSortDirection(sortedColumn !== SORT_FIELD.APY ? true : !sortDirection)
