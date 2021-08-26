@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { useGlobalTransactions } from '../../contexts/GlobalData'
 import TxnList from '../../components/TxnList'
 import { useTranslation } from 'react-i18next'
+import { useMedia } from 'react-use'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -23,12 +24,13 @@ const ListOptions = styled(AutoRow)`
 function TransactionStatics(props) {
   const transactions = useGlobalTransactions()
   const { t, i18n } = useTranslation()
+  const below600 = useMedia('(max-width: 600px)')
 
   return (
     <div>
       <ListOptions gap="10px">
         <RowBetween>
-          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap' }}>
+          <TYPE.main fontSize={below600 ? 20 : 40} style={{ whiteSpace: 'nowrap' }}>
             {t('Transactions')}
           </TYPE.main>
         </RowBetween>

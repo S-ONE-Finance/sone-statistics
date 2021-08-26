@@ -424,7 +424,10 @@ function AccountPage({ account }) {
           <StylePanelBlockPosition>
             <TxnList transactions={transactions} />
           </StylePanelBlockPosition>
-          <TitlteTop fontSize={isMobile ? 20 : '2.125rem'} style={{ fontWeight: 'bold' }}>
+          <TitlteTop
+            fontSize={isMobile ? 20 : '2.125rem'}
+            style={{ fontWeight: 'bold', marginBottom: below600 ? 10 : '' }}
+          >
             {t('Wallet Stats')}
           </TitlteTop>
           <StyledPanel>
@@ -437,13 +440,17 @@ function AccountPage({ account }) {
               </StyleAutoColumn>
 
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Fees Paid')}</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13} style={{ minWidth: below600 ? 120 : 'auto' }}>
+                  {t('Total Fees Paid')}
+                </TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
               <StyleAutoColumn gap="8px">
-                <TYPE.header fontSize={!below600 ? 20 : 13}>{t('Total Transactions')}</TYPE.header>
+                <TYPE.header fontSize={!below600 ? 20 : 13} style={{ minWidth: below600 ? 120 : 'auto' }}>
+                  {t('Total Transactions')}
+                </TYPE.header>
                 <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
                   {transactionCount ? transactionCount : '-'}
                 </TYPE.main>

@@ -263,11 +263,6 @@ function PairPage({ pairAddress, history }) {
       </StyleDiv>
 
       <ContentWrapperLarge style={{ zIndex: 1 }}>
-        {/* <RowBetween>
-          <TYPE.body>
-            <BasicLink to="/swap/pairs">{'Pairs'}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
-          </TYPE.body>
-        </RowBetween> */}
         <WarningGrouping
           disabled={
             !dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))

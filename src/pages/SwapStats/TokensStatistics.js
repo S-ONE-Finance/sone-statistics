@@ -24,12 +24,13 @@ const ListOptions = styled(AutoRow)`
 function TokensStatistics({ ...props }) {
   const allTokens = useAllTokenData()
   const { t, i18n } = useTranslation()
+  const below600 = useMedia('(max-width: 600px)')
 
   return (
     <div className="box-main-content-tokens">
       <ListOptions gap="10px">
         <RowBetween>
-          <TYPE.main fontSize={'2.125rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+          <TYPE.main fontSize={below600 ? 20 : 40} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
             {t('Top Tokens')}
           </TYPE.main>
           <CustomLink style={{ color: '#3FAAB0' }} to={'/swap/tokens'}>

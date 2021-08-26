@@ -7,6 +7,7 @@ import { CustomLink } from '../../components/Link'
 import PairList from '../../components/PairList'
 import { useAllPairData } from '../../contexts/PairData'
 import { useTranslation } from 'react-i18next'
+import { useMedia } from 'react-use'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -37,12 +38,13 @@ const StylePanel = styled(Panel)`
 function PairsStatistics({}) {
   const allPairs = useAllPairData()
   const { t, i18n } = useTranslation()
+  const below600 = useMedia('(max-width: 600px)')
 
   return (
     <>
       <StyleListOptions gap="10px">
         <RowBetween>
-          <TYPE.main fontSize={'2rem'} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+          <TYPE.main fontSize={below600 ? 20 : 40} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
             {t('Top Pairs')}
           </TYPE.main>
           <AutoRow gap="4px" width="100%" justifyContent="flex-end">

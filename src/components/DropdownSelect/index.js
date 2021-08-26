@@ -6,6 +6,7 @@ import { AutoColumn } from '../Column'
 import { ChevronDown as Arrow } from 'react-feather'
 import { TYPE } from '../../theme'
 import { StyledIcon } from '..'
+import { useMedia } from 'react-use'
 
 const Wrapper = styled.div`
   z-index: 20;
@@ -51,9 +52,9 @@ const ArrowStyled = styled(Arrow)`
 
 const DropdownSelect = ({ options, active, setActive, color }) => {
   const [showDropdown, toggleDropdown] = useState(false)
-
+  const below600 = useMedia('(max-width: 600px)')
   return (
-    <Wrapper open={showDropdown} color={color}>
+    <Wrapper style={{ border: below600 ? 0 : '' }} open={showDropdown} color={color}>
       <RowBetween onClick={() => toggleDropdown(!showDropdown)} justify="center">
         <TYPE.main>{active}</TYPE.main>
         <StyledIcon>
