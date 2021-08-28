@@ -21,9 +21,9 @@ const ListOptions = styled(AutoRow)`
   }
 `
 
-function TokensStatistics({ ...props }) {
+function TokensStatistics() {
   const allTokens = useAllTokenData()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const below600 = useMedia('(max-width: 600px)')
 
   return (
@@ -38,9 +38,7 @@ function TokensStatistics({ ...props }) {
           </CustomLink>
         </RowBetween>
       </ListOptions>
-      {/* <Panel style={{ marginTop: '6px', padding: '2.125rem 0 ' }}> */}
       <TopTokenList tokens={allTokens} />
-      {/* </Panel> */}
     </div>
   )
 }

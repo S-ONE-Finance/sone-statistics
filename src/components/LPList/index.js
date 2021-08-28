@@ -92,7 +92,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
   const [maxPage, setMaxPage] = useState(1)
   const [ITEMS_PER_PAGE, setITEMS_PER_PAGE] = useState(maxItems)
   const [isDarkMode] = useDarkModeManager()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const classes = useStyles()
 
   useEffect(() => {

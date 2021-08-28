@@ -1,30 +1,33 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import {
-  makeStyles,
-  Typography,
   Box,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Paper,
-  Tooltip,
-  TableContainer,
   CircularProgress,
   Link,
+  makeStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography
 } from '@material-ui/core'
 import {
-  ArrowRightAlt as ArrowRightAltIcon,
   ArrowDropDown as ArrowDropDownIcon,
   ArrowDropUp as ArrowDropUpIcon,
+  ArrowRightAlt as ArrowRightAltIcon
 } from '@material-ui/icons'
 import _orderBy from 'lodash.orderby'
-import useDashboardData from '../../hooks/useDashboardData'
 import { reduceFractionDigit } from '../../utils/number.js'
 import { ThemeContext } from 'styled-components'
 import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
 import { useTranslation } from 'react-i18next'
+import useFarms from '../../hooks/useFarms'
+import TokenLogo from '../TokenLogo'
+import { S_ONE_APP_URL } from '../../constants/urls'
+import useOneSoneInUSD from '../../hooks/useOneSoneInUSD'
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -54,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     minHeight: 200,
     border: 'none',
-    // borderColor: theme.palette.secondary.main,
   },
   positive: {
     color: '#87d128',
@@ -62,12 +64,6 @@ const useStyles = makeStyles((theme) => ({
   negative: {
     color: 'red',
   },
-  // iconSwapRight: {
-  //   animation: "swappingRight 5s linear infinite",
-  // },
-  // iconSwapLeft: {
-  //   animation: "swappingLeft 5s linear infinite",
-  // },
   redirectBtn: {
     fontSize: 12,
     wordBreak: 'keep-all',
@@ -94,58 +90,63 @@ const LoadingIndicator = () => {
   )
 }
 
-const PoolRow = ({ row }) => {
+export const getTokenLogoURL = (address) =>
+  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+
+const PoolRow = ({ farm }) => {
   const theme = useContext(ThemeContext)
   const isUpToExtraSmall = useIsUpToExtraSmall()
-  const commonData = useDashboardData((store) => store.commonData)
   const classes = useStyles()
 
-  const handleForwardToPool = ({ poolSymbol }, event) => {
-    event.preventDefault()
-    // const link = document.createElement("a");
-    // link.href = `https://luaswap.org/#/farms/${poolSymbol}`;
-    // link.target = "_blank";
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.remove(link);
-    window.open(`https://luaswap.org/#/farms/${poolSymbol}`, '_blank').focus()
+  const handleForwardToPool = ({ id }) => {
+    window.open(`${S_ONE_APP_URL}/#/staking/${id}`, '_blank')
   }
 
+  const { token0, token1 } = farm.liquidityPair
+
+  const MIN_NUM = 1
+  const stakedLpToken = Number(farm.balance) || MIN_NUM
+  const totalSupply = Number(farm?.liquidityPair?.totalSupply) || MIN_NUM
+  const reserve0 = Number(farm?.liquidityPair?.reserve0) || MIN_NUM
+  const reserve1 = Number(farm?.liquidityPair?.reserve1) || MIN_NUM
+  const stakedToken0 = reserve0 * (stakedLpToken / totalSupply)
+  const stakedToken1 = reserve1 * (stakedLpToken / totalSupply)
+
+  const bonusMultiplier = farm?.owner?.bonusMultiplier ?? 1
+  const rewardPerBlock = farm && farm.rewardPerBlock * bonusMultiplier
+  const soneInUSD = useOneSoneInUSD()
+  const rewardPerBlockInUSD = rewardPerBlock * soneInUSD
+  
+  const lockedValue = Number(farm?.balanceUSD) ?? 0
+  const lockedValueAndTotalSupplyRatio = (Number(farm?.balance) / totalSupply) * 100
+
   return (
-    row && (
+    farm && (
       <TableRow
         className={classes.tableRow}
-        style={{ background: row.rowIdx % 2 === 0 ? theme.tableCellOddBackground : 'unset' }}
+        style={{ background: farm.rowIdx % 2 === 0 ? theme.tableCellOddBackground : 'unset' }}
       >
         {!isUpToExtraSmall && (
           <TableCell className={classes.tableCell}>
             <Typography style={{ fontSize: 16, fontWeight: 400, float: 'right', color: theme.text4Sone }}>
-              {row.rowIdx}
+              {farm.rowIdx}
             </Typography>
           </TableCell>
         )}
         <TableCell className={classes.tableCell}>
           <Box display="flex" alignItems="center" flexDirection={isUpToExtraSmall ? 'column' : 'row'}>
             <Box display="flex" marginBottom={isUpToExtraSmall ? '5px' : 0}>
-              <Tooltip title={row.token1Symbol}>
-                <img
-                  alt={row.token1Symbol}
-                  src={row.token1Icon}
-                  style={{ margin: 0, width: isUpToExtraSmall ? 24 : 36, height: isUpToExtraSmall ? 24 : 36 }}
-                />
+              <Tooltip title={token0.symbol}>
+                <TokenLogo address={token0.address} size={isUpToExtraSmall ? 24 : 36}/>
               </Tooltip>
-              <Tooltip title={row.token2Symbol}>
-                <img
-                  alt={row.token2Symbol}
-                  src={row.token2Icon}
-                  style={{ marginLeft: -10, width: isUpToExtraSmall ? 24 : 36, height: isUpToExtraSmall ? 24 : 36 }}
-                />
+              <Tooltip title={farm.liquidityPair.token1.symbol}>
+                <TokenLogo address={token1.address} size={isUpToExtraSmall ? 24 : 36} style={{marginLeft: '-10px'}}/>
               </Tooltip>
             </Box>
-            <Tooltip title={`Open ${row.poolSymbolShort} farm`}>
+            <Tooltip title={`Open ${farm.symbol} farm`}>
               <Link
                 variant="nav"
-                onClick={(event) => handleForwardToPool(row, event)}
+                onClick={() => handleForwardToPool(farm)}
                 className={classes.redirectBtn}
                 style={{
                   fontSize: 16,
@@ -154,7 +155,7 @@ const PoolRow = ({ row }) => {
                   marginLeft: isUpToExtraSmall ? 0 : '10px',
                 }}
               >
-                {row.poolSymbolShort}
+                {farm.symbol}
               </Link>
             </Tooltip>
           </Box>
@@ -167,22 +168,22 @@ const PoolRow = ({ row }) => {
               color: theme.text5Sone,
               textAlign: isUpToExtraSmall ? 'center' : 'unset',
             }}
-          >{`${reduceFractionDigit(row.apy, 2)}%`}</Typography>
+          >{`${reduceFractionDigit(farm.roiPerYear * 100, 2)}%`}</Typography>
         </TableCell>
         {isUpToExtraSmall === false && (
           <>
             <TableCell className={classes.tableCell}>
               <Box display="flex" alignItems="baseline" mb={1}>
                 <Typography style={{ fontSize: 16, color: theme.text4Sone }}>
-                  {reduceFractionDigit(row.tokenAmount, 3)}&nbsp;
+                  {reduceFractionDigit(stakedToken0, 10)}&nbsp;
                 </Typography>
-                <Typography style={{ fontSize: 13, color: theme.text4Sone }}>{row.token1Symbol || ''}</Typography>
+                <Typography style={{ fontSize: 13, color: theme.text4Sone }}>{token0.symbol || ''}</Typography>
               </Box>
               <Box display="flex" alignItems="baseline">
                 <Typography style={{ fontSize: 16, color: theme.text4Sone }}>
-                  {reduceFractionDigit(row.token2Amount, 3)}&nbsp;
+                  {reduceFractionDigit(stakedToken1, 10)}&nbsp;
                 </Typography>
-                <Typography style={{ fontSize: 13, color: theme.text4Sone }}>{row.token2Symbol || ''}</Typography>
+                <Typography style={{ fontSize: 13, color: theme.text4Sone }}>{token1.symbol || ''}</Typography>
               </Box>
             </TableCell>
             <TableCell className={classes.tableCell} style={{ color: theme.text4Sone }}>
@@ -204,33 +205,33 @@ const PoolRow = ({ row }) => {
               color: theme.text6Sone,
             }}
           >
-            {`${reduceFractionDigit(row.totalStaked, 3)}`}
+            {`${reduceFractionDigit(stakedLpToken, 6)}`}
           </Typography>
           <Typography component="span" style={{ fontSize: 13, fontWeight: 400, color: theme.text6Sone }}>
-            {` ${row.poolSymbol || ''}`}
+            {` ${(farm.symbol + " LP") || ''}`}
           </Typography>
         </TableCell>
         <TableCell className={classes.tableCell} style={{ textAlign: 'center' }}>
           <Typography
             style={{ marginBottom: 5, fontSize: isUpToExtraSmall ? 13 : 16, fontWeight: 700, color: theme.text6Sone }}
           >
-            {`$${reduceFractionDigit(row.usdValue, 0)}`}
+            {`$${reduceFractionDigit(lockedValue, 6)}`}
           </Typography>
           <Typography style={{ fontSize: isUpToExtraSmall ? 13 : 16, fontWeight: 400, color: theme.text4Sone }}>
-            {`${reduceFractionDigit((row.usdValue / commonData.allStaked) * 100, 1)}% of total`}
+            {`${reduceFractionDigit(lockedValueAndTotalSupplyRatio, 2)}% of total`}
           </Typography>
         </TableCell>
         <TableCell className={classes.tableCell} style={{ textAlign: 'center' }}>
           <Box mb={1} display="flex" alignItems="baseline" justifyContent="center">
             <Typography style={{ fontSize: isUpToExtraSmall ? 13 : 16, fontWeight: 700, color: theme.text6Sone }}>
-              {reduceFractionDigit(row.newRewardPerBlock, 2)}&nbsp;
+              {reduceFractionDigit(rewardPerBlock, 6)}&nbsp;
             </Typography>
             <Typography component="span" style={{ fontSize: 13, fontWeight: 700, color: theme.text6Sone }}>
-              {'SONE'}
+              SONE
             </Typography>
           </Box>
           <Typography style={{ fontSize: isUpToExtraSmall ? 13 : 16, fontWeight: 400, color: theme.text4Sone }}>
-            {`~ $${reduceFractionDigit(Number(row.newRewardPerBlock) * commonData.luaPrice, 2)}`}
+            {`~ $${reduceFractionDigit(rewardPerBlockInUSD, 2)}`}
           </Typography>
         </TableCell>
       </TableRow>
@@ -240,20 +241,23 @@ const PoolRow = ({ row }) => {
 
 export default function PoolTable() {
   const isUpToExtraSmall = useIsUpToExtraSmall()
-  const [sortData, setSortData] = useState({})
-  const pools = useDashboardData((store) => store.pools)
   const classes = useStyles()
   const theme = useContext(ThemeContext)
-  const { t, i18n } = useTranslation()
-  const getSortedPools = (pools, sortData) => {
+  const { t } = useTranslation()
+
+  const farms = useFarms()
+  console.log(`farms`, farms.map(farm => farm))
+
+  const isLoading = false
+  const [sortData, setSortData] = useState({})
+
+  const getSortedPools = useCallback(() => {
     const sortingCols = Object.keys(sortData)
-
     if (sortingCols.length) {
-      return _orderBy(pools, sortingCols, Object.values(sortData))
+      return _orderBy(farms, sortingCols, Object.values(sortData))
     }
-
-    return pools
-  }
+    return farms
+  }, [farms, sortData])
 
   const handleSort = (name) => {
     setSortData((oldData) => ({
@@ -261,12 +265,14 @@ export default function PoolTable() {
     }))
   }
 
-  return pools?.length > 0 ? (
+  return isLoading ? (
+    <LoadingIndicator />
+  ) : (
     <TableContainer
       component={Paper}
       elevation={2}
       className={classes.tableContainer}
-      style={{ background: theme.bg1Sone }}
+      style={{ background: theme.bg1Sone, marginBottom: '100px' }}
     >
       <Table aria-label="Pool table" style={{ background: theme.bg1Sone }}>
         <TableHead style={{ height: '81px' }}>
@@ -279,7 +285,7 @@ export default function PoolTable() {
               />
             )}
             <TableCell
-              onClick={() => handleSort('name')}
+              onClick={() => handleSort('symbol')}
               width={TABLE_COL_WIDTH[1]}
               style={{ minWidth: TABLE_COL_MIN_WIDTH[1] }}
               className={`${classes.tableHeader} ${classes.sortable}`}
@@ -291,8 +297,8 @@ export default function PoolTable() {
                 >
                   {t('Pairs')}
                 </Typography>
-                {sortData.name &&
-                  (sortData.name === 'asc' ? (
+                {sortData.symbol &&
+                  (sortData.symbol === 'asc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -300,7 +306,7 @@ export default function PoolTable() {
               </Box>
             </TableCell>
             <TableCell
-              onClick={() => handleSort('apy')}
+              onClick={() => handleSort('roiPerYear')}
               width={TABLE_COL_WIDTH[2]}
               style={{ minWidth: TABLE_COL_MIN_WIDTH[2] }}
               className={`${classes.tableHeader} ${classes.sortable}`}
@@ -309,8 +315,8 @@ export default function PoolTable() {
                 <Typography className={classes.tableHeaderText} style={{ color: theme.text1Sone }}>
                   APY
                 </Typography>
-                {sortData.apy &&
-                  (sortData.apy === 'asc' ? (
+                {sortData.roiPerYear &&
+                  (sortData.roiPerYear === 'asc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -331,7 +337,7 @@ export default function PoolTable() {
               </Typography>
             </TableCell>
             <TableCell
-              onClick={() => handleSort('usdValue')}
+              onClick={() => handleSort('balanceUSD')}
               width={TABLE_COL_WIDTH[4]}
               style={{ minWidth: TABLE_COL_MIN_WIDTH[4] }}
               className={`${classes.tableHeader} ${classes.sortable}`}
@@ -340,8 +346,8 @@ export default function PoolTable() {
                 <Typography className={classes.tableHeaderText} style={{ color: theme.text1Sone }}>
                   {t('Locked Value')}
                 </Typography>
-                {sortData.usdValue &&
-                  (sortData.usdValue === 'asc' ? (
+                {sortData.balanceUSD &&
+                  (sortData.balanceUSD === 'asc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -349,7 +355,7 @@ export default function PoolTable() {
               </Box>
             </TableCell>
             <TableCell
-              onClick={() => handleSort('newRewardPerBlock')}
+              onClick={() => handleSort('rewardPerBlock')}
               width={TABLE_COL_WIDTH[5]}
               style={{ minWidth: TABLE_COL_MIN_WIDTH[5] }}
               className={`${classes.tableHeader} ${classes.sortable}`}
@@ -358,8 +364,8 @@ export default function PoolTable() {
                 <Typography className={classes.tableHeaderText} style={{ color: theme.text1Sone }}>
                   {t('Reward / Block')}
                 </Typography>
-                {sortData.newRewardPerBlock &&
-                  (sortData.newRewardPerBlock === 'asc' ? (
+                {sortData.rewardPerBlock &&
+                  (sortData.rewardPerBlock === 'asc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -369,13 +375,11 @@ export default function PoolTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {getSortedPools(pools, sortData).map((row, rowIdx) => {
-            return <PoolRow key={row.poolAddress} row={{ rowIdx, ...row }} />
+          {getSortedPools().map((row, rowIdx) => {
+            return <PoolRow key={row.poolAddress} farm={{ rowIdx, ...row }} />
           })}
         </TableBody>
       </Table>
     </TableContainer>
-  ) : (
-    <LoadingIndicator />
   )
 }

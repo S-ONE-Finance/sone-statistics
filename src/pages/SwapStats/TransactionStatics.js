@@ -1,7 +1,6 @@
 import React from 'react'
 import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
-import { CustomLink } from '../../components/Link'
 import styled from 'styled-components'
 import { useGlobalTransactions } from '../../contexts/GlobalData'
 import TxnList from '../../components/TxnList'
@@ -23,7 +22,7 @@ const ListOptions = styled(AutoRow)`
 
 function TransactionStatics(props) {
   const transactions = useGlobalTransactions()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const below600 = useMedia('(max-width: 600px)')
 
   return (

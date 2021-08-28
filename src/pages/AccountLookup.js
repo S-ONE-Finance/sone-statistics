@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import 'feather-icons'
 import { withRouter } from 'react-router-dom'
 import { TYPE } from '../theme'
-import { PageWrapper, FullWrapper } from '../components'
+import { FullWrapper, PageWrapper } from '../components'
 import Panel from '../components/Panel'
 import LPList from '../components/LPList'
 import styled from 'styled-components'
 import AccountSearch from '../components/AccountSearch'
 import { useTopLps } from '../contexts/GlobalData'
-import { useMedia } from 'react-use'
 
 const AccountWrapper = styled.div`
   @media screen and (max-width: 600px) {
@@ -27,10 +26,6 @@ function AccountLookup() {
   return (
     <PageWrapper>
       <FullWrapper style={{ zIndex: 1 }}>
-        {/* <RowBetween>
-          <TYPE.largeHeader style={{ fontSize: '2.125rem' }}>Wallet analytics</TYPE.largeHeader>
-          {!below600 && <Search small={true} />}
-        </RowBetween> */}
         <AccountWrapper>
           <AccountSearch />
         </AccountWrapper>

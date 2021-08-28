@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { AutoRow, RowBetween } from '../../components/Row'
-import { TYPE, ThemedBackground } from '../../theme'
-import Panel from '../../components/Panel'
+import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
 import PairList from '../../components/PairList'
 import { useAllPairData } from '../../contexts/PairData'
@@ -25,19 +24,11 @@ const StyleListOptions = styled(ListOptions)`
   margin-bottom: 0.5rem;
   padding: 0;
   border: 0;
-  backgroundcolor: transparent;
 `
 
-const StylePanel = styled(Panel)`
-  margintop: 6px;
-  padding: 0;
-  border: 0;
-  backgroundcolor: transparent;
-`
-
-function PairsStatistics({}) {
+function PairsStatistics() {
   const allPairs = useAllPairData()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const below600 = useMedia('(max-width: 600px)')
 
   return (

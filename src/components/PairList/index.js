@@ -165,7 +165,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
 
   const classes = useStyles()
   // i18n
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular

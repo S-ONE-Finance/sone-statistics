@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import Row, { RowFixed } from '../Row'
@@ -11,7 +11,7 @@ import { useAllPairData, usePairData } from '../../contexts/PairData'
 import DoubleTokenLogo from '../DoubleLogo'
 import { useMedia } from 'react-use'
 import { useAllPairsInUniswap, useAllTokensInUniswap } from '../../contexts/GlobalData'
-import { TOKEN_BLACKLIST, PAIR_BLACKLIST } from '../../constants'
+import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from '../../constants'
 
 import { transparentize } from 'polished'
 import { client } from '../../apollo/client'
@@ -182,7 +182,7 @@ export const Search = ({ small = false }) => {
 
   const [searchedTokens, setSearchedTokens] = useState([])
   const [searchedPairs, setSearchedPairs] = useState([])
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   useEffect(() => {
     async function fetchData() {
       try {

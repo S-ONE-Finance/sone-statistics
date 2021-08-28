@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { AutoRow, RowBetween } from '../../components/Row'
 import { TYPE } from '../../theme'
 import { CustomLink } from '../../components/Link'
@@ -24,7 +24,7 @@ const StyleDiv = styled.div`
 
 function AccountStatics() {
   const topLps = useTopLps()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const below600 = useMedia('(max-width: 600px)')
 
   return (

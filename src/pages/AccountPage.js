@@ -1,23 +1,22 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { useUserTransactions, useUserPositions } from '../contexts/User'
+import { useUserPositions, useUserTransactions } from '../contexts/User'
 import TxnList from '../components/TxnList'
 import Panel from '../components/Panel'
 import { formattedNum } from '../utils'
-import Row, { AutoRow, RowFixed, RowBetween } from '../components/Row'
+import Row, { AutoRow, RowBetween, RowFixed } from '../components/Row'
 import { AutoColumn } from '../components/Column'
 import UserChart from '../components/UserChart'
 import PairReturnsChart from '../components/PairReturnsChart'
 import PositionList from '../components/PositionList'
 import { TYPE } from '../theme'
 import { ButtonDropdown } from '../components/ButtonStyled'
-import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
+import { ContentWrapper, PageWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
 import { Activity } from 'react-feather'
 import Link from '../components/Link'
 import { FEE_WARNING_TOKENS } from '../constants'
 import { useMedia } from 'react-use'
-import { useSavedAccounts } from '../contexts/LocalStorage'
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
 import { useTranslation } from 'react-i18next'
@@ -105,7 +104,7 @@ function AccountPage({ account }) {
   // get data for this account
   const transactions = useUserTransactions(account)
   const positions = useUserPositions(account)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   // get data for user stats
   const transactionCount = transactions?.swaps?.length + transactions?.burns?.length + transactions?.mints?.length
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
@@ -165,13 +164,6 @@ function AccountPage({ account }) {
   }, [])
 
   const below600 = useMedia('(max-width: 600px)')
-
-  // adding/removing account from saved accounts
-  const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
-  const isBookmarked = savedAccounts.includes(account)
-  const handleBookmarkClick = useCallback(() => {
-    ;(isBookmarked ? removeAccount : addAccount)(account)
-  }, [account, isBookmarked, addAccount, removeAccount])
 
   // status theme mode
   const [isDarkMode] = useDarkModeManager()

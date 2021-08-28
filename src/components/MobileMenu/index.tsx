@@ -121,7 +121,7 @@ export default function MobileMenu({ setIsShowMobileMenu }: MobileMenuProps) {
   const closeModal = useCallback(() => {
     setIsShowMobileMenu(false)
   }, [setIsShowMobileMenu])
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <ColumnWrapper onClick={closeModal}>

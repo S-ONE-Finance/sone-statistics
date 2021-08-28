@@ -3,7 +3,6 @@ import { ReactComponent as CircleImage } from '../../assets/icon_overview.svg'
 import { ReactComponent as IconCoin } from '../../assets/icon_coin.svg'
 import { ReactComponent as IconTransactionCoin } from '../../assets/icon-transaction-coin.svg'
 import { ReactComponent as IconPairs } from '../../assets/icon-coin-pair.svg'
-import { ReactComponent as IconUser } from '../../assets/user.svg'
 import { ReactComponent as IconAccount } from '../../assets/account.svg'
 import { useDarkModeManager, useIndexTabManager } from '../../contexts/LocalStorage'
 import styled, { ThemeContext } from 'styled-components'
@@ -27,10 +26,6 @@ const TabCustom = withStyles((theme) => ({
     marginTop: 35,
     backgroundColor: useContext(ThemeContext).gray,
     color: useContext(ThemeContext).colorModeButton,
-    '&:hover': {
-      // color: '',
-      // opacity: 1,
-    },
     '&$selected': {
       color: '#fff',
       backgroundColor: useContext(ThemeContext).red1Sone,

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ResponsiveContainer } from 'recharts'
 import { timeframeOptions } from '../../constants'
 import { useGlobalChartData, useGlobalData } from '../../contexts/GlobalData'
@@ -46,7 +46,7 @@ const GlobalChart = ({ display }) => {
           if (item.date > utcStartTime) {
             return item
           } else {
-            return
+            return undefined
           }
         })
         .filter((item) => {
@@ -60,7 +60,7 @@ const GlobalChart = ({ display }) => {
   const ref = useRef()
   const isClient = typeof window === 'object'
   const [width, setWidth] = useState(ref?.current?.container?.clientWidth)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!isClient) {

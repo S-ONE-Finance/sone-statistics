@@ -2,6 +2,30 @@ export const FACTORY_ADDRESS = '0xB6EF230f01008e04b83E61807ed710F5BABc8Ddd'
 
 export const BUNDLE_ID = '1'
 
+export const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
+if (CHAIN_ID === '') throw new Error(`REACT_APP_CHAIN_ID not found.`)
+
+export const SONE_PRICE_MINIMUM = 0.00001 // 1 SONE >= 0.00001 USDT
+
+export const SONE_ADDRESS = {
+  1: '',
+  3: '0x57bb30bdb0d449bf687ed648acf2467f045c8e74'
+}
+
+export const SONE_MASTER_FARMER = {
+  1: '',
+  3: '0xfB3bEEE96FA08c2CAb70E6DbE34084A99B47b9aD',
+}
+
+export const CONFIG_MASTER_FARMER = {
+  1: null,
+  3: {
+    startBlock: 10897613,
+    rewardMultiplier: [32, 32, 32, 32, 16, 8, 4, 2, 1],
+    blocksPerWeek: 45134
+  }
+}
+
 export const timeframeOptions = {
   WEEK: '1 week',
   MONTH: '1 month',

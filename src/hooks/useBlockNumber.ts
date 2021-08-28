@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getLatestBlock } from '../utils'
 
-export default function useBlockNumber() {
+export default function useBlockNumber(): number {
   const [blockNumber, setBlockNumber] = useState()
 
   useEffect(() => {
@@ -22,5 +22,5 @@ export default function useBlockNumber() {
     }
   }, [])
 
-  return blockNumber
+  return blockNumber || 0
 }
