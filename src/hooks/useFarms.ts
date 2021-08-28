@@ -115,6 +115,7 @@ export default function useFarms(): Farm[] {
           roiPerYear,
           soneHarvested,
           multiplier,
+          balance,
           balanceUSD,
           tvl: liquidityPosition?.liquidityTokenBalance
             ? (pair.reserveUSD / pair.totalSupply) * liquidityPosition.liquidityTokenBalance

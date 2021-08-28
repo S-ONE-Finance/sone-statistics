@@ -30,7 +30,7 @@ const StyledEthereumLogo = styled.div`
   }
 `
 
-export default function TokenLogo({ address, header = false, size = '24px', ...rest }) {
+export default function TokenLogo({ address, header = false, size = '24px', style, ...rest }) {
   const [error, setError] = useState(false)
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
   if (error || BAD_IMAGES[address]) {
     return (
       <Inline>
-        <span {...rest} alt={''} style={{ fontSize: size }} role="img" aria-label="face">
+        <span {...rest} alt={''} style={{ fontSize: size, ...style }} role="img" aria-label="face">
           🤔
         </span>
       </Inline>
@@ -64,6 +64,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
           style={{
             boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)',
             borderRadius: '24px',
+            ...style
           }}
           alt=""
         />

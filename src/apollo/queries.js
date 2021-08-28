@@ -960,6 +960,8 @@ export const poolsQuery = gql`
       userCount
       soneHarvested
       soneHarvestedUSD
+      entryUSD
+      exitUSD
     }
   }
 `
