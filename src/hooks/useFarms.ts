@@ -20,12 +20,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-export default function useFarms(): Farm[] {
+export default function useFarms(): [boolean, Farm[]] {
   const sonePrice = useOneSoneInUSD()
   const block = useBlockNumber()
   const averageBlockTime = useAverageBlockTime()
 
-  const { data: pools } = useQuery(
+  const { data: pools, isLoading: isLoading1 } = useQuery(
     'useFarms_poolsQuery',
     async () => {
       const data = await stakingClient.query({
@@ -34,7 +34,8 @@ export default function useFarms(): Farm[] {
       return data?.data.pools
     }
   )
-  const { data: liquidityPositions } = useQuery(
+
+  const { data: liquidityPositions, isLoading: isLoading2 } = useQuery(
     ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[CHAIN_ID]],
     async () => {
       const data = await client.query({
@@ -57,7 +58,7 @@ export default function useFarms(): Farm[] {
     [pools]
   )
 
-  const { data: pairs } = useQuery(
+  const { data: pairs, isLoading: isLoading3 } = useQuery(
     ['useFarms_pairSubsetQuery', pairAddresses],
     async () => {
       const data = await client.query({
@@ -130,6 +131,6 @@ export default function useFarms(): Farm[] {
       })
     const sorted = _.orderBy(farms, ['pid'], ['desc'])
     const unique = _.uniq(sorted)
-    return unique
-  }, [averageBlockTime, block, liquidityPositions, pairs, pools, sonePrice])
+    return [Boolean(isLoading1 || isLoading2 || isLoading3), unique]
+  }, [averageBlockTime, block, isLoading1, isLoading2, isLoading3, liquidityPositions, pairs, pools, sonePrice])
 }

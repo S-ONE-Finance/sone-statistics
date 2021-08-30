@@ -245,10 +245,9 @@ export default function PoolTable() {
   const theme = useContext(ThemeContext)
   const { t } = useTranslation()
 
-  const farms = useFarms()
+  const [isLoading, farms] = useFarms()
   console.log(`farms`, farms.map(farm => farm))
 
-  const isLoading = false
   const [sortData, setSortData] = useState({})
 
   const getSortedPools = useCallback(() => {
