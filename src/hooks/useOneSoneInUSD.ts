@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { CHAIN_ID, SONE_ADDRESS, SONE_PRICE_MINIMUM } from '../constants'
-import { sonePriceQuery } from '../apollo/queries'
+import { tokenQuery } from '../apollo/queries'
 import { reduceFractionDigit } from '../utils/number'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
@@ -22,7 +22,7 @@ export default function useOneSoneInUSD(): number {
     'useOneSoneInUSD',
     async () => {
       const data = await client.query({
-        query: sonePriceQuery(SONE_ADDRESS[CHAIN_ID].toLowerCase())
+        query: tokenQuery(SONE_ADDRESS[CHAIN_ID].toLowerCase())
       })
 
       const ethPrice = +data.data.bundle.ethPrice

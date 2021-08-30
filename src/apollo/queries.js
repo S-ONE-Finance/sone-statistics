@@ -989,12 +989,13 @@ export const blocksQuery = gql`
   ${blockFieldsQuery}
 `
 
-export const sonePriceQuery = (soneAddress) => gql`
+export const tokenQuery = (address) => gql`
   {
-    token(id: "${soneAddress}") {
+    token(id: "${address}") {
       id
       name
       derivedETH
+      totalSupply
     }
     bundle(id: "1") {
       ethPrice

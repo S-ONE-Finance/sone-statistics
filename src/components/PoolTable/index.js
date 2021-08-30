@@ -246,7 +246,7 @@ export default function PoolTable() {
   const { t } = useTranslation()
 
   const [isLoading, farms] = useFarms()
-  console.log(`farms`, farms.map(farm => farm))
+  // console.log(`farms`, farms.map(farm => farm.balanceUSD))
 
   const [sortData, setSortData] = useState({})
 

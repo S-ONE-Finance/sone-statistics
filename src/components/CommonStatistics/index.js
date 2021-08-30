@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import { reduceFractionDigit, reduceLongNumber } from '../../utils/number'
+import { reduceFractionDigit } from '../../utils/number'
 import totalLiquidityIcon from '../../assets/total-liquidity.svg'
 import totalStakedIcon from '../../assets/total-staked.svg'
 import soneWhiteIcon from '../../assets/sone_white.svg'
@@ -11,6 +11,7 @@ import { useIsUpToExtraSmall } from '../../hooks/useWindowSize'
 import { S_ONE_APP_URL } from '../../constants/urls'
 import useFarms from '../../hooks/useFarms'
 import useOneSoneInUSD from '../../hooks/useOneSoneInUSD'
+import useSoneTotalSupply from '../../hooks/useSoneTotalSupply'
 
 const useStyles = makeStyles((theme) => ({
   cardPreview: {
@@ -91,10 +92,10 @@ export default function CommonStatistics() {
   const { t, i18n } = useTranslation()
 
 
-  const farms = useFarms()
+  const [, farms] = useFarms()
   const totalSupplyOfAllFarms = farms.reduce((res, item) => res + (Number(item.soneHarvestedUSD) ?? 0), 0)
-  // const totalSupplyOfAllFarmsInUSD =
   const totalValueStaked = farms.reduce((res, item) => res + (Number(item.balanceUSD) ?? 0), 0)
+  const totalSupply = useSoneTotalSupply()
   const sonePriceInUSD = useOneSoneInUSD()
 
   const handleCalculateStakeRate = (staked, liquidity) => {
@@ -122,7 +123,8 @@ export default function CommonStatistics() {
             />
           </Box>
         }
-        title={t('Total Supply')}
+        // title={t('Total Supply')}
+        title="Đang đợi confirm issue 53665"
         valueContainer={
           <Box display='flex' alignItems='center'>
             <Typography
@@ -196,10 +198,11 @@ export default function CommonStatistics() {
         title={t('SONE Token Price')}
         valueContainer={
           <Box display='flex' alignItems='center'>
-            <Typography className={classes.cardValue} style={{ color: theme.text6Sone }}>{`$${reduceFractionDigit(sonePriceInUSD, 6)}`}</Typography>
+            <Typography className={classes.cardValue}
+                        style={{ color: theme.text6Sone }}>{`$${reduceFractionDigit(sonePriceInUSD, 6)}`}</Typography>
           </Box>
         }
-        descriptionContainer={`${t('Total Supply')}: ${reduceLongNumber(commonData?.totalSupply)} SONE`}
+        descriptionContainer={`${t('Total Supply')}: ${reduceFractionDigit(totalSupply, 6)} SONE`}
       />
     </StyledGrid>
   )
