@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 
 import { client } from '../apollo/client'
 import {
-  PAIR_DATA,
-  PAIR_CHART,
   FILTERED_TRANSACTIONS,
-  PAIRS_CURRENT,
-  PAIRS_BULK,
-  PAIRS_HISTORICAL_BULK,
   HOURLY_PAIR_RATES,
+  PAIR_CHART,
+  PAIR_DATA,
+  PAIRS_BULK,
+  PAIRS_CURRENT,
+  PAIRS_HISTORICAL_BULK
 } from '../apollo/queries'
 
 import { useEthPrice } from './GlobalData'
@@ -17,12 +17,12 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
 import {
-  getPercentChange,
   get2DayPercentChange,
-  isAddress,
   getBlocksFromTimestamps,
+  getPercentChange,
   getTimestampsForChanges,
-  splitQuery,
+  isAddress,
+  splitQuery
 } from '../utils'
 import { timeframeOptions, TRACKED_OVERRIDES } from '../constants'
 import { useLatestBlocks } from './Application'
@@ -40,9 +40,9 @@ dayjs.extend(utc)
 export function safeAccess(object, path) {
   return object
     ? path.reduce(
-        (accumulator, currentValue) => (accumulator && accumulator[currentValue] ? accumulator[currentValue] : null),
-        object
-      )
+      (accumulator, currentValue) => (accumulator && accumulator[currentValue] ? accumulator[currentValue] : null),
+      object
+    )
     : null
 }
 
@@ -60,8 +60,8 @@ function reducer(state, { type, payload }) {
         ...state,
         [pairAddress]: {
           ...state?.[pairAddress],
-          ...data,
-        },
+          ...data
+        }
       }
     }
 
@@ -73,7 +73,7 @@ function reducer(state, { type, payload }) {
       })
       return {
         ...state,
-        ...added,
+        ...added
       }
     }
 
@@ -83,8 +83,8 @@ function reducer(state, { type, payload }) {
         ...state,
         [address]: {
           ...(safeAccess(state, [address]) || {}),
-          txns: transactions,
-        },
+          txns: transactions
+        }
       }
     }
     case UPDATE_CHART_DATA: {
@@ -93,8 +93,8 @@ function reducer(state, { type, payload }) {
         ...state,
         [address]: {
           ...(safeAccess(state, [address]) || {}),
-          chartData,
-        },
+          chartData
+        }
       }
     }
 
@@ -106,9 +106,9 @@ function reducer(state, { type, payload }) {
           ...state?.[address],
           hourlyData: {
             ...state?.[address]?.hourlyData,
-            [timeWindow]: hourlyData,
-          },
-        },
+            [timeWindow]: hourlyData
+          }
+        }
       }
     }
 
@@ -127,8 +127,8 @@ export default function Provider({ children }) {
       type: UPDATE,
       payload: {
         pairAddress,
-        data,
-      },
+        data
+      }
     })
   }, [])
 
@@ -136,29 +136,29 @@ export default function Provider({ children }) {
     dispatch({
       type: UPDATE_TOP_PAIRS,
       payload: {
-        topPairs,
-      },
+        topPairs
+      }
     })
   }, [])
 
   const updatePairTxns = useCallback((address, transactions) => {
     dispatch({
       type: UPDATE_PAIR_TXNS,
-      payload: { address, transactions },
+      payload: { address, transactions }
     })
   }, [])
 
   const updateChartData = useCallback((address, chartData) => {
     dispatch({
       type: UPDATE_CHART_DATA,
-      payload: { address, chartData },
+      payload: { address, chartData }
     })
   }, [])
 
   const updateHourlyData = useCallback((address, hourlyData, timeWindow) => {
     dispatch({
       type: UPDATE_HOURLY_DATA,
-      payload: { address, hourlyData, timeWindow },
+      payload: { address, hourlyData, timeWindow }
     })
   }, [])
 
@@ -172,8 +172,8 @@ export default function Provider({ children }) {
             updatePairTxns,
             updateChartData,
             updateTopPairs,
-            updateHourlyData,
-          },
+            updateHourlyData
+          }
         ],
         [state, update, updatePairTxns, updateChartData, updateTopPairs, updateHourlyData]
       )}
@@ -185,22 +185,24 @@ export default function Provider({ children }) {
 
 async function getBulkPairData(pairList, ethPrice) {
   const [t1, t2, tWeek] = getTimestampsForChanges()
-  let [{ number: b1 }, { number: b2 }, { number: bWeek }] = await getBlocksFromTimestamps([t1, t2, tWeek])
+  console.log(`await getBlocksFromTimestamps([t1, t2, tWeek])`, await getBlocksFromTimestamps([t1, t2, tWeek]))
+  let [{ number: b1 }, { number: b2 }, { number: bWeek }] = await getBlocksFromTimestamps([t1, t2, tWeek]) || {}
+  if (b1 === undefined || b2 === undefined || bWeek === undefined) return []
 
   try {
     let current = await client.query({
       query: PAIRS_BULK,
       variables: {
-        allPairs: pairList,
+        allPairs: pairList
       },
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-first'
     })
 
     let [oneDayResult, twoDayResult, oneWeekResult] = await Promise.all(
       [b1, b2, bWeek].map(async (block) => {
         let result = client.query({
           query: PAIRS_HISTORICAL_BULK(block, pairList),
-          fetchPolicy: 'cache-first',
+          fetchPolicy: 'cache-first'
         })
         return result
       })
@@ -220,35 +222,35 @@ async function getBulkPairData(pairList, ethPrice) {
 
     let pairData = await Promise.all(
       current &&
-        current.data.pairs.map(async (pair) => {
-          let data = pair
-          let oneDayHistory = oneDayData?.[pair.id]
-          if (!oneDayHistory) {
-            let newData = await client.query({
-              query: PAIR_DATA(pair.id, b1),
-              fetchPolicy: 'cache-first',
-            })
-            oneDayHistory = newData.data.pairs[0]
-          }
-          let twoDayHistory = twoDayData?.[pair.id]
-          if (!twoDayHistory) {
-            let newData = await client.query({
-              query: PAIR_DATA(pair.id, b2),
-              fetchPolicy: 'cache-first',
-            })
-            twoDayHistory = newData.data.pairs[0]
-          }
-          let oneWeekHistory = oneWeekData?.[pair.id]
-          if (!oneWeekHistory) {
-            let newData = await client.query({
-              query: PAIR_DATA(pair.id, bWeek),
-              fetchPolicy: 'cache-first',
-            })
-            oneWeekHistory = newData.data.pairs[0]
-          }
-          data = parseData(data, oneDayHistory, twoDayHistory, oneWeekHistory, ethPrice, b1)
-          return data
-        })
+      current.data.pairs.map(async (pair) => {
+        let data = pair
+        let oneDayHistory = oneDayData?.[pair.id]
+        if (!oneDayHistory) {
+          let newData = await client.query({
+            query: PAIR_DATA(pair.id, b1),
+            fetchPolicy: 'cache-first'
+          })
+          oneDayHistory = newData.data.pairs[0]
+        }
+        let twoDayHistory = twoDayData?.[pair.id]
+        if (!twoDayHistory) {
+          let newData = await client.query({
+            query: PAIR_DATA(pair.id, b2),
+            fetchPolicy: 'cache-first'
+          })
+          twoDayHistory = newData.data.pairs[0]
+        }
+        let oneWeekHistory = oneWeekData?.[pair.id]
+        if (!oneWeekHistory) {
+          let newData = await client.query({
+            query: PAIR_DATA(pair.id, bWeek),
+            fetchPolicy: 'cache-first'
+          })
+          oneWeekHistory = newData.data.pairs[0]
+        }
+        data = parseData(data, oneDayHistory, twoDayHistory, oneWeekHistory, ethPrice, b1)
+        return data
+      })
     )
     return pairData
   } catch (e) {
@@ -272,9 +274,9 @@ export async function getBulkPairDataForFooter(pairList) {
     const current = await client.query({
       query: PAIRS_BULK,
       variables: {
-        allPairs: pairList,
+        allPairs: pairList
       },
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'network-only'
     })
 
     // Lấy data quá khứ.
@@ -282,7 +284,7 @@ export async function getBulkPairDataForFooter(pairList) {
       [b1].map(async (block) => {
         return client.query({
           query: PAIRS_HISTORICAL_BULK(block, pairList),
-          fetchPolicy: 'network-only',
+          fetchPolicy: 'network-only'
         })
       })
     )
@@ -296,29 +298,31 @@ export async function getBulkPairDataForFooter(pairList) {
     // Với mỗi pair ở hiện tại, tìm data của nó trong quá khứ rồi map sự thay đổi.
     const pairs = await Promise.all(
       current &&
-        current.data.pairs.map(async (pair) => {
-          let data = pair
-          async function getHistoryFromData(data, blockNumber) {
-            let history = data?.[pair.id]
-            if (!history) {
-              const newData = await client.query({
-                query: PAIR_DATA(pair.id, blockNumber),
-                fetchPolicy: 'network-only',
-              })
-              history = newData.data.pairs[0]
-            }
-            return history
-          }
-          const oneDayHistory = await getHistoryFromData(oneDayData, b1)
+      current.data.pairs.map(async (pair) => {
+        let data = pair
 
-          // Nếu không có data quá khứ thì trả về null.
-          if (oneDayHistory) {
-            data = parseDataForFooter(data, oneDayHistory)
-            return data
-          } else {
-            return null
+        async function getHistoryFromData(data, blockNumber) {
+          let history = data?.[pair.id]
+          if (!history) {
+            const newData = await client.query({
+              query: PAIR_DATA(pair.id, blockNumber),
+              fetchPolicy: 'network-only'
+            })
+            history = newData.data.pairs[0]
           }
-        })
+          return history
+        }
+
+        const oneDayHistory = await getHistoryFromData(oneDayData, b1)
+
+        // Nếu không có data quá khứ thì trả về null.
+        if (oneDayHistory) {
+          data = parseDataForFooter(data, oneDayHistory)
+          return data
+        } else {
+          return null
+        }
+      })
     )
     // Lọc những pair nào bị null.
     return pairs.filter((pair) => pair !== null)
@@ -406,9 +410,9 @@ const getPairTransactions = async (pairAddress) => {
     let result = await client.query({
       query: FILTERED_TRANSACTIONS,
       variables: {
-        allPairs: [pairAddress],
+        allPairs: [pairAddress]
       },
-      fetchPolicy: 'no-cache',
+      fetchPolicy: 'no-cache'
     })
     transactions.mints = result.data.mints
     transactions.burns = result.data.burns
@@ -434,9 +438,9 @@ const getPairChartData = async (pairAddress) => {
         query: PAIR_CHART,
         variables: {
           pairAddress: pairAddress,
-          skip,
+          skip
         },
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'cache-first'
       })
       skip += 1000
       data = data.concat(result.data.pairDayDatas)
@@ -469,7 +473,7 @@ const getPairChartData = async (pairAddress) => {
             date: nextDay,
             dayString: nextDay,
             dailyVolumeUSD: 0,
-            reserveUSD: latestLiquidityUSD,
+            reserveUSD: latestLiquidityUSD
           })
         } else {
           latestLiquidityUSD = dayIndexArray[index].reserveUSD
@@ -530,7 +534,7 @@ const getHourlyRateData = async (pairAddress, startTime, latestBlock) => {
         values.push({
           timestamp,
           rate0: parseFloat(result[row]?.token0Price),
-          rate1: parseFloat(result[row]?.token1Price),
+          rate1: parseFloat(result[row]?.token1Price)
         })
       }
     }
@@ -543,12 +547,12 @@ const getHourlyRateData = async (pairAddress, startTime, latestBlock) => {
       formattedHistoryRate0.push({
         timestamp: values[i].timestamp,
         open: parseFloat(values[i].rate0),
-        close: parseFloat(values[i + 1].rate0),
+        close: parseFloat(values[i + 1].rate0)
       })
       formattedHistoryRate1.push({
         timestamp: values[i].timestamp,
         open: parseFloat(values[i].rate1),
-        close: parseFloat(values[i + 1].rate1),
+        close: parseFloat(values[i + 1].rate1)
       })
     }
 
@@ -566,10 +570,10 @@ export function Updater() {
     async function getData() {
       // get top pairs by reserves
       let {
-        data: { pairs },
+        data: { pairs }
       } = await client.query({
         query: PAIRS_CURRENT,
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'cache-first'
       })
 
       // format as array of addresses
@@ -581,6 +585,7 @@ export function Updater() {
       let topPairs = await getBulkPairData(formattedPairs, ethPrice)
       topPairs && updateTopPairs(topPairs)
     }
+
     ethPrice && getData()
   }, [ethPrice, updateTopPairs])
   return null
@@ -601,6 +606,7 @@ export function useHourlyRateData(pairAddress, timeWindow) {
       let data = await getHourlyRateData(pairAddress, startTime, latestBlock)
       updateHourlyData(pairAddress, data, timeWindow)
     }
+
     if (!chartData) {
       fetch()
     }
@@ -650,6 +656,7 @@ export function useDataForList(pairList) {
       )
       setFetched(newFetched.concat(newPairData))
     }
+
     if (ethPrice && pairList && pairList.length > 0 && !fetched && !stale) {
       setStale(true)
       fetchNewPairData()
@@ -680,6 +687,7 @@ export function usePairData(pairAddress) {
         data && update(pairAddress, data[0])
       }
     }
+
     if (!pairData && pairAddress && ethPrice && isAddress(pairAddress)) {
       fetchData()
     }
@@ -701,6 +709,7 @@ export function usePairTransactions(pairAddress) {
         updatePairTxns(pairAddress, transactions)
       }
     }
+
     checkForTxns()
   }, [pairTxns, pairAddress, updatePairTxns])
   return pairTxns
@@ -717,6 +726,7 @@ export function usePairChartData(pairAddress) {
         updateChartData(pairAddress, data)
       }
     }
+
     checkForChartData()
   }, [chartData, pairAddress, updateChartData])
   return chartData
@@ -740,10 +750,10 @@ function useFooterData() {
   // region Callback functions.
   const getData = useCallback(async () => {
     const {
-      data: { pairs },
+      data: { pairs }
     } = await client.query({
       query: PAIRS_CURRENT,
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-first'
     })
 
     // Format as array of addresses.
@@ -806,7 +816,7 @@ export function useOneDayPairPriceChange() {
           token0Symbol: item.token0.symbol,
           token1Symbol: item.token1.symbol,
           token1Price: item.token1Price,
-          oneDayToken1PriceChange: item.oneDayToken1PriceChange,
+          oneDayToken1PriceChange: item.oneDayToken1PriceChange
         }
       }),
     [data]

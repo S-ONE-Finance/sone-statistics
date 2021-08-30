@@ -200,6 +200,11 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
           timestamp: t.split('t')[1],
           number: fetchedData[t][0]['number'],
         })
+      } else {
+        blocks.push({
+          timestamp: t.split('t')[1],
+          number: undefined,
+        })
       }
     }
   }
