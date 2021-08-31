@@ -181,7 +181,6 @@ export default function Provider({ children }) {
       },
     })
   }, [])
-  console.log('state lobal data', );
   return (
     <GlobalDataContext.Provider
       value={useMemo(

@@ -137,9 +137,7 @@ const BLOCK_DIFFERENCE_THRESHOLD = 30
 
 function App({ t }) {
   const globalData = useGlobalData()
-  console.log(`globalData`, globalData)
   const globalChartData = useGlobalChartData()
-  console.log(`globalChartData`, globalChartData)
   const [latestBlock, headBlock] = useLatestBlocks()
 
   // show warning

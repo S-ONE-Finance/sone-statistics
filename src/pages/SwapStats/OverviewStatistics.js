@@ -17,7 +17,7 @@ import { useAllPairData } from '../../contexts/PairData'
 import PairList from '../../components/PairList'
 import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
-import { useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
+import { useEthPrice, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from 'react-responsive'
 
@@ -169,6 +169,8 @@ function OverviewStatistics() {
     setTotalFee24h(totalFees)
   }
 
+  const [ethPrice] = useEthPrice()
+
   return (
     <div className={classes.boxMainContentOverview}>
       <div style={isMobile ? { display: 'none' } : { display: 'block' }}>
@@ -190,7 +192,7 @@ function OverviewStatistics() {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {reduceFractionDigit(888888888)}
+                  {reduceFractionDigit(ethPrice, 2)}
                 </Typography>
               </Box>
             }

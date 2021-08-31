@@ -101,7 +101,6 @@ export function useIndexTabManager() {
   // console.log('useIndexTabManager', state);
   const currentIndexTAB = state[INDEX_TAB]
   const currentlastSave = state[LAST_SAVED]
-  console.log('useIndexTabManager currentIndexTAB', state)
   function setIndexTab(params) {
     console.log('useIndexTabManager params', currentlastSave !== state[LAST_SAVED] ? 0 : params)
     updateKey(INDEX_TAB, params)

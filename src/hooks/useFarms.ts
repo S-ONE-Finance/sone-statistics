@@ -4,21 +4,11 @@ import { calculateAPY, Farm } from '@s-one-finance/sdk-core'
 import { useQuery } from 'react-query'
 
 import { liquidityPositionSubsetQuery, pairSubsetQuery, poolsQuery } from '../apollo/queries'
-import { stakingClient } from '../apollo/client'
+import { client, stakingClient } from '../apollo/client'
 import useBlockNumber from './useBlockNumber'
 import useAverageBlockTime from './useAverageBlockTime'
 import useOneSoneInUSD from './useOneSoneInUSD'
 import { CHAIN_ID, CONFIG_MASTER_FARMER, SONE_MASTER_FARMER, SONE_PRICE_MINIMUM } from '../constants'
-import { ApolloClient } from 'apollo-client'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/s-one-system/sone-swap-ropsten',
-  }),
-  cache: new InMemoryCache()
-})
 
 export default function useFarms(): [boolean, Farm[]] {
   const sonePrice = useOneSoneInUSD()

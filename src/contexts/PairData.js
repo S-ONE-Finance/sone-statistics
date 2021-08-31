@@ -185,7 +185,6 @@ export default function Provider({ children }) {
 
 async function getBulkPairData(pairList, ethPrice) {
   const [t1, t2, tWeek] = getTimestampsForChanges()
-  console.log(`await getBlocksFromTimestamps([t1, t2, tWeek])`, await getBlocksFromTimestamps([t1, t2, tWeek]))
   let [{ number: b1 }, { number: b2 }, { number: bWeek }] = await getBlocksFromTimestamps([t1, t2, tWeek]) || {}
   if (b1 === undefined || b2 === undefined || bWeek === undefined) return []
 
