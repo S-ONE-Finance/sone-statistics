@@ -998,3 +998,12 @@ export const tokenQuery = (address) => gql`
     }
   }
 `
+
+export const liquidityOfAllPair = gql`
+{
+  pairs {
+    reserveUSD
+  }
+}
+
+`

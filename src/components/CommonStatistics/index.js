@@ -12,6 +12,7 @@ import { S_ONE_APP_URL } from '../../constants/urls'
 import useFarms from '../../hooks/useFarms'
 import useOneSoneInUSD from '../../hooks/useOneSoneInUSD'
 import useSoneTotalSupply from '../../hooks/useSoneTotalSupply'
+import useTotalLiquidity from '../../hooks/useTotalLiquidity'
 
 const useStyles = makeStyles((theme) => ({
   cardPreview: {
@@ -93,16 +94,11 @@ export default function CommonStatistics() {
 
 
   const [, farms] = useFarms()
-  const totalSupplyOfAllFarms = farms.reduce((res, item) => res + (Number(item.soneHarvestedUSD) ?? 0), 0)
-  const totalValueStaked = farms.reduce((res, item) => res + (Number(item.balanceUSD) ?? 0), 0)
+  const totalLiquidity = useTotalLiquidity()
+  const totalValueStaked = farms.reduce((res, item) => res + (Number(item.balanceUSD) || 0), 0)
+  const totalValueStakedPerTotalLiquidity = (totalValueStaked * 100 / totalLiquidity) || 0
   const totalSupply = useSoneTotalSupply()
   const sonePriceInUSD = useOneSoneInUSD()
-
-  const handleCalculateStakeRate = (staked, liquidity) => {
-    return `${reduceFractionDigit((staked / liquidity) * 100 || 0, 1)}%`
-  }
-
-  const commonData = {}
 
   return (
     <StyledGrid container spacing={3}>
@@ -123,15 +119,14 @@ export default function CommonStatistics() {
             />
           </Box>
         }
-        // title={t('Total Supply')}
-        title="Đang đợi confirm issue 53665"
+        title={t('Total Liquidity')}
         valueContainer={
           <Box display='flex' alignItems='center'>
             <Typography
               className={classes.cardValue}
               style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
             >
-              {`$${reduceFractionDigit(totalSupplyOfAllFarms, 6)}`}
+              {`$${reduceFractionDigit(totalLiquidity, 6)}`}
             </Typography>
           </Box>
         }
@@ -174,8 +169,8 @@ export default function CommonStatistics() {
         }
         descriptionContainer={
           i18n.language === 'jp'
-            ? `${t('of Total Liquidity')} ${handleCalculateStakeRate(totalValueStaked, commonData?.totalLiquidity)}`
-            : `${handleCalculateStakeRate(totalValueStaked, commonData?.totalLiquidity)} ${t('of Total Liquidity')}`
+            ? `${t('of Total Liquidity')} ${reduceFractionDigit(totalValueStakedPerTotalLiquidity, 2) + "%"}`
+            : `${reduceFractionDigit(totalValueStakedPerTotalLiquidity, 2) + "%"} ${t('of Total Liquidity')}`
         }
       />
       <CardItem
