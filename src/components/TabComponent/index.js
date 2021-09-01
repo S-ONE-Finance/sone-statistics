@@ -14,30 +14,6 @@ import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 
 // icon-transaction-coin.svg
-const TabCustom = withStyles((theme) => ({
-  root: {
-    textTransform: 'none',
-    fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing(4),
-    justifyContent: 'space-between',
-    minWidth: 220,
-    marginBottom: 30,
-    borderRadius: 30,
-    marginTop: 35,
-    backgroundColor: useContext(ThemeContext).gray,
-    color: useContext(ThemeContext).colorModeButton,
-    '&$selected': {
-      color: '#fff',
-      backgroundColor: useContext(ThemeContext).red1Sone,
-      borderRadius: 30,
-      fontWeight: theme.typography.fontWeightMedium,
-      justifyContent: 'space-between',
-    },
-  },
-  selected: {
-    backgroundColor: '#F05359',
-  },
-}))((props) => <Tab disableRipple {...props} />)
 
 const customStyleTabbar = makeStyles((theme) => ({
   root: {
@@ -96,6 +72,33 @@ function TabComponent(_props) {
   const history = useHistory()
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
+  const TabCustom = withStyles((theme) => {
+    return {
+      root: {
+        textTransform: 'none',
+        fontWeight: theme.typography.fontWeightRegular,
+        marginRight: theme.spacing(4),
+        justifyContent: 'space-between',
+        minWidth: 220,
+        marginBottom: 30,
+        borderRadius: 30,
+        marginTop: 35,
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        color: isDarkMode ? '#AAAAAA' : '#333333',
+        '&$selected': {
+          color: '#fff',
+          borderRadius: 30,
+          fontWeight: theme.typography.fontWeightMedium,
+          justifyContent: 'space-between',
+        },
+      },
+      selected: {
+        // backgroundColor: '#F05359',
+        // color: '#fff',
+      },
+    }
+  })((props) => <Tab disableRipple {...props} />)
+
   return (
     <ContentWrapper style={{ zIndex: 1 }}>
       <Grid container spacing={0} className="box-first-main">
@@ -125,6 +128,7 @@ function TabComponent(_props) {
         scrollButtons="off"
       >
         <TabCustom
+          theme2={isDarkMode}
           classes={{
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
@@ -141,6 +145,7 @@ function TabComponent(_props) {
           {...a11yProps(0)}
         />
         <TabCustom
+          theme2={isDarkMode}
           classes={{
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
@@ -156,6 +161,7 @@ function TabComponent(_props) {
           {...a11yProps(1)}
         />
         <TabCustom
+          theme2={isDarkMode}
           classes={{
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
@@ -172,6 +178,7 @@ function TabComponent(_props) {
           {...a11yProps(2)}
         />
         <TabCustom
+          theme2={isDarkMode}
           classes={{
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,
@@ -188,6 +195,7 @@ function TabComponent(_props) {
           {...a11yProps(3)}
         />
         <TabCustom
+          theme2={isDarkMode}
           classes={{
             wrapper: classes.iconLabelWrapper,
             labelContainer: classes.labelContainer,

@@ -75,13 +75,14 @@
   "1M": "1ヶ月",
   "D": "日",
   "H": "時",
-  "View on Etherscan": "Etherscaを見る",
+  "View on Etherscan": "Etherscanを見る",
   "Address": "アドレス",
   "Pair Address": "トークンペアアドレス",
-  "Pair name": "トークン名称",
+  "Pair name": "トークンペア名称",
 
   "Total Value Staked": "合計運用額",
   "of Total Liquidity": "合計預入額の",
   "Swap Stats": "取引データ",
-  "Staking Stats": "運用データ"
+  "Staking Stats": "運用データ",
+  "Liquidity (24hr)": "預入額 (24時間)"
 }

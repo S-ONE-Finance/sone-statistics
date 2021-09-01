@@ -289,7 +289,7 @@ function AccountPage({ account }) {
                       <Activity style={{ color: '#333333' }} size={16} />
                     </StyledIcon>
                     <TYPE.body fontSize={'16px'} style={{ color: '#333333' }} ml={'10px'}>
-                      All Positions
+                      {t('All Positions')}
                     </TYPE.body>
                   </RowFixed>
                 )}
@@ -340,7 +340,7 @@ function AccountPage({ account }) {
                           <StyledIcon>
                             <Activity size={16} />
                           </StyledIcon>
-                          <TYPE.body ml={'10px'}>All Positions</TYPE.body>
+                          <TYPE.body ml={'10px'}>{t('All Positions')}</TYPE.body>
                         </RowFixed>
                       </MenuRow>
                     )}
@@ -424,26 +424,26 @@ function AccountPage({ account }) {
           </TitlteTop>
           <StyledPanel>
             <StyleAutoRow gap="20px">
-              <StyleAutoColumn gap="8px">
+              <StyleAutoColumn gap="8px" style={{ width: below600 ? '100%' : 'auto' }}>
                 <TYPE.header fontSize={below600 ? 13 : 20}>{t('Total Value Swapped')}</TYPE.header>
-                <TYPE.main color="#767676" fontSize={below600 ? 13 : 24}>
+                <TYPE.main color="#767676" fontSize={below600 ? 13 : 24} style={{ width: below600 ? '60%' : 'auto' }}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
 
-              <StyleAutoColumn gap="8px">
+              <StyleAutoColumn gap="8px" style={{ width: below600 ? '100%' : 'auto' }}>
                 <TYPE.header fontSize={!below600 ? 20 : 13} style={{ minWidth: below600 ? 120 : 'auto' }}>
                   {t('Total Fees Paid')}
                 </TYPE.header>
-                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13} style={{ width: below600 ? '60%' : 'auto' }}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.main>
               </StyleAutoColumn>
-              <StyleAutoColumn gap="8px">
+              <StyleAutoColumn gap="8px" style={{ width: below600 ? '100%' : 'auto' }}>
                 <TYPE.header fontSize={!below600 ? 20 : 13} style={{ minWidth: below600 ? 120 : 'auto' }}>
                   {t('Total Transactions')}
                 </TYPE.header>
-                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13}>
+                <TYPE.main color="#767676" fontSize={!below600 ? 24 : 13} style={{ width: below600 ? '60%' : 'auto' }}>
                   {transactionCount ? transactionCount : '-'}
                 </TYPE.main>
               </StyleAutoColumn>

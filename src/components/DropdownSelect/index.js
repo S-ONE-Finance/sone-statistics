@@ -7,6 +7,7 @@ import { ChevronDown as Arrow } from 'react-feather'
 import { TYPE } from '../../theme'
 import { StyledIcon } from '..'
 import { useMedia } from 'react-use'
+import { useTranslation } from 'react-i18next'
 
 const Wrapper = styled.div`
   z-index: 20;
@@ -53,10 +54,12 @@ const ArrowStyled = styled(Arrow)`
 const DropdownSelect = ({ options, active, setActive, color }) => {
   const [showDropdown, toggleDropdown] = useState(false)
   const below600 = useMedia('(max-width: 600px)')
+  const { t } = useTranslation()
+
   return (
     <Wrapper style={{ border: below600 ? 0 : '' }} open={showDropdown} color={color}>
       <RowBetween onClick={() => toggleDropdown(!showDropdown)} justify="center">
-        <TYPE.main>{active}</TYPE.main>
+        <TYPE.main>{t(`${active}`)}</TYPE.main>
         <StyledIcon>
           <ArrowStyled />
         </StyledIcon>
@@ -75,7 +78,7 @@ const DropdownSelect = ({ options, active, setActive, color }) => {
                     }}
                     key={index}
                   >
-                    <TYPE.body fontSize={14}>{option}</TYPE.body>
+                    <TYPE.body fontSize={14}>{t(`${option}`)}</TYPE.body>
                   </Row>
                 )
               )

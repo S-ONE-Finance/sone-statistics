@@ -233,7 +233,7 @@ function PairPage({ pairAddress, history }) {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
+      <ThemedBackground />
       <span />
       <StyleDiv>
         <Warning
@@ -297,10 +297,18 @@ function PairPage({ pairAddress, history }) {
                     marginLeft: 0,
                   }}
                 >
-                  <Link external href={getPoolLink(token0?.id, token1?.id)} style={{ order: below600 ? 1 : 0 }}>
+                  <Link
+                    external
+                    href={getPoolLink(token0?.id, token1?.id)}
+                    style={{ order: below600 ? 1 : 0, marginRight: below600 ? 13 : 0 }}
+                  >
                     <ButtonLight
-                      style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
-                      fontSize={below600 ? 13 : 24}
+                      style={{
+                        backgroundColor: '#F05359',
+                        color: '#fff',
+                        borderRadius: 35,
+                        fontSize: below600 ? 13 : 24,
+                      }}
                     >
                       + {t('Add Liquidity')}
                     </ButtonLight>
@@ -309,8 +317,12 @@ function PairPage({ pairAddress, history }) {
                     <ButtonDark
                       ml={!below1080 && '.5rem'}
                       mr={below1080 && '.5rem'}
-                      style={{ backgroundColor: '#F05359', color: '#fff', borderRadius: 35 }}
-                      fontSize={below600 ? 13 : 24}
+                      style={{
+                        backgroundColor: '#F05359',
+                        color: '#fff',
+                        borderRadius: 35,
+                        fontSize: below600 ? 13 : 24,
+                      }}
                     >
                       {t('Swap')}
                     </ButtonDark>
@@ -329,7 +341,14 @@ function PairPage({ pairAddress, history }) {
             >
               <FixedPanel
                 onClick={() => history.push(`/swap/token/${token0?.id}`)}
-                style={{ backgroundColor: '#F3F3F3', borderRadius: 25, border: 0 }}
+                style={{
+                  backgroundColor: '#F3F3F3',
+                  borderRadius: 25,
+                  border: 0,
+                  height: 42,
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
               >
                 <RowFixed>
                   <TokenLogo address={token0?.id} size={'16px'} />
@@ -498,14 +517,14 @@ function PairPage({ pairAddress, history }) {
                 }}
                 p={20}
               >
-                <TokenDetailsLayout style={{ maxHeight: !below600 ? '82px' : 'auto', columnGap: '9%' }}>
+                <TokenDetailsLayout style={{ columnGap: '8%' }}>
                   <Column style={{ height: '100%', width: '100%' }}>
                     <ItemPairInfomation>
                       <TYPE.main
                         className="font-weight-bold f-20"
                         style={{ color: isDarkMode ? '#FFFFFF' : '#333333', fontWeight: 'bold' }}
                       >
-                        {t('Pair Name')}
+                        {t('Pair name')}
                       </TYPE.main>
                       <TYPE.main style={{ margin: 'auto' }}>
                         <RowFixed fontSize="16">
@@ -592,12 +611,12 @@ function PairPage({ pairAddress, history }) {
                       <AutoRow align="center" style={{ margin: 'auto' }}>
                         <ButtonLight color={backgroundColor} className="btn-danger" style={{ marginTop: 20 }}>
                           <Link
-                            fontSize={'16px'}
+                            fontSize={below600 ? '13px' : '16px'}
                             color={backgroundColor}
                             external
                             href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}
                           >
-                            {t('View on Etherscan')} ↗
+                            {t('View on Etherscan')}&nbsp;{!below600 ? '↗' : ''}
                           </Link>
                         </ButtonLight>
                       </AutoRow>

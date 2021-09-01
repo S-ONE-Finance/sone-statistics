@@ -112,7 +112,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
 
   const ListItem = ({ lp, index }) => {
     return (
-      <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
+      <DashGrid style={{ height: below600 ? '52px' : '48px' }} disbaleLinks={disbaleLinks} focus={true}>
         {!below600 && (
           <DataText
             area="number"
@@ -151,8 +151,11 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
               className={
                 isDarkMode ? 'justify-content-center font-weight-normal' : 'justify-content-center font-weight-normal'
               }
+              style={{ margin: below600 ? 'auto' : '', flexDirection: below600 ? 'column' : '' }}
             >
-              {!below600 && <DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
+              <div style={{ marginBottom: below600 ? '5px' : '' }}>
+                {<DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
+              </div>
               {lp.pairName}
             </RowFixed>
           </CustomLink>
@@ -260,9 +263,9 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
             value={ITEMS_PER_PAGE}
             onChange={handleChangePagePanigation}
           >
-            <MenuItem value={5}>5/Page</MenuItem>
-            <MenuItem value={10}>10/Page</MenuItem>
-            <MenuItem value={100}>100/Page</MenuItem>
+            <MenuItem value={5}>5/{t('page')}</MenuItem>
+            <MenuItem value={10}>10/{t('page')}</MenuItem>
+            <MenuItem value={100}>100/{t('page')}</MenuItem>
           </Select>
         </div>
       )}
