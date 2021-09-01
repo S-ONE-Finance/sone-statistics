@@ -103,7 +103,7 @@ const TokenChart = ({ address, color, base }) => {
   }, [prevWindow, timeWindow])
 
   const below1080 = useMedia('(max-width: 1080px)')
-  const below600 = useMedia('(max-height: 600px)')
+  const below600 = useMedia('(max-width: 600px)')
 
   let utcStartTime = getTimeframe(timeWindow)
   const domain = [(dataMin) => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax']
@@ -149,7 +149,7 @@ const TokenChart = ({ address, color, base }) => {
               <OptionButton
                 active={chartFilter === CHART_VIEW.LIQUIDITY}
                 onClick={() => setChartFilter(CHART_VIEW.LIQUIDITY)}
-                style={{ marginRight: '6px' }}
+                style={{ marginRight: '6px', fontSize: below600 ? 11 : 16 }}
               >
                 {t('Liquidity')}
               </OptionButton>

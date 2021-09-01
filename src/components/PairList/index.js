@@ -31,7 +31,7 @@ const List = styled(Box)`
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 100px 1fr 1fr;
+  grid-template-columns: 100px 1fr 1.4fr;
   grid-template-areas: 'name liq vol';
   padding: 0 1.125rem;
 
@@ -458,6 +458,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             classes={{
               root: classes.root,
             }}
+            siblingCount={below600 ? 0 : 2}
           />
           <Select
             className={classes.boxNavigation}

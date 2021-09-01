@@ -528,6 +528,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             classes={{
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
+            siblingCount={below780 ? 0 : 2}
           />
           <Select
             className={classes.boxNavigation}
