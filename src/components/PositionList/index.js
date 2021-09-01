@@ -416,6 +416,7 @@ function PositionList({ positions }) {
             classes={{
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
+            siblingCount={below740 ? 0 : 2}
           />
           <div className={classes.boxNavigation} style={{ color: isDarkMode ? '#fff' : '#767676', fontSize: 14 }}>
             {positionsSorted.length}/page

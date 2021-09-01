@@ -250,6 +250,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
             classes={{
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
+            siblingCount={below600 ? 0 : 2}
           />
           <Select
             className={classes.boxNavigation}

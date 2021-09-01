@@ -275,7 +275,7 @@ div.MuiTabs-flexContainer {
 
 .MuiButtonBase-root.MuiTab-root.Mui-selected .iconLightMode,
 .MuiButtonBase-root.MuiTab-root.Mui-selected .iconDarkMode {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1) !important;
 }
 
 .sc-fMiknA.kJSEpH.css-vurnku {
@@ -425,7 +425,8 @@ div.MuiTabs-flexContainer {
   }
 
   .box-title-main {
-    margin-top: 1rem;
+    margin-top: 34px !important;
+    margin-bottom: 12px !important;
   }
 }
 

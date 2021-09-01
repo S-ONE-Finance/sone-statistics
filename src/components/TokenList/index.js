@@ -31,7 +31,7 @@ const List = styled(Box)`
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 100px 1fr 1fr;
+  grid-template-columns: 100px 1fr 1.3fr;
   grid-template-areas: 'name liq vol';
   padding: 0 1.125rem;
 
@@ -80,7 +80,7 @@ const ClickableText = styled(Text)`
   user-select: none;
   color: ${({ theme }) => theme.text1} !important;
   @media screen and (max-width: 640px) {
-    font-size: 0.85rem;
+    font-size: 15px !important;
   }
 `
 
@@ -257,7 +257,7 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
         )}
         <DataText
           area="liq"
-          fontSize={'16px'}
+          fontSize={below680 ? '13px' : '16px'}
           style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
           fontWeight="400"
           className={
@@ -342,11 +342,12 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
               <ClickableText
                 color="text"
                 area="name"
-                fontWeight="500"
+                fontWeight="700"
                 onClick={(e) => {
                   setSortedColumn(SORT_FIELD.NAME)
                   setSortDirection(sortedColumn !== SORT_FIELD.NAME ? true : !sortDirection)
                 }}
+                className="f-20"
               >
                 {t('Name')}
                 {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
@@ -467,6 +468,7 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
             classes={{
               root: classes.root, // class name, e.g. `classes-nesting-root-x`
             }}
+            siblingCount={below600 ? 0 : 2}
           />
           <Select
             className={classes.boxNavigation}

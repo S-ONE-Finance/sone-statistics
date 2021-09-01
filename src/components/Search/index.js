@@ -21,6 +21,7 @@ import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { useTranslation } from 'react-i18next'
+import { useMediaQuery } from 'react-responsive'
 
 const Container = styled.div`
   height: 48px;
@@ -171,6 +172,7 @@ export const Search = ({ small = false }) => {
   // const below700 = useMedia('(max-width: 700px)')
   // const below470 = useMedia('(max-width: 470px)')
   // const below410 = useMedia('(max-width: 410px)')
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
   useEffect(() => {
     if (value !== '') {
@@ -434,6 +436,7 @@ export const Search = ({ small = false }) => {
           // minWidth: below1080 ? 450 : 'auto',
           borderRadius: 30,
           width: '100%',
+          padding: isMobile ? '7px 16px' : '12px 16px',
         }}
       >
         <SearchIconLarge style={{ position: 'relative', right: 'initial', marginRight: 0 }} />

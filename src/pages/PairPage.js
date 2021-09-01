@@ -251,7 +251,10 @@ function PairPage({ pairAddress, history }) {
           }
         >
           <DashboardWrapper>
-            <AutoColumn gap="40px" style={{ marginBottom: '1.5rem' }}>
+            <AutoColumn
+              gap="40px"
+              style={{ marginBottom: '1rem', marginTop: below600 ? '34px' : 0, gridRowGap: below600 ? '15px' : '40px' }}
+            >
               <div
                 style={{
                   display: 'flex',
