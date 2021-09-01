@@ -50,7 +50,7 @@ const DashGrid = styled.div`
   @media screen and (min-width: 500px) {
     > * {
       &:first-child {
-        width: 180px;
+        width: 210px;
       }
     }
   }
@@ -62,7 +62,7 @@ const DashGrid = styled.div`
 
     > * {
       &:first-child {
-        width: 180px;
+        width: 210px;
       }
     }
   }
@@ -538,9 +538,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             value={ITEMS_PER_PAGE}
             onChange={handleChangePagePagination}
           >
-            <MenuItem value={5}>5/Page</MenuItem>
-            <MenuItem value={10}>10/Page</MenuItem>
-            <MenuItem value={100}>100/Page</MenuItem>
+            <MenuItem value={5}>5/{t('page')}</MenuItem>
+            <MenuItem value={10}>10/{t('page')}</MenuItem>
+            <MenuItem value={100}>100/{t('page')}</MenuItem>
           </Select>
         </div>
       )}

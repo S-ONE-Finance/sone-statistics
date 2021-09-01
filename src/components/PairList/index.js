@@ -60,7 +60,7 @@ const DashGrid = styled.div`
   }
 
   @media screen and (min-width: 1200px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1.3fr;
     grid-template-areas: ' name liq vol volWeek fees apy';
   }
 `
@@ -468,9 +468,9 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
             value={ITEMS_PER_PAGE}
             onChange={handleChangePagePanigation}
           >
-            <MenuItem value={5}>5/Page</MenuItem>
-            <MenuItem value={10}>10/Page</MenuItem>
-            <MenuItem value={100}>100/Page</MenuItem>
+            <MenuItem value={5}>5/{t('page')}</MenuItem>
+            <MenuItem value={10}>10/{t('page')}</MenuItem>
+            <MenuItem value={100}>100/{t('page')}</MenuItem>
           </Select>
         </div>
       )}

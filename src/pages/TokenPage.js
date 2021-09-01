@@ -193,7 +193,7 @@ function TokenPage({ address, history }) {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
+      <ThemedBackground />
       <Warning
         type={'token'}
         show={!dismissed && listedTokens && !listedTokens.includes(address)}
@@ -221,9 +221,9 @@ function TokenPage({ address, history }) {
                     </RowFixed>
                   </TYPE.main>
                   <TYPE.main
-                    className="font-weight-500 color-dark"
+                    className="font-weight-500"
                     fontWeight={500}
-                    style={{ marginRight: '1rem' }}
+                    style={{ marginRight: '1rem', color: isDarkMode ? '#fff' : '#333333' }}
                     Add
                     Liquidity
                     fontSize={below500 ? 13 : 36}
@@ -293,32 +293,6 @@ function TokenPage({ address, history }) {
                 className="column-token"
                 style={{ marginTop: below1080 ? '0' : '1rem', gap: below500 ? 20 : 6 }}
               >
-                {below1080 && price && (
-                  <Panel
-                    style={{
-                      border: 0,
-                      backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3',
-                    }}
-                  >
-                    <AutoColumn gap="20px">
-                      <RowBetween>
-                        <TYPE.main
-                          fontSize={below500 ? 13 : 24}
-                          className={isDarkMode ? 'font-weight-normal color-gray2' : 'font-weight-normal color-gray'}
-                        >
-                          Price
-                        </TYPE.main>
-                        <div />
-                      </RowBetween>
-                      <RowBetween align="flex-end">
-                        <TYPE.main fontSize={below500 ? 20 : 28} lineHeight={1} fontWeight={500}>
-                          {price}
-                        </TYPE.main>
-                        <TYPE.main fontSize={below500 ? 16 : 24}>{priceChange}</TYPE.main>
-                      </RowBetween>
-                    </AutoColumn>
-                  </Panel>
-                )}
                 <Panel style={{ border: 0, backgroundColor: isDarkMode ? '#0E2B4A' : '#F3F3F3', borderRadius: 25 }}>
                   <AutoColumn gap="20px">
                     <RowBetween>

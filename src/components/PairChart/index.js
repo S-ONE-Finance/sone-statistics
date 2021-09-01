@@ -36,8 +36,8 @@ const OptionsRow = styled.div`
 const CHART_VIEW = {
   VOLUME: 'Volume',
   LIQUIDITY: 'Liquidity',
-  RATE0: 'Rate 0',
-  RATE1: 'Rate 1',
+  RATE0: 'ETH/USDC',
+  // RATE1: 'Rate 1',
 }
 
 const PairChart = ({ address, color, base0, base1 }) => {
@@ -107,12 +107,12 @@ const PairChart = ({ address, color, base0, base1 }) => {
         `<span style="font-size: 12px; margin-left: 4px;">${formattedSymbol1}/${formattedSymbol0}<span>`
       )
     }
-    if (chartFilter === CHART_VIEW.RATE1) {
-      return (
-        formattedNum(val) +
-        `<span style="font-size: 12px; margin-left: 4px;">${formattedSymbol0}/${formattedSymbol1}<span>`
-      )
-    }
+    // if (chartFilter === CHART_VIEW.RATE1) {
+    //   return (
+    //     formattedNum(val) +
+    //     `<span style="font-size: 12px; margin-left: 4px;">${formattedSymbol0}/${formattedSymbol1}<span>`
+    //   )
+    // }
   }
 
   const aspect = below1080 ? 60 / 20 : below1600 ? 60 / 32 : 60 / 28
@@ -154,7 +154,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
             >
               {pairData.token0 ? formattedSymbol1 + '/' + formattedSymbol0 : '-'}
             </OptionButton>
-            <OptionButton
+            {/* <OptionButton
               active={chartFilter === CHART_VIEW.RATE1}
               onClick={() => {
                 setTimeWindow(timeframeOptions.WEEK)
@@ -162,7 +162,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
               }}
             >
               {pairData.token0 ? formattedSymbol0 + '/' + formattedSymbol1 : '-'}
-            </OptionButton>
+            </OptionButton> */}
           </AutoRow>
           <AutoRow justify="flex-end" gap="6px">
             <StyleButtonComponent
@@ -247,7 +247,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
           </ResponsiveContainer>
         )}
 
-        {chartFilter === CHART_VIEW.RATE1 &&
+        {/* {chartFilter === CHART_VIEW.RATE1 &&
           (hourlyRate1 ? (
             <ResponsiveContainer aspect={aspect} ref={ref}>
               <CandleStickChart
@@ -260,7 +260,7 @@ const PairChart = ({ address, color, base0, base1 }) => {
             </ResponsiveContainer>
           ) : (
             <LocalLoader />
-          ))}
+          ))} */}
 
         {chartFilter === CHART_VIEW.RATE0 &&
           (hourlyRate0 ? (

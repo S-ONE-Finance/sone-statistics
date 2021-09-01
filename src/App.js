@@ -92,15 +92,15 @@ const WarningBanner = styled.div`
 const LayoutWrapper = ({ children }) => {
   const [isDarkMode] = useDarkModeManager()
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
-  // const [index, setIndex] = useIndexTabManager()
-  // console.log('index LayoutWrapper', index);
   return (
     <>
       <HeaderWrapper>
         <Header />
       </HeaderWrapper>
-      <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
-        <div style={{ padding: isMobile ? '20px 0' : '100px 0' }}>
+      <Body id="center" className={isDarkMode ? 'dark-mode' : 'light-mode'}>
+        <div
+          style={{ padding: isMobile ? '20px 0' : '100px 0', minHeight: !isMobile ? 'calc(100vh - 200px)' : 'auto' }}
+        >
           <TabComponent />
           {children}
         </div>

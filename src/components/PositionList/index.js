@@ -157,7 +157,12 @@ function PositionList({ positions }) {
           </DataText>
         )}
         <DataText area="name" justifyContent="flex-start" alignItems="flex-start">
-          <AutoColumn gap={below500 ? 0 : '8px'} justify="flex-start" align="flex-start">
+          <AutoColumn
+            gap={below500 ? 0 : '8px'}
+            justify="flex-start"
+            align="flex-start"
+            style={{ height: below500 ? 'auto' : 70 }}
+          >
             <DoubleTokenLogo
               size={below500 ? 22 : 26}
               a0={position.pair.token0.id}
@@ -175,12 +180,16 @@ function PositionList({ positions }) {
                   className="btn-danger minw-auto h-auto"
                   style={{ padding: '4px 6px', borderRadius: '15px', fontWeight: '400' }}
                 >
-                  Add
+                  {t('Adds')}
                 </ButtonLight>
               </Link>
             </RowFixed>
           </AutoColumn>
-          <AutoColumn gap={below500 ? 0 : '8px'} justify="flex-start" style={{ marginLeft: below500 ? 0 : 5 }}>
+          <AutoColumn
+            gap={below500 ? 0 : '8px'}
+            justify="flex-start"
+            style={{ marginLeft: below500 ? 0 : 5, height: below500 ? 'auto' : 70 }}
+          >
             <CustomLink
               to={'/swap/pair/' + position.pair.id}
               style={
@@ -207,7 +216,7 @@ function PositionList({ positions }) {
                     className="btn-secondary minw-auto h-auto"
                     style={{ padding: '4px 6px', borderRadius: '15px', color: '#333333', fontWeight: '400' }}
                   >
-                    Withdraw
+                    {t('Withdraw')}
                   </ButtonLight>
                 </Link>
               )}

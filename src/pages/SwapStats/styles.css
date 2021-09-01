@@ -268,9 +268,11 @@ div.MuiTabs-flexContainer {
 }
 
 .MuiButtonBase-root.MuiTab-root .iconDarkMode {
-  filter: invert(115%) sepia(107%) saturate(109%) hue-rotate(249deg) brightness(226%) contrast(13%);
+  /* filter: invert(115%) sepia(107%) saturate(109%) hue-rotate(249deg) brightness(226%) contrast(13%); */
+  /* filter: invert(11%) sepia(8%) saturate(15%) hue-rotate(330deg) brightness(96%) contrast(77%); */
   width: 20px;
   height: 20px;
+  fill: #aaaaaa;
 }
 
 .MuiButtonBase-root.MuiTab-root.Mui-selected .iconLightMode,

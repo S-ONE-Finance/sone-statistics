@@ -39,7 +39,7 @@
   "Liquidity Value": "Liquidity Value",
   "Positions": "Positions",
   "Total Fees Earned": "Total Fees Earned",
-  "Withdraw": "Redeems",
+  "Withdraw": "Withdraw",
   "Wallet Stats": "Wallet Stats",
   "Total Value Swapped": "Total Value Swapped",
   "Total Fees Paid": "Total Fees Paid",
@@ -69,7 +69,7 @@
 
   "All": "All",
   "Swaps": "Swaps",
-  "Adds": "Adds",
+  "Adds": "Add",
   "Transactions (24hrs)": "Transactions (24hrs)",
   "Volume": "Volume",
   "1W": "1W",
@@ -81,5 +81,6 @@
   "Pair Address": "Pair Address",
   "Pair name": "Pair name",
   "Swap Stats": "Swap Stats",
-  "Staking stats": "Staking stats"
+  "Staking stats": "Staking stats",
+  "Liquidity (24hr)": "Liquidity (24hr)"
 }
