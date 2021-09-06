@@ -20,6 +20,7 @@ import TxnList from '../../components/TxnList'
 import { useEthPrice, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from 'react-responsive'
+import dayjs from 'dayjs'
 
 OverviewStatistics.propTypes = {}
 
@@ -151,7 +152,13 @@ function OverviewStatistics() {
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
   const totalTransactionAPI = () => {
-    const total = transactions?.mints.length + transactions?.burns.length + transactions?.swaps.length
+    const utcEndTime = dayjs.utc()
+    const utcStartTime = utcEndTime.subtract(1, 'day').unix()
+    const txMints24h = transactions?.mints.filter(tx => +tx.transaction.timestamp >= utcStartTime)
+    const txBurns24h = transactions?.burns.filter(tx => +tx.transaction.timestamp >= utcStartTime)
+    const txSwaps24h = transactions?.swaps.filter(tx => +tx.transaction.timestamp >= utcStartTime)
+
+    const total = txMints24h.length + txBurns24h.length + txSwaps24h.length
     setTotalTransaction(total)
   }
 
