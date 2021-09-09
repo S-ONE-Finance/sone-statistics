@@ -150,7 +150,7 @@ function PositionList({ positions }) {
     const valueUSD = poolOwnership * position.pair.reserveUSD
 
     return (
-      <DashGrid style={{ opacity: poolOwnership > 0 ? 1 : 0.6, padding: below500 ? '4px 1rem' : '' }} focus={true}>
+      <DashGrid style={{ padding: below500 ? '4px 1rem' : '' }} focus={true}>
         {!below740 && (
           <DataText className="f-20 justify-content-center align-items-center mr-auto ml-auto" area="number">
             {index}
