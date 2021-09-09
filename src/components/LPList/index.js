@@ -24,6 +24,11 @@ dayjs.extend(utc)
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
+  width: 100%;
+  @media screen and (max-width: 600px) {
+    width: fit-content;
+    min-height: 300px;
+  }
 `
 
 const DashGrid = styled.div`

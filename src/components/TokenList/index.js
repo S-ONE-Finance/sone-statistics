@@ -26,13 +26,18 @@ dayjs.extend(utc)
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
+  width: 100%;
+  @media screen and (max-width: 600px) {
+    width: fit-content;
+    min-height: 300px;
+  }
 `
 
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 100px 1fr 1.3fr;
-  grid-template-areas: 'name liq vol';
+  grid-template-columns: 1fr 0.6fr 1fr 1fr 1fr 1.5fr;
+  grid-template-areas: 'name symbol liq vol price change';
   padding: 0 1.125rem;
 
   > * {
@@ -45,12 +50,8 @@ const DashGrid = styled.div`
     }
   }
 
-  @media screen and (min-width: 680px) {
-    display: grid;
-    grid-gap: 1em;
-    grid-template-columns: 180px 1fr 1fr 1fr;
-    grid-template-areas: 'name symbol liq vol ';
-
+  @media screen and (max-width: 680px) {
+    min-width: 750px;
     > * {
       justify-content: flex-end;
       width: 100%;
@@ -58,18 +59,13 @@ const DashGrid = styled.div`
       &:first-child {
         justify-content: flex-start;
       }
-    }0xc0e2d7d9279846b80eacdea57220ab2333bc049d
-  }
-
-  @media screen and (min-width: 1080px) {
-    display: grid;
-    grid-gap: 0.5em;
-    grid-template-columns: 1fr 0.6fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: 'name symbol liq vol price change';
+    }
   }
 `
 
-const ListWrapper = styled.div``
+const ListWrapper = styled.div`
+  overflow: auto;
+`
 
 const ClickableText = styled(Text)`
   text-align: end;
@@ -240,21 +236,19 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
             </CustomLink>
           </Row>
         </DataText>
-        {!below680 && (
-          <DataText
-            area="symbol"
+        <DataText
+          area="symbol"
+          style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+          fontWeight="400"
+          className="justify-content-center font-weight-normal"
+        >
+          <FormattedName
             style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-            fontWeight="400"
-            className="justify-content-center font-weight-normal"
-          >
-            <FormattedName
-              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-              className="font-weight-normal"
-              text={item.symbol}
-              maxCharacters={5}
-            />
-          </DataText>
-        )}
+            className="font-weight-normal"
+            text={item.symbol}
+            maxCharacters={5}
+          />
+        </DataText>
         <DataText
           area="liq"
           fontSize={below680 ? '13px' : '16px'}
@@ -281,39 +275,35 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
         >
           {formattedNum(item.oneDayVolumeUSD, true)}
         </DataText>
-        {!below1080 && (
-          <DataText
-            area="price"
-            fontSize={'16px'}
-            style={{ color: '#767676', fontWeight: 400 }}
-            fontWeight="400"
-            className="justify-content-center font-weight-normal color-gray"
-          >
-            <div className="justify-content-center font-weight-normal color-gray">
-              {formattedNum(item.priceUSD, true)}
-            </div>
-          </DataText>
-        )}
-        {!below1080 && (
-          <DataText
-            area="change"
-            style={{ color: '#767676' }}
-            fontWeight="400"
-            className="justify-content-center font-weight-normal color-gray"
-          >
-            <div className="justify-content-center font-weight-normal">
-              {item.priceChangeUSD >= 0 ? (
-                <p className="d-flex color-blue">
-                  <span>{formattedPercent(item.priceChangeUSD)}</span>
-                </p>
-              ) : (
-                <p className="d-flex color-red">
-                  <span>{formattedPercent(item.priceChangeUSD)}</span>
-                </p>
-              )}
-            </div>
-          </DataText>
-        )}
+        <DataText
+          area="price"
+          fontSize={'16px'}
+          style={{ color: '#767676', fontWeight: 400 }}
+          fontWeight="400"
+          className="justify-content-center font-weight-normal color-gray"
+        >
+          <div className="justify-content-center font-weight-normal color-gray">
+            {formattedNum(item.priceUSD, true)}
+          </div>
+        </DataText>
+        <DataText
+          area="change"
+          style={{ color: '#767676' }}
+          fontWeight="400"
+          className="justify-content-center font-weight-normal color-gray"
+        >
+          <div className="justify-content-center font-weight-normal">
+            {item.priceChangeUSD >= 0 ? (
+              <p className="d-flex color-blue">
+                <span>{formattedPercent(item.priceChangeUSD)}</span>
+              </p>
+            ) : (
+              <p className="d-flex color-red">
+                <span>{formattedPercent(item.priceChangeUSD)}</span>
+              </p>
+            )}
+          </div>
+        </DataText>
       </DashGrid>
     )
   }
@@ -353,21 +343,19 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
                 {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
-            {!below680 && (
-              <Flex alignItems="center">
-                <ClickableText
-                  area="symbol"
-                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
-                  onClick={() => {
-                    setSortedColumn(SORT_FIELD.SYMBOL)
-                    setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
-                  }}
-                >
-                  {t('Symbol')}
-                  {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
-                </ClickableText>
-              </Flex>
-            )}
+            <Flex alignItems="center">
+              <ClickableText
+                area="symbol"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
+                onClick={() => {
+                  setSortedColumn(SORT_FIELD.SYMBOL)
+                  setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
+                }}
+              >
+                {t('Symbol')}
+                {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
 
             <Flex alignItems="center">
               <ClickableText
@@ -397,35 +385,31 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
                 {sortedColumn === (useTracked ? SORT_FIELD.VOL_UT : SORT_FIELD.VOL) ? (!sortDirection ? '↑' : '↓') : ''}
               </ClickableText>
             </Flex>
-            {!below1080 && (
-              <Flex alignItems="center">
-                <ClickableText
-                  area="price"
-                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
-                  onClick={(e) => {
-                    setSortedColumn(SORT_FIELD.PRICE)
-                    setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
-                  }}
-                >
-                  {t('Price')} {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
-                </ClickableText>
-              </Flex>
-            )}
-            {!below1080 && (
-              <Flex alignItems="center">
-                <ClickableText
-                  area="change"
-                  className="justify-content-center w-100 text-center f-20 font-weight-bold"
-                  onClick={(e) => {
-                    setSortedColumn(SORT_FIELD.CHANGE)
-                    setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)
-                  }}
-                >
-                  {t('Price Change (24h)')}
-                  {sortedColumn === SORT_FIELD.CHANGE ? (!sortDirection ? '↑' : '↓') : ''}
-                </ClickableText>
-              </Flex>
-            )}
+            <Flex alignItems="center">
+              <ClickableText
+                area="price"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
+                onClick={(e) => {
+                  setSortedColumn(SORT_FIELD.PRICE)
+                  setSortDirection(sortedColumn !== SORT_FIELD.PRICE ? true : !sortDirection)
+                }}
+              >
+                {t('Price')} {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
+            <Flex alignItems="center">
+              <ClickableText
+                area="change"
+                className="justify-content-center w-100 text-center f-20 font-weight-bold"
+                onClick={(e) => {
+                  setSortedColumn(SORT_FIELD.CHANGE)
+                  setSortDirection(sortedColumn !== SORT_FIELD.CHANGE ? true : !sortDirection)
+                }}
+              >
+                {t('Price Change (24h)')}
+                {sortedColumn === SORT_FIELD.CHANGE ? (!sortDirection ? '↑' : '↓') : ''}
+              </ClickableText>
+            </Flex>
           </DashGrid>
           <Divider />
           <List p={0}>
