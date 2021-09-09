@@ -26,15 +26,19 @@ dayjs.extend(utc)
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
+  width: 100%;
+  @media screen and (max-width: 600px) {
+    width: fit-content;
+  }
 `
 
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 100px 1fr 1.4fr;
-  grid-template-areas: 'name liq vol';
   padding: 0 1.125rem;
-
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1.3fr;
+  grid-template-areas: ' name liq vol volWeek fees apy';
+  min-width: 750px;
   opacity: ${({ fade }) => (fade ? '0.6' : '1')};
 
   > * {
@@ -46,26 +50,18 @@ const DashGrid = styled.div`
       width: 20px;
     }
   }
-
-  @media screen and (min-width: 740px) {
-    padding: 0 1.125rem;
-    grid-template-columns: 1.5fr 1fr 1fr};
-    grid-template-areas: ' name liq vol pool ';
+  @media screen and (max-width: 600px) {
+    min-width: 750px;
   }
-
-  @media screen and (min-width: 1080px) {
-    padding: 0 1.125rem;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ' name liq vol volWeek fees apy';
-  }
-
   @media screen and (min-width: 1200px) {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1.3fr;
     grid-template-areas: ' name liq vol volWeek fees apy';
   }
 `
 
-const ListWrapper = styled.div``
+const ListWrapper = styled.div`
+  overflow: auto;
+`
 
 const ClickableText = styled(Text)`
   color: ${({ theme }) => theme.text1};
@@ -265,48 +261,42 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
           >
             {formatDataText(volume, pairData.oneDayVolumeUSD)}
           </DataText>
-          {!below1080 && (
-            <DataText
-              area="volWeek"
-              className="justify-content-center w-100"
-              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-              fontSize={below600 ? 13 : 20}
-              fontWeight={400}
-            >
-              {formatDataText(weekVolume, pairData.oneWeekVolumeUSD)}
-            </DataText>
-          )}
-          {!below1080 && (
-            <DataText
-              area="fees"
-              className="justify-content-center w-100"
-              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-              fontSize={below600 ? 13 : 20}
-              fontWeight={400}
-            >
-              {formatDataText(fees, pairData.oneDayVolumeUSD)}
-            </DataText>
-          )}
-          {!below1080 && (
-            <DataText
-              area="apy"
-              className="justify-content-center w-100"
-              // style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-              fontSize={below600 ? 13 : 20}
-              fontWeight={400}
-            >
-              {pairData.oneDayVolumeUSD ? (
-                <p className="d-flex color-blue">
-                  <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
-                </p>
-              ) : (
-                <p className="d-flex color-blue">
-                  <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
-                </p>
-              )}
-              {/* {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)} */}
-            </DataText>
-          )}
+          <DataText
+            area="volWeek"
+            className="justify-content-center w-100"
+            style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontSize={below600 ? 13 : 20}
+            fontWeight={400}
+          >
+            {formatDataText(weekVolume, pairData.oneWeekVolumeUSD)}
+          </DataText>
+          <DataText
+            area="fees"
+            className="justify-content-center w-100"
+            style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontSize={below600 ? 13 : 20}
+            fontWeight={400}
+          >
+            {formatDataText(fees, pairData.oneDayVolumeUSD)}
+          </DataText>
+          <DataText
+            area="apy"
+            className="justify-content-center w-100"
+            // style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+            fontSize={below600 ? 13 : 20}
+            fontWeight={400}
+          >
+            {pairData.oneDayVolumeUSD ? (
+              <p className="d-flex color-blue">
+                <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+              </p>
+            ) : (
+              <p className="d-flex color-blue">
+                <span>{formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}</span>
+              </p>
+            )}
+            {/* {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)} */}
+          </DataText>
         </DashGrid>
       )
     } else {
@@ -396,49 +386,43 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
               {sortedColumn === SORT_FIELD.VOL ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
-          {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
-              <ClickableText
-                style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
-                area="volWeek"
-                onClick={(e) => {
-                  setSortedColumn(SORT_FIELD.VOL_7DAYS)
-                  setSortDirection(sortedColumn !== SORT_FIELD.VOL_7DAYS ? true : !sortDirection)
-                }}
-              >
-                {t('Volume (7d)')} {sortedColumn === SORT_FIELD.VOL_7DAYS ? (!sortDirection ? '↑' : '↓') : ''}
-              </ClickableText>
-            </Flex>
-          )}
-          {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100  font-weight-bold">
-              <ClickableText
-                area="fees"
-                style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
-                onClick={(e) => {
-                  setSortedColumn(SORT_FIELD.FEES)
-                  setSortDirection(sortedColumn !== SORT_FIELD.FEES ? true : !sortDirection)
-                }}
-              >
-                {t('Fees (24hr)')} {sortedColumn === SORT_FIELD.FEES ? (!sortDirection ? '↑' : '↓') : ''}
-              </ClickableText>
-            </Flex>
-          )}
-          {!below1080 && (
-            <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
-              <ClickableText
-                area="apy"
-                style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
-                onClick={(e) => {
-                  setSortedColumn(SORT_FIELD.APY)
-                  setSortDirection(sortedColumn !== SORT_FIELD.APY ? true : !sortDirection)
-                }}
-              >
-                {t('1y Fees / Liquidity')} {sortedColumn === SORT_FIELD.APY ? (!sortDirection ? '↑' : '↓') : ''}
-              </ClickableText>
-              {/* <QuestionHelper text={'Based on 24hr volume annualized'} /> */}
-            </Flex>
-          )}
+          <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
+            <ClickableText
+              style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
+              area="volWeek"
+              onClick={(e) => {
+                setSortedColumn(SORT_FIELD.VOL_7DAYS)
+                setSortDirection(sortedColumn !== SORT_FIELD.VOL_7DAYS ? true : !sortDirection)
+              }}
+            >
+              {t('Volume (7d)')} {sortedColumn === SORT_FIELD.VOL_7DAYS ? (!sortDirection ? '↑' : '↓') : ''}
+            </ClickableText>
+          </Flex>
+          <Flex alignItems="center" className="justify-content-center w-100  font-weight-bold">
+            <ClickableText
+              area="fees"
+              style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
+              onClick={(e) => {
+                setSortedColumn(SORT_FIELD.FEES)
+                setSortDirection(sortedColumn !== SORT_FIELD.FEES ? true : !sortDirection)
+              }}
+            >
+              {t('Fees (24hr)')} {sortedColumn === SORT_FIELD.FEES ? (!sortDirection ? '↑' : '↓') : ''}
+            </ClickableText>
+          </Flex>
+          <Flex alignItems="center" className="justify-content-center w-100 font-weight-bold">
+            <ClickableText
+              area="apy"
+              style={{ fontWeight: 'bold', fontSize: below600 ? 16 : 20 }}
+              onClick={(e) => {
+                setSortedColumn(SORT_FIELD.APY)
+                setSortDirection(sortedColumn !== SORT_FIELD.APY ? true : !sortDirection)
+              }}
+            >
+              {t('1y Fees / Liquidity')} {sortedColumn === SORT_FIELD.APY ? (!sortDirection ? '↑' : '↓') : ''}
+            </ClickableText>
+            {/* <QuestionHelper text={'Based on 24hr volume annualized'} /> */}
+          </Flex>
         </DashGrid>
         <Divider />
         <List p={0}>{!pairList ? <LocalLoader /> : pairList}</List>
