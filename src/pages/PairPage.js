@@ -63,7 +63,7 @@ const ItemPairInfomation = styled.div`
   justify-content: space-between;
   display: flex;
   flex-direction: column;
-  @media screen and (max-width: 768.5px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
@@ -514,12 +514,13 @@ function PairPage({ pairAddress, history }) {
                   marginTop: '1.5rem',
                   backgroundColor: isDarkMode ? '#0E2B4A' : '#FFFFFF',
                   border: 0,
+                  display: 'block',
                 }}
                 p={20}
               >
                 <TokenDetailsLayout style={{ columnGap: '8%' }}>
-                  <Column style={{ height: '100%', width: '100%' }}>
-                    <ItemPairInfomation>
+                  <Column style={{ height: '100%', width: '100%', display: 'block' }}>
+                    <ItemPairInfomation style={below600 ? { flexDirection: 'row' } : {}}>
                       <TYPE.main
                         className="font-weight-bold f-20"
                         style={{ color: isDarkMode ? '#FFFFFF' : '#333333', fontWeight: 'bold' }}
@@ -596,7 +597,7 @@ function PairPage({ pairAddress, history }) {
                       </AutoRow>
                     </ItemPairInfomation>
                   </Column>
-                  <Column>
+                  <Column style={{ display: 'block' }}>
                     <ItemPairInfomation>
                       <TYPE.main>
                         <RowFixed>
