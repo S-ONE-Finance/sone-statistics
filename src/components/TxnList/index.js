@@ -28,13 +28,17 @@ dayjs.extend(utc)
 
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
+  @media screen and (max-width: 600px) {
+    width: fit-content;
+    min-height: 300px;
+  }
 `
 
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 100px 1fr 1fr;
-  grid-template-areas: 'txn value time';
+  grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 'txn value amountToken amountOther time';
 
   > * {
     justify-content: flex-end;
@@ -47,31 +51,21 @@ const DashGrid = styled.div`
     }
   }
 
-  @media screen and (min-width: 500px) {
+  @media screen and (max-width: 680px) {
+    min-width: 1000px;
     > * {
+      justify-content: flex-end;
+      width: 100%;
+
       &:first-child {
-        width: 210px;
+        justify-content: flex-start;
       }
     }
   }
+`
 
-  @media screen and (min-width: 780px) {
-    max-width: 1320px;
-    grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: 'txn value amountToken amountOther time';
-
-    > * {
-      &:first-child {
-        width: 210px;
-      }
-    }
-  }
-
-  @media screen and (min-width: 1080px) {
-    max-width: 1320px;
-    grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: 'txn value amountToken amountOther account time';
-  }
+const ListWrapper = styled.div`
+  overflow: auto;
 `
 
 const ClickableText = styled(Text)`
@@ -301,41 +295,31 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         <DataText area="value" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
           {currency === 'ETH' ? 'Ξ ' + formattedNum(item.valueETH) : formattedNum(item.amountUSD, true)}
         </DataText>
-        {!below780 && (
-          <>
-            <DataText
-              area="amountOther"
-              style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-            >
-              {formattedNum(item.token1Amount) + ' '}{' '}
-              <FormattedName
-                style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-                text={item.token1Symbol}
-                maxCharacters={5}
-                margin={true}
-              />
-            </DataText>
-            <DataText
-              area="amountToken"
-              style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-            >
-              {formattedNum(item.token0Amount) + ' '}{' '}
-              <FormattedName
-                style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
-                text={item.token0Symbol}
-                maxCharacters={5}
-                margin={true}
-              />
-            </DataText>
-          </>
-        )}
-        {!below1080 && (
-          <DataText area="account" style={{ justifyContent: 'center' }}>
-            <Link color="#3FAAB0" external href={ETHERSCAN_BASE_URL + '/address/' + item.account}>
-              {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
-            </Link>
+        <>
+          <DataText area="amountOther" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+            {formattedNum(item.token1Amount) + ' '}{' '}
+            <FormattedName
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              text={item.token1Symbol}
+              maxCharacters={5}
+              margin={true}
+            />
           </DataText>
-        )}
+          <DataText area="amountToken" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
+            {formattedNum(item.token0Amount) + ' '}{' '}
+            <FormattedName
+              style={{ color: isDarkMode ? '#AAAAAA' : '#767676 ' }}
+              text={item.token0Symbol}
+              maxCharacters={5}
+              margin={true}
+            />
+          </DataText>
+        </>
+        <DataText area="account" style={{ justifyContent: 'center' }}>
+          <Link color="#3FAAB0" external href={ETHERSCAN_BASE_URL + '/address/' + item.account}>
+            {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
+          </Link>
+        </DataText>
         <DataText area="time" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
           {formatTime(item.timestamp)}
         </DataText>
@@ -350,18 +334,19 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   return (
     <>
       <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: 302 }}>
-        <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
-          {below780 ? (
-            <RowBetween area="txn">
-              <DropdownSelect
-                style={{ border: 0 }}
-                options={TXN_TYPE}
-                active={txFilter}
-                setActive={setTxFilter}
-                color={color}
-              />
-            </RowBetween>
-          ) : (
+        <ListWrapper>
+          <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
+            {/* {below780 ? (
+              <RowBetween area="txn">
+                <DropdownSelect
+                  style={{ border: 0 }}
+                  options={TXN_TYPE}
+                  active={txFilter}
+                  setActive={setTxFilter}
+                  color={color}
+                />
+              </RowBetween>
+            ) : ( */}
             <RowFixed area="txn" gap="10px" pl={4}>
               <SortText
                 onClick={() => {
@@ -404,24 +389,23 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 {t('Withdraw')}
               </SortText>
             </RowFixed>
-          )}
+            {/* )} */}
 
-          <Flex alignItems="center" justifyContent="center">
-            <ClickableText
-              color="textDim"
-              area="value"
-              style={{ fontWeight: 'bold' }}
-              className="f-20"
-              onClick={(e) => {
-                setSortedColumn(SORT_FIELD.VALUE)
-                setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
-              }}
-            >
-              {t('Total Value')}
-              {sortedColumn === SORT_FIELD.VALUE ? (sortDirection ? '↓' : '↑') : ''}
-            </ClickableText>
-          </Flex>
-          {!below780 && (
+            <Flex alignItems="center" justifyContent="center">
+              <ClickableText
+                color="textDim"
+                area="value"
+                style={{ fontWeight: 'bold' }}
+                className="f-20"
+                onClick={(e) => {
+                  setSortedColumn(SORT_FIELD.VALUE)
+                  setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
+                }}
+              >
+                {t('Total Value')}
+                {sortedColumn === SORT_FIELD.VALUE ? (sortDirection ? '↓' : '↑') : ''}
+              </ClickableText>
+            </Flex>
             <Flex alignItems="center" justifyContent="center">
               <ClickableText
                 area="amountToken"
@@ -438,9 +422,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                 {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↓' : '↑') : ''}
               </ClickableText>
             </Flex>
-          )}
-          <>
-            {!below780 && (
+            <>
               <Flex alignItems="center" justifyContent="center">
                 <ClickableText
                   area="amountOther"
@@ -457,61 +439,59 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
                   {sortedColumn === SORT_FIELD.AMOUNT1 ? (sortDirection ? '↓' : '↑') : ''}
                 </ClickableText>
               </Flex>
-            )}
-            {!below1080 && (
               <Flex alignItems="center" justifyContent="center">
-                <TYPE.body area="account" style={{ fontWeight: 'bold', fontSize: 20 }}>
+                <TYPE.body area="account" style={{ fontWeight: 'bold' }} className="f-20">
                   {t('Accounts')}
                 </TYPE.body>
               </Flex>
-            )}
-            <Flex alignItems="center" justifyContent="center">
-              <ClickableText
-                area="time"
-                color="textDim"
-                onClick={() => {
-                  setSortedColumn(SORT_FIELD.TIMESTAMP)
-                  setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
-                }}
-                className="f-20"
-                style={{ fontWeight: 'bold' }}
-              >
-                {t('Time')}
-                {sortedColumn === SORT_FIELD.TIMESTAMP ? (sortDirection ? '↑' : '↓') : ''}
-              </ClickableText>
-            </Flex>
-          </>
-        </DashGrid>
-        <Divider />
-        <List p={0}>
-          {!filteredList ? (
-            <LocalLoader />
-          ) : filteredList.length === 0 ? (
-            <EmptyCard>No recent transactions found.</EmptyCard>
-          ) : (
-            filteredList.map((item, index) => {
-              return (
-                // <div key={index} >
-                <div
-                  key={index}
-                  className={
-                    isDarkMode
-                      ? index % 2
-                        ? 'table-row'
-                        : 'table-row-dark-mode'
-                      : index % 2
-                      ? 'table-row'
-                      : 'table-row-light-mode'
-                  }
-                  style={{ padding: '0 1rem' }}
+              <Flex alignItems="center" justifyContent="center">
+                <ClickableText
+                  area="time"
+                  color="textDim"
+                  onClick={() => {
+                    setSortedColumn(SORT_FIELD.TIMESTAMP)
+                    setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)
+                  }}
+                  className="f-20"
+                  style={{ fontWeight: 'bold' }}
                 >
-                  <ListItem key={index} index={index + 1} item={item} />
-                  <Divider />
-                </div>
-              )
-            })
-          )}
-        </List>
+                  {t('Time')}
+                  {sortedColumn === SORT_FIELD.TIMESTAMP ? (sortDirection ? '↑' : '↓') : ''}
+                </ClickableText>
+              </Flex>
+            </>
+          </DashGrid>
+          <Divider />
+          <List p={0}>
+            {!filteredList ? (
+              <LocalLoader />
+            ) : filteredList.length === 0 ? (
+              <EmptyCard>No recent transactions found.</EmptyCard>
+            ) : (
+              filteredList.map((item, index) => {
+                return (
+                  // <div key={index} >
+                  <div
+                    key={index}
+                    className={
+                      isDarkMode
+                        ? index % 2
+                          ? 'table-row'
+                          : 'table-row-dark-mode'
+                        : index % 2
+                        ? 'table-row'
+                        : 'table-row-light-mode'
+                    }
+                    style={{ padding: '0 1rem' }}
+                  >
+                    <ListItem key={index} index={index + 1} item={item} />
+                    <Divider />
+                  </div>
+                )
+              })
+            )}
+          </List>
+        </ListWrapper>
       </div>
       {filteredList && (
         <div className={classes.navigation}>
