@@ -36,7 +36,7 @@ const List = styled(Box)`
 const DashGrid = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 1fr 0.6fr 1fr 1fr 1fr 1.5fr;
+  grid-template-columns: 1.2fr 0.6fr 1fr 1fr 1fr 1.5fr;
   grid-template-areas: 'name symbol liq vol price change';
   padding: 0 1.125rem;
 
