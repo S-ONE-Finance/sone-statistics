@@ -11,7 +11,6 @@ import Modal from '../Modal'
 import MobileMenu from '../MobileMenu'
 import {
   S_ONE_APP_URL,
-  S_ONE_BLOG_URL,
   S_ONE_DOCS_URL,
   S_ONE_FAQ_URL,
   S_ONE_TOP_PAGE_URL,
@@ -493,14 +492,14 @@ function Header() {
                   {t('Docs')}
                 </StyledExternalLink>
                 <ResponsiveTopEndSubMenu>
+                  <SubMenuItemExternalLink href={S_ONE_DOCS_URL} target="_blank">
+                    {t('Docs')}
+                  </SubMenuItemExternalLink>
                   <SubMenuItemExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">
                     White Paper
                   </SubMenuItemExternalLink>
                   <SubMenuItemExternalLink href={S_ONE_FAQ_URL} target="_blank">
                     FAQ
-                  </SubMenuItemExternalLink>
-                  <SubMenuItemExternalLink href={S_ONE_BLOG_URL} target="_blank">
-                    Blog
                   </SubMenuItemExternalLink>
                 </ResponsiveTopEndSubMenu>
               </MenuItem>

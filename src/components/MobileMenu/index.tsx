@@ -8,11 +8,10 @@ import styled from 'styled-components'
 import { ReactComponent as Close } from '../../assets/x.svg'
 import Column from '../Column'
 import {
-  S_ONE_APP_URL,
-  S_ONE_BLOG_URL,
+  S_ONE_APP_URL, S_ONE_DOCS_URL,
   S_ONE_FAQ_URL,
   S_ONE_TOP_PAGE_URL,
-  S_ONE_WHITE_PAPER_URL,
+  S_ONE_WHITE_PAPER_URL
 } from '../../constants/urls'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -143,14 +142,14 @@ export default function MobileMenu({ setIsShowMobileMenu }: MobileMenuProps) {
         </StyledExternalLink>
         <StyledNavLink to="/stats-swap">{t('Swap Stats')}</StyledNavLink>
         <StyledNavLink to="/stats-staking">{t('Staking Stats')}</StyledNavLink>
+        <StyledExternalLink href={S_ONE_DOCS_URL} target="_blank">
+          {t('Docs')}
+        </StyledExternalLink>
         <StyledExternalLink href={S_ONE_WHITE_PAPER_URL} target="_blank">
           {t('White Paper')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_FAQ_URL} target="_blank">
           {t('FAQ')}
-        </StyledExternalLink>
-        <StyledExternalLink href={S_ONE_BLOG_URL} target="_blank">
-          {t('Blog')}
         </StyledExternalLink>
       </Column>
     </ColumnWrapper>
