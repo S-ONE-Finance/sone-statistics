@@ -122,7 +122,6 @@ const LayoutWrapper2 = ({ children }) => {
         <Header />
       </HeaderWrapper>
       <Body id="center" className={isDarkMode ? 'dark-mode ' : 'light-mode'}>
-        {/* <TabComponent /> */}
         {children}
       </Body>
       <Polling />
