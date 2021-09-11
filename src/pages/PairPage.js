@@ -3,7 +3,13 @@ import { withRouter } from 'react-router-dom'
 import 'feather-icons'
 import styled from 'styled-components'
 import Panel from '../components/Panel'
-import { BlockedMessageWrapper, BlockedWrapper, ContentWrapperLarge, PageWrapper } from '../components/index'
+import {
+  BlockedMessageWrapper,
+  BlockedWrapper,
+  ContentWrapperLarge,
+  PageWrapper,
+  ContentWrapper,
+} from '../components/index'
 import { AutoRow, RowBetween, RowFixed } from '../components/Row'
 import Column, { AutoColumn } from '../components/Column'
 import { ButtonDark, ButtonLight } from '../components/ButtonStyled'
@@ -244,7 +250,7 @@ function PairPage({ pairAddress, history }) {
         />
       </StyleDiv>
 
-      <ContentWrapperLarge style={{ zIndex: 1 }}>
+      <ContentWrapper style={{ zIndex: 1 }}>
         <WarningGrouping
           disabled={
             !dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))
@@ -628,7 +634,7 @@ function PairPage({ pairAddress, history }) {
             </>
           </DashboardWrapper>
         </WarningGrouping>
-      </ContentWrapperLarge>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

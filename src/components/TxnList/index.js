@@ -39,7 +39,7 @@ const DashGrid = styled.div`
   grid-gap: 1em;
   grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas: 'txn value amountToken amountOther time';
-
+  min-width: 1000px
   > * {
     justify-content: flex-end;
     width: 100%;
@@ -52,7 +52,6 @@ const DashGrid = styled.div`
   }
 
   @media screen and (max-width: 680px) {
-    min-width: 1000px;
     > * {
       justify-content: flex-end;
       width: 100%;
@@ -333,20 +332,12 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
   return (
     <>
-      <div className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'} style={{ borderRadius: 15, minHeight: 302 }}>
+      <div
+        className={isDarkMode ? 'isBgTableDark' : 'isBgTableLight'}
+        style={{ borderRadius: 15, minHeight: 302, width: '100%' }}
+      >
         <ListWrapper>
           <DashGrid center={true} style={{ height: 'fit-content', padding: '1rem' }}>
-            {/* {below780 ? (
-              <RowBetween area="txn">
-                <DropdownSelect
-                  style={{ border: 0 }}
-                  options={TXN_TYPE}
-                  active={txFilter}
-                  setActive={setTxFilter}
-                  color={color}
-                />
-              </RowBetween>
-            ) : ( */}
             <RowFixed area="txn" gap="10px" pl={4}>
               <SortText
                 onClick={() => {
