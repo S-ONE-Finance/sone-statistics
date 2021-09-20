@@ -147,7 +147,6 @@ const formatDataText = (value, trackedValue, supressWarning = false) => {
 function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false }) {
   const below600 = useMedia('(max-width: 600px)')
   const below740 = useMedia('(max-width: 740px)')
-  const below1080 = useMedia('(max-width: 1080px)')
 
   // pagination
   const [page, setPage] = useState(1)

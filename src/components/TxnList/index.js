@@ -6,13 +6,12 @@ import utc from 'dayjs/plugin/utc'
 import { formattedNum, formatTime, urls } from '../../utils'
 import { useMedia } from 'react-use'
 import { useCurrentCurrency } from '../../contexts/Application'
-import { RowBetween, RowFixed } from '../Row'
+import { RowFixed } from '../Row'
 
 import LocalLoader from '../LocalLoader'
 import { Box, Flex, Text } from 'rebass'
 import Link from '../Link'
 import { Divider, EmptyCard } from '..'
-import DropdownSelect from '../DropdownSelect'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
@@ -280,7 +279,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       })
       .slice(ITEMS_PER_PAGE * (page - 1), page * ITEMS_PER_PAGE)
 
-  const below1080 = useMedia('(max-width: 1080px)')
   const below780 = useMedia('(max-width: 780px)')
 
   const ListItem = ({ item }) => {
