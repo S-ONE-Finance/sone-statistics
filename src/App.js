@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
-import { client } from './apollo/client'
+import { swapClients } from './apollo/client'
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import TokenPage from './pages/TokenPage'
 import PairPage from './pages/PairPage'
@@ -13,7 +13,7 @@ import AllPairsPage from './pages/AllPairsPage'
 import AccountLookup from './pages/AccountLookup'
 import LocalLoader from './components/LocalLoader'
 import GoogleAnalyticsReporter from './components/analytics/GoogleAnalyticsReporter'
-import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
+import { chainId, PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import StakingStats from './pages/StakingStats'
@@ -121,7 +121,7 @@ function App() {
   const globalChartData = useGlobalChartData()
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={swapClients[chainId]}>
       <AppWrapper>
         {globalData &&
         Object.keys(globalData).length > 0 &&

@@ -4,33 +4,30 @@ import { calculateAPY, Farm } from '@s-one-finance/sdk-core'
 import { useQuery } from 'react-query'
 
 import { liquidityPositionSubsetQuery, pairSubsetQuery, poolsQuery } from '../apollo/queries'
-import { client, stakingClient } from '../apollo/client'
+import { swapClients, stakingClients } from '../apollo/client'
 import useBlockNumber from './useBlockNumber'
 import useAverageBlockTime from './useAverageBlockTime'
 import useOneSoneInUSD from './useOneSoneInUSD'
-import { CHAIN_ID, CONFIG_MASTER_FARMER, SONE_MASTER_FARMER, SONE_PRICE_MINIMUM } from '../constants'
+import { chainId, CONFIG_MASTER_FARMER, SONE_MASTER_FARMER, SONE_PRICE_MINIMUM } from '../constants'
 
 export default function useFarms(): [boolean, Farm[]] {
   const sonePrice = useOneSoneInUSD()
   const block = useBlockNumber()
   const averageBlockTime = useAverageBlockTime()
 
-  const { data: pools, isLoading: isLoading1 } = useQuery(
-    'useFarms_poolsQuery',
-    async () => {
-      const data = await stakingClient.query({
-        query: poolsQuery
-      })
-      return data?.data.pools
-    }
-  )
+  const { data: pools, isLoading: isLoading1 } = useQuery('useFarms_poolsQuery', async () => {
+    const data = await stakingClients[chainId].query({
+      query: poolsQuery,
+    })
+    return data?.data.pools
+  })
 
   const { data: liquidityPositions, isLoading: isLoading2 } = useQuery(
-    ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[CHAIN_ID]],
+    ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[chainId]],
     async () => {
-      const data = await client.query({
+      const data = await swapClients[chainId].query({
         query: liquidityPositionSubsetQuery,
-        variables: { user: SONE_MASTER_FARMER[CHAIN_ID].toLowerCase() }
+        variables: { user: SONE_MASTER_FARMER[chainId].toLowerCase() },
       })
       return data?.data.liquidityPositions
     }
@@ -40,10 +37,10 @@ export default function useFarms(): [boolean, Farm[]] {
     () =>
       Array.isArray(pools) && pools.length > 0
         ? pools
-          .map((pool: any) => {
-            return pool.pair
-          })
-          .sort()
+            .map((pool: any) => {
+              return pool.pair
+            })
+            .sort()
         : [],
     [pools]
   )
@@ -51,9 +48,9 @@ export default function useFarms(): [boolean, Farm[]] {
   const { data: pairs, isLoading: isLoading3 } = useQuery(
     ['useFarms_pairSubsetQuery', pairAddresses],
     async () => {
-      const data = await client.query({
+      const data = await swapClients[chainId].query({
         query: pairSubsetQuery,
-        variables: { pairAddresses }
+        variables: { pairAddresses },
       })
       return data?.data.pairs
     },
@@ -81,11 +78,7 @@ export default function useFarms(): [boolean, Farm[]] {
         const LPTokenValue = investedValue / LPTokenPrice
         const poolShare = LPTokenValue / (LPTokenValue + Number(balance))
         const roiPerBlock = (rewardPerBlock * sonePrice * poolShare) / investedValue
-        const multiplierYear = calculateAPY(
-          averageBlockTime,
-          block || 0,
-          CONFIG_MASTER_FARMER[CHAIN_ID]
-        )
+        const multiplierYear = calculateAPY(averageBlockTime, block || 0, CONFIG_MASTER_FARMER[chainId])
         const roiPerYear = multiplierYear * roiPerBlock
         const rewardPerDay = rewardPerBlock * blocksPerHour * 24
         const soneHarvested = pool.soneHarvested > 0 ? pool.soneHarvested : 0
@@ -113,7 +106,7 @@ export default function useFarms(): [boolean, Farm[]] {
             : 0.1,
           sonePrice,
           LPTokenPrice,
-          secondsPerBlock: Number(averageBlockTime)
+          secondsPerBlock: Number(averageBlockTime),
         }
       })
       .filter((item: Farm | false) => {

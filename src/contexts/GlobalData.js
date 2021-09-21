@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect, useState } from 'react'
-import { client } from '../apollo/client'
+import { swapClients } from '../apollo/client'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { useTimeframe } from './Application'
@@ -22,6 +22,8 @@ import {
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { useAllPairData } from './PairData'
 import { useTokenChartDataCombined } from './TokenData'
+import { chainId } from '../constants'
+
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
 const UPDATE_CHART = 'UPDATE_CHART'
@@ -50,7 +52,6 @@ function useGlobalDataContext() {
 }
 
 function reducer(state, { type, payload }) {
-  
   switch (type) {
     case UPDATE: {
       const { data } = payload
@@ -244,32 +245,32 @@ async function getGlobalData(ethPrice, oldEthPrice) {
     ])
 
     // fetch the global data
-    let result = await client.query({
+    let result = await swapClients[chainId].query({
       query: GLOBAL_DATA(),
       fetchPolicy: 'cache-first',
     })
     data = result.data.uniswapFactories[0]
 
     // fetch the historical data
-    let oneDayResult = await client.query({
+    let oneDayResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(oneDayBlock?.number),
       fetchPolicy: 'cache-first',
     })
     oneDayData = oneDayResult.data.uniswapFactories[0]
 
-    let twoDayResult = await client.query({
+    let twoDayResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoDayBlock?.number),
       fetchPolicy: 'cache-first',
     })
     twoDayData = twoDayResult.data.uniswapFactories[0]
 
-    let oneWeekResult = await client.query({
+    let oneWeekResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(oneWeekBlock?.number),
       fetchPolicy: 'cache-first',
     })
     const oneWeekData = oneWeekResult.data.uniswapFactories[0]
 
-    let twoWeekResult = await client.query({
+    let twoWeekResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoWeekBlock?.number),
       fetchPolicy: 'cache-first',
     })
@@ -334,7 +335,7 @@ const getChartData = async (oldestDateToFetch, offsetData) => {
 
   try {
     while (!allFound) {
-      let result = await client.query({
+      let result = await swapClients[chainId].query({
         query: GLOBAL_CHART,
         variables: {
           startTime: oldestDateToFetch,
@@ -432,7 +433,7 @@ const getGlobalTransactions = async () => {
   let transactions = {}
 
   try {
-    let result = await client.query({
+    let result = await swapClients[chainId].query({
       query: GLOBAL_TXNS,
       fetchPolicy: 'cache-first',
     })
@@ -478,11 +479,11 @@ const getEthPrice = async () => {
 
   try {
     let oneDayBlock = await getBlockFromTimestamp(utcOneDayBack)
-    let result = await client.query({
+    let result = await swapClients[chainId].query({
       query: ETH_PRICE(),
       fetchPolicy: 'cache-first',
     })
-    let resultOneDay = await client.query({
+    let resultOneDay = await swapClients[chainId].query({
       query: ETH_PRICE(oneDayBlock),
       fetchPolicy: 'cache-first',
     })
@@ -510,7 +511,7 @@ async function getAllPairsOnUniswap() {
     let pairs = []
     let skipCount = 0
     while (!allFound) {
-      let result = await client.query({
+      let result = await swapClients[chainId].query({
         query: ALL_PAIRS,
         variables: {
           skip: skipCount,
@@ -538,7 +539,7 @@ async function getAllTokensOnUniswap() {
     let skipCount = 0
     let tokens = []
     while (!allFound) {
-      let result = await client.query({
+      let result = await swapClients[chainId].query({
         query: ALL_TOKENS,
         variables: {
           skip: skipCount,
@@ -699,7 +700,7 @@ export function useTopLps() {
         topPairs.map(async (pair) => {
           // for each one, fetch top LPs
           try {
-            const { data: results } = await client.query({
+            const { data: results } = await swapClients[chainId].query({
               query: TOP_LPS_PER_PAIRS,
               variables: {
                 pair: pair.toString(),

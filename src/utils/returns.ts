@@ -1,7 +1,8 @@
 import { USER_MINTS_BUNRS_PER_PAIR } from '../apollo/queries'
-import { client } from '../apollo/client'
+import { swapClients } from '../apollo/client'
 import dayjs from 'dayjs'
 import { getShareValueOverTime } from '.'
+import { chainId } from '../constants'
 
 export const priceOverrides = [
   '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', // USDC
@@ -54,7 +55,7 @@ async function getPrincipalForUserPerPair(user: string, pairAddress: string) {
   let amount0 = 0
   let amount1 = 0
   // get all minst and burns to get principal amounts
-  const results = await client.query({
+  const results = await swapClients[chainId].query({
     query: USER_MINTS_BUNRS_PER_PAIR,
     variables: {
       user,

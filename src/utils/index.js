@@ -3,12 +3,12 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import utc from 'dayjs/plugin/utc'
-import { client, blockClient } from '../apollo/client'
+import { swapClients, blockClients } from '../apollo/client'
 import { GET_BLOCK, GET_BLOCKS, GET_LATEST_BLOCK, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import { timeframeOptions } from '../constants'
+import { chainId, timeframeOptions } from '../constants'
 import Numeral from 'numeral'
 import { ETHERSCAN_BASE_URL } from '../constants/urls'
 
@@ -154,7 +154,7 @@ export async function splitQuery(query, localClient, vars, list, skipCount = 100
 }
 
 export async function getLatestBlock() {
-  let result = await blockClient.query({
+  let result = await blockClients[chainId].query({
     query: GET_LATEST_BLOCK,
     fetchPolicy: 'network-only',
   })
@@ -167,7 +167,7 @@ export async function getLatestBlock() {
  * @param {Int} timestamp in seconds
  */
 export async function getBlockFromTimestamp(timestamp) {
-  let result = await blockClient.query({
+  let result = await blockClients[chainId].query({
     query: GET_BLOCK,
     variables: {
       timestampFrom: timestamp,
@@ -190,7 +190,7 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
     return []
   }
 
-  let fetchedData = await splitQuery(GET_BLOCKS, blockClient, [], timestamps, skipCount)
+  let fetchedData = await splitQuery(GET_BLOCKS, blockClients[chainId], [], timestamps, skipCount)
 
   let blocks = []
   if (fetchedData) {
@@ -216,7 +216,7 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
 //   const blocks = await getBlocksFromTimestamps(timestamps)
 
 //   // get historical share values with time travel queries
-//   let result = await client.query({
+//   let result = await swapClients[chainId].query({
 //     query: SHARE_VALUE(account, blocks),
 //     fetchPolicy: 'cache-first',
 //   })
@@ -250,7 +250,7 @@ export async function getShareValueOverTime(pairAddress, timestamps) {
   const blocks = await getBlocksFromTimestamps(timestamps)
 
   // get historical share values with time travel queries
-  let result = await client.query({
+  let result = await swapClients[chainId].query({
     query: SHARE_VALUE(pairAddress, blocks),
     fetchPolicy: 'cache-first',
   })

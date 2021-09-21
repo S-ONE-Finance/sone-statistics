@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 
-import { client } from '../apollo/client'
+import { swapClients } from '../apollo/client'
 import {
   FILTERED_TRANSACTIONS,
   HOURLY_PAIR_RATES,
@@ -24,7 +24,7 @@ import {
   isAddress,
   splitQuery,
 } from '../utils'
-import { timeframeOptions, TRACKED_OVERRIDES } from '../constants'
+import { chainId, timeframeOptions, TRACKED_OVERRIDES } from '../constants'
 import { updateNameData } from '../utils/data'
 import useBlockNumber from '../hooks/useBlockNumber'
 
@@ -192,7 +192,7 @@ async function getBulkPairData(pairList, ethPrice) {
   if (b1 === undefined) b1 = b2
 
   try {
-    let current = await client.query({
+    let current = await swapClients[chainId].query({
       query: PAIRS_BULK,
       variables: {
         allPairs: pairList,
@@ -202,7 +202,7 @@ async function getBulkPairData(pairList, ethPrice) {
 
     let [oneDayResult, twoDayResult, oneWeekResult] = await Promise.all(
       [b1, b2, bWeek].map(async (block) => {
-        let result = client.query({
+        let result = swapClients[chainId].query({
           query: PAIRS_HISTORICAL_BULK(block, pairList),
           fetchPolicy: 'cache-first',
         })
@@ -228,7 +228,7 @@ async function getBulkPairData(pairList, ethPrice) {
           let data = pair
           let oneDayHistory = oneDayData?.[pair.id]
           if (!oneDayHistory) {
-            let newData = await client.query({
+            let newData = await swapClients[chainId].query({
               query: PAIR_DATA(pair.id, b1),
               fetchPolicy: 'cache-first',
             })
@@ -236,7 +236,7 @@ async function getBulkPairData(pairList, ethPrice) {
           }
           let twoDayHistory = twoDayData?.[pair.id]
           if (!twoDayHistory) {
-            let newData = await client.query({
+            let newData = await swapClients[chainId].query({
               query: PAIR_DATA(pair.id, b2),
               fetchPolicy: 'cache-first',
             })
@@ -244,7 +244,7 @@ async function getBulkPairData(pairList, ethPrice) {
           }
           let oneWeekHistory = oneWeekData?.[pair.id]
           if (!oneWeekHistory) {
-            let newData = await client.query({
+            let newData = await swapClients[chainId].query({
               query: PAIR_DATA(pair.id, bWeek),
               fetchPolicy: 'cache-first',
             })
@@ -273,7 +273,7 @@ export async function getBulkPairDataForFooter(pairList) {
 
   try {
     // Lấy data current.
-    const current = await client.query({
+    const current = await swapClients[chainId].query({
       query: PAIRS_BULK,
       variables: {
         allPairs: pairList,
@@ -284,7 +284,7 @@ export async function getBulkPairDataForFooter(pairList) {
     // Lấy data quá khứ.
     const [oneDayResult] = await Promise.all(
       [b1].map(async (block) => {
-        return client.query({
+        return swapClients[chainId].query({
           query: PAIRS_HISTORICAL_BULK(block, pairList),
           fetchPolicy: 'network-only',
         })
@@ -306,7 +306,7 @@ export async function getBulkPairDataForFooter(pairList) {
           async function getHistoryFromData(data, blockNumber) {
             let history = data?.[pair.id]
             if (!history) {
-              const newData = await client.query({
+              const newData = await swapClients[chainId].query({
                 query: PAIR_DATA(pair.id, blockNumber),
                 fetchPolicy: 'network-only',
               })
@@ -409,7 +409,7 @@ const getPairTransactions = async (pairAddress) => {
   const transactions = {}
 
   try {
-    let result = await client.query({
+    let result = await swapClients[chainId].query({
       query: FILTERED_TRANSACTIONS,
       variables: {
         allPairs: [pairAddress],
@@ -436,7 +436,7 @@ const getPairChartData = async (pairAddress) => {
     let allFound = false
     let skip = 0
     while (!allFound) {
-      let result = await client.query({
+      let result = await swapClients[chainId].query({
         query: PAIR_CHART,
         variables: {
           pairAddress: pairAddress,
@@ -526,7 +526,7 @@ const getHourlyRateData = async (pairAddress, startTime, latestBlock) => {
       })
     }
 
-    const result = await splitQuery(HOURLY_PAIR_RATES, client, [pairAddress], blocks, 100)
+    const result = await splitQuery(HOURLY_PAIR_RATES, swapClients[chainId], [pairAddress], blocks, 100)
 
     // format token ETH price results
     let values = []
@@ -573,7 +573,7 @@ export function Updater() {
       // get top pairs by reserves
       let {
         data: { pairs },
-      } = await client.query({
+      } = await swapClients[chainId].query({
         query: PAIRS_CURRENT,
         fetchPolicy: 'cache-first',
       })
@@ -753,7 +753,7 @@ function useFooterData() {
   const getData = useCallback(async () => {
     const {
       data: { pairs },
-    } = await client.query({
+    } = await swapClients[chainId].query({
       query: PAIRS_CURRENT,
       fetchPolicy: 'cache-first',
     })
