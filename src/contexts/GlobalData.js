@@ -1,22 +1,22 @@
-import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import { swapClients } from '../apollo/client'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { useTimeframe } from './Application'
 import {
-  getPercentChange,
+  get2DayPercentChange,
   getBlockFromTimestamp,
   getBlocksFromTimestamps,
-  get2DayPercentChange,
+  getPercentChange,
   getTimeframe,
 } from '../utils'
 import {
-  GLOBAL_DATA,
-  GLOBAL_TXNS,
-  GLOBAL_CHART,
-  ETH_PRICE,
   ALL_PAIRS,
   ALL_TOKENS,
+  ETH_PRICE,
+  GLOBAL_CHART,
+  GLOBAL_DATA,
+  GLOBAL_TXNS,
   TOP_LPS_PER_PAIRS,
 } from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
@@ -564,7 +564,6 @@ async function getAllTokensOnUniswap() {
 export function useGlobalData() {
   const [state, { update, updateAllPairsInUniswap, updateAllTokensInUniswap }] = useGlobalDataContext()
   const [ethPrice, oldEthPrice] = useEthPrice()
-
   const data = state?.globalData
 
   // const combinedVolume = useTokenDataCombined(offsetVolumes)
@@ -581,6 +580,7 @@ export function useGlobalData() {
       let allTokens = await getAllTokensOnUniswap()
       updateAllTokensInUniswap(allTokens)
     }
+
     if (!data && ethPrice && oldEthPrice) {
       fetchData()
     }

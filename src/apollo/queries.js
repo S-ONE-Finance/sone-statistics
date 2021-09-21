@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
-import { FACTORY_ADDRESS, BUNDLE_ID } from '../constants'
+import { BUNDLE_ID, chainId } from '../constants'
+import { FACTORY_ADDRESS } from '@s-one-finance/sdk-core'
 
 export const SUBGRAPH_HEALTH = gql`
   query health {
@@ -444,10 +445,10 @@ export const GLOBAL_CHART = gql`
 `
 
 export const GLOBAL_DATA = (block) => {
-  const queryString = ` query uniswapFactories {
+  const queryString = `query uniswapFactories {
       uniswapFactories(
        ${block ? `block: { number: ${block}}` : ``} 
-       where: { id: "${FACTORY_ADDRESS}" }) {
+       where: { id: "${FACTORY_ADDRESS[chainId].toLowerCase()}" }) {
         id
         totalVolumeUSD
         totalVolumeETH

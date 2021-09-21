@@ -1,5 +1,3 @@
-export const FACTORY_ADDRESS = '0x16373A406828Bf5d3dDF071FC24b682E9057b9A5'
-
 export const BUNDLE_ID = '1'
 
 const DEFAULT_chainId = '0x4' // Rinkeby

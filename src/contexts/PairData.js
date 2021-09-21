@@ -187,7 +187,10 @@ async function getBulkPairData(pairList, ethPrice) {
   let [{ number: b1 }, { number: b2 }, { number: bWeek }] = (await getBlocksFromTimestamps([t1, t2, tWeek])) || {}
 
   // Khắc phục khi subgraph ko sync được block mới.
-  if (bWeek === undefined) return []
+  if (bWeek === undefined) {
+    alert('Cannot fetch last week block number.')
+    return []
+  }
   if (b2 === undefined) b2 = bWeek
   if (b1 === undefined) b1 = b2
 
