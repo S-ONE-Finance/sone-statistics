@@ -955,7 +955,6 @@ export const poolsQuery = gql`
       balance
       userCount
       soneHarvested
-      soneHarvestedUSD
       entryUSD
       exitUSD
     }
@@ -1000,10 +999,9 @@ export const tokenQuery = (address) => gql`
 `
 
 export const liquidityOfAllPair = gql`
-{
-  pairs {
-    reserveUSD
+  {
+    pairs {
+      reserveUSD
+    }
   }
-}
-
 `
