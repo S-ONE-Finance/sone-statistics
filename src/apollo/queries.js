@@ -49,7 +49,7 @@ export const V1_DATA_QUERY = gql`
 
 export const GET_LATEST_BLOCK = gql`
   query blocks {
-    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 10000000 }) {
+    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc) {
       id
       number
       timestamp
