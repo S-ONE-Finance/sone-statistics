@@ -17,11 +17,11 @@ import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
-import { ETHERSCAN_BASE_URL } from '../../constants/urls'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import { chainId, ETHERSCAN_BASE_URL } from '../../constants'
 
 dayjs.extend(utc)
 
@@ -313,7 +313,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           </DataText>
         </>
         <DataText area="account" style={{ justifyContent: 'center' }}>
-          <Link color="#3FAAB0" external href={ETHERSCAN_BASE_URL + '/address/' + item.account}>
+          <Link color="#3FAAB0" external href={ETHERSCAN_BASE_URL[chainId] + '/address/' + item.account}>
             {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
           </Link>
         </DataText>

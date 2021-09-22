@@ -15,10 +15,9 @@ import { ContentWrapper, PageWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
 import { Activity } from 'react-feather'
 import Link from '../components/Link'
-import { FEE_WARNING_TOKENS } from '../constants'
+import { ETHERSCAN_BASE_URL, chainId, FEE_WARNING_TOKENS } from '../constants'
 import { useMedia } from 'react-use'
 import { useDarkModeManager } from '../contexts/LocalStorage'
-import { ETHERSCAN_BASE_URL } from '../constants/urls'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from 'react-responsive'
 
@@ -251,7 +250,7 @@ function AccountPage({ account }) {
                 </TYPE.header>
               </div>
               <div style={{ width: isMobile ? '144px' : '15%', maxWidth: 218 }}>
-                <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL + '/address/' + account} target="_blank">
+                <Link lineHeight={'145.23%'} href={ETHERSCAN_BASE_URL[chainId] + '/address/' + account} target="_blank">
                   <TYPE.main
                     className="btn-danger"
                     fontSize={isMobile ? 13 : 16}

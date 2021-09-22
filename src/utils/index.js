@@ -8,9 +8,8 @@ import { GET_BLOCK, GET_BLOCKS, GET_LATEST_BLOCK, SHARE_VALUE } from '../apollo/
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import { chainId, timeframeOptions } from '../constants'
+import { chainId, ETHERSCAN_BASE_URL, timeframeOptions } from '../constants'
 import Numeral from 'numeral'
-import { ETHERSCAN_BASE_URL } from '../constants/urls'
 
 // format libraries
 const Decimal = toFormat(_Decimal)
@@ -326,10 +325,10 @@ export const setThemeColor = (theme) => document.documentElement.style.setProper
 export const Big = (number) => new BigNumber(number)
 
 export const urls = {
-  showTransaction: (tx) => `${ETHERSCAN_BASE_URL}/tx/${tx}/`,
-  showAddress: (address) => `${ETHERSCAN_BASE_URL}/address/${address}/`,
-  showToken: (address) => `${ETHERSCAN_BASE_URL}/token/${address}/`,
-  showBlock: (block) => `${ETHERSCAN_BASE_URL}/block/${block}/`,
+  showTransaction: (tx) => `${ETHERSCAN_BASE_URL[chainId]}/tx/${tx}/`,
+  showAddress: (address) => `${ETHERSCAN_BASE_URL[chainId]}/address/${address}/`,
+  showToken: (address) => `${ETHERSCAN_BASE_URL[chainId]}/token/${address}/`,
+  showBlock: (block) => `${ETHERSCAN_BASE_URL[chainId]}/block/${block}/`,
 }
 
 export const formatTime = (unix) => {

@@ -22,6 +22,17 @@ export const CONFIG_MASTER_FARMER = {
     rewardMultiplier: [32, 32, 32, 32, 16, 8, 4, 2, 1],
     blocksPerWeek: 45134,
   },
+  4: {
+    startBlock: 9283344,
+    rewardMultiplier: [32, 32, 32, 32, 16, 8, 4, 2, 1],
+    blocksPerWeek: 45134,
+  },
+}
+
+export const ETHERSCAN_BASE_URL = {
+  1: 'https://etherscan.io',
+  3: 'https://ropsten.etherscan.io',
+  4: 'https://rinkeby.etherscan.io',
 }
 
 export const timeframeOptions = {

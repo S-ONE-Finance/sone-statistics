@@ -20,7 +20,3 @@ if (S_ONE_STAKING_STATISTICS_URL === '') throw new Error(`REACT_APP_S_ONE_STAKIN
 if (S_ONE_DOCS_URL === '') throw new Error(`REACT_APP_S_ONE_DOCS_URL not found.`)
 if (S_ONE_WHITE_PAPER_URL === '') throw new Error(`REACT_APP_S_ONE_WHITE_PAPER_URL not found.`)
 if (S_ONE_FAQ_URL === '') throw new Error(`REACT_APP_S_ONE_FAQ_URL not found.`)
-
-// ETHERSCAN URL
-export const ETHERSCAN_BASE_URL = process.env.REACT_APP_ETHERSCAN_BASE_URL ?? ''
-if (ETHERSCAN_BASE_URL === '') throw new Error(`REACT_APP_ETHERSCAN_BASE_URL not found.`)

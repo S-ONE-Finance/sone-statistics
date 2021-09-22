@@ -26,8 +26,7 @@ import { AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { BLOCKED_WARNINGS, TOKEN_BLACKLIST, UNTRACKED_COPY } from '../constants'
-import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { BLOCKED_WARNINGS, chainId, ETHERSCAN_BASE_URL, TOKEN_BLACKLIST, UNTRACKED_COPY } from '../constants'
 import { useTranslation } from 'react-i18next'
 
 const DashboardWrapper = styled.div`
@@ -176,9 +175,10 @@ function TokenPage({ address, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[address] ?? `This token is not supported.`}
             </TYPE.light>
-            <Link external={true} href={ETHERSCAN_BASE_URL + '/address/' + address}>{`More about ${shortenAddress(
-              address
-            )}`}</Link>
+            <Link
+              external={true}
+              href={ETHERSCAN_BASE_URL[chainId] + '/address/' + address}
+            >{`More about ${shortenAddress(address)}`}</Link>
           </AutoColumn>
         </BlockedMessageWrapper>
       </BlockedWrapper>
@@ -478,7 +478,7 @@ function TokenPage({ address, history }) {
                         <Link
                           color="#fff"
                           external
-                          href={ETHERSCAN_BASE_URL + '/address/' + address}
+                          href={ETHERSCAN_BASE_URL[chainId] + '/address/' + address}
                           fontSize={below600 ? 13 : 16}
                         >
                           {t('View on Etherscan')} ↗
