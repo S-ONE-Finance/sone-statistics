@@ -3,11 +3,16 @@ import { useQuery } from 'react-query'
 import { chainId, SONE } from '../constants'
 import { tokenQuery } from '../apollo/queries'
 import { swapClients } from '../apollo/client'
+import useBlockNumber from './useBlockNumber'
+import { useLastTruthy } from './useLast'
 
 export default function useSoneTotalSupply(): number {
-  const { data: totalSupply } = useQuery<number>('useSoneTotalSupply', async () => {
+  const block = useBlockNumber()
+
+  const { data: totalSupplyQueryResult } = useQuery<number>(['useSoneTotalSupply', block], async () => {
     const data = await swapClients[chainId].query({
       query: tokenQuery(SONE[chainId].toLowerCase()),
+      fetchPolicy: 'network-only',
     })
 
     const totalSupply = +data.data.token.totalSupply
@@ -18,6 +23,8 @@ export default function useSoneTotalSupply(): number {
 
     return totalSupply
   })
+
+  const totalSupply = useLastTruthy(totalSupplyQueryResult) ?? undefined
 
   return useMemo(() => totalSupply ?? 0, [totalSupply])
 }

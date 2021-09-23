@@ -16,9 +16,10 @@ export default function useFarms(): [boolean, Farm[]] {
   const block = useBlockNumber()
   const averageBlockTime = useAverageBlockTime()
 
-  const { data: poolsQueryResult, isLoading: isLoading1 } = useQuery('useFarms_poolsQuery', async () => {
+  const { data: poolsQueryResult, isLoading: isLoading1 } = useQuery(['useFarms_poolsQuery', block], async () => {
     const data = await stakingClients[chainId].query({
       query: poolsQuery,
+      fetchPolicy: 'network-only',
     })
     return data?.data.pools
   })
@@ -26,11 +27,12 @@ export default function useFarms(): [boolean, Farm[]] {
   const pools = useLastTruthy(poolsQueryResult) ?? undefined
 
   const { data: liquidityPositionsQueryResult, isLoading: isLoading2 } = useQuery(
-    ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[chainId]],
+    ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[chainId], block],
     async () => {
       const data = await swapClients[chainId].query({
         query: liquidityPositionSubsetQuery,
         variables: { user: SONE_MASTER_FARMER[chainId].toLowerCase() },
+        fetchPolicy: 'network-only',
       })
       return data?.data.liquidityPositions
     }
@@ -51,11 +53,12 @@ export default function useFarms(): [boolean, Farm[]] {
   )
 
   const { data: pairsQueryResult, isLoading: isLoading3 } = useQuery(
-    ['useFarms_pairSubsetQuery', pairAddresses],
+    ['useFarms_pairSubsetQuery', pairAddresses, block],
     async () => {
       const data = await swapClients[chainId].query({
         query: pairSubsetQuery,
         variables: { pairAddresses },
+        fetchPolicy: 'network-only',
       })
       return data?.data.pairs
     },

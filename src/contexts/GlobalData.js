@@ -247,20 +247,20 @@ async function getGlobalData(ethPrice, oldEthPrice) {
     // fetch the global data
     let result = await swapClients[chainId].query({
       query: GLOBAL_DATA(),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     data = result.data.uniswapFactories[0]
 
     // fetch the historical data
     let oneDayResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(oneDayBlock?.number),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     oneDayData = oneDayResult.data.uniswapFactories[0]
 
     let twoDayResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoDayBlock?.number),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     twoDayData = twoDayResult.data.uniswapFactories[0]
 

@@ -3,13 +3,15 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import utc from 'dayjs/plugin/utc'
-import { swapClients, blockClients } from '../apollo/client'
+import { blockClients, swapClients } from '../apollo/client'
 import { GET_BLOCK, GET_BLOCKS, GET_LATEST_BLOCK, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
 import { chainId, ETHERSCAN_BASE_URL, timeframeOptions } from '../constants'
 import Numeral from 'numeral'
+import { S_ONE_APP_URL } from '../constants/urls'
+import { WETH } from '@s-one-finance/sdk-core'
 
 // format libraries
 const Decimal = toFormat(_Decimal)
@@ -45,31 +47,25 @@ export function getTimeframe(timeWindow) {
 }
 
 export function getPoolLink(token0Address, token1Address = null, remove = false) {
-  if (!token1Address) {
-    // return (
-    //   `https://dev-app.s-one.finance/#/` +
-    //   (remove ? `remove` : `add`) +
-    //   `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${'ETH'}`
-    // )
-    return `https://dev-app.s-one.finance/#/` + (remove ? `my-account/withdraw` : `add`)
+  if (token1Address) {
+    return (
+      S_ONE_APP_URL +
+      (remove ? `/#/my-account/withdraw/${token0Address}/${token1Address}` : `/#/add/${token0Address}/${token1Address}`)
+    )
   } else {
-    // return (
-    //   `https://dev-app.s-one.finance/#/` +
-    //   (remove ? `remove` : `add`) +
-    //   `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address
-    //   }`
-    // )
-    return `https://dev-app.s-one.finance/#/` + (remove ? `my-account/withdraw` : `add`)
+    return S_ONE_APP_URL + (remove ? `/#/my-account/withdraw` : `/#/add/${token0Address}`)
   }
 }
 
 export function getSwapLink(token0Address, token1Address = null) {
-  if (!token1Address) {
-    return `https://dev-app.s-one.finance/#/swap`
+  const isToken0WETH = WETH[chainId].address.toLowerCase() === token0Address
+  const isToken1WETH = WETH[chainId].address.toLowerCase() === token1Address
+  if (token1Address) {
+    return `https://dev-app.s-one.finance/#/swap?currencyInput=${isToken0WETH ? 'ETH' : token0Address}&currencyOutput=${
+      isToken1WETH ? 'ETH' : token1Address
+    }`
   } else {
-    // return `https://dev-app.s-one.finance/#/swap?inputCurrency=${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
-    //   }&outputCurrency=${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address}`
-    return `https://dev-app.s-one.finance/#/swap`
+    return `https://dev-app.s-one.finance/#/swap?currencyOutput=${isToken0WETH ? 'ETH' : token0Address}`
   }
 }
 
