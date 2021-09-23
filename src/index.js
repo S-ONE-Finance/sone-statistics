@@ -43,9 +43,7 @@ function ContextProviders({ children }) {
         <TokenDataContextProvider>
           <GlobalDataContextProvider>
             <PairDataContextProvider>
-              <UserContextProvider>
-                {children}
-              </UserContextProvider>
+              <UserContextProvider>{children}</UserContextProvider>
             </PairDataContextProvider>
           </GlobalDataContextProvider>
         </TokenDataContextProvider>
@@ -64,7 +62,7 @@ function Updaters() {
   )
 }
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 15000 } } })
 
 ReactDOM.render(
   <ContextProviders>

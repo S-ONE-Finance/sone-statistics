@@ -4,25 +4,28 @@ import { calculateAPY, Farm } from '@s-one-finance/sdk-core'
 import { useQuery } from 'react-query'
 
 import { liquidityPositionSubsetQuery, pairSubsetQuery, poolsQuery } from '../apollo/queries'
-import { swapClients, stakingClients } from '../apollo/client'
+import { stakingClients, swapClients } from '../apollo/client'
 import useBlockNumber from './useBlockNumber'
 import useAverageBlockTime from './useAverageBlockTime'
 import useOneSoneInUSD from './useOneSoneInUSD'
 import { chainId, CONFIG_MASTER_FARMER, SONE_MASTER_FARMER, SONE_PRICE_MINIMUM } from '../constants'
+import { useLastTruthy } from './useLast'
 
 export default function useFarms(): [boolean, Farm[]] {
   const sonePrice = useOneSoneInUSD()
   const block = useBlockNumber()
   const averageBlockTime = useAverageBlockTime()
 
-  const { data: pools, isLoading: isLoading1 } = useQuery('useFarms_poolsQuery', async () => {
+  const { data: poolsQueryResult, isLoading: isLoading1 } = useQuery('useFarms_poolsQuery', async () => {
     const data = await stakingClients[chainId].query({
       query: poolsQuery,
     })
     return data?.data.pools
   })
 
-  const { data: liquidityPositions, isLoading: isLoading2 } = useQuery(
+  const pools = useLastTruthy(poolsQueryResult) ?? undefined
+
+  const { data: liquidityPositionsQueryResult, isLoading: isLoading2 } = useQuery(
     ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[chainId]],
     async () => {
       const data = await swapClients[chainId].query({
@@ -32,6 +35,8 @@ export default function useFarms(): [boolean, Farm[]] {
       return data?.data.liquidityPositions
     }
   )
+
+  const liquidityPositions = useLastTruthy(liquidityPositionsQueryResult) ?? undefined
 
   const pairAddresses = useMemo(
     () =>
@@ -45,7 +50,7 @@ export default function useFarms(): [boolean, Farm[]] {
     [pools]
   )
 
-  const { data: pairs, isLoading: isLoading3 } = useQuery(
+  const { data: pairsQueryResult, isLoading: isLoading3 } = useQuery(
     ['useFarms_pairSubsetQuery', pairAddresses],
     async () => {
       const data = await swapClients[chainId].query({
@@ -56,6 +61,8 @@ export default function useFarms(): [boolean, Farm[]] {
     },
     { enabled: Boolean(pairAddresses) }
   )
+
+  const pairs = useLastTruthy(pairsQueryResult) ?? undefined
 
   return useMemo(() => {
     const farms: Farm[] = (pools ?? [])
