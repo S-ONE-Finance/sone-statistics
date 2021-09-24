@@ -1,5 +1,7 @@
 // S_ONE URLS
-export const S_ONE_APP_URL = process.env.REACT_APP_S_ONE_APP_URL ?? ''
+// TODO:
+// export const S_ONE_APP_URL = process.env.REACT_APP_S_ONE_APP_URL ?? ''
+export const S_ONE_APP_URL = 'https://staging-app.s-one.finance'
 export const S_ONE_TOP_PAGE_URL = process.env.REACT_APP_S_ONE_TOP_PAGE_URL ?? ''
 export const S_ONE_LANDING_PAGE_URL = process.env.REACT_APP_S_ONE_LANDING_PAGE_URL ?? ''
 export const S_ONE_WALLET_INTRO_PAGE_URL = process.env.REACT_APP_S_ONE_WALLET_INTRO_PAGE_URL ?? ''
