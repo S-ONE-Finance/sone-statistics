@@ -2149,11 +2149,6 @@
   resolved "https://registry.yarnpkg.com/@s-one-finance/core/-/core-2.0.0-rc1.tgz#cb25bef1c75571ae334f46324d414b3a1a3e122f"
   integrity sha512-t/UIVMEkA0raLEe4XkpPPDrL03FZ2dmd9Vt2beWxhdaWbAwZPfGKgWthNExjM/7OxfIpjj9ng3de2xxic7JQfA==
 
-"@s-one-finance/default-token-list@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@s-one-finance/default-token-list/-/default-token-list-1.0.5.tgz#2decb5b212a16d5a4ca8da2b17dd516ad2445010"
-  integrity sha512-rMSxyl3/tkYZmWwMO7C293b/tdLqnLJl0GRH4e8+M5DVthPn5FoFq0bmFeMcnZ9cWFwi7tSwenuqyyreAGOfbA==
-
 "@s-one-finance/sdk-core@^1.4.3":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@s-one-finance/sdk-core/-/sdk-core-1.4.3.tgz#49468d385d7f9054497cfefdd3073301d03b93e8"
