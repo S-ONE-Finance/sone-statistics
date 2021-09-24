@@ -1,20 +1,20 @@
-export const FACTORY_ADDRESS = '0x16373A406828Bf5d3dDF071FC24b682E9057b9A5'
-
 export const BUNDLE_ID = '1'
 
-export const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
-if (CHAIN_ID === '') throw new Error(`REACT_APP_CHAIN_ID not found.`)
+const DEFAULT_chainId = '0x4' // Rinkeby
+export const chainId = parseInt(window?.ethereum?.chainId ?? DEFAULT_chainId, 16)
 
 export const SONE_PRICE_MINIMUM = 0.00001 // 1 SONE >= 0.00001 USDT
 
-export const SONE_ADDRESS = {
+export const SONE = {
   1: '',
-  3: '0x57bb30bdb0d449bf687ed648acf2467f045c8e74'
+  3: '0x57bb30bdb0d449bf687ed648acf2467f045c8e74',
+  4: '0x5FEA1f4aEf9c78BC56cEd5083fb59d351396748f',
 }
 
 export const SONE_MASTER_FARMER = {
   1: '',
   3: '0xfB3bEEE96FA08c2CAb70E6DbE34084A99B47b9aD',
+  4: '0x05bf874f71AAbf40966489e45DE3E5FcDC823927',
 }
 
 export const CONFIG_MASTER_FARMER = {
@@ -22,8 +22,19 @@ export const CONFIG_MASTER_FARMER = {
   3: {
     startBlock: 10897613,
     rewardMultiplier: [32, 32, 32, 32, 16, 8, 4, 2, 1],
-    blocksPerWeek: 45134
-  }
+    blocksPerWeek: 45134,
+  },
+  4: {
+    startBlock: 9342011,
+    rewardMultiplier: [32, 32, 32, 32, 16, 8, 4, 2, 1],
+    blocksPerWeek: 45134,
+  },
+}
+
+export const ETHERSCAN_BASE_URL = {
+  1: 'https://etherscan.io',
+  3: 'https://ropsten.etherscan.io',
+  4: 'https://rinkeby.etherscan.io',
 }
 
 export const timeframeOptions = {

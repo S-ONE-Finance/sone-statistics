@@ -1,39 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'feather-icons'
 import { withRouter } from 'react-router-dom'
 import { Text } from 'rebass'
 import styled from 'styled-components'
-import Link from '../components/Link'
+import Link, { CustomLink } from '../components/Link'
 import Panel from '../components/Panel'
 import TokenLogo from '../components/TokenLogo'
 import PairList from '../components/PairList'
 import Loader from '../components/LocalLoader'
 import { AutoRow, RowBetween, RowFixed } from '../components/Row'
 import Column, { AutoColumn } from '../components/Column'
-import { ButtonLight, ButtonDark } from '../components/ButtonStyled'
+import { ButtonDark, ButtonLight } from '../components/ButtonStyled'
 import TxnList from '../components/TxnList'
 import TokenChart from '../components/TokenChart'
-import { formattedNum, formattedPercent, getPoolLink, getSwapLink, localNumber } from '../utils'
-import { useTokenData, useTokenTransactions, useTokenPairs } from '../contexts/TokenData'
-import { TYPE, ThemedBackground } from '../theme'
-import { transparentize } from 'polished'
-import { useColor } from '../hooks'
+import { formattedNum, formattedPercent, getPoolLink, getSwapLink, localNumber, shortenAddress } from '../utils'
+import { useTokenData, useTokenPairs, useTokenTransactions } from '../contexts/TokenData'
+import { ThemedBackground, TYPE } from '../theme'
+import { useColor, useCopyClipboard } from '../hooks'
 import { useMedia } from 'react-use'
 import { useDataForList } from '../contexts/PairData'
-import { useEffect } from 'react'
 import Warning from '../components/Warning'
-import { usePathDismissed } from '../contexts/LocalStorage'
-import { PageWrapper, ContentWrapper, BlockedWrapper, BlockedMessageWrapper } from '../components'
+import { useDarkModeManager, usePathDismissed } from '../contexts/LocalStorage'
+import { BlockedMessageWrapper, BlockedWrapper, ContentWrapper, PageWrapper } from '../components'
 import { AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
-import { shortenAddress } from '../utils'
-import { useDarkModeManager } from '../contexts/LocalStorage'
-import { useCopyClipboard } from '../hooks'
-import { CustomLink } from '../components/Link'
-import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { BLOCKED_WARNINGS, chainId, ETHERSCAN_BASE_URL, TOKEN_BLACKLIST, UNTRACKED_COPY } from '../constants'
 import { useTranslation } from 'react-i18next'
 
 const DashboardWrapper = styled.div`
@@ -182,9 +175,10 @@ function TokenPage({ address, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[address] ?? `This token is not supported.`}
             </TYPE.light>
-            <Link external={true} href={ETHERSCAN_BASE_URL + '/address/' + address}>{`More about ${shortenAddress(
-              address
-            )}`}</Link>
+            <Link
+              external={true}
+              href={ETHERSCAN_BASE_URL[chainId] + '/address/' + address}
+            >{`More about ${shortenAddress(address)}`}</Link>
           </AutoColumn>
         </BlockedMessageWrapper>
       </BlockedWrapper>
@@ -484,7 +478,7 @@ function TokenPage({ address, history }) {
                         <Link
                           color="#fff"
                           external
-                          href={ETHERSCAN_BASE_URL + '/address/' + address}
+                          href={ETHERSCAN_BASE_URL[chainId] + '/address/' + address}
                           fontSize={below600 ? 13 : 16}
                         >
                           {t('View on Etherscan')} ↗

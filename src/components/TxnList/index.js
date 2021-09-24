@@ -6,23 +6,22 @@ import utc from 'dayjs/plugin/utc'
 import { formattedNum, formatTime, urls } from '../../utils'
 import { useMedia } from 'react-use'
 import { useCurrentCurrency } from '../../contexts/Application'
-import { RowBetween, RowFixed } from '../Row'
+import { RowFixed } from '../Row'
 
 import LocalLoader from '../LocalLoader'
 import { Box, Flex, Text } from 'rebass'
 import Link from '../Link'
 import { Divider, EmptyCard } from '..'
-import DropdownSelect from '../DropdownSelect'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../theme'
 import { updateNameData } from '../../utils/data'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { Pagination } from '@material-ui/lab'
-import { ETHERSCAN_BASE_URL } from '../../constants/urls'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import { chainId, ETHERSCAN_BASE_URL } from '../../constants'
 
 dayjs.extend(utc)
 
@@ -280,13 +279,12 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       })
       .slice(ITEMS_PER_PAGE * (page - 1), page * ITEMS_PER_PAGE)
 
-  const below1080 = useMedia('(max-width: 1080px)')
   const below780 = useMedia('(max-width: 780px)')
 
   const ListItem = ({ item }) => {
     return (
       <DashGrid style={{ height: '48px' }}>
-        <DataText area="txn" fontWeight="400" className="justify-content-center w-100">
+        <DataText area="txn" fontWeight="400" className="justify-content-left w-100">
           <Link color="#3FAAB0" external href={urls.showTransaction(item.hash)}>
             {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
           </Link>
@@ -315,7 +313,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           </DataText>
         </>
         <DataText area="account" style={{ justifyContent: 'center' }}>
-          <Link color="#3FAAB0" external href={ETHERSCAN_BASE_URL + '/address/' + item.account}>
+          <Link color="#3FAAB0" external href={ETHERSCAN_BASE_URL[chainId] + '/address/' + item.account}>
             {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
           </Link>
         </DataText>

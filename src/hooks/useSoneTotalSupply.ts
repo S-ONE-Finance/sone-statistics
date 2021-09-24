@@ -1,26 +1,30 @@
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { CHAIN_ID, SONE_ADDRESS } from '../constants'
+import { chainId, SONE } from '../constants'
 import { tokenQuery } from '../apollo/queries'
-import { client } from '../apollo/client'
+import { swapClients } from '../apollo/client'
+import useBlockNumber from './useBlockNumber'
+import { useLastTruthy } from './useLast'
 
 export default function useSoneTotalSupply(): number {
-  const { data: totalSupply } = useQuery<number>(
-    'useSoneTotalSupply',
-    async () => {
-      const data = await client.query({
-        query: tokenQuery(SONE_ADDRESS[CHAIN_ID].toLowerCase())
-      })
+  const block = useBlockNumber()
 
-      const totalSupply = +data.data.token.totalSupply
+  const { data: totalSupplyQueryResult } = useQuery<number>(['useSoneTotalSupply', block], async () => {
+    const data = await swapClients[chainId].query({
+      query: tokenQuery(SONE[chainId].toLowerCase()),
+      fetchPolicy: 'network-only',
+    })
 
-      if (isNaN(totalSupply)) {
-        throw new Error('Error when fetch data in useSoneTotalSupply')
-      }
+    const totalSupply = +data.data.token.totalSupply
 
-      return totalSupply
+    if (isNaN(totalSupply)) {
+      throw new Error('Error when fetch data in useSoneTotalSupply')
     }
-  )
+
+    return totalSupply
+  })
+
+  const totalSupply = useLastTruthy(totalSupplyQueryResult) ?? undefined
 
   return useMemo(() => totalSupply ?? 0, [totalSupply])
 }

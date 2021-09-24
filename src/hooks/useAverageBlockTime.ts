@@ -1,8 +1,9 @@
 import { getUnixTime, startOfHour, startOfMinute, startOfSecond, subHours } from 'date-fns'
 import { useCallback, useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { blockClient } from '../apollo/client'
+import { blockClients } from '../apollo/client'
 import { blocksQuery } from '../apollo/queries'
+import { chainId } from '../constants'
 
 type BlocksResponse = {
   id: string
@@ -17,12 +18,12 @@ export default function useAverageBlockTime(): number {
   const end = getUnixTime(now)
 
   const queryFn = useCallback(async () => {
-    const data = await blockClient.query({
+    const data = await blockClients[chainId].query({
       query: blocksQuery,
       variables: {
         start,
-        end
-      }
+        end,
+      },
     })
     return data.data.blocks
   }, [start, end])
@@ -31,7 +32,7 @@ export default function useAverageBlockTime(): number {
     ['useAverageBlockTime', start, end],
     queryFn,
     {
-      enabled: Boolean(start && end)
+      enabled: Boolean(start && end),
     }
   )
 
@@ -40,19 +41,19 @@ export default function useAverageBlockTime(): number {
     () =>
       isSuccess && Array.isArray(blocks) && blocks.length
         ? blocks.reduce(
-        (previousValue: any, currentValue: any, currentIndex: number) => {
-          if (previousValue.timestamp) {
-            const difference = previousValue.timestamp - currentValue.timestamp
-            previousValue.difference = previousValue.difference + difference
-          }
-          previousValue.timestamp = currentValue.timestamp
-          if (currentIndex === blocks.length - 1) {
-            return previousValue.difference / blocks.length
-          }
-          return previousValue
-        },
-        { timestamp: null, difference: 0 }
-        )
+            (previousValue: any, currentValue: any, currentIndex: number) => {
+              if (previousValue.timestamp) {
+                const difference = previousValue.timestamp - currentValue.timestamp
+                previousValue.difference = previousValue.difference + difference
+              }
+              previousValue.timestamp = currentValue.timestamp
+              if (currentIndex === blocks.length - 1) {
+                return previousValue.difference / blocks.length
+              }
+              return previousValue
+            },
+            { timestamp: null, difference: 0 }
+          )
         : 15,
     [blocks, isSuccess]
   )

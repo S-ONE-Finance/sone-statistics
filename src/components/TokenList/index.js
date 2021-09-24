@@ -150,7 +150,6 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.LIQ)
 
-  const below1080 = useMedia('(max-width: 1080px)')
   const below680 = useMedia('(max-width: 680px)')
   const below600 = useMedia('(max-width: 600px)')
 

@@ -12,12 +12,12 @@ import {
   TableHead,
   TableRow,
   Tooltip,
-  Typography
+  Typography,
 } from '@material-ui/core'
 import {
   ArrowDropDown as ArrowDropDownIcon,
   ArrowDropUp as ArrowDropUpIcon,
-  ArrowRightAlt as ArrowRightAltIcon
+  ArrowRightAlt as ArrowRightAltIcon,
 } from '@material-ui/icons'
 import _orderBy from 'lodash.orderby'
 import { reduceFractionDigit } from '../../utils/number.js'
@@ -105,10 +105,10 @@ const PoolRow = ({ farm }) => {
   const { token0, token1 } = farm.liquidityPair
 
   const MIN_NUM = 1
-  const stakedLpToken = Number(farm.balance) || MIN_NUM
+  const stakedLpToken = Number(farm.balance) || 0
   const totalSupply = Number(farm?.liquidityPair?.totalSupply) || MIN_NUM
-  const reserve0 = Number(farm?.liquidityPair?.reserve0) || MIN_NUM
-  const reserve1 = Number(farm?.liquidityPair?.reserve1) || MIN_NUM
+  const reserve0 = Number(farm?.liquidityPair?.reserve0) || 0
+  const reserve1 = Number(farm?.liquidityPair?.reserve1) || 0
   const stakedToken0 = reserve0 * (stakedLpToken / totalSupply)
   const stakedToken1 = reserve1 * (stakedLpToken / totalSupply)
 
@@ -116,7 +116,7 @@ const PoolRow = ({ farm }) => {
   const rewardPerBlock = farm && farm.rewardPerBlock * bonusMultiplier
   const soneInUSD = useOneSoneInUSD()
   const rewardPerBlockInUSD = rewardPerBlock * soneInUSD
-  
+
   const lockedValue = Number(farm?.balanceUSD) ?? 0
   const lockedValueAndTotalSupplyRatio = (Number(farm?.balance) / totalSupply) * 100
 
@@ -137,10 +137,10 @@ const PoolRow = ({ farm }) => {
           <Box display="flex" alignItems="center" flexDirection={isUpToExtraSmall ? 'column' : 'row'}>
             <Box display="flex" marginBottom={isUpToExtraSmall ? '5px' : 0}>
               <Tooltip title={token0.symbol}>
-                <TokenLogo address={token0.address} size={isUpToExtraSmall ? 24 : 36}/>
+                <TokenLogo address={token0.address} size={isUpToExtraSmall ? 24 : 36} />
               </Tooltip>
               <Tooltip title={farm.liquidityPair.token1.symbol}>
-                <TokenLogo address={token1.address} size={isUpToExtraSmall ? 24 : 36} style={{marginLeft: '-10px'}}/>
+                <TokenLogo address={token1.address} size={isUpToExtraSmall ? 24 : 36} style={{ marginLeft: '-10px' }} />
               </Tooltip>
             </Box>
             <Tooltip title={`Open ${farm.symbol} farm`}>
@@ -208,7 +208,7 @@ const PoolRow = ({ farm }) => {
             {`${reduceFractionDigit(stakedLpToken, 6)}`}
           </Typography>
           <Typography component="span" style={{ fontSize: 13, fontWeight: 400, color: theme.text6Sone }}>
-            {` ${(farm.symbol + " LP") || ''}`}
+            {` ${farm.symbol + ' LP' || ''}`}
           </Typography>
         </TableCell>
         <TableCell className={classes.tableCell} style={{ textAlign: 'center' }}>

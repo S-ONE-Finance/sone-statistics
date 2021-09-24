@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
-import { FACTORY_ADDRESS, BUNDLE_ID } from '../constants'
+import { BUNDLE_ID, chainId } from '../constants'
+import { FACTORY_ADDRESS } from '@s-one-finance/sdk-core'
 
 export const SUBGRAPH_HEALTH = gql`
   query health {
@@ -48,7 +49,7 @@ export const V1_DATA_QUERY = gql`
 
 export const GET_LATEST_BLOCK = gql`
   query blocks {
-    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc, where: { number_gt: 10000000 }) {
+    blocks(first: 1, skip: 0, orderBy: number, orderDirection: desc) {
       id
       number
       timestamp
@@ -444,10 +445,10 @@ export const GLOBAL_CHART = gql`
 `
 
 export const GLOBAL_DATA = (block) => {
-  const queryString = ` query uniswapFactories {
+  const queryString = `query uniswapFactories {
       uniswapFactories(
        ${block ? `block: { number: ${block}}` : ``} 
-       where: { id: "${FACTORY_ADDRESS}" }) {
+       where: { id: "${FACTORY_ADDRESS[chainId].toLowerCase()}" }) {
         id
         totalVolumeUSD
         totalVolumeETH
@@ -955,7 +956,6 @@ export const poolsQuery = gql`
       balance
       userCount
       soneHarvested
-      soneHarvestedUSD
       entryUSD
       exitUSD
     }
@@ -1000,10 +1000,9 @@ export const tokenQuery = (address) => gql`
 `
 
 export const liquidityOfAllPair = gql`
-{
-  pairs {
-    reserveUSD
+  {
+    pairs {
+      reserveUSD
+    }
   }
-}
-
 `

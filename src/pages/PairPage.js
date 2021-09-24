@@ -3,13 +3,7 @@ import { withRouter } from 'react-router-dom'
 import 'feather-icons'
 import styled from 'styled-components'
 import Panel from '../components/Panel'
-import {
-  BlockedMessageWrapper,
-  BlockedWrapper,
-  ContentWrapperLarge,
-  PageWrapper,
-  ContentWrapper,
-} from '../components/index'
+import { BlockedMessageWrapper, BlockedWrapper, ContentWrapper, PageWrapper } from '../components/index'
 import { AutoRow, RowBetween, RowFixed } from '../components/Row'
 import Column, { AutoColumn } from '../components/Column'
 import { ButtonDark, ButtonLight } from '../components/ButtonStyled'
@@ -21,7 +15,6 @@ import { formattedNum, formattedPercent, getPoolLink, getSwapLink, shortenAddres
 import { useColor } from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { ThemedBackground, TYPE } from '../theme'
-import { transparentize } from 'polished'
 import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
 import DoubleTokenLogo from '../components/DoubleLogo'
@@ -35,8 +28,7 @@ import { AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { BLOCKED_WARNINGS, PAIR_BLACKLIST, UNTRACKED_COPY } from '../constants'
-import { ETHERSCAN_BASE_URL } from '../constants/urls'
+import { BLOCKED_WARNINGS, chainId, ETHERSCAN_BASE_URL, PAIR_BLACKLIST, UNTRACKED_COPY } from '../constants'
 import { useTranslation } from 'react-i18next'
 
 const DashboardWrapper = styled.div`
@@ -217,9 +209,10 @@ function PairPage({ pairAddress, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[pairAddress] ?? `This pair is not supported.`}
             </TYPE.light>
-            <Link external={true} href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}>{`More about ${shortenAddress(
-              pairAddress
-            )}`}</Link>
+            <Link
+              external={true}
+              href={ETHERSCAN_BASE_URL[chainId] + '/address/' + pairAddress}
+            >{`More about ${shortenAddress(pairAddress)}`}</Link>
           </AutoColumn>
         </BlockedMessageWrapper>
       </BlockedWrapper>
@@ -621,7 +614,7 @@ function PairPage({ pairAddress, history }) {
                             fontSize={below600 ? '13px' : '16px'}
                             color={backgroundColor}
                             external
-                            href={ETHERSCAN_BASE_URL + '/address/' + pairAddress}
+                            href={ETHERSCAN_BASE_URL[chainId] + '/address/' + pairAddress}
                           >
                             {t('View on Etherscan')}&nbsp;{!below600 ? '↗' : ''}
                           </Link>

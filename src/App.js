@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
-import { client } from './apollo/client'
+import { swapClients } from './apollo/client'
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import TokenPage from './pages/TokenPage'
 import PairPage from './pages/PairPage'
@@ -12,9 +12,8 @@ import AllTokensPage from './pages/AllTokensPage'
 import AllPairsPage from './pages/AllPairsPage'
 import AccountLookup from './pages/AccountLookup'
 import LocalLoader from './components/LocalLoader'
-import { useLatestBlocks } from './contexts/Application'
 import GoogleAnalyticsReporter from './components/analytics/GoogleAnalyticsReporter'
-import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
+import { chainId, PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import StakingStats from './pages/StakingStats'
@@ -71,21 +70,6 @@ const Body = styled.div`
   `};
 `
 
-const WarningWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`
-
-const WarningBanner = styled.div`
-  background-color: #ff6871;
-  padding: 1.5rem;
-  color: white;
-  width: 100%;
-  text-align: center;
-  font-weight: 500;
-`
-
 /**
  * Wrap the component with the header and sidebar pinned tab
  */
@@ -132,26 +116,13 @@ const LayoutWrapper2 = ({ children }) => {
   )
 }
 
-const BLOCK_DIFFERENCE_THRESHOLD = 30
-
-function App({ t }) {
+function App() {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
-  const [latestBlock, headBlock] = useLatestBlocks()
-
-  // show warning
-  const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={swapClients[chainId]}>
       <AppWrapper>
-        {showWarning && (
-          <WarningWrapper>
-            <WarningBanner>
-              {`Warning: The data on this site has only synced to Ethereum block ${latestBlock} (out of ${headBlock}). Please check back soon.`}
-            </WarningBanner>
-          </WarningWrapper>
-        )}
         {globalData &&
         Object.keys(globalData).length > 0 &&
         globalChartData &&

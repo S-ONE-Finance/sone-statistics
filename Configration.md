@@ -18,7 +18,7 @@ export const FACTORY_ADDRESS = '0xB6EF230f01008e04b83E61807ed710F5BABc8Ddd'
 ## 3. Config graphql client at `src/apollo/client.js`
 
 - client - line 5
-- blockClient - line 39
+- blockClients - line 39
 
 ```js
 //  Example
@@ -40,7 +40,7 @@ export const v1Client = new ApolloClient({
 })
 // .
 // .
-export const blockClient = new ApolloClient({
+export const blockClients = new ApolloClient({
   link: new HttpLink({
     uri: 'https://api.thegraph.com/subgraphs/name/blocklytics/ropsten-blocks',
   }),
