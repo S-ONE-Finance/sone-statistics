@@ -297,7 +297,7 @@ export default function PoolTable() {
                   {t('Pairs')}
                 </Typography>
                 {sortData.symbol &&
-                  (sortData.symbol === 'asc' ? (
+                  (sortData.symbol === 'desc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -315,7 +315,7 @@ export default function PoolTable() {
                   APY
                 </Typography>
                 {sortData.roiPerYear &&
-                  (sortData.roiPerYear === 'asc' ? (
+                  (sortData.roiPerYear === 'desc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -346,7 +346,7 @@ export default function PoolTable() {
                   {t('Locked Value')}
                 </Typography>
                 {sortData.balanceUSD &&
-                  (sortData.balanceUSD === 'asc' ? (
+                  (sortData.balanceUSD === 'desc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
@@ -364,7 +364,7 @@ export default function PoolTable() {
                   {t('Reward / Block')}
                 </Typography>
                 {sortData.rewardPerBlock &&
-                  (sortData.rewardPerBlock === 'asc' ? (
+                  (sortData.rewardPerBlock === 'desc' ? (
                     <ArrowDropDownIcon className={classes.sortIcon} />
                   ) : (
                     <ArrowDropUpIcon className={classes.sortIcon} />
