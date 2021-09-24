@@ -31,6 +31,12 @@ export const CONFIG_MASTER_FARMER = {
   },
 }
 
+export const FULLNODE_ETH = {
+  1: 'http://eth.s-one.finance:8545',
+  3: 'http://3.1.49.97:8545',
+  4: 'http://13.229.143.80:8545',
+}
+
 export const ETHERSCAN_BASE_URL = {
   1: 'https://etherscan.io',
   3: 'https://ropsten.etherscan.io',
