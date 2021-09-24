@@ -10,7 +10,7 @@
   "Tokens": "Tokens",
   "Pairs": "Pairs",
   "Accounts": "Accounts",
-  "Search tokens, pairs and accounts": "Search tokens, pairs and accounts",
+  "Search tokens and pairs": "Search tokens and pairs",
   "Top Tokens": "Top Tokens",
   "See more": "See more",
   "Name": "Name",
@@ -57,7 +57,7 @@
   "Stats": "Stats",
   "Docs": "Docs",
   "Swap Statistic": "Swap Statistic",
-  "textSearchInpMain": "Search tokens, pairs and accounts",
+  "textSearchInpMain": "Search tokens and pairs",
 
   "ETH Price": "ETH Price",
   "No. Pools": "Pools",
