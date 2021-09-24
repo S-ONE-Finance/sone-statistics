@@ -245,7 +245,8 @@ export default function PoolTable() {
   const theme = useContext(ThemeContext)
   const { t } = useTranslation()
 
-  const [isLoading, farms] = useFarms()
+  const [isQueryAllUsedToSucceed, farms] = useFarms()
+  const showLoading = !isQueryAllUsedToSucceed
   // console.log(`farms`, farms.map(farm => farm.balanceUSD))
 
   const [sortData, setSortData] = useState({})
@@ -264,7 +265,7 @@ export default function PoolTable() {
     }))
   }
 
-  return isLoading ? (
+  return showLoading ? (
     <LoadingIndicator />
   ) : (
     <TableContainer

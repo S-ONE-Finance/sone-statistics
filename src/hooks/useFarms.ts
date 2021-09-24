@@ -16,17 +16,20 @@ export default function useFarms(): [boolean, Farm[]] {
   const block = useBlockNumber()
   const averageBlockTime = useAverageBlockTime()
 
-  const { data: poolsQueryResult, isLoading: isLoading1 } = useQuery(['useFarms_poolsQuery', block], async () => {
-    const data = await stakingClients[chainId].query({
-      query: poolsQuery,
-      fetchPolicy: 'network-only',
-    })
-    return data?.data.pools
-  })
+  const { data: poolsQueryResult, isSuccess: isQueryPoolsSuccess } = useQuery(
+    ['useFarms_poolsQuery', block],
+    async () => {
+      const data = await stakingClients[chainId].query({
+        query: poolsQuery,
+        fetchPolicy: 'network-only',
+      })
+      return data?.data.pools
+    }
+  )
 
   const pools = useLastTruthy(poolsQueryResult) ?? undefined
 
-  const { data: liquidityPositionsQueryResult, isLoading: isLoading2 } = useQuery(
+  const { data: liquidityPositionsQueryResult, isSuccess: isQueryLqSuccess } = useQuery(
     ['useFarms_liquidityPositionSubsetQuery', SONE_MASTER_FARMER[chainId], block],
     async () => {
       const data = await swapClients[chainId].query({
@@ -52,7 +55,7 @@ export default function useFarms(): [boolean, Farm[]] {
     [pools]
   )
 
-  const { data: pairsQueryResult, isLoading: isLoading3 } = useQuery(
+  const { data: pairsQueryResult, isSuccess: isQueryPairsSuccess } = useQuery(
     ['useFarms_pairSubsetQuery', pairAddresses, block],
     async () => {
       const data = await swapClients[chainId].query({
@@ -66,6 +69,10 @@ export default function useFarms(): [boolean, Farm[]] {
   )
 
   const pairs = useLastTruthy(pairsQueryResult) ?? undefined
+
+  // The query used to succeed
+
+  const isQueryAllUsedToSucceed = useLastTruthy(isQueryPoolsSuccess && isQueryLqSuccess && isQueryPairsSuccess)
 
   return useMemo(() => {
     const farms: Farm[] = (pools ?? [])
@@ -124,6 +131,6 @@ export default function useFarms(): [boolean, Farm[]] {
       })
     const sorted = _.orderBy(farms, ['pid'], ['desc'])
     const unique = _.uniq(sorted)
-    return [Boolean(isLoading1 || isLoading2 || isLoading3), unique]
-  }, [averageBlockTime, block, isLoading1, isLoading2, isLoading3, liquidityPositions, pairs, pools, sonePrice])
+    return [isQueryAllUsedToSucceed, unique]
+  }, [averageBlockTime, block, isQueryAllUsedToSucceed, liquidityPositions, pairs, pools, sonePrice])
 }
