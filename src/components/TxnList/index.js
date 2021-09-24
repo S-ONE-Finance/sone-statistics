@@ -325,6 +325,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   }
 
   const handleChangePagePagination = (event) => {
+    setPage(1)
     SET_ITEMS_PER_PAGE(event.target.value)
   }
 

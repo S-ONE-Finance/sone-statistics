@@ -196,7 +196,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
               : 'table-row-light-mode'
           }
         >
-          <ListItem key={index} index={(page - 1) * 10 + index + 1} lp={lp} />
+          <ListItem key={index} index={(page - 1) * ITEMS_PER_PAGE + index + 1} lp={lp} />
           <Divider />
         </div>
       )
@@ -210,6 +210,7 @@ function LPList({ lps, disbaleLinks, maxItems = 5 }) {
   `
 
   const handleChangePagePanigation = (event) => {
+    setPage(1)
     setITEMS_PER_PAGE(event.target.value)
     return
   }

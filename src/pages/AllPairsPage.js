@@ -33,7 +33,7 @@ function AllPairsPage() {
           <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
         </AutoRow>
         <StylePanel>
-          <PairList pairs={allPairs} disbaleLinks={true} maxItems={50} useTracked={useTracked} />
+          <PairList pairs={allPairs} disbaleLinks={true} maxItems={5} useTracked={useTracked} />
         </StylePanel>
       </FullWrapper>
     </PageWrapper>

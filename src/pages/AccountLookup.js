@@ -42,7 +42,7 @@ function AccountLookup() {
           }}
         >
           {' '}
-          <LPList lps={topLps} maxItems={100} />
+          <LPList lps={topLps} maxItems={5} />
         </Panel>
       </FullWrapper>
     </PageWrapper>

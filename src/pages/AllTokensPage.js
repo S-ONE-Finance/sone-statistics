@@ -24,7 +24,7 @@ function AllTokensPage() {
     <PageWrapper>
       <FullWrapper>
         <StylePanel>
-          <TopTokenList tokens={allTokens} itemMax={50} />
+          <TopTokenList tokens={allTokens} itemMax={5} />
         </StylePanel>
       </FullWrapper>
     </PageWrapper>

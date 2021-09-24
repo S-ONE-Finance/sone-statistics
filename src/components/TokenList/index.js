@@ -308,6 +308,7 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
   }
 
   const handleChangePagePanigation = (event) => {
+    setPage(1)
     setITEMS_PER_PAGE(event.target.value)
     return
   }
@@ -428,7 +429,7 @@ function TopTokenList({ tokens, itemMax = 5, useTracked = false }) {
                         : 'table-row-light-mode'
                     }
                   >
-                    <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
+                    <ListItem key={index} index={(page - 1) * ITEMS_PER_PAGE + index + 1} item={item} />
                     <Divider />
                   </div>
                 )
