@@ -347,6 +347,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 5, useTracked = false
       })
 
   const handleChangePagePanigation = (event) => {
+    setPage(1)
     setITEMS_PER_PAGE(event.target.value)
     return
   }
