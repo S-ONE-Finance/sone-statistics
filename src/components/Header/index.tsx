@@ -524,13 +524,13 @@ function Header() {
                 <Globe size={20} />
                 {/* Only support 3 languages */}
                 <TYPE.language style={{ marginLeft: '5px' }}>
-                  {language === 'en' ? 'EN' : language === 'jp' ? '日本語' : language === 'cn' ? '中文' : 'EN'}
+                  {language === 'en' ? 'EN' : language === 'jp' ? '日本語' : language === 'cn' ? '簡体中文' : 'EN'}
                 </TYPE.language>
               </StyledMenuButtonWithText>
               <ResponsiveBottomRightSubMenu>
                 <SubMenuItemText onClick={() => changeLanguage('jp')}>日本語</SubMenuItemText>
                 <SubMenuItemText onClick={() => changeLanguage('en')}>English</SubMenuItemText>
-                <SubMenuItemText onClick={() => changeLanguage('cn')}>中文</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('cn')}>簡体中文</SubMenuItemText>
               </ResponsiveBottomRightSubMenu>
             </ResponsiveMenuItem>
             <ShowOnlyExtraSmall>
