@@ -266,13 +266,13 @@ async function getGlobalData(ethPrice, oldEthPrice) {
 
     let oneWeekResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(oneWeekBlock?.number),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     const oneWeekData = oneWeekResult.data.uniswapFactories[0]
 
     let twoWeekResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoWeekBlock?.number),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     const twoWeekData = twoWeekResult.data.uniswapFactories[0]
 
