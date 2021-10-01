@@ -48,11 +48,13 @@ const Title = styled.div`
   color: ${({ theme }) => theme.text6Sone};
   font-size: 40px;
   font-weight: 500;
+  width: 500px;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     font-size: 20px;
     font-weight: 700;
     text-align: center;
+    width: 100%;
   `}
 `
 
@@ -73,17 +75,30 @@ function TabComponent(_props) {
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
   const pathTabIndex = {
-    '/swap/tokens': 1,
-    '/swap/pairs': 2,
-    '/swap/accounts': 3,
+    token: 1,
+    pair: 2,
+    account: 3,
   }
+
+  const getTabIndex = (url) => {
+    for (const route in pathTabIndex) {
+      if (url.includes(route)) {
+        return pathTabIndex[route]
+      }
+    }
+    return 0
+  }
+
   useEffect(() => {
     const url = history.location.pathname
-    if (pathTabIndex.hasOwnProperty(url)) {
-      setIndex(pathTabIndex[url])
+    const tabIndex = getTabIndex(url)
+    if (tabIndex) {
+      setIndex(tabIndex)
     }
     return () => {
-      setIndex(0) // reset tab index
+      if (!tabIndex) {
+        setIndex(0) // reset tab index
+      }
     }
   }, [history.location.pathname])
 
@@ -134,8 +149,10 @@ function TabComponent(_props) {
       <Tabs
         value={indexTab}
         onChange={(value, index) => {
-          // history.push('/swap')
           setIndex(index)
+          if (history.location.pathname != '/stats-swap') {
+            history.push('/stats-swap')
+          }
         }}
         indicatorColor=""
         textColor="primary"
