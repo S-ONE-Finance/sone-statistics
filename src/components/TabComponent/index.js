@@ -82,7 +82,7 @@ function TabComponent(_props) {
     if (pathTabIndex.hasOwnProperty(url)) {
       setIndex(pathTabIndex[url])
     }
-  }, [history.location.pathname, setIndex])
+  }, [history.location.pathname])
 
   const TabCustom = withStyles((theme) => {
     return {
