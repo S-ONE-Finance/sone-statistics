@@ -82,6 +82,9 @@ function TabComponent(_props) {
     if (pathTabIndex.hasOwnProperty(url)) {
       setIndex(pathTabIndex[url])
     }
+    return () => {
+      setIndex(0) // reset tab index
+    }
   }, [history.location.pathname])
 
   const TabCustom = withStyles((theme) => {
@@ -131,7 +134,7 @@ function TabComponent(_props) {
       <Tabs
         value={indexTab}
         onChange={(value, index) => {
-          history.push('/swap')
+          // history.push('/swap')
           setIndex(index)
         }}
         indicatorColor=""
