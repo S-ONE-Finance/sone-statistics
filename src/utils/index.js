@@ -61,20 +61,20 @@ export function getSwapLink(token0Address, token1Address = null) {
   const isToken0WETH = WETH[chainId].address.toLowerCase() === token0Address
   const isToken1WETH = WETH[chainId].address.toLowerCase() === token1Address
   if (token1Address) {
-    return `https://dev-app.s-one.finance/#/swap?currencyInput=${isToken0WETH ? 'ETH' : token0Address}&currencyOutput=${
+    return `${S_ONE_APP_URL}/#/swap?inputCurrency=${isToken0WETH ? 'ETH' : token0Address}&outputCurrency=${
       isToken1WETH ? 'ETH' : token1Address
     }`
   } else {
-    return `https://dev-app.s-one.finance/#/swap?currencyOutput=${isToken0WETH ? 'ETH' : token0Address}`
+    return `${S_ONE_APP_URL}/#/swap?outputCurrency=${isToken0WETH ? 'ETH' : token0Address}`
   }
 }
 
 export function getMiningPoolLink(token0Address) {
-  return `https://dev-app.s-one.finance/#/uni/ETH/${token0Address}`
+  return `${S_ONE_APP_URL}/#/uni/ETH/${token0Address}`
 }
 
 export function getUniswapAppLink(linkVariable) {
-  let baseUniswapUrl = 'https://dev-app.s-one.finance/#/uni'
+  let baseUniswapUrl = '${S_ONE_APP_URL}/#/uni'
   if (!linkVariable) {
     return baseUniswapUrl
   }
