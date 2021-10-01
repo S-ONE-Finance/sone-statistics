@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ReactComponent as CircleImage } from '../../assets/icon_overview.svg'
 import { ReactComponent as IconCoin } from '../../assets/icon_coin.svg'
 import { ReactComponent as IconTransactionCoin } from '../../assets/icon-transaction-coin.svg'
@@ -71,6 +71,18 @@ function TabComponent(_props) {
   const [indexTab, setIndex] = useIndexTabManager()
   const history = useHistory()
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+
+  const pathTabIndex = {
+    '/swap/tokens': 1,
+    '/swap/pairs': 2,
+    '/swap/accounts': 3,
+  }
+  useEffect(() => {
+    const url = history.location.pathname
+    if (pathTabIndex.hasOwnProperty(url)) {
+      setIndex(pathTabIndex[url])
+    }
+  }, [history.location.pathname])
 
   const TabCustom = withStyles((theme) => {
     return {
