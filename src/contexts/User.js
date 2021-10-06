@@ -210,7 +210,7 @@ export function useUserSnapshots(account) {
               skip: skip,
               user: account,
             },
-            fetchPolicy: 'cache-first',
+            fetchPolicy: 'network-only',
           })
           allResults = allResults.concat(result.data.liquidityPositionSnapshots)
           if (result.data.liquidityPositionSnapshots.length < 1000) {

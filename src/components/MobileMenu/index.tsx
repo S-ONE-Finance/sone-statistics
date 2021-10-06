@@ -8,10 +8,11 @@ import styled from 'styled-components'
 import { ReactComponent as Close } from '../../assets/x.svg'
 import Column from '../Column'
 import {
-  S_ONE_APP_URL, S_ONE_DOCS_URL,
+  S_ONE_APP_URL,
+  S_ONE_DOCS_URL,
   S_ONE_FAQ_URL,
   S_ONE_TOP_PAGE_URL,
-  S_ONE_WHITE_PAPER_URL
+  S_ONE_WHITE_PAPER_URL,
 } from '../../constants/urls'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -134,7 +135,7 @@ export default function MobileMenu({ setIsShowMobileMenu }: MobileMenuProps) {
         <StyledExternalLink href={S_ONE_APP_URL + '/#/swap'} target="_blank">
           {t('Swap')}
         </StyledExternalLink>
-        <StyledExternalLink href={S_ONE_APP_URL + '/#/add'} target="_blank">
+        <StyledExternalLink href={S_ONE_APP_URL + '/#/add/ETH'} target="_blank">
           {t('Liquidity')}
         </StyledExternalLink>
         <StyledExternalLink href={S_ONE_APP_URL + '/#/staking'} target="_blank">

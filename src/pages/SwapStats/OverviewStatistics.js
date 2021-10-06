@@ -17,10 +17,10 @@ import { useAllPairData } from '../../contexts/PairData'
 import PairList from '../../components/PairList'
 import LPList from '../../components/LPList'
 import TxnList from '../../components/TxnList'
-import { useEthPrice, useGlobalTransactions, useTopLps } from '../../contexts/GlobalData'
+import { useEthPrice, useGlobalTransactions, useTopLps, useGlobalData } from '../../contexts/GlobalData'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from 'react-responsive'
-import dayjs from 'dayjs'
+import { formattedNum, formattedPercent, getPercentChange, localNumber } from '../../utils'
 
 OverviewStatistics.propTypes = {}
 
@@ -107,9 +107,10 @@ function OverviewStatistics() {
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
   const allPairs = useAllPairData()
+  const { oneDayVolumeUSD, oneDayTxns, pairCount, percentChangeTxns, percentChangePools, percentChangeFees } =
+    useGlobalData()
   const { t } = useTranslation()
-  const [totalTransaction, setTotalTransaction] = useState(0)
-  const [totalFee24h, setTotalFee24h] = useState(0)
+  const oneDayFees = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD * 0.003, true) : ''
 
   //accounts
   const topLps = useTopLps()
@@ -118,22 +119,6 @@ function OverviewStatistics() {
   // const below800 = useMedia('min-width: 800px')
   // const below600 = useMediaQuery('max-width: 600px')
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
-
-  useEffect(() => {
-    if (!transactions) {
-      return
-    }
-    totalTransactionAPI()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactions])
-
-  useEffect(() => {
-    if (!allPairs) {
-      return
-    }
-    totalFee24hAPI()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allPairs])
 
   const PanelHight = styled(Panel)`
     height: 100%;
@@ -151,32 +136,8 @@ function OverviewStatistics() {
     border: 0;
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.18);
   `
-  const totalTransactionAPI = () => {
-    const utcEndTime = dayjs.utc()
-    const utcStartTime = utcEndTime.subtract(1, 'day').unix()
-    const txMints24h = transactions?.mints.filter(tx => +tx.transaction.timestamp >= utcStartTime)
-    const txBurns24h = transactions?.burns.filter(tx => +tx.transaction.timestamp >= utcStartTime)
-    const txSwaps24h = transactions?.swaps.filter(tx => +tx.transaction.timestamp >= utcStartTime)
 
-    const total = txMints24h.length + txBurns24h.length + txSwaps24h.length
-    setTotalTransaction(total)
-  }
-
-  // BUG: Total Fee không đúng.
-  const totalFee24hAPI = () => {
-    var totalFees = 0
-    var totalOneDayVolumeUSD = 0
-    var totalOneDayVolumeUntracked = 0
-    Object.values(allPairs).forEach((item) => {
-      if (item.oneDayVolumeUSD) {
-        totalOneDayVolumeUSD += item.oneDayVolumeUSD
-      }
-    })
-    totalFees = totalOneDayVolumeUSD + totalOneDayVolumeUntracked
-    setTotalFee24h(totalFees)
-  }
-
-  const [ethPrice] = useEthPrice()
+  const [ethPrice, ethPriceOld] = useEthPrice()
 
   return (
     <div className={classes.boxMainContentOverview}>
@@ -203,7 +164,11 @@ function OverviewStatistics() {
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+            ratioValue={
+              <p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>
+                {formattedPercent(getPercentChange(ethPrice, ethPriceOld))}
+              </p>
+            }
           />
         </Grid>
         <Grid item md={6} lg={3} className={classes.boxItem}>
@@ -216,11 +181,11 @@ function OverviewStatistics() {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {totalTransaction}
+                  {localNumber(oneDayTxns)}
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`+0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{percentChangeTxns}</p>}
           />
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
@@ -233,11 +198,11 @@ function OverviewStatistics() {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {Object.keys(allPairs).length}
+                  {localNumber(pairCount)}
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`-0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{percentChangePools}</p>}
           />
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
@@ -250,11 +215,11 @@ function OverviewStatistics() {
                   className={classes.cardValue}
                   style={{ color: theme.text6Sone, fontSize: isUpToExtraSmall ? 20 : 28 }}
                 >
-                  {Math.round(totalFee24h)}
+                  {oneDayFees}
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{`+0.03%`}</p>}
+            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{percentChangeFees}</p>}
           />
         </Grid>
       </StyledGrid>
