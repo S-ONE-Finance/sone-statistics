@@ -230,17 +230,17 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
   try {
     let current = await swapClients[chainId].query({
       query: TOKENS_CURRENT,
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
 
     let oneDayResult = await swapClients[chainId].query({
       query: TOKENS_DYNAMIC(oneDayBlock),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
 
     let twoDayResult = await swapClients[chainId].query({
       query: TOKENS_DYNAMIC(twoDayBlock),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
 
     let oneDayData = oneDayResult?.data?.tokens.reduce((obj, cur, i) => {
@@ -266,14 +266,14 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           if (!oneDayHistory) {
             let oneDayResult = await swapClients[chainId].query({
               query: TOKEN_DATA(token.id, oneDayBlock),
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             oneDayHistory = oneDayResult.data.tokens[0]
           }
           if (!twoDayHistory) {
             let twoDayResult = await swapClients[chainId].query({
               query: TOKEN_DATA(token.id, twoDayBlock),
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             twoDayHistory = twoDayResult.data.tokens[0]
           }
@@ -325,7 +325,7 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           if (data.id === '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9') {
             const aaveData = await swapClients[chainId].query({
               query: PAIR_DATA('0xdfc14d2af169b0d36c4eff567ada9b2e0cae044f'),
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             const result = aaveData.data.pairs[0]
             data.totalLiquidityUSD = parseFloat(result.reserveUSD) / 2
@@ -365,21 +365,21 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
     // fetch all current and historical data
     let result = await swapClients[chainId].query({
       query: TOKEN_DATA(address),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     data = result?.data?.tokens?.[0]
 
     // get results from 24 hours in past
     let oneDayResult = await swapClients[chainId].query({
       query: TOKEN_DATA(address, oneDayBlock),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     oneDayData = oneDayResult.data.tokens[0]
 
     // get results from 48 hours in past
     let twoDayResult = await swapClients[chainId].query({
       query: TOKEN_DATA(address, twoDayBlock),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     twoDayData = twoDayResult.data.tokens[0]
 
@@ -387,14 +387,14 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
     if (!oneDayData) {
       let oneDayResult = await swapClients[chainId].query({
         query: TOKEN_DATA(address, oneDayBlock),
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       oneDayData = oneDayResult.data.tokens[0]
     }
     if (!twoDayData) {
       let twoDayResult = await swapClients[chainId].query({
         query: TOKEN_DATA(address, twoDayBlock),
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       twoDayData = twoDayResult.data.tokens[0]
     }
@@ -461,7 +461,7 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
     if (data.id === '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9') {
       const aaveData = await swapClients[chainId].query({
         query: PAIR_DATA('0xdfc14d2af169b0d36c4eff567ada9b2e0cae044f'),
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       const result = aaveData.data.pairs[0]
       data.totalLiquidityUSD = parseFloat(result.reserveUSD) / 2
@@ -482,7 +482,7 @@ const getTokenTransactions = async (allPairsFormatted) => {
       variables: {
         allPairs: allPairsFormatted,
       },
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     transactions.mints = result.data.mints
     transactions.burns = result.data.burns
@@ -498,7 +498,7 @@ const getTokenPairs = async (tokenAddress) => {
     // fetch all current and historical data
     let result = await swapClients[chainId].query({
       query: TOKEN_DATA(tokenAddress),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     return result.data?.['pairs0'].concat(result.data?.['pairs1'])
   } catch (e) {
@@ -599,7 +599,7 @@ const getTokenChartData = async (tokenAddress) => {
           tokenAddr: tokenAddress,
           skip,
         },
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       if (result.data.tokenDayDatas.length < 1000) {
         allFound = true
@@ -671,11 +671,12 @@ export function useTokenData(tokenAddress) {
   const tokenData = state?.[tokenAddress]
 
   useEffect(() => {
-    if (!tokenData && ethPrice && ethPriceOld && isAddress(tokenAddress)) {
-      getTokenData(tokenAddress, ethPrice, ethPriceOld).then((data) => {
+    ;(async () => {
+      if (!tokenData && ethPrice && ethPriceOld && isAddress(tokenAddress)) {
+        const data = await getTokenData(tokenAddress, ethPrice, ethPriceOld)
         update(tokenAddress, data)
-      })
-    }
+      }
+    })()
   }, [ethPrice, ethPriceOld, tokenAddress, tokenData, update])
 
   return tokenData || {}

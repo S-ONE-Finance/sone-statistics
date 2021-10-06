@@ -132,7 +132,7 @@ export async function splitQuery(query, localClient, vars, list, skipCount = 100
     let sliced = list.slice(skip, end)
     let result = await localClient.query({
       query: query(...vars, sliced),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     fetchedData = {
       ...fetchedData,
@@ -168,7 +168,7 @@ export async function getBlockFromTimestamp(timestamp) {
       timestampFrom: timestamp,
       timestampTo: timestamp + 600,
     },
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'network-only',
   })
   return result?.data?.blocks?.[0]?.number
 }
@@ -213,7 +213,7 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
 //   // get historical share values with time travel queries
 //   let result = await swapClients[chainId].query({
 //     query: SHARE_VALUE(account, blocks),
-//     fetchPolicy: 'cache-first',
+//     fetchPolicy: 'network-only',
 //   })
 
 //   let values = []
@@ -247,7 +247,7 @@ export async function getShareValueOverTime(pairAddress, timestamps) {
   // get historical share values with time travel queries
   let result = await swapClients[chainId].query({
     query: SHARE_VALUE(pairAddress, blocks),
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'network-only',
   })
 
   let values = []
