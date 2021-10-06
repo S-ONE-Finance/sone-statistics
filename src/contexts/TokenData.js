@@ -365,7 +365,7 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
     // fetch all current and historical data
     let result = await swapClients[chainId].query({
       query: TOKEN_DATA(address),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     data = result?.data?.tokens?.[0]
 
@@ -671,11 +671,12 @@ export function useTokenData(tokenAddress) {
   const tokenData = state?.[tokenAddress]
 
   useEffect(() => {
-    if (!tokenData && ethPrice && ethPriceOld && isAddress(tokenAddress)) {
-      getTokenData(tokenAddress, ethPrice, ethPriceOld).then((data) => {
+    ;(async () => {
+      if (!tokenData && ethPrice && ethPriceOld && isAddress(tokenAddress)) {
+        const data = await getTokenData(tokenAddress, ethPrice, ethPriceOld)
         update(tokenAddress, data)
-      })
-    }
+      }
+    })()
   }, [ethPrice, ethPriceOld, tokenAddress, tokenData, update])
 
   return tokenData || {}

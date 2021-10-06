@@ -259,7 +259,6 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       fetchPolicy: 'network-only',
     })
     oneDayData = oneDayResult.data.uniswapFactories[0]
-    console.log('oneDayData', oneDayData)
 
     let twoDayResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoDayBlock?.number),
@@ -273,7 +272,6 @@ async function getGlobalData(ethPrice, oldEthPrice) {
     })
     const oneWeekData = oneWeekResult.data.uniswapFactories[0]
 
-    console.log('twoWeekBlock?.number', twoWeekBlock?.number)
     let twoWeekResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoWeekBlock?.number),
       fetchPolicy: 'network-only',
@@ -592,7 +590,6 @@ export function useGlobalData() {
       fetchData()
     }
   }, [ethPrice, oldEthPrice, update, data, updateAllPairsInUniswap, updateAllTokensInUniswap])
-  console.log('data', data)
   return data || {}
 }
 
