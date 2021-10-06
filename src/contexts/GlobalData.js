@@ -346,7 +346,7 @@ const getChartData = async (oldestDateToFetch, offsetData) => {
           startTime: oldestDateToFetch,
           skip,
         },
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       skip += 1000
       data = data.concat(result.data.uniswapDayDatas)
@@ -440,7 +440,7 @@ const getGlobalTransactions = async () => {
   try {
     let result = await swapClients[chainId].query({
       query: GLOBAL_TXNS,
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     transactions.mints = []
     transactions.burns = []
@@ -486,11 +486,11 @@ const getEthPrice = async () => {
     let oneDayBlock = await getBlockFromTimestamp(utcOneDayBack)
     let result = await swapClients[chainId].query({
       query: ETH_PRICE(),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     let resultOneDay = await swapClients[chainId].query({
       query: ETH_PRICE(oneDayBlock),
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
     const currentPrice = result?.data?.bundles[0]?.ethPrice
     const oneDayBackPrice = resultOneDay?.data?.bundles[0]?.ethPrice
@@ -521,7 +521,7 @@ async function getAllPairsOnUniswap() {
         variables: {
           skip: skipCount,
         },
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       skipCount = skipCount + PAIRS_TO_FETCH
       pairs = pairs.concat(result?.data?.pairs)
@@ -549,7 +549,7 @@ async function getAllTokensOnUniswap() {
         variables: {
           skip: skipCount,
         },
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       tokens = tokens.concat(result?.data?.tokens)
       if (result?.data?.tokens?.length < TOKENS_TO_FETCH || tokens.length > TOKENS_TO_FETCH) {
@@ -709,7 +709,7 @@ export function useTopLps() {
               variables: {
                 pair: pair.toString(),
               },
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             if (results) {
               return results.liquidityPositions
