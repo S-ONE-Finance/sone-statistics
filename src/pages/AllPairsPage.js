@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 function AllPairsPage() {
   const allPairs = useAllPairData()
-
+  console.log('allPairs', allPairs)
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
