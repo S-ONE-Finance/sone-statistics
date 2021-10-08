@@ -200,14 +200,14 @@ async function getBulkPairData(pairList, ethPrice) {
       variables: {
         allPairs: pairList,
       },
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
 
     let [oneDayResult, twoDayResult, oneWeekResult] = await Promise.all(
       [b1, b2, bWeek].map(async (block) => {
         let result = swapClients[chainId].query({
           query: PAIRS_HISTORICAL_BULK(block, pairList),
-          fetchPolicy: 'cache-first',
+          fetchPolicy: 'network-only',
         })
         return result
       })
@@ -233,7 +233,7 @@ async function getBulkPairData(pairList, ethPrice) {
           if (!oneDayHistory) {
             let newData = await swapClients[chainId].query({
               query: PAIR_DATA(pair.id, b1),
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             oneDayHistory = newData.data.pairs[0]
           }
@@ -241,7 +241,7 @@ async function getBulkPairData(pairList, ethPrice) {
           if (!twoDayHistory) {
             let newData = await swapClients[chainId].query({
               query: PAIR_DATA(pair.id, b2),
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             twoDayHistory = newData.data.pairs[0]
           }
@@ -249,7 +249,7 @@ async function getBulkPairData(pairList, ethPrice) {
           if (!oneWeekHistory) {
             let newData = await swapClients[chainId].query({
               query: PAIR_DATA(pair.id, bWeek),
-              fetchPolicy: 'cache-first',
+              fetchPolicy: 'network-only',
             })
             oneWeekHistory = newData.data.pairs[0]
           }
@@ -445,7 +445,7 @@ const getPairChartData = async (pairAddress) => {
           pairAddress: pairAddress,
           skip,
         },
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
       skip += 1000
       data = data.concat(result.data.pairDayDatas)
@@ -578,7 +578,7 @@ export function Updater() {
         data: { pairs },
       } = await swapClients[chainId].query({
         query: PAIRS_CURRENT,
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
       })
 
       // format as array of addresses
@@ -758,7 +758,7 @@ function useFooterData() {
       data: { pairs },
     } = await swapClients[chainId].query({
       query: PAIRS_CURRENT,
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
 
     // Format as array of addresses.
