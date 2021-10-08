@@ -202,7 +202,6 @@ async function getBulkPairData(pairList, ethPrice) {
       },
       fetchPolicy: 'network-only',
     })
-
     let [oneDayResult, twoDayResult, oneWeekResult] = await Promise.all(
       [b1, b2, bWeek].map(async (block) => {
         let result = swapClients[chainId].query({
@@ -212,7 +211,6 @@ async function getBulkPairData(pairList, ethPrice) {
         return result
       })
     )
-
     let oneDayData = oneDayResult?.data?.pairs.reduce((obj, cur, i) => {
       return { ...obj, [cur.id]: cur }
     }, {})
@@ -228,7 +226,7 @@ async function getBulkPairData(pairList, ethPrice) {
     let pairData = await Promise.all(
       current &&
         current.data.pairs.map(async (pair) => {
-          let data = pair
+          let data = { ...pair }
           let oneDayHistory = oneDayData?.[pair.id]
           if (!oneDayHistory) {
             let newData = await swapClients[chainId].query({
