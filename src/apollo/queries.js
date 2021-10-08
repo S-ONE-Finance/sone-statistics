@@ -725,6 +725,8 @@ export const PAIRS_HISTORICAL_BULK = (block, pairs) => {
       id
       token0Price
       token1Price
+      volumeUSD
+      untrackedVolumeUSD
     }
   }
   `
