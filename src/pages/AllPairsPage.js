@@ -8,10 +8,15 @@ import { AutoRow } from '../components/Row'
 import QuestionHelper from '../components/QuestionHelper'
 import CheckBox from '../components/Checkbox'
 import styled from 'styled-components'
+import { TYPE } from '../theme'
+import { useMedia } from 'react-use'
+import { useTranslation } from 'react-i18next'
 
 function AllPairsPage() {
   const allPairs = useAllPairData()
-  console.log('allPairs', allPairs)
+  const { t } = useTranslation()
+  const below600 = useMedia('(max-width: 600px)')
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -28,6 +33,9 @@ function AllPairsPage() {
   return (
     <PageWrapper>
       <FullWrapper>
+        <TYPE.main fontSize={below600 ? 20 : 40} style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+          {t('Top Pairs')}
+        </TYPE.main>
         <AutoRow gap="4px">
           <CheckBox checked={useTracked} setChecked={() => setUseTracked(!useTracked)} text={'Hide untracked pairs'} />
           <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
