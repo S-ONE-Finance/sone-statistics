@@ -202,7 +202,6 @@ async function getBulkPairData(pairList, ethPrice) {
       },
       fetchPolicy: 'network-only',
     })
-    console.log('current', current)
     let [oneDayResult, twoDayResult, oneWeekResult] = await Promise.all(
       [b1, b2, bWeek].map(async (block) => {
         let result = swapClients[chainId].query({
@@ -227,8 +226,7 @@ async function getBulkPairData(pairList, ethPrice) {
     let pairData = await Promise.all(
       current &&
         current.data.pairs.map(async (pair) => {
-          let data = pair
-          if (data.id == '0x21ddc5604feb889063ab56618bc6b8a2b2694bab') console.log('data---', data)
+          let data = { ...pair }
           let oneDayHistory = oneDayData?.[pair.id]
           if (!oneDayHistory) {
             let newData = await swapClients[chainId].query({
@@ -338,7 +336,6 @@ export async function getBulkPairDataForFooter(pairList) {
 }
 
 function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBlock) {
-  if (data.id == '0x21ddc5604feb889063ab56618bc6b8a2b2694bab') console.log('data', data)
   const pairAddress = data.id
 
   // get volume changes
