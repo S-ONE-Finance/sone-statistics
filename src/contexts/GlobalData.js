@@ -285,6 +285,12 @@ async function getGlobalData(ethPrice, oldEthPrice) {
         twoDayData.totalVolumeUSD
       )
 
+      let [oneDayVolumeUntracked, volumeChangeUntracked] = get2DayPercentChange(
+        data.untrackedVolumeUSD,
+        oneDayData.untrackedVolumeUSD,
+        twoDayData.untrackedVolumeUSD
+      )
+
       const [oneWeekVolume, weeklyVolumeChange] = get2DayPercentChange(
         data.totalVolumeUSD,
         oneWeekData.totalVolumeUSD,
@@ -309,10 +315,10 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       data.oneWeekVolume = oneWeekVolume
       data.weeklyVolumeChange = weeklyVolumeChange
       data.volumeChangeUSD = volumeChangeUSD
+      data.oneDayVolumeUntracked = oneDayVolumeUntracked
       data.liquidityChangeUSD = liquidityChangeUSD
       data.oneDayTxns = oneDayTxns
       data.txnChange = txnChange
-      data.percentChangeTxns = formattedPercent(getPercentChange(data.txCount, oneDayData.txCount))
       data.percentChangePools = formattedPercent(getPercentChange(data.pairCount, oneDayData.pairCount))
       data.percentChangeFees = formattedPercent(getPercentChange(data.totalVolumeUSD, oneDayData.totalVolumeUSD))
     }

@@ -107,10 +107,18 @@ function OverviewStatistics() {
   const allTokens = useAllTokenData()
   const [isDarkMode] = useDarkModeManager()
   const allPairs = useAllPairData()
-  const { oneDayVolumeUSD, oneDayTxns, pairCount, percentChangeTxns, percentChangePools, percentChangeFees } =
-    useGlobalData()
+  const {
+    oneDayVolumeUSD,
+    oneDayTxns,
+    pairCount,
+    percentChangePools,
+    percentChangeFees,
+    oneDayVolumeUntracked,
+    txnChange,
+  } = useGlobalData()
   const { t } = useTranslation()
-  const oneDayFees = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD * 0.003, true) : ''
+  // const oneDayFees = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD * 0.003, true) : ''
+  const oneDayFees = formattedNum(oneDayVolumeUSD ? oneDayVolumeUSD * 0.003 : oneDayVolumeUntracked * 0.003, true)
 
   //accounts
   const topLps = useTopLps()
@@ -185,7 +193,9 @@ function OverviewStatistics() {
                 </Typography>
               </Box>
             }
-            ratioValue={<p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{percentChangeTxns}</p>}
+            ratioValue={
+              <p style={{ marginRight: 5, fontSize: isUpToExtraSmall ? 13 : 16 }}>{formattedPercent(txnChange)}</p>
+            }
           />
         </Grid>
         <Grid item md={12} lg={3} className={classes.boxItem}>
