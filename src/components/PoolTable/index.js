@@ -129,7 +129,7 @@ const PoolRow = ({ farm }) => {
         {!isUpToExtraSmall && (
           <TableCell className={classes.tableCell}>
             <Typography style={{ fontSize: 16, fontWeight: 400, float: 'right', color: theme.text4Sone }}>
-              {farm.rowIdx}
+              {Number(farm.rowIdx) + 1}
             </Typography>
           </TableCell>
         )}
