@@ -161,7 +161,6 @@ function OverviewStatistics() {
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
             title={t('ETH Price')}
-            colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -182,7 +181,6 @@ function OverviewStatistics() {
         <Grid item md={6} lg={3} className={classes.boxItem}>
           <CardItem
             title={t('No. Transactions (24h)')}
-            colorTextRatioValue="#7AC51B"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -201,7 +199,6 @@ function OverviewStatistics() {
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
             title={t('No. Pools')}
-            colorTextRatioValue="#F05359"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
@@ -218,7 +215,6 @@ function OverviewStatistics() {
         <Grid item md={12} lg={3} className={classes.boxItem}>
           <CardItem
             title={t('Total Fees (24h)')}
-            colorTextRatioValue="#7AC51B"
             valueContainer={
               <Box display="flex" alignItems="center">
                 <Typography
