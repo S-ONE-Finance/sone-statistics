@@ -1,6 +1,7 @@
 {
   "Staking Statistics": "Staking Statistics",
-  "98.9% of Total Liquidity": "98.9% of Total Liquidity",
+  "{{percent}}_of_total_liquidity": "{{percent}}% of Total Liquidity",
+  "{{percent}}_of_total": "{{percent}}% of total",
   "SONE Token Price": "SONE Token Price",
   "Total Supply: 198.75M SONE": "Total Supply: 198.75M SONE",
   "Staked Value": "Staked Value",
