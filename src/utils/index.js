@@ -327,7 +327,7 @@ export const urls = {
   showBlock: (block) => `${ETHERSCAN_BASE_URL[chainId]}/block/${block}/`,
 }
 
-export const formatTime = (unix) => {
+export const formatTime = (t, unix) => {
   const now = dayjs()
   const timestamp = dayjs.unix(unix)
 
@@ -337,13 +337,13 @@ export const formatTime = (unix) => {
   const inDays = now.diff(timestamp, 'day')
 
   if (inHours >= 24) {
-    return `${inDays} ${inDays === 1 ? 'day' : 'days'} ago`
+    return t('{{days}}_days_ago', { days: inDays })
   } else if (inMinutes >= 60) {
-    return `${inHours} ${inHours === 1 ? 'hour' : 'hours'} ago`
+    return t('{{hours}}_hours_ago', { hours: inHours })
   } else if (inSeconds >= 60) {
-    return `${inMinutes} ${inMinutes === 1 ? 'minute' : 'minutes'} ago`
+    return t('{{minutes}}_minutes_ago', { minutes: inMinutes })
   } else {
-    return `${inSeconds} ${inSeconds === 1 ? 'second' : 'seconds'} ago`
+    return t('{{seconds}}_seconds_ago', { seconds: inSeconds })
   }
 }
 

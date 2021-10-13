@@ -98,7 +98,7 @@ const GlobalChart = ({ display }) => {
             data={chartDataFiltered}
             base={volumeWindow === VOLUME_WINDOW.WEEKLY ? oneWeekVolume : oneDayVolumeUSD}
             baseChange={volumeWindow === VOLUME_WINDOW.WEEKLY ? weeklyVolumeChange : volumeChangeUSD}
-            title={volumeWindow === VOLUME_WINDOW.WEEKLY ? 'Volume (7d)' : `${t('Volume')}`}
+            title={volumeWindow === VOLUME_WINDOW.WEEKLY ? 'Volume (7d)' : `${t('Volume (24h)')}`}
             field={volumeWindow === VOLUME_WINDOW.WEEKLY ? 'weeklyVolumeUSD' : 'dailyVolumeUSD'}
             width={width}
             type={CHART_TYPES.BAR}

@@ -318,7 +318,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           </Link>
         </DataText>
         <DataText area="time" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>
-          {formatTime(item.timestamp)}
+          {formatTime(t, item.timestamp)}
         </DataText>
       </DashGrid>
     )
