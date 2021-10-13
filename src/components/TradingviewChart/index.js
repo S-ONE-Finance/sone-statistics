@@ -167,7 +167,7 @@ const TradingViewChart = ({
       function setLastBarText() {
         toolTip.innerHTML =
           `<div style="font-size: 16px; margin: 4px 0px; color: ${textColor}; font-weight:400">${title} ${
-            type === CHART_TYPES.BAR && !useWeekly ? '(24hr)' : ''
+            type === CHART_TYPES.BAR && !useWeekly ? '' : ''
           }</div>` +
           `<div style="font-size: 22px; margin: 4px 0px; color:${textColor}" >` +
           formattedNum(base ?? 0, true) +

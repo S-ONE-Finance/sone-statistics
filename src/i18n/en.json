@@ -83,5 +83,10 @@
   "Pair name": "Pair name",
   "Swap Stats": "Swap Stats",
   "Staking stats": "Staking stats",
-  "Liquidity (24hr)": "Liquidity (24hr)"
+  "Liquidity (24hr)": "Liquidity (24hr)",
+
+  "{{days}}_days_ago": "{{days}} days ago",
+  "{{hours}}_hours_ago": "{{hours}} hours ago",
+  "{{minutes}}_minutes_ago": "{{minutes}} minutes ago",
+  "{{seconds}}_seconds_ago": "{{seconds}} seconds ago"
 }

@@ -83,5 +83,10 @@
   "Pair Name": "Pair名称",
   "Swap Stats": "交易数据",
   "Staking stats": "质押统计",
-  "Liquidity (24hr)": "流动性 (24小时)"
+  "Liquidity (24hr)": "流动性 (24小时)",
+
+  "{{days}}_days_ago": "{{days}}天前",
+  "{{hours}}_hours_ago": "{{hours}}小时前",
+  "{{minutes}}_minutes_ago": "{{minutes}}分前",
+  "{{seconds}}_seconds_ago": "{{seconds}}秒前"
 }
