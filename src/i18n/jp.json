@@ -1,6 +1,7 @@
 {
   "Staking Statistics": "運用データ",
-  "98.9% of Total Liquidity": "合計預入額の98.9%",
+  "{{percent}}_of_total_liquidity": "合計預入額の{{percent}}%",
+  "{{percent}}_of_total": "全体の{{percent}}%",
   "SONE Token Price": "SONEトークン価格",
   "Total Supply": "合計供給量",
   "Staked Value": "運用額",

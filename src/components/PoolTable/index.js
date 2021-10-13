@@ -120,6 +120,8 @@ const PoolRow = ({ farm }) => {
   const lockedValue = Number(farm?.balanceUSD) ?? 0
   const lockedValueAndTotalSupplyRatio = (Number(farm?.balance) / totalSupply) * 100
 
+  const { t } = useTranslation()
+
   return (
     farm && (
       <TableRow
@@ -218,7 +220,7 @@ const PoolRow = ({ farm }) => {
             {`$${reduceFractionDigit(lockedValue, 6)}`}
           </Typography>
           <Typography style={{ fontSize: isUpToExtraSmall ? 13 : 16, fontWeight: 400, color: theme.text4Sone }}>
-            {`${reduceFractionDigit(lockedValueAndTotalSupplyRatio, 2)}% of total`}
+            {t('{{percent}}_of_total', { percent: reduceFractionDigit(lockedValueAndTotalSupplyRatio, 2) })}
           </Typography>
         </TableCell>
         <TableCell className={classes.tableCell} style={{ textAlign: 'center' }}>

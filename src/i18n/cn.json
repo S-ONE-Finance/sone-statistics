@@ -1,6 +1,7 @@
 {
   "Staking Statistics": "质押统计",
-  "98.9% of Total Liquidity": "占总流动资金的98.9%",
+  "{{percent}}_of_total_liquidity": "占总流动资金的{{percent}}%",
+  "{{percent}}_of_total": "全部中的{{percent}}%",
   "SONE Token Price": "SONE代币价格",
   "Total Supply: 198.75M SONE": "供应总量：1.9875亿SONE",
   "Staked Value": "质押值",
