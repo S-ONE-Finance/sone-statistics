@@ -528,8 +528,8 @@ function Header() {
                 </TYPE.language>
               </StyledMenuButtonWithText>
               <ResponsiveBottomRightSubMenu>
-                <SubMenuItemText onClick={() => changeLanguage('jp')}>日本語</SubMenuItemText>
                 <SubMenuItemText onClick={() => changeLanguage('en')}>English</SubMenuItemText>
+                <SubMenuItemText onClick={() => changeLanguage('jp')}>日本語</SubMenuItemText>
                 <SubMenuItemText onClick={() => changeLanguage('cn')}>簡体中文</SubMenuItemText>
               </ResponsiveBottomRightSubMenu>
             </ResponsiveMenuItem>
