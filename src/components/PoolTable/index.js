@@ -297,7 +297,7 @@ export default function PoolTable() {
                   className={classes.tableHeaderText}
                   style={{ color: theme.text1Sone, marginLeft: isUpToExtraSmall ? 0 : '3vw' }}
                 >
-                  {t('Pairs')}
+                  {t('Pair')}
                 </Typography>
                 {sortData.symbol &&
                   (sortData.symbol === 'desc' ? (
