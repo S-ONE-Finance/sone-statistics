@@ -162,10 +162,13 @@ export default function CommonStatistics() {
         title={t('Total Value Staked')}
         valueContainer={
           <Box display="flex" alignItems="center">
-            <Typography className={classes.cardValue} style={{ color: theme.text6Sone }}>{`$${reduceFractionDigit(
-              totalValueStaked,
-              6
-            )}`}</Typography>
+            <Typography
+              className={classes.cardValue}
+              style={{
+                color: theme.text6Sone,
+                fontSize: isUpToExtraSmall ? 20 : 28,
+              }}
+            >{`$${reduceFractionDigit(totalValueStaked, 6)}`}</Typography>
           </Box>
         }
         descriptionContainer={t('{{percent}}_of_total_liquidity', {
@@ -192,10 +195,13 @@ export default function CommonStatistics() {
         title={t('SONE Token Price')}
         valueContainer={
           <Box display="flex" alignItems="center">
-            <Typography className={classes.cardValue} style={{ color: theme.text6Sone }}>{`$${reduceFractionDigit(
-              sonePriceInUSD,
-              6
-            )}`}</Typography>
+            <Typography
+              className={classes.cardValue}
+              style={{
+                color: theme.text6Sone,
+                fontSize: isUpToExtraSmall ? 20 : 28,
+              }}
+            >{`$${reduceFractionDigit(sonePriceInUSD, 6)}`}</Typography>
           </Box>
         }
         descriptionContainer={`${t('Total Supply')}: ${reduceFractionDigit(totalSupply, 6)} SONE`}
