@@ -3,6 +3,7 @@
   "{{percent}}_of_total_liquidity": "{{percent}}% of Total Liquidity",
   "{{percent}}_of_total": "{{percent}}% of total",
   "SONE Token Price": "SONE Token Price",
+  "Total Supply": "Total Supply",
   "Total Supply: 198.75M SONE": "Total Supply: 198.75M SONE",
   "Staked Value": "Staked Value",
   "Locked Value": "Locked Value",
@@ -84,7 +85,7 @@
   "Pair Address": "Pair Address",
   "Pair name": "Pair name",
   "Swap Stats": "Swap Stats",
-  "Staking stats": "Staking stats",
+  "Staking Stats": "Staking stats",
   "Liquidity (24hr)": "Liquidity (24hr)",
 
   "{{days}}_days_ago": "{{days}} days ago",
