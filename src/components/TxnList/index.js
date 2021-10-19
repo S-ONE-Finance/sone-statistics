@@ -39,27 +39,26 @@ const DashGrid = styled.div`
   grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas: 'txn value amountToken amountOther time';
   min-width: 1000px
+  > *{
+    justify-content: flex-end;
+    width: 100%;
+
+    &:first-child {
+      justify-content: flex-start;
+      text-align: left;
+      Transactions
+      width: 100px;
+    }
+  } @media screen and(max-width: 680 px) {
   > * {
     justify-content: flex-end;
     width: 100%;
 
     &:first-child {
       justify-content: flex-start;
-      text-align: left;Transactions
-      width: 100px;
     }
   }
-
-  @media screen and (max-width: 680px) {
-    > * {
-      justify-content: flex-end;
-      width: 100%;
-
-      &:first-child {
-        justify-content: flex-start;
-      }
-    }
-  }
+}
 `
 
 const ListWrapper = styled.div`
@@ -145,16 +144,16 @@ const TXN_TYPE = {
   REMOVE: 'Removes',
 }
 
-function getTransactionType(event, symbol0, symbol1) {
+function getTransactionType(t, event, symbol0, symbol1) {
   const formattedS0 = symbol0?.length > 8 ? symbol0.slice(0, 7) + '...' : symbol0
   const formattedS1 = symbol1?.length > 8 ? symbol1.slice(0, 7) + '...' : symbol1
   switch (event) {
     case TXN_TYPE.ADD:
-      return 'Add ' + formattedS0 + ' and ' + formattedS1
+      return t('Add {{symbol0}} and {{symbol1}}', { symbol0: formattedS0, symbol1: formattedS1 })
     case TXN_TYPE.REMOVE:
-      return 'Remove ' + formattedS0 + ' and ' + formattedS1
+      return t('Remove {{symbol0}} and {{symbol1}}', { symbol0: formattedS0, symbol1: formattedS1 })
     case TXN_TYPE.SWAP:
-      return 'Swap ' + formattedS0 + ' for ' + formattedS1
+      return t('Swap {{symbol0}} for {{symbol1}}', { symbol0: formattedS0, symbol1: formattedS1 })
     default:
       return ''
   }
@@ -286,7 +285,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       <DashGrid style={{ height: '48px' }}>
         <DataText area="txn" fontWeight="400" className="justify-content-left w-100">
           <Link color="#3FAAB0" external href={urls.showTransaction(item.hash)}>
-            {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
+            {getTransactionType(t, item.type, item.token1Symbol, item.token0Symbol)}
           </Link>
         </DataText>
         <DataText area="value" style={{ justifyContent: 'center', color: isDarkMode ? '#AAAAAA' : '#767676 ' }}>

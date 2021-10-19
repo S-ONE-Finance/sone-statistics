@@ -235,12 +235,12 @@ function PairPage({ pairAddress, history }) {
       <ThemedBackground />
       <span />
       <StyleDiv>
-        <Warning
-          type={'pair'}
-          show={!dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))}
-          setShow={markAsDismissed}
-          address={pairAddress}
-        />
+        {/*<Warning*/}
+        {/*  type={'pair'}*/}
+        {/*  show={!dismissed && listedTokens && !(listedTokens.includes(token0?.id) && listedTokens.includes(token1?.id))}*/}
+        {/*  setShow={markAsDismissed}*/}
+        {/*  address={pairAddress}*/}
+        {/*/>*/}
       </StyleDiv>
 
       <ContentWrapper style={{ zIndex: 1 }}>
