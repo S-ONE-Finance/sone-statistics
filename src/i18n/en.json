@@ -77,6 +77,7 @@
   "1W": "1W",
   "1M": "1M",
   "D": "D",
+  "W": "W",
   "H": "H",
   "View on Etherscan": "View on Etherscan",
   "Address": "Address",
@@ -89,5 +90,9 @@
   "{{days}}_days_ago": "{{days}} days ago",
   "{{hours}}_hours_ago": "{{hours}} hours ago",
   "{{minutes}}_minutes_ago": "{{minutes}} minutes ago",
-  "{{seconds}}_seconds_ago": "{{seconds}} seconds ago"
+  "{{seconds}}_seconds_ago": "{{seconds}} seconds ago",
+
+  "Add {{symbol0}} and {{symbol1}}": "Add {{symbol0}} and {{symbol1}}",
+  "Remove {{symbol0}} and {{symbol1}}": "Remove {{symbol0}} and {{symbol1}}",
+  "Swap {{symbol0}} for {{symbol1}}": "Swap {{symbol0}} for {{symbol1}}"
 }

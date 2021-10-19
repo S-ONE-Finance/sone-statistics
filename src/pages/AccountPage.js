@@ -296,7 +296,7 @@ function AccountPage({ account }) {
                   <RowFixed>
                     <DoubleTokenLogo a0={activePosition.pair.token0.id} a1={activePosition.pair.token1.id} size={16} />
                     <TYPE.body ml={'16px'}>
-                      {activePosition.pair.token0.symbol}-{activePosition.pair.token1.symbol} Position
+                      {activePosition.pair.token0.symbol}-{activePosition.pair.token1.symbol} {t('Positions')}
                     </TYPE.body>
                   </RowFixed>
                 )}
@@ -322,7 +322,7 @@ function AccountPage({ account }) {
                           >
                             <DoubleTokenLogo a0={p.pair.token0.id} a1={p.pair.token1.id} size={16} />
                             <TYPE.body ml={'16px'}>
-                              {p.pair.token0.symbol}-{p.pair.token1.symbol} Position
+                              {p.pair.token0.symbol}-{p.pair.token1.symbol} {t('Positions')}
                             </TYPE.body>
                           </MenuRow>
                         )
