@@ -83,7 +83,7 @@
   "View on Etherscan": "View on Etherscan",
   "Address": "Address",
   "Pair Address": "Pair Address",
-  "Pair name": "Pair name",
+  "Pair Name": "Pair Name",
   "Swap Stats": "Swap Stats",
   "Staking Stats": "Staking stats",
   "Liquidity (24hr)": "Liquidity (24hr)",
@@ -95,5 +95,7 @@
 
   "Add {{symbol0}} and {{symbol1}}": "Add {{symbol0}} and {{symbol1}}",
   "Remove {{symbol0}} and {{symbol1}}": "Remove {{symbol0}} and {{symbol1}}",
-  "Swap {{symbol0}} for {{symbol1}}": "Swap {{symbol0}} for {{symbol1}}"
+  "Swap {{symbol0}} for {{symbol1}}": "Swap {{symbol0}} for {{symbol1}}",
+
+  "No recent transactions found": "No recent transactions found."
 }

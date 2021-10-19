@@ -159,6 +159,10 @@ function TokenPage({ address, history }) {
   const listedTokens = useListedTokens()
 
   useEffect(() => {
+    markAsDismissed()
+  }, [markAsDismissed])
+
+  useEffect(() => {
     window.scrollTo({
       behavior: 'smooth',
       top: 0,
@@ -188,12 +192,12 @@ function TokenPage({ address, history }) {
   return (
     <PageWrapper>
       <ThemedBackground />
-      {/*<Warning*/}
-      {/*  type={'token'}*/}
-      {/*  show={!dismissed && listedTokens && !listedTokens.includes(address)}*/}
-      {/*  setShow={markAsDismissed}*/}
-      {/*  address={address}*/}
-      {/*/>*/}
+      <Warning
+        type={'token'}
+        show={!dismissed && listedTokens && !listedTokens.includes(address)}
+        setShow={markAsDismissed}
+        address={address}
+      />
       <ContentWrapper style={{ zIndex: 1 }}>
         <WarningGrouping disabled={!dismissed && listedTokens && !listedTokens.includes(address)}>
           <DashboardWrapper style={{ marginTop: below1080 ? '0' : '1rem', zIndex: 1 }}>

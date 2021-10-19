@@ -82,7 +82,7 @@
   "View on Etherscan": "Etherscanを見る",
   "Address": "アドレス",
   "Pair Address": "トークンペアアドレス",
-  "Pair name": "トークンペア名称",
+  "Pair Name": "トークンペア名称",
 
   "Total Value Staked": "合計運用額",
   "of Total Liquidity": "合計預入額の",
@@ -96,5 +96,7 @@
   "{{seconds}}_seconds_ago": "{{seconds}}秒前",
   "Add {{symbol0}} and {{symbol1}}": "{{symbol0}}と{{symbol1}}を追加",
   "Remove {{symbol0}} and {{symbol1}}": "{{symbol0}}と{{symbol1}}を引出し",
-  "Swap {{symbol0}} for {{symbol1}}": "{{symbol0}}を{{symbol1}}に交換"
+  "Swap {{symbol0}} for {{symbol1}}": "{{symbol0}}を{{symbol1}}に交換",
+
+  "No recent transactions found": "No recent transactions found."
 }
