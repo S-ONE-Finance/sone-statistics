@@ -193,10 +193,6 @@ function PairPage({ pairAddress, history }) {
   const { t } = useTranslation()
 
   useEffect(() => {
-    markAsDismissed()
-  }, [markAsDismissed])
-
-  useEffect(() => {
     window.scrollTo({
       behavior: 'smooth',
       top: 0,

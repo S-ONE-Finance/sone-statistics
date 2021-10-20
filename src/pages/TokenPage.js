@@ -159,10 +159,6 @@ function TokenPage({ address, history }) {
   const listedTokens = useListedTokens()
 
   useEffect(() => {
-    markAsDismissed()
-  }, [markAsDismissed])
-
-  useEffect(() => {
     window.scrollTo({
       behavior: 'smooth',
       top: 0,
