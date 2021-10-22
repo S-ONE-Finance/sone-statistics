@@ -3,6 +3,7 @@
   "{{percent}}_of_total_liquidity": "占总流动资金的{{percent}}%",
   "{{percent}}_of_total": "全部中的{{percent}}%",
   "SONE Token Price": "SONE代币价格",
+  "Total Supply": "合計供給量",
   "Total Supply: 198.75M SONE": "供应总量：1.9875亿SONE",
   "Staked Value": "质押值",
   "Locked Value": "锁定值",
@@ -11,6 +12,7 @@
   "Tokens": "代币",
   "Pair": "代币Pair",
   "Pairs": "代币Pair",
+  "Total Value Staked": "总质押值",
   "Accounts": "账户",
   "Search tokens and pairs": "搜索代币和代币对",
   "Top Tokens": "顶级代币",
@@ -84,7 +86,7 @@
   "Pair Address": "Pair地址",
   "Pair Name": "Pair名称",
   "Swap Stats": "交易数据",
-  "Staking stats": "质押统计",
+  "Staking Stats": "质押统计",
   "Liquidity (24hr)": "流动性 (24小时)",
 
   "{{days}}_days_ago": "{{days}}天前",
@@ -94,5 +96,7 @@
 
   "Add {{symbol0}} and {{symbol1}}": "添加{{symbol0}}和{{symbol1}}",
   "Remove {{symbol0}} and {{symbol1}}": "删除{{symbol0}}和{{symbol1}}",
-  "Swap {{symbol0}} for {{symbol1}}": "用{{symbol0}}交换{{symbol1}}"
+  "Swap {{symbol0}} for {{symbol1}}": "用{{symbol0}}交换{{symbol1}}",
+
+  "No recent transactions found": "No recent transactions found."
 }
