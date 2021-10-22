@@ -226,8 +226,6 @@ export default function Provider({ children }) {
 async function getGlobalData(ethPrice, oldEthPrice) {
   // data for each day , historic data used for % changes
   let data = {}
-  let oneDayData = {}
-  let twoDayData = {}
 
   try {
     // get timestamps for the days
@@ -235,7 +233,6 @@ async function getGlobalData(ethPrice, oldEthPrice) {
     const utcOneDayBack = utcCurrentTime.subtract(1, 'day').unix()
     const utcTwoDaysBack = utcCurrentTime.subtract(2, 'day').unix()
     const utcOneWeekBack = utcCurrentTime.subtract(1, 'week').unix()
-    // TODO_THANHNV: fake to test data two week
     const utcTwoWeeksBack = utcCurrentTime.subtract(2, 'week').unix()
 
     // get the blocks needed for time travel queries
@@ -258,13 +255,13 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       query: GLOBAL_DATA(oneDayBlock?.number),
       fetchPolicy: 'network-only',
     })
-    oneDayData = oneDayResult.data.uniswapFactories[0]
+    const oneDayData = oneDayResult.data.uniswapFactories[0]
 
     let twoDayResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(twoDayBlock?.number),
       fetchPolicy: 'network-only',
     })
-    twoDayData = twoDayResult.data.uniswapFactories[0]
+    const twoDayData = twoDayResult.data.uniswapFactories[0]
 
     let oneWeekResult = await swapClients[chainId].query({
       query: GLOBAL_DATA(oneWeekBlock?.number),
@@ -276,9 +273,10 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       query: GLOBAL_DATA(twoWeekBlock?.number),
       fetchPolicy: 'network-only',
     })
+
     const twoWeekData = twoWeekResult.data.uniswapFactories[0]
 
-    if (data && oneDayData && twoDayData && twoWeekData) {
+    if (data && oneDayData && twoDayData && oneWeekData && twoWeekData) {
       let [oneDayVolumeUSD, volumeChangeUSD] = get2DayPercentChange(
         data.totalVolumeUSD,
         oneDayData.totalVolumeUSD,
