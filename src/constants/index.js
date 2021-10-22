@@ -1,7 +1,7 @@
 export const BUNDLE_ID = '1'
 
-const DEFAULT_chainId = '0x4' // Rinkeby
-export const chainId = parseInt(window?.ethereum?.chainId ?? DEFAULT_chainId, 16)
+const DEFAULT_CHAIN_ID = process.env.REACT_APP_DEFAULT_CHAIN_ID
+export const chainId = parseInt(window?.ethereum?.chainId ?? DEFAULT_CHAIN_ID, 16)
 
 export const SONE_PRICE_MINIMUM = 0.00001 // 1 SONE >= 0.00001 USDT
 

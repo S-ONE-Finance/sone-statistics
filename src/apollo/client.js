@@ -6,13 +6,13 @@ import { ChainId } from '@s-one-finance/sdk-core'
 export const swapClients = {
   [ChainId.MAINNET]: new ApolloClient({
     link: new HttpLink({
-      uri: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
+      uri: 'https://graph-node.s-one.finance/subgraphs/name/s-one-finance/soneswap',
     }),
     cache: new InMemoryCache(),
   }),
   [ChainId.RINKEBY]: new ApolloClient({
     link: new HttpLink({
-      uri: 'https://graph-node.s-one.finance/subgraphs/name/s-one-finance/soneswap',
+      uri: 'https://graph-node-2.s-one.finance/subgraphs/name/s-one-finance/soneswap',
     }),
     cache: new InMemoryCache(),
   }),
@@ -27,13 +27,13 @@ export const swapClients = {
 export const stakingClients = {
   [ChainId.MAINNET]: new ApolloClient({
     link: new HttpLink({
-      uri: '',
+      uri: 'https://graph-node.s-one.finance/subgraphs/name/s-one-finance/master-farmer',
     }),
     cache: new InMemoryCache(),
   }),
   [ChainId.RINKEBY]: new ApolloClient({
     link: new HttpLink({
-      uri: 'https://graph-node.s-one.finance/subgraphs/name/s-one-finance/master-farmer',
+      uri: 'https://graph-node-2.s-one.finance/subgraphs/name/s-one-finance/master-farmer',
     }),
     cache: new InMemoryCache(),
   }),
