@@ -27,7 +27,7 @@ export const swapClients = {
 export const stakingClients = {
   [ChainId.MAINNET]: new ApolloClient({
     link: new HttpLink({
-      uri: 'https://graph-node.s-one.finance/subgraphs/name/s-one-finance/master-farmer',
+      uri: 'https://api.thegraph.com/subgraphs/name/s-one-system/s-one-liquidity-mining',
     }),
     cache: new InMemoryCache(),
   }),
